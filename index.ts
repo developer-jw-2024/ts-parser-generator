@@ -1,4 +1,4 @@
-import  { Greeter, Hi }  from './GreeterUtils'
+import  { Greeter, Hi }  from './src/GreeterUtils'
 
 export {
     Greeter,
