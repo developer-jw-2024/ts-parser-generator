@@ -6,11 +6,20 @@ import { RegularExpressionTree, RegularExpressionTreeOperation } from './Regular
 export class NFA {
     maxIndex : number
     tree : RegularExpressionTree
-    starIndex : number
-    endIndex : number
+    startIndex : number
+    terminatedIndexList : Array<number> = []
     finiteAutomatonPaths : Array<FiniteAutomatonPath> = []
 
-    constructor(tree : RegularExpressionTree) {
+    constructor(){
+    }
+
+    initWith(startIndex : number, terminatedIndexList : Array<number>, finiteAutomatonPaths : Array<FiniteAutomatonPath>) {
+        this.startIndex = startIndex
+        this.terminatedIndexList = terminatedIndexList
+        this.finiteAutomatonPaths = finiteAutomatonPaths
+    }
+
+    initWithRegularExpressionTree(tree : RegularExpressionTree) {
         if (tree==null) {
             throw new Error(`tree can not be null`)
         }
@@ -21,8 +30,8 @@ export class NFA {
     convert() {
         this.maxIndex = 1
         this.finiteAutomatonPaths = []
-        this.starIndex = 0
-        this.endIndex = 1
+        this.startIndex = 0
+        this.terminatedIndexList = [1]
         this.convertRegularExpressionTreeToNFA(this.tree, 0, 1)
     }
 
@@ -245,11 +254,11 @@ export class NFA {
     }
 
     toDFA() {
-        var terminatedIndexList : Array<number> = []
+        var dfaTerminatedIndexList : Array<number> = []
         var dfaStates : Array<DFAState> = [new DFAState(this.epsilonClosure([0]))]
         var finiteAutomatonPaths : Array<FiniteAutomatonPath> = []
-        if (dfaStates[0].states.indexOf(this.endIndex)>=0) {
-            terminatedIndexList.push(0)
+        if (intersection(dfaStates[0].states, this.terminatedIndexList).length>0) {
+            dfaTerminatedIndexList.push(0)
         }
         var i = 0
         while (i<dfaStates.length) {
@@ -267,8 +276,8 @@ export class NFA {
                     dfaStates.push(destinationState)
                     destIndex = dfaStates.length - 1
                     // console.log('destinationState: ', destinationState.states, this.endIndex)
-                    if (destinationState.states.indexOf(this.endIndex)>=0) {
-                        terminatedIndexList.push(destIndex)
+                    if (intersection(destinationState.states, this.terminatedIndexList).length>0) {
+                        dfaTerminatedIndexList.push(destIndex)
                     }
                 }
                 // console.log(i, destIndex, transferChar)
@@ -276,7 +285,7 @@ export class NFA {
             }
             i++
         }
-        return new DFA(0, terminatedIndexList, finiteAutomatonPaths, dfaStates)
+        return new DFA(0, dfaTerminatedIndexList, finiteAutomatonPaths, dfaStates, this)
     }
 }
 

@@ -492,7 +492,8 @@ export class RegularExpression {
     constructor(regularExpression : string) {
         var chars = toChars(regularExpression)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         this.dfa = nfa.toDFA()
     }
 

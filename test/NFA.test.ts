@@ -24,7 +24,8 @@ describe('NFA', ()  => {
         var value = 'a'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}}
         ])
@@ -32,7 +33,8 @@ describe('NFA', ()  => {
         var value = '.'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : true}}
         ])
@@ -40,7 +42,8 @@ describe('NFA', ()  => {
         var value = 'ab'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 1, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}}
@@ -49,7 +52,8 @@ describe('NFA', ()  => {
         var value = '((ab))'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 1, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}}
@@ -58,7 +62,8 @@ describe('NFA', ()  => {
         var value = 'abc'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -68,7 +73,8 @@ describe('NFA', ()  => {
         var value = 'a|b'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -81,7 +87,8 @@ describe('NFA', ()  => {
         var value = 'ab|c'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 4, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -95,7 +102,8 @@ describe('NFA', ()  => {
         var value = 'a|b|c'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -115,7 +123,8 @@ describe('NFA', ()  => {
         var value = '(((a)|b|c))'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -131,7 +140,8 @@ describe('NFA', ()  => {
         var value = '[a-c]'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -148,7 +158,8 @@ describe('NFA', ()  => {
         var value = '[^a-c]'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['a', 'b', 'c'], "isAnyCharPath" : false}},
         ])
@@ -157,7 +168,8 @@ describe('NFA', ()  => {
         var value = 'a*'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -169,7 +181,8 @@ describe('NFA', ()  => {
         var value = 'a+'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -182,7 +195,8 @@ describe('NFA', ()  => {
         var value = 'a?'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -190,10 +204,32 @@ describe('NFA', ()  => {
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
+        var value = 'a*b+'
+        var chars = toChars(value)
+        var tree = buildRegularExpressionTree(chars)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
+        expect(nfa.finiteAutomatonPaths).toEqual([
+            {"source": 0, "destination": 3, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 3, "destination": 4, transferChar:{"transferValue": 'a', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 3, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+
+            {"source": 2, "destination": 5, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 5, "destination": 6, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 5, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 6, "destination": 7, transferChar:{"transferValue": 'b', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 7, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 7, "destination": 6, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+
+        ])
+
         var value = 'a|.'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -220,20 +256,23 @@ describe('NFA', ()  => {
         var value = 'a'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(isSetEqual(nfa.epsilonClosure([0]), [0])).toBe(true)
 
         var value = 'a?'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         expect(isSetEqual(nfa.epsilonClosure([0]), [0, 1, 2])).toBe(true)
 
 
         var value = 'a|b'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -250,7 +289,8 @@ describe('NFA', ()  => {
         var value = 'a|[^b]'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -267,7 +307,8 @@ describe('NFA', ()  => {
         var value = 'a|[^ab]'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -284,7 +325,8 @@ describe('NFA', ()  => {
         var value = '[^ab]|a'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -301,7 +343,8 @@ describe('NFA', ()  => {
         var value = '[^ab]|[^bc]'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -319,7 +362,8 @@ describe('NFA', ()  => {
         var value = 'a|.'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -336,7 +380,8 @@ describe('NFA', ()  => {
         var value = '.|a'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -353,7 +398,8 @@ describe('NFA', ()  => {
         var value = '[^a]|.'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -370,7 +416,8 @@ describe('NFA', ()  => {
         var value = '[^ab]|.'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -388,7 +435,8 @@ describe('NFA', ()  => {
         var value = '.|[^a]'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -405,7 +453,8 @@ describe('NFA', ()  => {
         var value = '.|[^ab]'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)
@@ -423,7 +472,8 @@ describe('NFA', ()  => {
         var value = '.|.'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
-        var nfa = new NFA(tree)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
         var startEpsilonClosure = nfa.epsilonClosure([0])
         expect(isSetEqual(startEpsilonClosure, [0, 2, 4])).toBe(true)
         var nonEmptyPaths = nfa.findNonEmptyFiniteAutomatonPaths(startEpsilonClosure)

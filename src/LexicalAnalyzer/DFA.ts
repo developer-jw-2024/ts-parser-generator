@@ -1,23 +1,31 @@
 import { start } from 'repl'
-import { FiniteAutomatonPath, TransferChar, DFAState } from './NFA'
+import { FiniteAutomatonPath, TransferChar, DFAState, NFA } from './NFA'
 
 export class DFA {
-    starIndex : number
+    startIndex : number
     terminatedIndexList : Array<number>
     finiteAutomatonPaths : Array<FiniteAutomatonPath>
     dfaStates : Array<DFAState>
-    constructor(starIndex : number, 
+    nfa : NFA
+
+    constructor(startIndex : number, 
         terminatedIndexList : Array<number>, 
         finiteAutomatonPaths : Array<FiniteAutomatonPath>,
-        dfaStates : Array<DFAState>) {
-        this.starIndex = starIndex
+        dfaStates : Array<DFAState>, 
+        nfa : NFA) {
+        this.startIndex = startIndex
         this.terminatedIndexList = terminatedIndexList
         this.finiteAutomatonPaths = finiteAutomatonPaths
         this.dfaStates = dfaStates
+        this.nfa = nfa
+    }
+
+    getNumberOfNodes() {
+        return this.dfaStates.length
     }
 
     test(value : string) : boolean {
-        var cursor : number = this.starIndex
+        var cursor : number = this.startIndex
         for (var i=0;cursor>=0 && i<value.length;i++) {
             var transferChar: TransferChar= new TransferChar(value[i], false, false, null, false)
             cursor = this.move(cursor, transferChar)
@@ -36,7 +44,7 @@ export class DFA {
     }
 
     deltaNodeNumber(delta : number) {
-        this.starIndex += delta
+        this.startIndex += delta
         this.terminatedIndexList = this.terminatedIndexList.map(x=>x+delta)
         this.finiteAutomatonPaths.forEach(path=>{
             path.source+=delta
