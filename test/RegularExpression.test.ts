@@ -975,14 +975,14 @@ describe('RegularExpression', ()  => {
         var charblocks = initCharBlocks(chars)
         var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
         expect(tree.operation).toEqual(RegularExpressionTreeOperation.CHAR)
-        expect(tree.actualChars).toEqual(['*'])
+        expect(tree.actualChars).toEqual(['\\*'])
 
         var value = '\\\\'
         var chars = toChars(value)
         var charblocks = initCharBlocks(chars)
         var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
         expect(tree.operation).toEqual(RegularExpressionTreeOperation.CHAR)
-        expect(tree.actualChars).toEqual(['\\'])
+        expect(tree.actualChars).toEqual(['\\\\'])
 
         var value = 'ab'
         var chars = toChars(value)

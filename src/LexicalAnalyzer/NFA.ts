@@ -275,7 +275,7 @@ export class NFA {
                 if (destIndex==-1) {
                     dfaStates.push(destinationState)
                     destIndex = dfaStates.length - 1
-                    // console.log('destinationState: ', destinationState.states, this.endIndex)
+                    // console.log('destinationState: ', destinationState.states)
                     if (intersection(destinationState.states, this.terminatedIndexList).length>0) {
                         dfaTerminatedIndexList.push(destIndex)
                     }

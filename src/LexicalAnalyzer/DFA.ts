@@ -1,5 +1,6 @@
 import { start } from 'repl'
 import { FiniteAutomatonPath, TransferChar, DFAState, NFA } from './NFA'
+import { toChars } from './RegularExpression'
 
 export class DFA {
     startIndex : number
@@ -26,8 +27,9 @@ export class DFA {
 
     test(value : string) : boolean {
         var cursor : number = this.startIndex
-        for (var i=0;cursor>=0 && i<value.length;i++) {
-            var transferChar: TransferChar= new TransferChar(value[i], false, false, null, false)
+        var chars : Array<string> = toChars(value)
+        for (var i=0;cursor>=0 && i<chars.length;i++) {
+            var transferChar: TransferChar= new TransferChar(chars[i], false, false, null, false)
             cursor = this.move(cursor, transferChar)
         }
         return cursor>=0 && this.terminatedIndexList.indexOf(cursor)>=0

@@ -299,10 +299,10 @@ export class RegularExpressionTree {
 
         if (this.operation==RegularExpressionTreeOperation.CHAR && 
             this.actualChars[0].length==2 && this.actualChars[0][0]=='\\') {
-            this.actualChars[0] = this.actualChars[0].slice(1)
-            if (this.actualChars[0]=='n') {
+                // this.actualChars[0] = this.actualChars[0].slice(1)
+            if (this.actualChars[0]=='\\n') {
                 this.actualChars[0]='\n'
-            } else if (this.actualChars[0]=='t') {
+            } else if (this.actualChars[0]=='\\t') {
                 this.actualChars[0]='\t'
             }
         }

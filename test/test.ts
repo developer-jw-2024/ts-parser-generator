@@ -1,11 +1,24 @@
-function abc(nodes : Array<number>) : Array<number> {
-    var result : Array<number> = nodes.map(x=>x)
-    result.push(3)
-    return result
-}
+import { RegularExpression } from "../index"
+import { LexicalAnalysis, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
 
-var a : Array<number> = [1,2,8]
-var b : Array<number> = abc(a)
 
-console.log(a)
-console.log(b)
+var H1 = new TokenType('H1', '#')
+var H2 = new TokenType('H2', '##')
+var SPACES = new TokenType('SPACES', '" "+')
+var PLAINTEXT = new TokenType('PLAINTEXT', '[^ #]+')
+
+// console.log("============================")
+var lexicalAnalysis = new LexicalAnalysis([
+    H1,
+    H2,
+    SPACES,
+    PLAINTEXT
+])
+var tokens = lexicalAnalysis.toTokens("# I am boy.")
+// expect(tokens).toEqual([
+//     new Token(AAAABBB, "aab"),
+//     new Token(TokenType.UNKNOWN_TOKENTYPE, "cac"),
+//     new Token(ABB, "abb"),
+// ])
+// console.log(tokens)
+
