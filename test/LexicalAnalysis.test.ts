@@ -192,7 +192,7 @@ describe('LexicalAnalysis', ()  => {
             {"source": 6, "destination": 6, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
-        var tokens = lexicalAnalysis.toTokens("# I am boy.")
+        var tokens = lexicalAnalysis.toTokens("# I am (boy).\n")
         expect(tokens).toEqual([
             new Token(H1, "#"),
             new Token(SPACES, " "),
@@ -200,7 +200,7 @@ describe('LexicalAnalysis', ()  => {
             new Token(SPACES, " "),
             new Token(PLAINTEXT, "am"),
             new Token(SPACES, " "),
-            new Token(PLAINTEXT, "boy."),
+            new Token(PLAINTEXT, "(boy).\n"),
         ])
         // console.log(tokens)
     })

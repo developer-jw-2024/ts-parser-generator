@@ -50,7 +50,7 @@ export function initCharBlocks(chars: Array<string>): Array<{ left: number, righ
             pareStack.push({ index: i, value: chars[i] })
             result.push({ left: i, right: null })
         } else if (isRightCharInPareChars(chars[i])) {
-            throw new Error(`Syntax error!`)
+            throw new Error(`Syntax error the char "${chars[i]}" at ${i}!`)
         } else {
             result.push({ left: i, right: i })
         }

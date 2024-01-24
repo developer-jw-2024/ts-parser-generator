@@ -388,7 +388,6 @@ export class TransferChar {
 
         }
 
-
         return false
     }
 }
@@ -396,53 +395,20 @@ export class FiniteAutomatonPath {
     source : number
     destination : number
     transferChar : TransferChar
-    // transferValue : string | null
-    // isEmptyPath : boolean = false
-    // isNegativePath : boolean = false
-    // negativeTransferValues : Array<string> | null = null
-    // isAnyCharPath : boolean = false
     constructor(
         source : number, 
         destination : number, 
         transferChar : TransferChar
-        // transferValue : string | null = null, 
-        // isEmptyPath : boolean = false, 
-        // isNegativePath : boolean = false, 
-        // negativeTransferValues : Array<string> = null,  
-        // isAnyCharPath : boolean = false
         ) {
         this.source = source
         this.destination = destination
         this.transferChar = transferChar
-        // this.transferChar = new TransferChar(transferValue, isEmptyPath, isNegativePath, negativeTransferValues, isAnyCharPath)
-        // this.transferValue = transferValue
-        // this.isEmptyPath = isEmptyPath
-        // this.isNegativePath = isNegativePath
-        // this.negativeTransferValues = negativeTransferValues
-        // this.isAnyCharPath = isAnyCharPath
     }
 
     isEqual(other : FiniteAutomatonPath) : boolean {
         if (this.source!=other.source) return false
         if (this.destination!=other.destination) return false
         return this.transferChar.isEqual(other.transferChar)
-        /*
-        if (this.isEmptyPath!=other.isEmptyPath) return false
-        if (this.transferValue==null && other.transferValue!=null) return false
-        if (this.transferValue!=null && other.transferValue==null) return false
-        if (this.transferValue!=null && other.transferValue!=null && 
-            this.transferValue!=other.transferValue) return false
-        if (this.isNegativePath!=other.isNegativePath) return false
-        if (this.isAnyCharPath!=other.isAnyCharPath) return false
-        if (this.negativeTransferValues==null && other.negativeTransferValues!=null) return false
-        if (this.negativeTransferValues!=null && other.negativeTransferValues==null) return false
-        if (this.negativeTransferValues!=null && other.negativeTransferValues!=null) {
-            if (!isSetEqual(this.negativeTransferValues, other.negativeTransferValues)) return false
-        }
-
-        return true
-        */
-
     }
     
 }
