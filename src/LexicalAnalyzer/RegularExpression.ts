@@ -56,7 +56,7 @@ export function initCharBlocks(chars: Array<string>): Array<{ left: number, righ
         }
     }
     if (pareStack.length>0) {
-        throw new Error(`Syntax error!`)
+        throw new Error(`Syntax error the char "${pareStack[pareStack.length-1].value}" at ${pareStack[pareStack.length-1].index}!`)
     }
     return result
 }
@@ -127,6 +127,7 @@ export function toChars(content: string): string[] {
                 hasDoubleQuotes = !hasDoubleQuotes
             }
         }
+        
     }
     if (chars[chars.length - 1] == RegularExpressionSymbol.BackSlash) {
         chars.pop()
@@ -297,15 +298,26 @@ export class RegularExpressionTree {
         this.endIndex = endIndex
         this.subtrees = subtrees
 
+        /*
         if (this.operation==RegularExpressionTreeOperation.CHAR && 
             this.actualChars[0].length==2 && this.actualChars[0][0]=='\\') {
-                // this.actualChars[0] = this.actualChars[0].slice(1)
+                this.actualChars[0] = this.actualChars[0].slice(1)
             if (this.actualChars[0]=='\\n') {
                 this.actualChars[0]='\n'
             } else if (this.actualChars[0]=='\\t') {
                 this.actualChars[0]='\t'
             }
-        }
+        } 
+        */
+
+        if (this.operation==RegularExpressionTreeOperation.CHAR ||
+            this.operation==RegularExpressionTreeOperation.NOT) {
+            for (var i=0;i<this.actualChars.length;i++) {
+                if (this.actualChars[i].length==2 && this.actualChars[i][0]=='\\') {
+                    this.actualChars[i] = this.actualChars[i].slice(1)
+                }
+            }
+        } 
     }
 
 }

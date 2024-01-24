@@ -204,4 +204,29 @@ describe('LexicalAnalysis', ()  => {
         ])
         // console.log(tokens)
     })
+
+    test('LexicalAnalysis.toTokens 2', () => { 
+        var H1 = new TokenType('H1', '#')
+        var H2 = new TokenType('H2', '##')
+        var SPACES = new TokenType('SPACES', '" "+')
+        var PLAINTEXT = new TokenType('PLAINTEXT', '[^#\\( ]+')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            H1,
+            H2,
+            SPACES,
+            PLAINTEXT
+        ])
+        var tokens = lexicalAnalysis.toTokens("# I am (boy).\n")
+        expect(tokens).toEqual([
+            new Token(H1, "#"),
+            new Token(SPACES, " "),
+            new Token(PLAINTEXT, "I"),
+            new Token(SPACES, " "),
+            new Token(PLAINTEXT, "am"),
+            new Token(SPACES, " "),
+            new Token(TokenType.UNKNOWN_TOKENTYPE, '('),
+            new Token(PLAINTEXT, "boy).\n"),
+        ])
+    })
 })

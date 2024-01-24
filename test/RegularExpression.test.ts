@@ -209,27 +209,27 @@ describe('RegularExpression', ()  => {
 
         expect(()=>{
             initCharBlocks(toChars('('))
-        }).toThrow('Syntax error!')
+        }).toThrow('Syntax error the char "(" at 0!')
 
         expect(()=>{
             initCharBlocks(toChars(')'))
-        }).toThrow('Syntax error!')
+        }).toThrow('Syntax error the char ")" at 0!')
 
         expect(()=>{
             initCharBlocks(toChars('['))
-        }).toThrow('Syntax error!')
+        }).toThrow('Syntax error the char "[" at 0!')
 
         expect(()=>{
             initCharBlocks(toChars(']'))
-        }).toThrow('Syntax error!')
+        }).toThrow('Syntax error the char "]" at 0!')
 
         expect(()=>{
             initCharBlocks(toChars('{'))
-        }).toThrow('Syntax error!')
+        }).toThrow('Syntax error the char "{" at 0!')
 
         expect(()=>{
             initCharBlocks(toChars('}'))
-        }).toThrow('Syntax error!')
+        }).toThrow('Syntax error the char "}" at 0!')
 
         expect(initCharBlocks(toChars('.'))).toEqual([{left : 0, right : 0}]);
         expect(initCharBlocks(toChars('"."'))).toEqual([{left : 0, right : 2},{left : 1, right : 1},{left : 0, right : 2}]);
@@ -349,21 +349,21 @@ describe('RegularExpression', ()  => {
             initCharBlocks(toChars('(a(bc)?'))
             expect(true).toBe(false)
         } catch (e) {
-            expect(e.message).toBe('Syntax error!');
+            expect(e.message).toBe('Syntax error the char "(" at 0!');
         }
     
         try {
             initCharBlocks(toChars(')a(bc)?'))
             expect(true).toBe(false)
         } catch (e) {
-            expect(e.message).toBe('Syntax error!');
+            expect(e.message).toBe('Syntax error the char ")" at 0!');
         }
     
         try {
             initCharBlocks(toChars('a(bc))'))
             expect(true).toBe(false)
         } catch (e) {
-            expect(e.message).toBe('Syntax error!');
+            expect(e.message).toBe('Syntax error the char ")" at 5!');
         }
 
         expect(initCharBlocks(toChars('"(a?)+"'))).toEqual([
@@ -956,14 +956,14 @@ describe('RegularExpression', ()  => {
         expect(tree.operation).toEqual(RegularExpressionTreeOperation.CHAR)
         expect(tree.actualChars).toEqual(['\n'])
 
-        var value = '\\n'
+        var value = '\n'
         var chars = toChars(value)
         var charblocks = initCharBlocks(chars)
         var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
         expect(tree.operation).toEqual(RegularExpressionTreeOperation.CHAR)
         expect(tree.actualChars).toEqual(['\n'])
 
-        var value = '\\t'
+        var value = '\t'
         var chars = toChars(value)
         var charblocks = initCharBlocks(chars)
         var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
@@ -975,14 +975,14 @@ describe('RegularExpression', ()  => {
         var charblocks = initCharBlocks(chars)
         var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
         expect(tree.operation).toEqual(RegularExpressionTreeOperation.CHAR)
-        expect(tree.actualChars).toEqual(['\\*'])
+        expect(tree.actualChars).toEqual(['*'])
 
         var value = '\\\\'
         var chars = toChars(value)
         var charblocks = initCharBlocks(chars)
         var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
         expect(tree.operation).toEqual(RegularExpressionTreeOperation.CHAR)
-        expect(tree.actualChars).toEqual(['\\\\'])
+        expect(tree.actualChars).toEqual(['\\'])
 
         var value = 'ab'
         var chars = toChars(value)

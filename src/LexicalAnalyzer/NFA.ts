@@ -365,6 +365,7 @@ export class TransferChar {
             if (other.isPositiveTransferPath()) {
                 return this.transferValue==other.transferValue
             } else if (other.isNegativeTransferPath()) {
+                // console.log(this.transferValue, other.negativeTransferValues)
                 return other.negativeTransferValues.indexOf(this.transferValue)==-1
             } else if (other.isWildcardTransferPath()) {
                 return true

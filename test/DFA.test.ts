@@ -119,8 +119,8 @@ describe('DFA', ()  => {
         expect(dfa.startIndex).toEqual(0)
         expect(isSetEqual(dfa.terminatedIndexList, [0,1])).toBe(true)
         expect(dfa.finiteAutomatonPaths).toEqual([
-            {"source": 0, "destination": 1, transferChar:{"transferValue": "\\\\", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 1, "destination": 1, transferChar:{"transferValue": "\\\\", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 1, transferChar:{"transferValue": "\\", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 1, "destination": 1, transferChar:{"transferValue": "\\", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
         var value = 'a+'
@@ -253,7 +253,7 @@ describe('DFA', ()  => {
         expect(regExp.test("10")).toBe(true)
 
         var regExp : RegularExpression = new RegularExpression('[\\\\]*')
-        expect(regExp.test("\\\\")).toBe(true)
+        expect(regExp.test("\\")).toBe(true)
         expect(regExp.test("2")).toBe(false)
 
         var regExp : RegularExpression = new RegularExpression('(a|b)*c')
@@ -271,5 +271,15 @@ describe('DFA', ()  => {
         expect(regExp.test("cc")).toBe(false)
         expect(regExp.test("abababababac")).toBe(true)
         expect(regExp.test("abababababaabbbabd")).toBe(true)
+
+        var regExp : RegularExpression = new RegularExpression('[^ #]')
+        expect(regExp.test("\\")).toBe(false)
+        expect(regExp.test("\\\\")).toBe(true)
+        expect(regExp.test("(")).toBe(true)
+
+        var regExp : RegularExpression = new RegularExpression('[^ #\\(]')
+        expect(regExp.test("\\")).toBe(false)
+        expect(regExp.test("\\\\")).toBe(true)
+        expect(regExp.test("(")).toBe(false)
     })
 })
