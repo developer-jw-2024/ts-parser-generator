@@ -1,4 +1,5 @@
 import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis"
+import { intersection, union } from "../Utils/SetUtils"
 
 class GrammarProduction {
     symbol : Token
@@ -11,6 +12,10 @@ class GrammarProduction {
 
     toString() {
         return `${this.symbol.toString()} ==> ${this.factors.map(t=>t.toString()).join(' ')}`
+    }
+
+    toSimpleString() {
+        return `${this.symbol.toSimpleString()} ==> ${this.factors.map(t=>t.toSimpleString()).join(' ')}`
     }
 }
 
@@ -42,7 +47,8 @@ export class SyntaxAnalysis {
     first : Map<number, Array<number>> = new Map<number, Array<number>>()
     follow : Map<number, Array<number>> = new Map<number, Array<number>>()
     
-
+    firstOfGrammaProduction : Map<number, Array<number>> = new Map<number, Array<number>>()
+    
     constructor(tokens : Array<Token>) {
         var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
         this.tokens = [Token.TERMINATED_TOKEN, Token.EMPTY_TOKEN]
@@ -71,6 +77,8 @@ export class SyntaxAnalysis {
 
         this.calculateFirst()
         this.calculateFollow()
+        this.calculateFirstOfGrammaProductions()
+        
     }
 
     getIndexOfToken(token : Token) : number {
@@ -157,9 +165,10 @@ export class SyntaxAnalysis {
         }
 
 
-        // for (var i=0;i<this.tokens.length;i++) {
-        //     console.log(`${i}) `, this.tokens[i].toString(), this.follow[i])
-        // }
+        console.log('Follow')
+        for (var i=0;i<this.tokens.length;i++) {
+            console.log(`${i}) `, this.tokens[i].toString(), this.follow[i])
+        }
 
     }
 
@@ -174,6 +183,13 @@ export class SyntaxAnalysis {
                 this.first[i].push(i)
             }
         }
+        for (var i=0;i<this.indexGrammerProductions.length;i++) {
+            var pg = this.indexGrammerProductions[i]
+            if (pg.factors.length==1 && pg.factors[0]==indexOfEmptyToken && this.first[pg.symbol].indexOf(indexOfEmptyToken)==-1) {
+                this.first[pg.symbol].push(indexOfEmptyToken)
+            }
+        }
+
         var modifiedFlag = true
         while (modifiedFlag) {
             modifiedFlag = false
@@ -192,35 +208,120 @@ export class SyntaxAnalysis {
                 }
             }
         }
-        // for (var i=0;i<this.tokens.length;i++) {
-        //     console.log(`${i}) `, this.tokens[i].toString(), this.first[i])
-        // }
+        console.log("First")
+        for (var i=0;i<this.tokens.length;i++) {
+            console.log(`${i}) `, this.tokens[i].toString(), this.first[i])
+        }
+    }
+
+    calculateFirstOfGrammaProductions() {
+        this.firstOfGrammaProduction  = new Map<number, Array<number>>()
+        for (var i=0;i<this.indexGrammerProductions.length;i++) {
+            var gp = this.indexGrammerProductions[i]
+            this.firstOfGrammaProduction[i] = this.getFirst(gp.factors)
+        }
+    }
+
+    getFirst(indexOfTokens : Array<number>) : Array<number> {
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+        var result : Array<number> = []
+        var continueFlag = true
+        for (var i=0;continueFlag && i<indexOfTokens.length;i++) {
+            var tokenNo = indexOfTokens[i]
+            if (tokenNo==indexOfEmptyToken) {
+                if (result.indexOf(tokenNo)==-1) result.push(tokenNo)
+            }
+            this.first[tokenNo].forEach(n=>{
+                if (result.indexOf(n)==-1) result.push(n)
+            })
+            continueFlag = this.first[tokenNo].indexOf(indexOfEmptyToken)>=0
+        }
+        return result
     }
 
     isLL1() : boolean {
 
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
 
-
-        var result : boolean = false
-        for (var i=0;!result && i<this.tokens.length;i++) {
-            if (this.tokens[i].type.isTerminal) {
-                for (var j=0;!result && j<this.tokens.length;j++) {
-                    for (var k=j+1;!result && k<this.tokens.length;k++) {
-                        result = (this.first[j].indexOf(i)>=0 && this.first[k].indexOf(i)>=0)
-                    }                        
+        var result : boolean = true
+        for (var i=0;result && i<this.indexGrammerProductions.length;i++) {
+            var pgi = this.indexGrammerProductions[i]
+            var firstOfi = this.firstOfGrammaProduction[i]
+            var symbol = pgi.symbol
+            for (var j=i+1;result && j<this.indexGrammerProductions.length;j++) {
+                var pgj = this.indexGrammerProductions[j]
+                var firstOfj = this.firstOfGrammaProduction[j]
+                if (symbol==pgj.symbol) {
+                    if (result) {
+                        result = intersection(firstOfi, firstOfj).length==0
+                    }
+                    if (result && firstOfj.indexOf(indexOfEmptyToken)>=0) {
+                        result = intersection(firstOfi, this.follow[symbol]).length==0
+                    }
+                    if (result && firstOfi.indexOf(indexOfEmptyToken)>=0) {
+                        result = intersection(firstOfj, this.follow[symbol]).length==0
+                    }
                 }
             }
         }
-        for (var j=0;!result && j<this.tokens.length;j++) {
-            if (j!=indexOfEmptyToken) {
-                for (var k=j+1;!result && k<this.tokens.length;k++) {
-                    if (k!=indexOfEmptyToken) {
-                        result = (this.first[j].indexOf(indexOfEmptyToken)>=0 && this.first[k].indexOf(indexOfEmptyToken)>=0)
+        return result
+    }
+
+    constructLL1PredictiveParsingTable() {
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+        var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
+
+        var predictiveParsingTable : Array<Array<Array<number>>> = []
+        for (var i=0;i<this.indexGrammerProductions.length;i++) {
+            var pg = this.indexGrammerProductions[i]
+            var symbol = pg.symbol
+            var firstOfpg = this.firstOfGrammaProduction[i]
+            // console.log(i, this.grammerProductions[i].toSimpleString(), firstOfpg, indexOfEmptyToken)
+            if (predictiveParsingTable[symbol]==null || predictiveParsingTable[symbol]==undefined) {
+                predictiveParsingTable[symbol] = []
+            }
+            for (var j=0;j<firstOfpg.length;j++) {
+                var a = firstOfpg[j]
+                if (this.tokens[a].type.isTerminal) {
+                    if (predictiveParsingTable[symbol][a]==null || predictiveParsingTable[symbol][a]==undefined) {
+                        predictiveParsingTable[symbol][a] = []
                     }
-                }                            
+                    predictiveParsingTable[symbol][a].push(i)
+                    console.log(this.tokens[symbol].value, this.tokens[a].value, this.grammerProductions[i].toSimpleString())
+                }
+            }
+            
+            if (firstOfpg.indexOf(indexOfEmptyToken)>=0) {
+                
+                var followOfSymbol = this.follow[symbol]
+                for (var j=0;j<followOfSymbol.length;j++) {
+                    var b =followOfSymbol[j]
+                    if (this.tokens[b].type.isTerminal || b==indexOfEmptyToken) {
+                        if (predictiveParsingTable[symbol][b]==null || predictiveParsingTable[symbol][b]==undefined) {
+                            predictiveParsingTable[symbol][b] = []
+                        }
+                        predictiveParsingTable[symbol][b].push(i)
+                        console.log(this.tokens[symbol].value, this.tokens[b].value, this.grammerProductions[i].toSimpleString())
+                    }
+                }
             }
         }
-        return result
+
+        console.log(predictiveParsingTable)
+        for (var i=0;i<this.tokens.length;i++) {
+            if (!this.tokens[i].type.isTerminal && i!=indexOfEmptyToken) {
+                for (var j=0;j<this.tokens.length;j++) {
+                    if (!this.tokens[j].type.isTerminal) {
+                        if (predictiveParsingTable[i][j]!=null && predictiveParsingTable[i][j]!=undefined) {
+                            console.log(this.tokens[i].toString(), this.tokens[j].toString())
+                            var list = predictiveParsingTable[i][j]
+                            for (var k=0;k<list.length;k++) {
+                                console.log('\t', this.grammerProductions[k].toString())
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

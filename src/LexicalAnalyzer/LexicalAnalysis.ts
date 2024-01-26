@@ -6,7 +6,7 @@ import { intersection } from '../Utils/SetUtils'
 
 export class TokenType {
 
-    static EMPTY_TOKENTYPE : TokenType = new TokenType("EMPTY", '<EMPTY>', true)
+    static EMPTY_TOKENTYPE : TokenType = new TokenType("EMPTY", '<EMPTY>', false)
     static TERMINATED_TOKENTYPE : TokenType = new TokenType("TERMINATED", null, true)
     static UNKNOWN_TOKENTYPE : TokenType = new TokenType("UNKNOWN", null, true)
 
@@ -40,7 +40,12 @@ export class Token {
     }
 
     toString() : string | null {
-        return `<${this.type.name} , ${this.value}>  ${this.type.isTerminal?'X':''}`
+        return `<${this.type.name} , ${this.value}>`
+        // return `<${this.type.name} , ${this.value}>  ${this.type.isTerminal?'X':''}`
+    }
+
+    toSimpleString() : string | null {
+        return this.value
     }
 
     isEqual(other : Token) {

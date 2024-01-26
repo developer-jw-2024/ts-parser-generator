@@ -6,7 +6,6 @@ import { isSetEqual } from '../src/Utils/SetUtils'
 import { FileUtils } from '../src/Utils/FileUtil'
 import { SyntaxAnalysis } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 
-
 var PLUS = new TokenType('PLUS', '\\+', true)
 var STAR = new TokenType('STAR', '\\*', true)
 var ID = new TokenType('ID', 'id', true)
@@ -26,8 +25,11 @@ var lexicalAnalysis = new LexicalAnalysis([
     SyntaxAnalysis.GrammarSymbol
 ])
 
+
 var value = FileUtils.readFromFileSystem('./test/GrammarProductions.txt')
 var tokens = lexicalAnalysis.toTokens(value)
 var syntaxAnalysis = new SyntaxAnalysis(tokens)
+
 console.log(syntaxAnalysis.isLL1())
+syntaxAnalysis.constructLL1PredictiveParsingTable()
 // console.log(syntaxAnalysis.grammerProductions)
