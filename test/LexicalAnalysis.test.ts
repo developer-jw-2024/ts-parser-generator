@@ -5,9 +5,9 @@ import { isSetEqual } from '../src/Utils/SetUtils'
 describe('LexicalAnalysis', ()  => {
     
     test('LexicalAnalysis 2', ()=>{
-        var DERIVATION = new TokenType('DERIVATION', '\\->')
-        var GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+")
-        var SPACES = new TokenType('SPACES', '[ \t]+')
+        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
+        var GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+", false)
+        var SPACES = new TokenType('SPACES', '[ \t]+', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             DERIVATION,
@@ -85,9 +85,9 @@ describe('LexicalAnalysis', ()  => {
 
     test('LexicalAnalysis', () => { 
         var lexicalAnalysis = new LexicalAnalysis([
-            new TokenType('A', 'a'),
-            new TokenType('ABB', 'abb'),
-            new TokenType('AAAABBB', 'a*b+'),
+            new TokenType('A', 'a', true),
+            new TokenType('ABB', 'abb', true),
+            new TokenType('AAAABBB', 'a*b+', true),
         ])
         expect(lexicalAnalysis.startIndex).toEqual(0)
         var tokenTypes = lexicalAnalysis.tokenTypes
@@ -160,8 +160,8 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('LexicalAnalysis.toTokens', () => { 
-        var ABB = new TokenType('ABB', 'abb')
-        var AAAABBB = new TokenType('AAAABBB', 'a*b+')
+        var ABB = new TokenType('ABB', 'abb', true)
+        var AAAABBB = new TokenType('AAAABBB', 'a*b+', true)
 
         var lexicalAnalysis = new LexicalAnalysis([ABB, AAAABBB])
         var tokens = lexicalAnalysis.toTokens("aabcacabb")
@@ -193,10 +193,10 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('LexicalAnalysis.toTokens', () => { 
-        var H1 = new TokenType('H1', '#')
-        var H2 = new TokenType('H2', '##')
-        var SPACES = new TokenType('SPACES', '" "+')
-        var PLAINTEXT = new TokenType('PLAINTEXT', '[^# ]+')
+        var H1 = new TokenType('H1', '#', true)
+        var H2 = new TokenType('H2', '##', true)
+        var SPACES = new TokenType('SPACES', '" "+', true)
+        var PLAINTEXT = new TokenType('PLAINTEXT', '[^# ]+', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             H1,
@@ -288,10 +288,10 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('LexicalAnalysis.toTokens 2', () => { 
-        var H1 = new TokenType('H1', '#')
-        var H2 = new TokenType('H2', '##')
-        var SPACES = new TokenType('SPACES', '" "+')
-        var PLAINTEXT = new TokenType('PLAINTEXT', '[^#\\( ]+')
+        var H1 = new TokenType('H1', '#', true)
+        var H2 = new TokenType('H2', '##', true)
+        var SPACES = new TokenType('SPACES', '" "+', true)
+        var PLAINTEXT = new TokenType('PLAINTEXT', '[^#\\( ]+', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             H1,
@@ -313,8 +313,8 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('LexicalAnalysis.toTokens 3', () => { 
-        var H1 = new TokenType('H1', '#')
-        var H2 = new TokenType('H2', '##')
+        var H1 = new TokenType('H1', '#', true)
+        var H2 = new TokenType('H2', '##', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             H1,
@@ -327,7 +327,7 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[A-C][A-C_]+')
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[A-C][A-C_]+', false)
         // var DERIVATION = new TokenType('DERIVATION', '\\->')
         expect(GrammarSymbol.regularExpression.dfa.test("A")).toEqual(false)
         expect(GrammarSymbol.regularExpression.dfa.test("AC")).toEqual(true)
@@ -335,10 +335,10 @@ describe('LexicalAnalysis', ()  => {
     })
     
     test('GrammarSymbols 1', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[A][Ad]+')
-        var Enter = new TokenType('Enter', '\n')
-        var SPACES = new TokenType('SPACES', '[ \t]+')
-        var DERIVATION = new TokenType('DERIVATION', '\\->')
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[A][Ad]+', false)
+        var Enter = new TokenType('Enter', '\n', true)
+        var SPACES = new TokenType('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             GrammarSymbol,
@@ -361,10 +361,10 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 2', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-cA-C][a-cA-C_]+')
-        var Enter = new TokenType('Enter', '\n')
-        var SPACES = new TokenType('SPACES', '[ \t]+')
-        var DERIVATION = new TokenType('DERIVATION', '\\->')
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-cA-C][a-cA-C_]+', false)
+        var Enter = new TokenType('Enter', '\n', true)
+        var SPACES = new TokenType('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             GrammarSymbol,
@@ -387,10 +387,10 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 3', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-dA-D][a-dA-D_]*')
-        var Enter = new TokenType('Enter', '\n')
-        var SPACES = new TokenType('SPACES', '[ \t]+')
-        var DERIVATION = new TokenType('DERIVATION', '\\->')
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-dA-D][a-dA-D_]*', false)
+        var Enter = new TokenType('Enter', '\n', true)
+        var SPACES = new TokenType('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             GrammarSymbol,
@@ -413,11 +413,11 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 4', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', "[a-zA-Z][^ \n\t]*")
-        var Enter = new TokenType('Enter', '\n')
-        var SPACES = new TokenType('SPACES', '[ \t]+')
-        var DERIVATION = new TokenType('DERIVATION', '\\->')
-        var EMPTY = new TokenType('EMPTY', '<EMPTY>')
+        var GrammarSymbol = new TokenType('GrammarSymbol', "[a-zA-Z][^ \n\t]*", false)
+        var Enter = new TokenType('Enter', '\n', true)
+        var SPACES = new TokenType('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
+        var EMPTY = new TokenType('EMPTY', '<EMPTY>', true)
 
         var lexicalAnalysis = new LexicalAnalysis([
             GrammarSymbol,

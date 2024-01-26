@@ -30,3 +30,4 @@ export class StateSet {
         return otherStateSet.isSubSetOf(this)
     }
 }
+

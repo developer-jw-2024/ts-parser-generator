@@ -6,26 +6,45 @@ import { intersection } from '../Utils/SetUtils'
 
 export class TokenType {
 
-    static UNKNOWN_TOKENTYPE : TokenType = new TokenType("UNKNOWN", null)
+    static EMPTY_TOKENTYPE : TokenType = new TokenType("EMPTY", '<EMPTY>', true)
+    static TERMINATED_TOKENTYPE : TokenType = new TokenType("TERMINATED", null, true)
+    static UNKNOWN_TOKENTYPE : TokenType = new TokenType("UNKNOWN", null, true)
 
     name : string
     regularExpressionValue : string | null
     regularExpression : RegularExpression | null
+    isTerminal : boolean
 
-    constructor(name : string, regularExpressionValue : string | null) {
+    constructor(name : string, regularExpressionValue : string | null, isTerminal : boolean) {
         this.name = name
         this.regularExpressionValue = regularExpressionValue
         this.regularExpression = regularExpressionValue==null?null:new RegularExpression(this.regularExpressionValue)
+        this.isTerminal = isTerminal
+    }
+
+    isEqual(other : TokenType) {
+        return this.name == other.name
     }
 }
 
 export class Token {
+
+    static EMPTY_TOKEN : Token = new Token(TokenType.EMPTY_TOKENTYPE, '<EMPTY>')
+    static TERMINATED_TOKEN : Token = new Token(TokenType.TERMINATED_TOKENTYPE, '<TERMINATED>')
 
     type : TokenType
     value : string
     constructor(type : TokenType, value : string) {
         this.type = type
         this.value = value
+    }
+
+    toString() : string | null {
+        return `<${this.type.name} , ${this.value}>  ${this.type.isTerminal?'X':''}`
+    }
+
+    isEqual(other : Token) {
+        return this.type.isEqual(other.type) && this.value==other.value
     }
 }
 
