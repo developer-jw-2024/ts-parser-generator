@@ -36,8 +36,10 @@ export class DFA {
     }
 
     move(sourceIndex : number, transferChar: TransferChar) : number {
+        // console.log('>>>>>>>> >>> sourceIndex: ', sourceIndex)
         for (var i=0;i<this.finiteAutomatonPaths.length;i++) {
             var path = this.finiteAutomatonPaths[i]
+            // if (sourceIndex==0) console.log(">>>>>>>>   ", i, path, transferChar, path.transferChar, transferChar.canPass(path.transferChar))
             if (path.source==sourceIndex && transferChar.canPass(path.transferChar)) {
                 return path.destination
             }

@@ -176,7 +176,63 @@ export class NFA {
         return result
     }
 
-    getTransferChars(paths : Array<FiniteAutomatonPath>) : Array<TransferChar> {
+    
+    getTransferChars(originalTransferChars : Array<TransferChar>) : Array<TransferChar> {
+        var result : Array<TransferChar> = []
+        var flags : Array<boolean> = []
+
+        for (var i=0;i<originalTransferChars.length;i++) {
+            if (result.filter(e=>e.isEqual(originalTransferChars[i])).length==0) {
+                result.push(originalTransferChars[i])
+                flags.push(true)
+            }
+        }
+        var i = 0
+        while (i<result.length) {
+            for (var j=i+1;flags[i] && j<result.length;j++) {
+                if (flags[j]) {
+                    var transferCharOne = result[i]
+                    var transferCharTwo = result[j]
+                    var transferChars = this.getDistinctTransferChars(transferCharOne, transferCharTwo)
+
+                    if (transferChars.filter(e=>e.isEqual(transferCharOne)).length==0) {
+                        flags[i] = false
+                    }
+                    if (transferChars.filter(e=>e.isEqual(transferCharTwo)).length==0) {
+                        flags[j] = false
+                    }
+                    for (var k=0;k<transferChars.length;k++) {
+                        var generateTransferChar = transferChars[k]
+                        if (result.filter(e=>e.isEqual(generateTransferChar)).length==0) {
+                            result.push(generateTransferChar)
+                            flags.push(true)
+                        }
+                    }
+                }
+            }
+            i++
+        }
+        var newResult : Array<TransferChar> = []
+        for (var i=0;i<result.length;i++) {
+            if (flags[i]) {
+                newResult.push(result[i])
+            }
+        }
+        return newResult
+    }
+
+    getTransferCharsWithFiniteAutomatonPaths(paths : Array<FiniteAutomatonPath>) : Array<TransferChar> {
+        var result : Array<TransferChar> = []
+
+        for (var i=0;i<paths.length;i++) {
+            var path : FiniteAutomatonPath= paths[i]
+            result.push(path.transferChar)
+        }
+        return this.getTransferChars(result)
+
+    }
+
+    getTransferCharsWithFiniteAutomatonPaths3(paths : Array<FiniteAutomatonPath>) : Array<TransferChar> {
         var result : Array<TransferChar> = []
         if (paths.length>0) {
             var path : FiniteAutomatonPath= paths[0]
@@ -265,7 +321,7 @@ export class NFA {
             var currentState = dfaStates[i]
             // console.log(i, currentState)
             var paths : Array<FiniteAutomatonPath> = this.findNonEmptyFiniteAutomatonPaths(currentState.states)
-            var transferChars : Array<TransferChar> = this.getTransferChars(paths)
+            var transferChars : Array<TransferChar> = this.getTransferCharsWithFiniteAutomatonPaths(paths)
             for (var j=0;j<transferChars.length;j++) {
                 var transferChar = transferChars[j]
                 var destinationNodes = this.move(currentState.states, transferChar)
@@ -275,12 +331,12 @@ export class NFA {
                 if (destIndex==-1) {
                     dfaStates.push(destinationState)
                     destIndex = dfaStates.length - 1
-                    // console.log('destinationState: ', destinationState.states)
+                    // console.log('\tdestinationState: ', destinationState.states)
                     if (intersection(destinationState.states, this.terminatedIndexList).length>0) {
                         dfaTerminatedIndexList.push(destIndex)
                     }
                 }
-                // console.log(i, destIndex, transferChar)
+                // console.log('\t===>',i, destIndex, transferChar)
                 finiteAutomatonPaths.push(new FiniteAutomatonPath(i, destIndex, transferChar))
             }
             i++
@@ -336,6 +392,13 @@ export class TransferChar {
         return !this.isNegativePath && this.isAnyCharPath
     }
     
+    toString() : string | null {
+        if (this.isEmptyTransferPath()) return '<E>'
+        if (this.isPositiveTransferPath()) return this.transferValue
+        if (this.isNegativeTransferPath()) return `[^${this.negativeTransferValues}]`
+        if (this.isWildcardTransferPath()) return '.'
+        return null
+    }
 
     isEqual(other : TransferChar) : boolean {
         if (this.isEmptyPath!=other.isEmptyPath) return false
@@ -404,6 +467,10 @@ export class FiniteAutomatonPath {
         this.source = source
         this.destination = destination
         this.transferChar = transferChar
+    }
+
+    toString() : string | null {
+        return `${this.source} --- ${this.transferChar.toString()} ---> ${this.destination}`
     }
 
     isEqual(other : FiniteAutomatonPath) : boolean {

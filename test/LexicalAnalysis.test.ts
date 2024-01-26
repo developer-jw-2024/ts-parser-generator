@@ -1,6 +1,88 @@
 import { LexicalAnalysis, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
+import { FileUtils } from "../src/Utils/FileUtil"
+import { isSetEqual } from '../src/Utils/SetUtils'
 
 describe('LexicalAnalysis', ()  => {
+    
+    test('LexicalAnalysis 2', ()=>{
+        var DERIVATION = new TokenType('DERIVATION', '\\->')
+        var GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+")
+        var SPACES = new TokenType('SPACES', '[ \t]+')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            DERIVATION,
+            SPACES,
+            GrammarSymbol,
+        ])
+        
+        expect(isSetEqual(DERIVATION.regularExpression.dfa.terminatedIndexList, [3])).toBe(true)
+        expect(DERIVATION.regularExpression.dfa.finiteAutomatonPaths).toEqual([
+            {"source": 1, "destination": 2, transferChar:{"transferValue": "-", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 3, transferChar:{"transferValue": ">", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+        ])
+
+        expect(isSetEqual(SPACES.regularExpression.dfa.terminatedIndexList, [5,6,7,8])).toBe(true)
+        expect(SPACES.regularExpression.dfa.finiteAutomatonPaths).toEqual([
+            {"source": 4, "destination": 5, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 6, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 5, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 5, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 6, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 6, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 7, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 7, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 8, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 8, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+
+        ])
+
+        expect(isSetEqual(GrammarSymbol.regularExpression.dfa.terminatedIndexList, [10,11])).toBe(true)
+        expect(GrammarSymbol.regularExpression.dfa.finiteAutomatonPaths).toEqual([
+            {"source": 9, "destination": 10, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '\n', '\t'], "isAnyCharPath" : false}},
+            {"source": 10, "destination": 11, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '\n', '\t'], "isAnyCharPath" : false}},
+            {"source": 11, "destination": 11, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '\n', '\t'], "isAnyCharPath" : false}},
+        ])
+
+        expect(lexicalAnalysis.nfa.finiteAutomatonPaths).toEqual([
+            {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 1, "destination": 2, transferChar:{"transferValue": "-", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 3, transferChar:{"transferValue": ">", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+
+            {"source": 0, "destination": 4, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 5, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 6, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 5, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 5, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 6, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 6, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 7, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 7, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 8, "destination": 7, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 8, "destination": 8, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+
+            {"source": 0, "destination": 9, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 9, "destination": 10, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '\n', '\t'], "isAnyCharPath" : false}},
+            {"source": 10, "destination": 11, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '\n', '\t'], "isAnyCharPath" : false}},
+            {"source": 11, "destination": 11, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '\n', '\t'], "isAnyCharPath" : false}},
+
+        ])
+
+        var tokens = lexicalAnalysis.toTokens("A' -> A")
+        expect(tokens).toEqual([
+            new Token(GrammarSymbol, "A'"),
+            new Token(SPACES, " "),
+            new Token(DERIVATION, "->"),
+            new Token(SPACES, " "),
+            new Token(GrammarSymbol, 'A'),
+        ])
+        
+        // console.log(lexicalAnalysis.dfa.dfaStates)
+        // console.log(lexicalAnalysis.terminatdNodes)
+        // console.log(lexicalAnalysis.dfa.finiteAutomatonPaths)
+    })
+    
+
+
     test('LexicalAnalysis', () => { 
         var lexicalAnalysis = new LexicalAnalysis([
             new TokenType('A', 'a'),
@@ -183,13 +265,13 @@ describe('LexicalAnalysis', ()  => {
         expect(dfa.terminatedIndexList).toEqual([1,2,3,4,5,6])
         expect(dfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": "#", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
-            {"source": 0, "destination": 3, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 2, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 3, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
             {"source": 1, "destination": 4, transferChar:{"transferValue": "#", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 2, "destination": 5, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
-            {"source": 3, "destination": 6, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 5, "destination": 5, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
-            {"source": 6, "destination": 6, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 5, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 3, "destination": 6, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
+            {"source": 5, "destination": 5, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 6, "destination": 6, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
         ])
 
         var tokens = lexicalAnalysis.toTokens("# I am (boy).\n")
@@ -229,4 +311,163 @@ describe('LexicalAnalysis', ()  => {
             new Token(PLAINTEXT, "boy).\n"),
         ])
     })
+
+    test('LexicalAnalysis.toTokens 3', () => { 
+        var H1 = new TokenType('H1', '#')
+        var H2 = new TokenType('H2', '##')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            H1,
+            H2,
+        ])
+        var tokens = lexicalAnalysis.toTokens("I am (boy).\n")
+        expect(tokens).toEqual([
+            new Token(TokenType.UNKNOWN_TOKENTYPE, 'I am (boy).\n'),
+        ])
+    })
+
+    test('GrammarSymbols', () => { 
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[A-C][A-C_]+')
+        // var DERIVATION = new TokenType('DERIVATION', '\\->')
+        expect(GrammarSymbol.regularExpression.dfa.test("A")).toEqual(false)
+        expect(GrammarSymbol.regularExpression.dfa.test("AC")).toEqual(true)
+        expect(GrammarSymbol.regularExpression.dfa.test("A_")).toEqual(true)
+    })
+    
+    test('GrammarSymbols 1', () => { 
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[A][Ad]+')
+        var Enter = new TokenType('Enter', '\n')
+        var SPACES = new TokenType('SPACES', '[ \t]+')
+        var DERIVATION = new TokenType('DERIVATION', '\\->')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            GrammarSymbol,
+            Enter,
+            SPACES,
+            DERIVATION
+        ])
+        
+        var tokens = lexicalAnalysis.toTokens("A -> A d")
+        expect(tokens).toEqual([
+            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token(SPACES, " "),
+            new Token(DERIVATION, "->"),
+            new Token(SPACES, " "),
+            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token(SPACES, " "),
+            new Token(TokenType.UNKNOWN_TOKENTYPE, 'd'),
+        ])
+        
+    })
+
+    test('GrammarSymbols 2', () => { 
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-cA-C][a-cA-C_]+')
+        var Enter = new TokenType('Enter', '\n')
+        var SPACES = new TokenType('SPACES', '[ \t]+')
+        var DERIVATION = new TokenType('DERIVATION', '\\->')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            GrammarSymbol,
+            Enter,
+            SPACES,
+            DERIVATION
+        ])
+        
+        var tokens = lexicalAnalysis.toTokens("A -> A d")
+        expect(tokens).toEqual([
+            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token(SPACES, " "),
+            new Token(DERIVATION, "->"),
+            new Token(SPACES, " "),
+            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token(SPACES, " "),
+            new Token(TokenType.UNKNOWN_TOKENTYPE, 'd'),
+        ])
+        
+    })
+
+    test('GrammarSymbols 3', () => { 
+        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-dA-D][a-dA-D_]*')
+        var Enter = new TokenType('Enter', '\n')
+        var SPACES = new TokenType('SPACES', '[ \t]+')
+        var DERIVATION = new TokenType('DERIVATION', '\\->')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            GrammarSymbol,
+            Enter,
+            SPACES,
+            DERIVATION
+        ])
+        
+        var tokens = lexicalAnalysis.toTokens("A -> A d")
+        expect(tokens).toEqual([
+            new Token(GrammarSymbol, 'A'),
+            new Token(SPACES, " "),
+            new Token(DERIVATION, "->"),
+            new Token(SPACES, " "),
+            new Token(GrammarSymbol, 'A'),
+            new Token(SPACES, " "),
+            new Token(GrammarSymbol, 'd'),
+        ])
+        
+    })
+
+    test('GrammarSymbols 4', () => { 
+        var GrammarSymbol = new TokenType('GrammarSymbol', "[a-zA-Z][^ \n\t]*")
+        var Enter = new TokenType('Enter', '\n')
+        var SPACES = new TokenType('SPACES', '[ \t]+')
+        var DERIVATION = new TokenType('DERIVATION', '\\->')
+        var EMPTY = new TokenType('EMPTY', '<EMPTY>')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            GrammarSymbol,
+            Enter,
+            SPACES,
+            DERIVATION,
+            EMPTY
+        ])
+        
+        var tokens = lexicalAnalysis.toTokens("A' -> <EMPTY>")
+        expect(tokens).toEqual([
+            new Token(GrammarSymbol, "A'"),
+            new Token(SPACES, " "),
+            new Token(DERIVATION, "->"),
+            new Token(SPACES, " "),
+            new Token(EMPTY, '<EMPTY>'),
+        ])
+        
+    })
+
+    /*
+    test('GrammarSymbols 5', () => { 
+        var EMPTY = new TokenType('EMPTY', '<EMPTY>')
+        var DERIVATION = new TokenType('DERIVATION', '\\->')
+        var GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+")
+        var Enter = new TokenType('Enter', '\n')
+        var SPACES = new TokenType('SPACES', '[ \t]+')
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            EMPTY,
+            DERIVATION,
+            GrammarSymbol,
+            Enter,
+            SPACES,
+        ])
+
+        var value = FileUtils.readFromFileSystem('./test/GrammarProductions.txt')
+        var tokens = lexicalAnalysis.toTokens(value).filter((token)=>token.type!=SPACES)
+        
+        // expect(tokens).toEqual([
+        //     new Token(GrammarSymbol, "E"),
+        //     new Token(SPACES, " "),
+        //     new Token(DERIVATION, "->"),
+        //     new Token(SPACES, " "),
+        //     new Token(GrammarSymbol, "T"),
+        //     new Token(SPACES, " "),
+        //     new Token(GrammarSymbol, "E'"),
+        //     new Token(Enter, "\n"),
+            
+        // ])
+    })
+    */
 })

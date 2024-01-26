@@ -162,16 +162,17 @@ describe('DFA', ()  => {
         var dfa = nfa.toDFA()
         expect(dfa.startIndex).toEqual(0)
         expect(isSetEqual(dfa.terminatedIndexList, [1])).toBe(true)
+
         expect(dfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": "c", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 0, "destination": 2, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 0, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 2, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 3, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 1, transferChar:{"transferValue": "c", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 2, "destination": 2, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 2, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 3, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 3, "destination": 1, transferChar:{"transferValue": "c", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 3, "destination": 2, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
-            {"source": 3, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 3, "destination": 2, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 3, "destination": 3, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
         var value = '#'
@@ -213,6 +214,8 @@ describe('DFA', ()  => {
             {"source": 2, "destination": 2, transferChar:{"transferValue": " ", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
+
+
         var value = '[^ #]+'
         var chars = toChars(value)
         var tree = buildRegularExpressionTree(chars)
@@ -225,6 +228,28 @@ describe('DFA', ()  => {
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '#'], "isAnyCharPath" : false}},
             {"source": 1, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '#'], "isAnyCharPath" : false}},
             {"source": 2, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '#'], "isAnyCharPath" : false}},
+        ])
+
+        var value = '[ \t]+'
+        var chars = toChars(value)
+        var tree = buildRegularExpressionTree(chars)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
+        var dfa = nfa.toDFA()
+        expect(dfa.startIndex).toEqual(0)
+        expect(isSetEqual(dfa.terminatedIndexList, [1,2,3,4])).toBe(true)
+        expect(dfa.finiteAutomatonPaths).toEqual([
+            {"source": 0, "destination": 1, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 2, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 1, "destination": 3, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 1, "destination": 4, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 3, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 4, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 3, "destination": 3, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 3, "destination": 4, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 3, transferChar:{"transferValue": ' ', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 4, transferChar:{"transferValue": '\t', "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+
         ])
     })
 
@@ -281,5 +306,12 @@ describe('DFA', ()  => {
         expect(regExp.test("\\")).toBe(false)
         expect(regExp.test("\\\\")).toBe(true)
         expect(regExp.test("(")).toBe(false)
+
+        var regExp : RegularExpression = new RegularExpression("[']")
+        expect(regExp.test("\\")).toBe(false)
+        expect(regExp.test("\\\\")).toBe(false)
+        expect(regExp.test("(")).toBe(false)
+        expect(regExp.test("'")).toBe(true)
+        
     })
 })

@@ -1,0 +1,8 @@
+E -> T E'
+E' -> + T E'
+E' -> <EMPTY>
+T -> F T'
+T' -> * F T'
+T' -> <EMPTY>
+F -> ( E )
+F -> id

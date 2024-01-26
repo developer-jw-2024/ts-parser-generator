@@ -314,7 +314,13 @@ export class RegularExpressionTree {
             this.operation==RegularExpressionTreeOperation.NOT) {
             for (var i=0;i<this.actualChars.length;i++) {
                 if (this.actualChars[i].length==2 && this.actualChars[i][0]=='\\') {
-                    this.actualChars[i] = this.actualChars[i].slice(1)
+                    if (this.actualChars[i]=='\\n') {
+                        this.actualChars[i]='\n'
+                    } else if (this.actualChars[i]=='\\t') {
+                        this.actualChars[i]='\t'
+                    } else {
+                        this.actualChars[i] = this.actualChars[i].slice(1)
+                    }
                 }
             }
         } 

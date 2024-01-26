@@ -64,20 +64,27 @@ export class LexicalAnalysis {
         var terminatdNodes = new Map<number, TokenType | null>()
         dfa.terminatedIndexList.forEach((terminatedIndex)=>{
             terminatdNodes[terminatedIndex] = null
-
+            // console.log('terminatedIndex: ', terminatedIndex)
             that.tokenTypes.forEach((tokenType)=>{
                 var regularExpression = tokenType.regularExpression
+                // console.log('\t',tokenType.name, regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states,
+                //     intersection(regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states))
                 if (intersection(regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states).length>0) {
                     if (terminatdNodes[terminatedIndex]==null) {
                         terminatdNodes[terminatedIndex] = tokenType
                     }
+                    // console.log('\t', terminatdNodes[terminatedIndex])
                 }
             })
         })
 
         this.dfa = dfa
         this.terminatdNodes = terminatdNodes
-        // console.log(this.terminatdNodes)
+        // console.log(dfa.terminatedIndexList)
+        // dfa.finiteAutomatonPaths.forEach(p=>{
+        //     console.log(p.source, p.destination, p.transferChar.transferValue, p.transferChar.negativeTransferValues)
+        // })
+
     }
 
     isTerminatedNode(nodeIndex : number) : boolean {
@@ -86,6 +93,7 @@ export class LexicalAnalysis {
 
     getToken(chars : Array<string>, nodeStartIndex : number, charStartIndex : number) : { charEndPos: number,  nodeEndIndex : number} | null {
         // console.log(chars)
+        // console.log('--------------------------------')
         var charEndPos : number = -1
         var nodeEndIndex : number = -1
 
@@ -94,12 +102,12 @@ export class LexicalAnalysis {
         var charCursor : number = charStartIndex
 
         var transferChar : TransferChar = new TransferChar(chars[charCursor])
-        // var preNodeCursor = nodeCursor
+        var preNodeCursor = nodeCursor
         nodeCursor = this.dfa.move(nodeCursor, transferChar)
         // console.log('-->', preNodeCursor, transferChar.transferValue, nodeCursor)
         var step = 0
         while (charCursor<chars.length && nodeCursor!=-1) {
-            // console.log(nodeCursor)
+            // console.log('nodeCursor:', nodeCursor)
             if (this.terminatdNodes[nodeCursor]!=null) {
                 charEndPos = charCursor
                 nodeEndIndex = nodeCursor
@@ -144,6 +152,7 @@ export class LexicalAnalysis {
             }
             // console.log(i)
         }
+        // console.log(i, lastSuccessCharIndex)
         if (i>lastSuccessCharIndex) {
             tokens.push(new Token(TokenType.UNKNOWN_TOKENTYPE, chars.slice(lastSuccessCharIndex, i).join('')))
             // console.log("UNKNOWN", lastSuccessCharIndex, i, chars.slice(lastSuccessCharIndex, i))
