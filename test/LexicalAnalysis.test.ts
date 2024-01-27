@@ -437,37 +437,4 @@ describe('LexicalAnalysis', ()  => {
         ])
         
     })
-
-    /*
-    test('GrammarSymbols 5', () => { 
-        var EMPTY = new TokenType('EMPTY', '<EMPTY>')
-        var DERIVATION = new TokenType('DERIVATION', '\\->')
-        var GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+")
-        var Enter = new TokenType('Enter', '\n')
-        var SPACES = new TokenType('SPACES', '[ \t]+')
-
-        var lexicalAnalysis = new LexicalAnalysis([
-            EMPTY,
-            DERIVATION,
-            GrammarSymbol,
-            Enter,
-            SPACES,
-        ])
-
-        var value = FileUtils.readFromFileSystem('./test/GrammarProductions.txt')
-        var tokens = lexicalAnalysis.toTokens(value).filter((token)=>token.type!=SPACES)
-        
-        // expect(tokens).toEqual([
-        //     new Token(GrammarSymbol, "E"),
-        //     new Token(SPACES, " "),
-        //     new Token(DERIVATION, "->"),
-        //     new Token(SPACES, " "),
-        //     new Token(GrammarSymbol, "T"),
-        //     new Token(SPACES, " "),
-        //     new Token(GrammarSymbol, "E'"),
-        //     new Token(Enter, "\n"),
-            
-        // ])
-    })
-    */
 })

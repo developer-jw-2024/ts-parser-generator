@@ -6,7 +6,7 @@ import { intersection } from '../Utils/SetUtils'
 
 export class TokenType {
 
-    static EMPTY_TOKENTYPE : TokenType = new TokenType("EMPTY", '<EMPTY>', false)
+    static EMPTY_TOKENTYPE : TokenType = new TokenType("EMPTY", '<EMPTY>', true)
     static TERMINATED_TOKENTYPE : TokenType = new TokenType("TERMINATED", null, true)
     static UNKNOWN_TOKENTYPE : TokenType = new TokenType("UNKNOWN", null, true)
 
@@ -52,6 +52,7 @@ export class Token {
         return this.type.isEqual(other.type) && this.value==other.value
     }
 }
+
 
 export class LexicalAnalysis {
     tokenTypes : Array<TokenType>
