@@ -1,6 +1,4 @@
-interface compareFunction<T> {
-    isEqual(other: T): boolean;
-}
+import { compareFunction } from "../src/Utils/SetUtils"
 
 class Tank implements compareFunction<Tank> {
     value : number
@@ -30,3 +28,4 @@ console.log(groupBy([new Tank(1), new Tank(2)]))
 console.log(groupBy([new Tank(2), new Tank(2)]))
 console.log(groupBy([new Monitor(1), new Monitor(2)]))
 console.log(groupBy([new Monitor(2), new Monitor(2)]))
+console.log(groupBy([new Monitor(2), new Tank(2)]))

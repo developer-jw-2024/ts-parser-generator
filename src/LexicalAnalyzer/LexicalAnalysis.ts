@@ -39,6 +39,10 @@ export class Token {
         this.value = value
     }
 
+    copy(value : string) : Token {
+        return new Token(this.type, value)
+    }
+
     toString() : string | null {
         return `<${this.type.name} , ${this.value}>`
         // return `<${this.type.name} , ${this.value}>  ${this.type.isTerminal?'X':''}`

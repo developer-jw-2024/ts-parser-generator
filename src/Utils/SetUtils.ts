@@ -1,3 +1,7 @@
+export interface compareFunction<T> {
+    isEqual(other: T): boolean;
+}
+
 export enum CharsSetType {
     ALL = "ALL",
     NEGATIVE = "NEGATIVE",

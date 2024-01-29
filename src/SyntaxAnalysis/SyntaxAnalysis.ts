@@ -1,6 +1,25 @@
 import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis"
+import { isSetEqual } from "../Utils/SetUtils"
 
-class GrammarProduction {
+function nextGrammarSymbol(a: string) : string {
+    
+    var i = a.length-1
+    while (a[i]>='0' && a[i]<='9' && i>=0) {
+        i--
+    }
+
+    var num : string = a.substring(i+1, a.length)
+    num = num.trim()
+    if (num.length==0) num ="0"
+    var n = parseInt(num)+1
+    return a.substring(0, i+1)+n
+}
+
+function isValueInTokens(value : string, tokens : Array<Token>) : boolean {
+    return tokens.filter(t=>t.value==value).length>0
+}
+
+export class GrammarProduction {
     symbol : Token
     factors : Array<Token> = []
 
@@ -18,13 +37,21 @@ class GrammarProduction {
     }
 }
 
-class IndexGrammarProduction {
+export class IndexGrammarProduction {
     symbol : number
     factors : Array<number> = []
 
     constructor(symbol : number, factors : Array<number>) {
         this.symbol = symbol
         this.factors = factors
+    }
+
+    isEqual(other : IndexGrammarProduction) {
+        return this.symbol==other.symbol && isSetEqual(this.factors, other.factors)
+    }
+
+    copy() : IndexGrammarProduction {
+        return new IndexGrammarProduction(this.symbol, this.factors)
     }
 }
 
@@ -41,6 +68,7 @@ export class SyntaxAnalysis {
     tokens : Array<Token> =  []
     grammerProductions : Array<GrammarProduction>
     indexGrammerProductions : Array<IndexGrammarProduction>
+    indexGrammerProductionFlags : Array<boolean>
 
     
     constructor(tokens : Array<Token>) {
@@ -59,11 +87,13 @@ export class SyntaxAnalysis {
         this.grammerProductions = this.toGrammarProductions(tokenGroups, new Token(SyntaxAnalysis.DERIVATION, '->'))
 
         this.indexGrammerProductions = new Array<IndexGrammarProduction>()
+        this.indexGrammerProductionFlags = new Array<boolean>()
         for (var i=0;i<this.grammerProductions.length;i++) {
             var gp = this.grammerProductions[i]
             var indexOfToken = this.getIndexOfToken(gp.symbol)
             var indexArrayOfFactors = gp.factors.map(e=>this.getIndexOfToken(e))
             this.indexGrammerProductions.push(new IndexGrammarProduction(indexOfToken, indexArrayOfFactors))
+            this.indexGrammerProductionFlags.push(true)
         }
 
         this.startSymbol = this.grammerProductions[0].symbol
@@ -78,7 +108,7 @@ export class SyntaxAnalysis {
 
     toGrammarProduction(list : Array<Token>, derivationToken : Token) : GrammarProduction {
         if (!list[1].isEqual(derivationToken)) {
-            console.log(list)
+            // console.log(list)
             throw new Error('Grammer Production Error!')
         }
         var token : Token = list[0]
@@ -112,7 +142,164 @@ export class SyntaxAnalysis {
         return result
     }
 
+    isInIndexGrammarProductionList(newIGP : IndexGrammarProduction) : boolean {
+        return this.indexGrammerProductions.filter(e=>{
+            // console.log(e, newIGP, e.isEqual(newIGP))
+            return e.isEqual(newIGP)
+        }).length>0
+    }
 
+    /*
+    eliminateLeftRecursion2() {
+        var gpList : Array<IndexGrammarProduction> = this.indexGrammerProductions.map(x=>x.copy())
+        var flags : Array<boolean> = this.indexGrammerProductions.map(x=>true)
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
 
+        var continueFlag = true
+        while (continueFlag) {
+            continueFlag = false
+            var len = gpList.length
+            for (var i=0;i<len;i++) {
+                var igp = gpList[i]
+                var iToken = this.tokens[igp.symbol]
+                var jToken = this.tokens[igp.factors[0]]
+                var replacedFlag = false
+                if (flags[i] && igp.symbol!=igp.factors[0] && !iToken.type.isTerminal && !jToken.type.isTerminal) {
+                    for (var j=0;j<len;j++) {
+                        var jgp = gpList[j]
+                        if (flags[j] && jgp.symbol==igp.factors[0]) {
+                            var newIndexGrammarProduction = new IndexGrammarProduction(igp.symbol, jgp.factors.concat(igp.factors.slice(1)))
+                            if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
+                                // console.log('New0:', igp, jgp, newIndexGrammarProduction)
+
+                                gpList.push(newIndexGrammarProduction)
+                                flags.push(true)
+                            }
+                            replacedFlag = true
+                            continueFlag = true    
+                        }
+                    }
+                }
+                if (replacedFlag) {
+                    flags[i] = false
+                    // console.log('Delete ', i)
+                }
+                
+                if (flags[i] && igp.symbol==igp.factors[0] && !iToken.type.isTerminal) {
+                    var tokenName : string = this.tokens[igp.symbol].value
+                    tokenName = nextGrammarSymbol(tokenName)
+                    while (isValueInTokens(tokenName, this.tokens)) {
+                        tokenName = nextGrammarSymbol(tokenName)
+                    }
+                    var newToken : Token | null = null
+                    var newTokenIndex : number = -1
+                    for (var j=0;j<len;j++) {
+                        var jgp = gpList[j]
+                        if (flags[j] && jgp.symbol==igp.symbol && jgp.symbol!=jgp.factors[0]) {
+                            if (newToken==null) {
+                                newToken = new Token(this.tokens[igp.symbol].type, tokenName)
+                                this.tokens.push(newToken)
+                                newTokenIndex = this.tokens.length-1
+                            }
+                            var newIndexGrammarProduction = new IndexGrammarProduction(igp.symbol, jgp.factors.concat([newTokenIndex]))
+                            if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
+                                // console.log('New1:', flags[i], igp, flags[j], jgp, newIndexGrammarProduction)
+                                gpList.push(newIndexGrammarProduction)
+                                flags.push(true)
+                            }
+                            replacedFlag = true
+                            continueFlag = true
+                            flags[j] = false
+                            // console.log('1 Delete ', j)
+                        }
+                    }
+                    if (newToken!=null) {
+                        for (var j=0;j<len;j++) {
+                            var jgp = gpList[j]
+                            if (flags[j] && jgp.symbol==igp.symbol) {
+                                var newIndexGrammarProduction = new IndexGrammarProduction(newTokenIndex, igp.factors.slice(1).concat([newTokenIndex]))
+                                if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
+                                    // console.log('New2:', newIndexGrammarProduction)
+                                    gpList.push(newIndexGrammarProduction)
+                                    flags.push(true)
+                                }
+                                replacedFlag = true
+                                continueFlag = true
+                                flags[j] = false
+                                // console.log('2 Delete ', j)
+                            }
+                        }
+                        var newIndexGrammarProduction = new IndexGrammarProduction(newTokenIndex, [indexOfEmptyToken])
+                        if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
+                            // console.log('New3:', newIndexGrammarProduction)
+                            gpList.push(newIndexGrammarProduction)
+                            flags.push(true)
+                        }
+                    }
+                    
+                }
+                
+            }
+
+        }
+
+        // console.log(gpList)
+        // console.log(flags)
+        // console.log(this.tokens)
+
+        this.indexGrammerProductions = gpList.filter((gp, i)=>flags[i])
+    }
+    */
+    eliminateLeftRecursion() {
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+
+        for (var i=0;i<this.tokens.length;i++) {
+            var originalLen = this.indexGrammerProductions.length
+            if (!this.tokens[i].type.isTerminal) {
+                for (var j=0;j<i;j++) {
+                    if (!this.tokens[j].type.isTerminal) {
+                        this.replaceGrammerProduction(i, j)
+                    }
+                }    
+            }
+            if (this.indexGrammerProductions.length>originalLen) {
+                this.indexGrammerProductionFlags[i] = false
+            }
+        }
+    }
+
+    replaceGrammerProduction(i : number, j :number) {
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+        //Ai -> Aj xyz  X   --- k
+        //Aj -> abc         --- l
+        //Ai -> abc xyz
+        var len = this.indexGrammerProductions.length
+        for (var k=0;k<len;k++) {
+            var kgp = this.indexGrammerProductions[k]
+            if (this.indexGrammerProductionFlags[k] && kgp.symbol==i && kgp.factors[0]==j) {
+                for (var l=0;l<len;l++) {
+                    var lgp = this.indexGrammerProductions[l]
+                    if (this.indexGrammerProductionFlags[l] && lgp.symbol==j) {
+                        var symbol = kgp.symbol
+                        var factors = lgp.factors.concat(kgp.factors.slice(1))
+                        while (factors.length>0 && factors[0]==indexOfEmptyToken) factors = factors.slice(1)
+                        var newIndexGrammerProduction = new IndexGrammarProduction(symbol, factors)
+                        if (!this.isInIndexGrammarProductionList(newIndexGrammerProduction)) {
+                            this.indexGrammerProductions.push(newIndexGrammerProduction)
+                            this.indexGrammerProductionFlags.push(true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    eliminateTheImmediateLeftRecursion(indexOfToken : number) {
+        var len = this.indexGrammerProductions.length
+        for (var i=0;i<len;i++) {
+            var gp = this.indexGrammerProductionFlags[i]
+            // if (this.indexGrammerProductionFlags[i] && gp[i].symbol==indexOfToken && gp[i].factors[0]==)
+        }
+    }
 
 }
