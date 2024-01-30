@@ -2,18 +2,27 @@ import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAna
 import { isListEqual } from "../Utils/ArrayListUtils"
 import { isSetEqual } from "../Utils/SetUtils"
 
-function nextGrammarSymbol(a: string) : string {
+function nextGrammarSymbolByName(tokenName: string) : string {
     
-    var i = a.length-1
-    while (a[i]>='0' && a[i]<='9' && i>=0) {
+    var i = tokenName.length-1
+    while (tokenName[i]>='0' && tokenName[i]<='9' && i>=0) {
         i--
     }
 
-    var num : string = a.substring(i+1, a.length)
+    var num : string = tokenName.substring(i+1, tokenName.length)
     num = num.trim()
     if (num.length==0) num ="0"
     var n = parseInt(num)+1
-    return a.substring(0, i+1)+n
+    return tokenName.substring(0, i+1)+n
+}
+
+function nextGrammarSymbol(tokenName: string, tokens : Array<Token>) : string {
+    
+    var newTokenName : string = nextGrammarSymbolByName(tokenName)  
+    while (isValueInTokens(newTokenName, tokens)) {
+        newTokenName = nextGrammarSymbolByName(newTokenName)
+    }
+    return newTokenName
 }
 
 function isValueInTokens(value : string, tokens : Array<Token>) : boolean {
@@ -150,107 +159,7 @@ export class SyntaxAnalysis {
         }).length>0
     }
 
-    /*
-    eliminateLeftRecursion2() {
-        var gpList : Array<IndexGrammarProduction> = this.indexGrammerProductions.map(x=>x.copy())
-        var flags : Array<boolean> = this.indexGrammerProductions.map(x=>true)
-        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
-
-        var continueFlag = true
-        while (continueFlag) {
-            continueFlag = false
-            var len = gpList.length
-            for (var i=0;i<len;i++) {
-                var igp = gpList[i]
-                var iToken = this.tokens[igp.symbol]
-                var jToken = this.tokens[igp.factors[0]]
-                var replacedFlag = false
-                if (flags[i] && igp.symbol!=igp.factors[0] && !iToken.type.isTerminal && !jToken.type.isTerminal) {
-                    for (var j=0;j<len;j++) {
-                        var jgp = gpList[j]
-                        if (flags[j] && jgp.symbol==igp.factors[0]) {
-                            var newIndexGrammarProduction = new IndexGrammarProduction(igp.symbol, jgp.factors.concat(igp.factors.slice(1)))
-                            if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
-                                // console.log('New0:', igp, jgp, newIndexGrammarProduction)
-
-                                gpList.push(newIndexGrammarProduction)
-                                flags.push(true)
-                            }
-                            replacedFlag = true
-                            continueFlag = true    
-                        }
-                    }
-                }
-                if (replacedFlag) {
-                    flags[i] = false
-                    // console.log('Delete ', i)
-                }
-                
-                if (flags[i] && igp.symbol==igp.factors[0] && !iToken.type.isTerminal) {
-                    var tokenName : string = this.tokens[igp.symbol].value
-                    tokenName = nextGrammarSymbol(tokenName)
-                    while (isValueInTokens(tokenName, this.tokens)) {
-                        tokenName = nextGrammarSymbol(tokenName)
-                    }
-                    var newToken : Token | null = null
-                    var newTokenIndex : number = -1
-                    for (var j=0;j<len;j++) {
-                        var jgp = gpList[j]
-                        if (flags[j] && jgp.symbol==igp.symbol && jgp.symbol!=jgp.factors[0]) {
-                            if (newToken==null) {
-                                newToken = new Token(this.tokens[igp.symbol].type, tokenName)
-                                this.tokens.push(newToken)
-                                newTokenIndex = this.tokens.length-1
-                            }
-                            var newIndexGrammarProduction = new IndexGrammarProduction(igp.symbol, jgp.factors.concat([newTokenIndex]))
-                            if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
-                                // console.log('New1:', flags[i], igp, flags[j], jgp, newIndexGrammarProduction)
-                                gpList.push(newIndexGrammarProduction)
-                                flags.push(true)
-                            }
-                            replacedFlag = true
-                            continueFlag = true
-                            flags[j] = false
-                            // console.log('1 Delete ', j)
-                        }
-                    }
-                    if (newToken!=null) {
-                        for (var j=0;j<len;j++) {
-                            var jgp = gpList[j]
-                            if (flags[j] && jgp.symbol==igp.symbol) {
-                                var newIndexGrammarProduction = new IndexGrammarProduction(newTokenIndex, igp.factors.slice(1).concat([newTokenIndex]))
-                                if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
-                                    // console.log('New2:', newIndexGrammarProduction)
-                                    gpList.push(newIndexGrammarProduction)
-                                    flags.push(true)
-                                }
-                                replacedFlag = true
-                                continueFlag = true
-                                flags[j] = false
-                                // console.log('2 Delete ', j)
-                            }
-                        }
-                        var newIndexGrammarProduction = new IndexGrammarProduction(newTokenIndex, [indexOfEmptyToken])
-                        if (!this.isInIndexGrammarProductionList(newIndexGrammarProduction, gpList)) {
-                            // console.log('New3:', newIndexGrammarProduction)
-                            gpList.push(newIndexGrammarProduction)
-                            flags.push(true)
-                        }
-                    }
-                    
-                }
-                
-            }
-
-        }
-
-        // console.log(gpList)
-        // console.log(flags)
-        // console.log(this.tokens)
-
-        this.indexGrammerProductions = gpList.filter((gp, i)=>flags[i])
-    }
-    */
+    
     eliminateLeftRecursion() {
 
         for (var i=0;i<this.tokens.length;i++) {
@@ -264,6 +173,12 @@ export class SyntaxAnalysis {
             
             this.eliminateTheImmediateLeftRecursion(i)
         }
+        
+        this.removeFalseGrammerProductions()
+        
+    }
+
+    removeFalseGrammerProductions() {
         var cupgp : Array<GrammarProduction> =[]
         for (var i=0;i<this.indexGrammerProductions.length;i++) {
             if (this.indexGrammerProductionFlags[i]) {
@@ -285,7 +200,7 @@ export class SyntaxAnalysis {
         }
         this.indexGrammerProductions = cup
         this.indexGrammerProductionFlags = flagCup
-        
+
     }
 
     replaceGrammerProduction(i : number, j :number) {
@@ -337,7 +252,7 @@ export class SyntaxAnalysis {
             if (this.indexGrammerProductionFlags[i] && gp.symbol==indexOfToken && gp.factors[0]==indexOfToken) {
                 if (newTokenName==null) {
                     var tokenName : string = this.tokens[indexOfToken].value
-                    newTokenName = nextGrammarSymbol(tokenName)    
+                    newTokenName = nextGrammarSymbol(tokenName, this.tokens)    
                 }
                 // console.log('immediate', indexOfToken, gp)
                 immediateLeftRecursionCount++
@@ -397,30 +312,16 @@ export class SyntaxAnalysis {
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
 
         var len = this.indexGrammerProductions.length
-        var maxLeftCommonFactor : Array<number> | null = null
-        var tokenOfSymbol : number | null = null
-        for (var i=0;i<len;i++) {
-            for (var j=i+1;j<len;j++) {
-                var leftCommonFactor : Array<number> | null = this.leftCommonFactor(i, j)
-                if (leftCommonFactor!=null) {
-                    if (maxLeftCommonFactor==null || maxLeftCommonFactor.length<leftCommonFactor.length) {
-                        maxLeftCommonFactor = leftCommonFactor
-                        tokenOfSymbol = this.indexGrammerProductions[i].symbol  
-                    }
-                }
-            }
-        }
-        if (tokenOfSymbol!=null) {
-            console.log(tokenOfSymbol, maxLeftCommonFactor)
+        var maxFactor : {tokenOfSymbol : number, maxLeftCommonFactor : Array<number>} | null = this.maxLeftCommonFactor()
+        while (maxFactor!=null) {
+            var tokenOfSymbol : number = maxFactor.tokenOfSymbol
+            var maxLeftCommonFactor : Array<number> = maxFactor.maxLeftCommonFactor
+
             var tokenName : string = this.tokens[tokenOfSymbol].value
-            var newTokenName : string = nextGrammarSymbol(tokenName)  
+            var newTokenName : string = nextGrammarSymbol(tokenName, this.tokens)  
             var indexOfNewTokenName : number = -1  
-            while (isValueInTokens(newTokenName, this.tokens)) {
-                newTokenName = nextGrammarSymbol(newTokenName)
-            }
             var newToken : Token = new Token(this.tokens[tokenOfSymbol].type, newTokenName)
             this.tokens.push(newToken)
-
             indexOfNewTokenName  = this.tokens.length-1
             var newgp = new IndexGrammarProduction(tokenOfSymbol, maxLeftCommonFactor.concat([indexOfNewTokenName]))
 
@@ -430,7 +331,7 @@ export class SyntaxAnalysis {
             }
             for (var i=0;i<len;i++) {
                 var gp = this.indexGrammerProductions[i]
-                if (gp.symbol==tokenOfSymbol && 
+                if (this.indexGrammerProductionFlags[i] && gp.symbol==tokenOfSymbol && 
                     gp.factors.length>=maxLeftCommonFactor.length && 
                     this.isLeftCommonFactor(maxLeftCommonFactor, gp.factors)) {
                         var factors : Array<number> = gp.factors.slice(maxLeftCommonFactor.length)
@@ -439,15 +340,45 @@ export class SyntaxAnalysis {
                         if (!this.isInIndexGrammarProductionList(newgp)) {
                             this.indexGrammerProductions.push(newgp)
                             this.indexGrammerProductionFlags.push(true)
+                        }
+                        if (this.indexGrammerProductionFlags[i]) {
                             this.indexGrammerProductionFlags[i] = false
                         }
+                        
                     }
             }
-
+            len = this.indexGrammerProductions.length
+            maxFactor = this.maxLeftCommonFactor()
         }
+
+        this.removeFalseGrammerProductions()
+    }
+
+    maxLeftCommonFactor() : {tokenOfSymbol : number, maxLeftCommonFactor : Array<number>} | null {
+        var len = this.indexGrammerProductions.length
+        var maxLeftCommonFactor : Array<number> | null = null
+        var tokenOfSymbol : number | null = null
+        for (var i=0;i<len;i++) {
+            for (var j=i+1;this.indexGrammerProductionFlags[i] && j<len;j++) {
+                if (this.indexGrammerProductionFlags[j]) {
+                    var leftCommonFactor : Array<number> | null = this.leftCommonFactor(i, j)
+                    
+                    if (leftCommonFactor!=null) {
+                        if (maxLeftCommonFactor==null || maxLeftCommonFactor.length<leftCommonFactor.length) {
+                            maxLeftCommonFactor = leftCommonFactor
+                            tokenOfSymbol = this.indexGrammerProductions[i].symbol  
+                        }
+                    }    
+                }
+            }
+        }
+        if (tokenOfSymbol==null) return null
+        return { tokenOfSymbol : tokenOfSymbol, maxLeftCommonFactor : maxLeftCommonFactor }
     }
 
     leftCommonFactor(i : number, j: number) : Array<number> | null {
+        if (!this.indexGrammerProductionFlags[i]) return null
+        if (!this.indexGrammerProductionFlags[j]) return null
         var gpi = this.indexGrammerProductions[i]
         var gpj = this.indexGrammerProductions[j]
         if (gpi.symbol!=gpj.symbol) return null
@@ -456,7 +387,7 @@ export class SyntaxAnalysis {
         for (var k=0;gpi.factors[k]==gpj.factors[k] && k<len;k++) {
             result.push(gpi.factors[k])
         }
-        console.log(this.indexGrammerProductions[i], this.indexGrammerProductions[j])
+        // console.log(this.indexGrammerProductions[i], this.indexGrammerProductions[j])
         return result.length==0?null:result
     }
 
