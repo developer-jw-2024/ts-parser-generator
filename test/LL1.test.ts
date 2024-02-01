@@ -130,7 +130,48 @@ describe('LL', () => {
         expect(isSetEqual(m, m2)).toBe(true)
 
     })
+    
+    test('LL1LexicalAnalysis.isValid', () => {
+        var PLUS = new TokenType('PLUS', '\\+', true)
+        var STAR = new TokenType('STAR', '\\*', true)
+        var ID = new TokenType('ID', 'id', true)
+        var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
+        var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
 
+        var ll1LexicalAnalysis = new LexicalAnalysis([
+            PLUS,
+            STAR,
+            ID,
+            OPENBRACKET,
+            CLOSEBRACKET,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
+        var tokens = ll1LexicalAnalysis.toTokens(value)
+        var ll1 = new LL1LexicalAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(true)
+
+        
+        var languageLexicalAnalysis = new LexicalAnalysis([
+            PLUS,
+            STAR,
+            ID,
+            OPENBRACKET,
+            CLOSEBRACKET
+        ])
+        
+        
+        ll1.isValid(languageLexicalAnalysis, "id+id*id")
+        
+
+    })
+    
     test('LL1LexicalAnalysis 2', () => {
         var i_ = new TokenType('i', 'i', true)
         var t_ = new TokenType('t', 't', true)
@@ -206,6 +247,100 @@ describe('LL', () => {
         ])
 
         var m : Array<string> = []
+        var isValidLL1 : boolean = true
+        var hasTerminated : boolean = false
+        for (var i=0;i<ll1.tokens.length;i++) {
+            for (var j=0;j<ll1.tokens.length;j++) {
+                if (ll1.predictiveParsingTable[i][j].length>0) {
+                    var A = ll1.tokens[i].toSimpleString()
+                    var a = ll1.tokens[j].toSimpleString()
+                    var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
+                        return ll1.grammerProductions[pgi].toSimpleString()
+                    })
+                    if (ll1.tokens[j].type.name=='TERMINATED') {
+                        hasTerminated = true
+                    }
+                    if (gps.length>0) {
+                        isValidLL1 = false
+                    }
+                    m.push(`${A} ${a} ${gps.join('/')}`)
+                }
+            }
+        }
+        if (!hasTerminated) {
+            isValidLL1 = false
+        }
+
+        var m2 : Array<string> = [
+            "S a S -> a",
+            "S i S -> i E t S S'",
+            "S' e S' -> e S/S' -> <EMPTY>",
+            "S' <TERMINATED> S' -> <EMPTY>",
+            "E b E -> b",
+        ]
+
+        // console.log(minus(m, m2))
+        // console.log(minus(m2, m))
+
+        expect(isSetEqual(m, m2)).toBe(true)
+
+    })
+
+    test('LL1LexicalAnalysis 3', () => {
+        var i_ = new TokenType('i', 'i', true)
+        var t_ = new TokenType('t', 't', true)
+        var e_ = new TokenType('e', 'e', true)
+        var a_ = new TokenType('a', 'a', true)
+        var b_ = new TokenType('b', 'b', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            i_, t_, a_, e_, b_,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = `
+        S -> a S
+        `
+        var tokens = lexicalAnalysis.toTokens(value)
+        var ll1 = new LL1LexicalAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(false)
+        
+        expect(ll1.tokens.map(t=>{
+            return {
+                type : t.type.name,
+                value : t.value
+            }
+        })).toEqual([
+            {type : 'TERMINATED', value : '<TERMINATED>'},
+            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : 'GrammarSymbol', value : 'S'},
+            {type : 'a', value : 'a'},
+        ])
+
+        expect(ll1.first).toEqual([
+            [0], //<TERMINATED>
+            [1], //<EMPTY>
+            [3], //S
+            [3], //a
+        ])
+
+        expect(ll1.follow).toEqual([
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [0],//S 2
+            [3],//a 3
+        ])
+
+        expect(ll1.firstOfGrammaProduction).toEqual([
+            [3], 
+        ])
+
+        var m : Array<string> = []
         for (var i=0;i<ll1.tokens.length;i++) {
             for (var j=0;j<ll1.tokens.length;j++) {
                 if (ll1.predictiveParsingTable[i][j].length>0) {
@@ -220,15 +355,122 @@ describe('LL', () => {
         }
 
         var m2 : Array<string> = [
-            "S a S -> a",
-            "S i S -> i E t S S'",
-            "S' e S' -> e S/S' -> <EMPTY>",
-            "S' <TERMINATED> S' -> <EMPTY>",
-            "E b E -> b",
+            "S a S -> a S",
         ]
 
-        // console.log(minus(m, m2))
-        // console.log(minus(m2, m))
+        expect(isSetEqual(m, m2)).toBe(true)
+
+    })
+
+    test('LL1LexicalAnalysis 4', () => {
+        var i_ = new TokenType('i', 'i', true)
+        var t_ = new TokenType('t', 't', true)
+        var e_ = new TokenType('e', 'e', true)
+        var a_ = new TokenType('a', 'a', true)
+        var b_ = new TokenType('b', 'b', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            i_, t_, a_, e_, b_,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = `
+        S -> S a
+        `
+        var tokens = lexicalAnalysis.toTokens(value)
+        try {
+            var ll1 = new LL1LexicalAnalysis(tokens)
+        } catch(error) {
+            expect(error.message).toEqual('Can not eliminate the immediate left recursion')
+        }
+    
+    })
+
+    test('LL1LexicalAnalysis 5', () => {
+        var i_ = new TokenType('i', 'i', true)
+        var t_ = new TokenType('t', 't', true)
+        var e_ = new TokenType('e', 'e', true)
+        var a_ = new TokenType('a', 'a', true)
+        var b_ = new TokenType('b', 'b', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            i_, t_, a_, e_, b_,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = `
+        S -> a A
+        A -> b S
+        `
+        var tokens = lexicalAnalysis.toTokens(value)
+        var ll1 = new LL1LexicalAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(false)
+        
+        expect(ll1.tokens.map(t=>{
+            return {
+                type : t.type.name,
+                value : t.value
+            }
+        })).toEqual([
+            {type : 'TERMINATED', value : '<TERMINATED>'},
+            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : 'GrammarSymbol', value : 'S'},
+            {type : 'a', value : 'a'},
+            {type : 'GrammarSymbol', value : 'A'},
+            {type : 'b', value : 'b'},
+        ])
+
+        expect(ll1.first).toEqual([
+            [0], //<TERMINATED>
+            [1], //<EMPTY>
+            [3], //S
+            [3], //a
+            [5], //A
+            [5], //b
+        ])
+
+        expect(ll1.follow).toEqual([
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [0],//S 2
+            [5],//a 3 
+            [0],//A 4 
+            [3],//b 5 
+        ])
+
+        expect(ll1.firstOfGrammaProduction).toEqual([
+            [3], 
+            [5], 
+        ])
+
+        var m : Array<string> = []
+        for (var i=0;i<ll1.tokens.length;i++) {
+            for (var j=0;j<ll1.tokens.length;j++) {
+                if (ll1.predictiveParsingTable[i][j].length>0) {
+                    var A = ll1.tokens[i].toSimpleString()
+                    var a = ll1.tokens[j].toSimpleString()
+                    var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
+                        return ll1.grammerProductions[pgi].toSimpleString()
+                    }).join('/')
+                    m.push(`${A} ${a} ${gps}`)
+                }
+            }
+        }
+
+        var m2 : Array<string> = [
+            "S a S -> a A",
+            "A b A -> b S"
+        ]
 
         expect(isSetEqual(m, m2)).toBe(true)
 

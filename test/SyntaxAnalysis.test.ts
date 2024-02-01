@@ -169,7 +169,57 @@ describe('SyntaxAnalysis', ()  => {
         
     })
 
-    test('SyntaxAnalysis.eliminateLeftRecursion 1', ()=>{
+    test('SyntaxAnalysis.eliminateLeftRecursion 4', ()=>{
+        var i_ = new TokenType('i', 'i', true)
+        var t_ = new TokenType('t', 't', true)
+        var e_ = new TokenType('e', 'e', true)
+        var a_ = new TokenType('a', 'a', true)
+        var b_ = new TokenType('b', 'b', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            i_, t_, e_, a_, b_,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+        var gptext = `
+        S -> i E t S
+        S -> i E t S e S
+        S -> a
+        E -> b
+        `
+        
+        // 0: <T> 1:<E> 2:S 3:i 4:E 5:t 6:e 7:a 8:b 9:S'
+        var tokens = lexicalAnalysis.toTokens(gptext)
+        
+        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        
+        expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
+            new IndexGrammarProduction(2, [3, 4, 5, 2]),
+            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
+            new IndexGrammarProduction(2, [7]),
+            new IndexGrammarProduction(4, [8]),
+        ])).toEqual(true)
+        expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true])).toBe(true)
+
+        syntaxAnalysis.eliminateLeftRecursion()
+
+        expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true])
+        expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
+            new IndexGrammarProduction(2, [3, 4, 5, 2]),
+            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
+            new IndexGrammarProduction(2, [7]),
+            new IndexGrammarProduction(4, [8]),
+        ])).toEqual(true)
+
+
+        
+    })
+
+    test('SyntaxAnalysis.leftCommonFactor', ()=>{
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
         var c_ = new TokenType('c', 'c', true)
@@ -204,7 +254,7 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.leftCommonFactor(0, 2)).toEqual(null)
     })
 
-    test('SyntaxAnalysis.eliminateLeftRecursion 2', ()=>{
+    test('SyntaxAnalysis.leftFactoring 1', ()=>{
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
         var c_ = new TokenType('c', 'c', true)
@@ -243,7 +293,7 @@ describe('SyntaxAnalysis', ()  => {
         ])).toEqual(true)
     })
 
-    test('SyntaxAnalysis.eliminateLeftRecursion 3', ()=>{
+    test('SyntaxAnalysis.leftFactoring 2', ()=>{
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
         var c_ = new TokenType('c', 'c', true)
@@ -283,7 +333,7 @@ describe('SyntaxAnalysis', ()  => {
         ])).toEqual(true)
     })
 
-    test('SyntaxAnalysis.eliminateLeftRecursion 4', ()=>{
+    test('SyntaxAnalysis.leftFactoring 3', ()=>{
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
         var c_ = new TokenType('c', 'c', true)
@@ -324,7 +374,7 @@ describe('SyntaxAnalysis', ()  => {
     })
 
 
-    test('SyntaxAnalysis.eliminateLeftRecursion 5', ()=>{
+    test('SyntaxAnalysis.leftFactoring 4', ()=>{
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
         var c_ = new TokenType('c', 'c', true)
@@ -369,6 +419,56 @@ describe('SyntaxAnalysis', ()  => {
             new IndexGrammarProduction(10, [6]),
             new IndexGrammarProduction(10, [5, 9]),
         ])).toEqual(true)
+    })
+
+    test('SyntaxAnalysis.leftFactoring 5', ()=>{
+        var i_ = new TokenType('i', 'i', true)
+        var t_ = new TokenType('t', 't', true)
+        var e_ = new TokenType('e', 'e', true)
+        var a_ = new TokenType('a', 'a', true)
+        var b_ = new TokenType('b', 'b', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            i_, t_, e_, a_, b_,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+        var gptext = `
+        S -> i E t S
+        S -> i E t S e S
+        S -> a
+        E -> b
+        `
+        
+        // 0: <T> 1:<E> 2:S 3:i 4:E 5:t 6:e 7:a 8:b 9:S'
+        var tokens = lexicalAnalysis.toTokens(gptext)
+        
+        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        
+        expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
+            new IndexGrammarProduction(2, [3, 4, 5, 2]),
+            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
+            new IndexGrammarProduction(2, [7]),
+            new IndexGrammarProduction(4, [8]),
+        ])).toEqual(true)
+        expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true])).toBe(true)
+
+        syntaxAnalysis.leftFactoring()
+        expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true ,true])
+        expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
+            new IndexGrammarProduction(2, [3, 4, 5, 2, 9]),
+            new IndexGrammarProduction(2, [7]),
+            new IndexGrammarProduction(9, [6, 2]),
+            new IndexGrammarProduction(9, [1]),
+            new IndexGrammarProduction(4, [8]),
+        ])).toEqual(true)
+
+
+        
     })
 })
   

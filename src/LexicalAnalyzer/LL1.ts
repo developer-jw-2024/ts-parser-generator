@@ -1,5 +1,5 @@
 import { SyntaxAnalysis } from "../SyntaxAnalysis/SyntaxAnalysis";
-import { LexicalAnalysis, Token } from "./LexicalAnalysis";
+import { LexicalAnalysis, Token, TokenType } from "./LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 
 export class LL1LexicalAnalysis extends SyntaxAnalysis {
@@ -13,6 +13,8 @@ export class LL1LexicalAnalysis extends SyntaxAnalysis {
     
     constructor(tokens : Array<Token>) {
         super(tokens)
+        this.eliminateLeftRecursion()
+        this.leftFactoring()
         this.calculateFirst()
         this.calculateFollow()
         this.calculateFirstOfGrammaProductions()
@@ -169,7 +171,30 @@ export class LL1LexicalAnalysis extends SyntaxAnalysis {
                 }
             }
         }
-        return result
+        return result && this.isCanTerminatedLL1()
+    }
+
+    isCanTerminatedLL1() {
+        var isValidLL1 : boolean = true
+        var hasTerminated : boolean = false
+        for (var i=0;i<this.tokens.length;i++) {
+            for (var j=0;j<this.tokens.length;j++) {
+                if (this.predictiveParsingTable[i][j].length>0) {
+                    var gps = this.predictiveParsingTable[i][j]
+                    // console.log(this.tokens[j].type, TokenType.TERMINATED_TOKENTYPE, this.tokens[j].type.isEqual(TokenType.TERMINATED_TOKENTYPE))
+                    if (this.tokens[j].type.isEqual(TokenType.TERMINATED_TOKENTYPE)) {
+                        hasTerminated = true
+                    }
+                    if (gps.length>1) {
+                        isValidLL1 = false
+                    }
+                }
+            }
+        }
+        if (!hasTerminated) {
+            isValidLL1 = false
+        }
+        return isValidLL1
     }
 
     constructLL1PredictiveParsingTable() {
@@ -216,5 +241,45 @@ export class LL1LexicalAnalysis extends SyntaxAnalysis {
         }
 
 
+    }
+
+    isValid(lexicalAnalysis : LexicalAnalysis, inputString : string) {
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+        var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
+
+        var inputTokens : Array<Token> = lexicalAnalysis.toTokens(inputString)
+        inputTokens.push(Token.TERMINATED_TOKEN)
+        var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
+        var stack : Array<number> = [indexOfTerminatedToken, this.getIndexOfToken(this.startSymbol)]
+        var X : number = stack[stack.length-1]
+        var ip : number = 0
+        
+        while (X!=indexOfTerminatedToken) {
+            console.log('stack:', stack, 'ip:', ip, 'X:', X, 'a:',input[ip])
+            if (X==input[ip]) {
+                var matchTokenIndex = stack.pop()
+                console.log("Match: ", this.tokens[matchTokenIndex].toSimpleString())
+                ip++
+            } else if (this.tokens[X].type.isTerminal) {
+                console.log('error input 1', this.tokens[X])
+            } else if (this.predictiveParsingTable[X][input[ip]].length==0) {
+                console.log('error input 2')
+                return 
+            } else if (this.predictiveParsingTable[X][input[ip]].length==1) {
+                var pgi : number = this.predictiveParsingTable[X][input[ip]][0]
+                var gp = this.indexGrammerProductions[pgi]
+                console.log(this.grammerProductions[pgi].toSimpleString())
+                stack.pop()
+                var i : number = gp.factors.length-1
+                while (i>=0 && gp.factors[i]==indexOfEmptyToken) { i-- }
+                while (i>=0) {
+                    stack.push(gp.factors[i])
+                    i--
+                }
+            }
+            X  = stack[stack.length-1]
+        }
+        console.log('stack:', stack, 'ip:', ip, 'X:', X, 'a:',input[ip])
+        
     }
 }

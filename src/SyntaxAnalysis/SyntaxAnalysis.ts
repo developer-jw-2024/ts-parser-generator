@@ -82,6 +82,7 @@ export class SyntaxAnalysis {
 
     
     constructor(tokens : Array<Token>) {
+        
         var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
         this.tokens = [Token.TERMINATED_TOKEN, Token.EMPTY_TOKEN]
         
