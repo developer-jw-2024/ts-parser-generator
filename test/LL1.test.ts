@@ -476,4 +476,83 @@ describe('LL', () => {
 
     })
 
+    test('LL1LexicalAnalysis 6', () => {
+        var ob_ = new TokenType('(', '\\(', true)
+        var cb_ = new TokenType(')', '\\)', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            ob_, cb_,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = `
+        S -> ( S ) S
+        S -> <EMPTY>
+        `
+        var tokens = lexicalAnalysis.toTokens(value)
+        var ll1 = new LL1LexicalAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(true)
+        
+        expect(ll1.tokens.map(t=>{
+            return {
+                type : t.type.name,
+                value : t.value
+            }
+        })).toEqual([
+            {type : 'TERMINATED', value : '<TERMINATED>'},
+            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : 'GrammarSymbol', value : 'S'},
+            {type : '(', value : '('},
+            {type : ')', value : ')'},
+        ])
+
+        expect(ll1.first).toEqual([
+            [0], //<TERMINATED>
+            [1], //<EMPTY>
+            [1,3], //S
+            [3], //(
+            [4], //)
+        ])
+
+        expect(ll1.follow).toEqual([
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [0,4],//S 2
+            [3],//( 3
+            [3,0,4],//) 4
+        ])
+
+        expect(ll1.firstOfGrammaProduction).toEqual([
+            [3], 
+            [1], 
+        ])
+
+        var m : Array<string> = []
+        for (var i=0;i<ll1.tokens.length;i++) {
+            for (var j=0;j<ll1.tokens.length;j++) {
+                if (ll1.predictiveParsingTable[i][j].length>0) {
+                    var A = ll1.tokens[i].toSimpleString()
+                    var a = ll1.tokens[j].toSimpleString()
+                    var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
+                        return ll1.grammerProductions[pgi].toSimpleString()
+                    }).join('/')
+                    m.push(`${A} ${a} ${gps}`)
+                }
+            }
+        }
+
+        var m2 : Array<string> = [
+            "S <TERMINATED> S -> <EMPTY>",
+            "S ( S -> ( S ) S",
+            "S ) S -> <EMPTY>"
+        ]
+
+        expect(isSetEqual(m, m2)).toBe(true)
+
+    })
 })

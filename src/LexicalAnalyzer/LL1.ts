@@ -255,20 +255,21 @@ export class LL1LexicalAnalysis extends SyntaxAnalysis {
         var ip : number = 0
         
         while (X!=indexOfTerminatedToken) {
-            console.log('stack:', stack, 'ip:', ip, 'X:', X, 'a:',input[ip])
+            // console.log('stack:', stack, 'ip:', ip, 'X:', X, 'a:',input[ip])
             if (X==input[ip]) {
                 var matchTokenIndex = stack.pop()
-                console.log("Match: ", this.tokens[matchTokenIndex].toSimpleString())
+                // console.log("Match: ", this.tokens[matchTokenIndex].toSimpleString())
                 ip++
             } else if (this.tokens[X].type.isTerminal) {
                 console.log('error input 1', this.tokens[X])
+                return 
             } else if (this.predictiveParsingTable[X][input[ip]].length==0) {
                 console.log('error input 2')
                 return 
             } else if (this.predictiveParsingTable[X][input[ip]].length==1) {
                 var pgi : number = this.predictiveParsingTable[X][input[ip]][0]
                 var gp = this.indexGrammerProductions[pgi]
-                console.log(this.grammerProductions[pgi].toSimpleString())
+                // console.log(this.grammerProductions[pgi].toSimpleString())
                 stack.pop()
                 var i : number = gp.factors.length-1
                 while (i>=0 && gp.factors[i]==indexOfEmptyToken) { i-- }
@@ -279,7 +280,7 @@ export class LL1LexicalAnalysis extends SyntaxAnalysis {
             }
             X  = stack[stack.length-1]
         }
-        console.log('stack:', stack, 'ip:', ip, 'X:', X, 'a:',input[ip])
+        // console.log('stack:', stack, 'ip:', ip, 'X:', X, 'a:',input[ip])
         
     }
 }
