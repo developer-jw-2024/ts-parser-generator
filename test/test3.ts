@@ -6,7 +6,7 @@ import { FiniteAutomatonPath, NFA, TransferChar } from '../src/LexicalAnalyzer/N
 import { isSetEqual, minus } from '../src/Utils/SetUtils'
 import { FileUtils } from '../src/Utils/FileUtil'
 import { SyntaxAnalysis } from "../src/SyntaxAnalysis/SyntaxAnalysis"
-import { LL1LexicalAnalysis } from "../src/LexicalAnalyzer/LL1"
+import { LL1LexicalAnalysis } from "../src/SyntaxAnalysis/LL1"
 
 var PLUS = new TokenType('PLUS', '\\+', true)
 var STAR = new TokenType('STAR', '\\*', true)

@@ -1,8 +1,8 @@
-import { SyntaxAnalysis } from "../SyntaxAnalysis/SyntaxAnalysis";
-import { LexicalAnalysis, Token, TokenType } from "./LexicalAnalysis";
+import { SyntaxAnalysis } from "./SyntaxAnalysis";
+import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 
-export class LL1LexicalAnalysis extends SyntaxAnalysis {
+export class LL1SyntaxAnalysis extends SyntaxAnalysis {
 
     //Map<tokens.index, [tokens.index]
     first : Array<Array<number>> = new Array<Array<number>>()

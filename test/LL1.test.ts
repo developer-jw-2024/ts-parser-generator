@@ -5,11 +5,11 @@ import { FiniteAutomatonPath, NFA, TransferChar } from '../src/LexicalAnalyzer/N
 import { isSetEqual, minus } from '../src/Utils/SetUtils'
 import { FileUtils } from '../src/Utils/FileUtil'
 import { SyntaxAnalysis } from "../src/SyntaxAnalysis/SyntaxAnalysis"
-import { LL1LexicalAnalysis } from "../src/LexicalAnalyzer/LL1"
+import { LL1SyntaxAnalysis } from "../src/SyntaxAnalysis/LL1"
 
 
 describe('LL', () => {
-    test('LL1LexicalAnalysis 1', () => {
+    test('LL1SyntaxAnalysis 1', () => {
         var PLUS = new TokenType('PLUS', '\\+', true)
         var STAR = new TokenType('STAR', '\\*', true)
         var ID = new TokenType('ID', 'id', true)
@@ -32,7 +32,7 @@ describe('LL', () => {
 
         var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
         var tokens = lexicalAnalysis.toTokens(value)
-        var ll1 = new LL1LexicalAnalysis(tokens)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
         expect(ll1.isLL1()).toEqual(true)
         
         expect(ll1.tokens.map(t=>{
@@ -131,7 +131,7 @@ describe('LL', () => {
 
     })
     
-    test('LL1LexicalAnalysis.isValid', () => {
+    test('LL1SyntaxAnalysis.isValid', () => {
         var PLUS = new TokenType('PLUS', '\\+', true)
         var STAR = new TokenType('STAR', '\\*', true)
         var ID = new TokenType('ID', 'id', true)
@@ -154,7 +154,7 @@ describe('LL', () => {
 
         var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
         var tokens = ll1LexicalAnalysis.toTokens(value)
-        var ll1 = new LL1LexicalAnalysis(tokens)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
         expect(ll1.isLL1()).toEqual(true)
 
         
@@ -172,7 +172,7 @@ describe('LL', () => {
 
     })
     
-    test('LL1LexicalAnalysis 2', () => {
+    test('LL1SyntaxAnalysis 2', () => {
         var i_ = new TokenType('i', 'i', true)
         var t_ = new TokenType('t', 't', true)
         var e_ = new TokenType('e', 'e', true)
@@ -191,7 +191,7 @@ describe('LL', () => {
 
         var value = FileUtils.readFromFileSystem('./test/NOT_LL1_Test.txt')
         var tokens = lexicalAnalysis.toTokens(value)
-        var ll1 = new LL1LexicalAnalysis(tokens)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
         expect(ll1.tokens.map(t=>{
@@ -286,7 +286,7 @@ describe('LL', () => {
 
     })
 
-    test('LL1LexicalAnalysis 3', () => {
+    test('LL1SyntaxAnalysis 3', () => {
         var i_ = new TokenType('i', 'i', true)
         var t_ = new TokenType('t', 't', true)
         var e_ = new TokenType('e', 'e', true)
@@ -307,7 +307,7 @@ describe('LL', () => {
         S -> a S
         `
         var tokens = lexicalAnalysis.toTokens(value)
-        var ll1 = new LL1LexicalAnalysis(tokens)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
         expect(ll1.tokens.map(t=>{
@@ -362,7 +362,7 @@ describe('LL', () => {
 
     })
 
-    test('LL1LexicalAnalysis 4', () => {
+    test('LL1SyntaxAnalysis 4', () => {
         var i_ = new TokenType('i', 'i', true)
         var t_ = new TokenType('t', 't', true)
         var e_ = new TokenType('e', 'e', true)
@@ -384,14 +384,14 @@ describe('LL', () => {
         `
         var tokens = lexicalAnalysis.toTokens(value)
         try {
-            var ll1 = new LL1LexicalAnalysis(tokens)
+            var ll1 = new LL1SyntaxAnalysis(tokens)
         } catch(error) {
             expect(error.message).toEqual('Can not eliminate the immediate left recursion')
         }
     
     })
 
-    test('LL1LexicalAnalysis 5', () => {
+    test('LL1SyntaxAnalysis 5', () => {
         var i_ = new TokenType('i', 'i', true)
         var t_ = new TokenType('t', 't', true)
         var e_ = new TokenType('e', 'e', true)
@@ -413,7 +413,7 @@ describe('LL', () => {
         A -> b S
         `
         var tokens = lexicalAnalysis.toTokens(value)
-        var ll1 = new LL1LexicalAnalysis(tokens)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
         expect(ll1.tokens.map(t=>{
@@ -476,7 +476,7 @@ describe('LL', () => {
 
     })
 
-    test('LL1LexicalAnalysis 6', () => {
+    test('LL1SyntaxAnalysis 6', () => {
         var ob_ = new TokenType('(', '\\(', true)
         var cb_ = new TokenType(')', '\\)', true)
 
@@ -495,7 +495,7 @@ describe('LL', () => {
         S -> <EMPTY>
         `
         var tokens = lexicalAnalysis.toTokens(value)
-        var ll1 = new LL1LexicalAnalysis(tokens)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
         expect(ll1.isLL1()).toEqual(true)
         
         expect(ll1.tokens.map(t=>{

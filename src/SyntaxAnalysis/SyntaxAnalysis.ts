@@ -2,7 +2,7 @@ import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAna
 import { isListEqual } from "../Utils/ArrayListUtils"
 import { isSetEqual } from "../Utils/SetUtils"
 
-function nextGrammarSymbolByName(tokenName: string) : string {
+export function nextGrammarSymbolByName(tokenName: string) : string {
     
     var i = tokenName.length-1
     while (tokenName[i]>='0' && tokenName[i]<='9' && i>=0) {
@@ -16,7 +16,7 @@ function nextGrammarSymbolByName(tokenName: string) : string {
     return tokenName.substring(0, i+1)+n
 }
 
-function nextGrammarSymbol(tokenName: string, tokens : Array<Token>) : string {
+export function nextGrammarSymbol(tokenName: string, tokens : Array<Token>) : string {
     
     var newTokenName : string = nextGrammarSymbolByName(tokenName)  
     while (isValueInTokens(newTokenName, tokens)) {
@@ -25,7 +25,7 @@ function nextGrammarSymbol(tokenName: string, tokens : Array<Token>) : string {
     return newTokenName
 }
 
-function isValueInTokens(value : string, tokens : Array<Token>) : boolean {
+export function isValueInTokens(value : string, tokens : Array<Token>) : boolean {
     return tokens.filter(t=>t.value==value).length>0
 }
 
@@ -44,6 +44,17 @@ export class GrammarProduction {
 
     toSimpleString() {
         return `${this.symbol.toSimpleString()} -> ${this.factors.map(t=>t.toSimpleString()).join(' ')}`
+    }
+
+    toSimpleStringWithDot(dotPos : number) {
+        return `${this.symbol.toSimpleString()} -> ${this.factors.map((t, i, array)=>{
+            if (i==dotPos) {
+                return '⏺ '+t.toSimpleString()
+            } else if (i==array.length-1 && dotPos==array.length) {
+                return t.toSimpleString()+' ⏺'
+            } 
+            return t.toSimpleString()
+        }).join(' ')}`
     }
 }
 
