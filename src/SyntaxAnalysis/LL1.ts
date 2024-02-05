@@ -4,11 +4,6 @@ import { intersection, union } from "../Utils/SetUtils"
 
 export class LL1SyntaxAnalysis extends SyntaxAnalysis {
 
-    //Map<tokens.index, [tokens.index]
-    first : Array<Array<number>> = new Array<Array<number>>()
-    follow : Array<Array<number>> = new Array<Array<number>>()
-    
-    firstOfGrammaProduction : Array<Array<number>> = new Array<Array<number>>()
     predictiveParsingTable : Array<Array<Array<number>>> = []
     
     constructor(tokens : Array<Token>) {
@@ -21,130 +16,7 @@ export class LL1SyntaxAnalysis extends SyntaxAnalysis {
         this.constructLL1PredictiveParsingTable()
     }
 
-    calculateFollow() {
-        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
-        var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
-        this.follow = new Array<Array<number>>()
-        for (var i=0;i<this.tokens.length;i++) {
-            this.follow[i] = []
-        }
-        this.follow[this.indexOfStartSymbl] = [indexOfTerminatedToken]
-
-        var modifiedFlag = true
-        while (modifiedFlag) {
-            modifiedFlag = false
-            for (var i=0;i<this.indexGrammerProductions.length;i++) {
-                var gp = this.indexGrammerProductions[i]
-                
-                for (var j=0;j<gp.factors.length-1;j++) {
-                    var indexOfCurrent = gp.factors[j]
-                    var firstOfLatter = this.first[gp.factors[j+1]]
-                    firstOfLatter.forEach(n=>{
-                        if (n!=indexOfEmptyToken && this.follow[indexOfCurrent].indexOf(n)==-1) {
-                            this.follow[indexOfCurrent].push(n)
-                            modifiedFlag = true
-                        }
-                    })
-                }
-
-                var continueFlag = true
-                for (var j=gp.factors.length-1;continueFlag && j>=0;j--) {
-                    var indexOfCurrent = gp.factors[j]
-                    if (indexOfCurrent!=indexOfEmptyToken) {
-                        this.follow[gp.symbol].forEach(n=>{
-                            if (this.follow[indexOfCurrent].indexOf(n)==-1) {
-                                this.follow[indexOfCurrent].push(n)
-                                modifiedFlag = true
-                            }
-                        })
-                        continueFlag = this.first[indexOfCurrent].indexOf(indexOfEmptyToken)>=0    
-                    }
-                }
-            }
-        }
-
-
-
-    }
-
-    showFollow() {
-        console.log('Follow')
-        for (var i=0;i<this.tokens.length;i++) {
-            console.log(`${i}) `, this.tokens[i].toString(), this.follow[i])
-        }
-
-    }
-
-    calculateFirst() {
-        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
-        this.first = new Array<Array<number>>()
-        for (var i=0;i<this.tokens.length;i++) {
-            this.first[i] = []
-        }
-        for (var i=0;i<this.tokens.length;i++) {
-            if (this.tokens[i].type.isTerminal) {
-                this.first[i].push(i)
-            }
-        }
-        for (var i=0;i<this.indexGrammerProductions.length;i++) {
-            var pg = this.indexGrammerProductions[i]
-            if (pg.factors.length==1 && pg.factors[0]==indexOfEmptyToken && this.first[pg.symbol].indexOf(indexOfEmptyToken)==-1) {
-                this.first[pg.symbol].push(indexOfEmptyToken)
-            }
-        }
-
-        var modifiedFlag = true
-        while (modifiedFlag) {
-            modifiedFlag = false
-            for (var i=0;i<this.indexGrammerProductions.length;i++) {
-                var gp = this.indexGrammerProductions[i]
-                
-                var continueFlag = true
-                for (var j=0;continueFlag && j<gp.factors.length;j++) {
-                    continueFlag = this.first[gp.factors[j]].indexOf(indexOfEmptyToken)>=0
-                    this.first[gp.factors[j]].forEach(n=>{
-                        if (this.first[gp.symbol].indexOf(n)==-1) {
-                            this.first[gp.symbol].push(n)
-                            modifiedFlag = true
-                        }
-                    })
-                }
-            }
-        }
-    }
-
-    showFirst() {
-        console.log("First")
-        for (var i=0;i<this.tokens.length;i++) {
-            console.log(`${i}) `, this.tokens[i].toString(), this.first[i])
-        }
-    }
-
-    calculateFirstOfGrammaProductions() {
-        this.firstOfGrammaProduction  = new Array<Array<number>>()
-        for (var i=0;i<this.indexGrammerProductions.length;i++) {
-            var gp = this.indexGrammerProductions[i]
-            this.firstOfGrammaProduction[i] = this.getFirst(gp.factors)
-        }
-    }
-
-    getFirst(indexOfTokens : Array<number>) : Array<number> {
-        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
-        var result : Array<number> = []
-        var continueFlag = true
-        for (var i=0;continueFlag && i<indexOfTokens.length;i++) {
-            var tokenNo = indexOfTokens[i]
-            if (tokenNo==indexOfEmptyToken) {
-                if (result.indexOf(tokenNo)==-1) result.push(tokenNo)
-            }
-            this.first[tokenNo].forEach(n=>{
-                if (result.indexOf(n)==-1) result.push(n)
-            })
-            continueFlag = this.first[tokenNo].indexOf(indexOfEmptyToken)>=0
-        }
-        return result
-    }
 
     isLL1() : boolean {
 

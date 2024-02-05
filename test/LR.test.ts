@@ -30,6 +30,7 @@ describe('Lr', () => {
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
         var tokens = lexicalAnalysis.toTokens(value)
         var lrSyntaxAnalysis = new LRSyntaxAnalysis(tokens)
-        console.log(lrSyntaxAnalysis.grammerProductions.map(gp=>gp.toString()).join('\n'))
+        // lrSyntaxAnalysis.states
+        // console.log(lrSyntaxAnalysis.grammerProductions.map(gp=>gp.toString()).join('\n'))
     })
 })

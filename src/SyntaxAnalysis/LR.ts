@@ -49,12 +49,36 @@ export class LRItemSet {
     }
 }
 
+export enum LRActionType {
+    SHIFT,
+    REDUCE,
+    ACCEPT,
+    GOTO,
+    ERROR
+}
+
+export class LRAction {
+    type : LRActionType
+    value : number
+
+    constructor(type : LRActionType, value : number) {
+        this.type = type
+        this.value = value
+    }
+}
+
 export class LRSyntaxAnalysis extends SyntaxAnalysis {
     states : Array<LRItemSet> = []
+    acceptIndexGrammarProduction : IndexGrammarProduction | null = null
+    acceptState : LRItemSet | null = null
+    actions : Array<Array<LRAction>> = []
 
     constructor(tokens : Array<Token>) {
         super(tokens)
         this.argument()
+        this.calculateFirst()
+        this.calculateFollow()
+        this.calculateFirstOfGrammaProductions()
 
         var numOfGrammerProduction : number = this.indexGrammerProductions.findIndex((gp, i)=>gp.symbol==this.indexOfStartSymbl)
         var lrItem = new LRItem(numOfGrammerProduction, 0)
@@ -63,6 +87,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         this.states = []
         this.states.push(lrState2)
 
+        this.actions = []
+       
         
         var road : Array<Array<number>> = []
         var source : number = 0
@@ -74,20 +100,60 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 var destState = this.goto(sourceState, symbol)
                 var destination : number = this.states.findIndex(s=>s.isEqual(destState))
                 if (destination==-1) {
-                    this.states.push(destState)
-                    destination = this.states.length-1
+                    if (this.acceptState.isEqual(destState)) {
+                        road[source] = road[source] || []
+                        if (road[source][destination]) {
+                            throw new Error(`duplicated transfer char for ${source}-${destination}`)
+                        }
+                        road[source][destination] = symbol
+                        // console.log(source, this.tokens[symbol].toSimpleString(), destination)
+                        if (this.tokens[symbol].type.isTerminal) {
+                            this.actions[source] = this.actions[source] || []
+                            this.actions[source][symbol] = new LRAction(LRActionType.ACCEPT, destination)
+                            // console.log(source, this.tokens[symbol].toSimpleString(), 'ACCEPT', destination)
+                        }    
+                    } else {
+                        this.states.push(destState)
+                        destination = this.states.length-1    
+
+                        for (var j=0;j<destState.items.length;j++) {
+                            var item = destState.items[j]
+                            var igp = this.indexGrammerProductions[item.numOfGrammerProduction]
+                            if (igp.factors.length==item.dotPos) {
+                                var follows = this.follow[igp.symbol]
+                                for (var k=0;k<follows.length;k++) {
+                                    this.actions[destination] = this.actions[destination] || []
+                                    this.actions[destination][follows[k]] = new LRAction(LRActionType.REDUCE, item.numOfGrammerProduction)
+                                    // console.log(destination, this.tokens[follows[k]].toSimpleString(), 'REDUCE', item.numOfGrammerProduction+1, this.grammerProductions[item.numOfGrammerProduction].toSimpleString())
+                                }
+                            }
+                        }
+    
+                    }
+                    // console.log(this.showLRItemSet(destState), this.acceptState.isEqual(destState))
                 }
-                road[source] = road[source] || []
-                if (road[source][destination]) {
-                    throw new Error(`duplicated transfer char for ${source}-${destination}`)
+                if (destination!=-1) {
+                    road[source] = road[source] || []
+                    if (road[source][destination]) {
+                        throw new Error(`duplicated transfer char for ${source}-${destination}`)
+                    }
+                    road[source][destination] = symbol
+                    this.actions[source] = this.actions[source] || []
+                    // console.log(source, this.tokens[symbol].toSimpleString(), destination)
+                    if (this.tokens[symbol].type.isTerminal) {
+                        this.actions[source][symbol] = new LRAction(LRActionType.SHIFT, destination)
+                        // console.log(source, this.tokens[symbol].toSimpleString(), 'Shift', destination)
+                    } else {
+                        this.actions[source][symbol] = new LRAction(LRActionType.GOTO, destination)
+                        // console.log(source, this.tokens[symbol].toSimpleString(), 'GOTO', destination)
+                    }
+
+            
                 }
-                road[source][destination] = symbol
-                console.log(source, this.tokens[symbol].toSimpleString(), destination)
             }
             source++
         }
         
-        console.log(this.states.length)
     }
 
     showLRItemSet(lrItemSet : LRItemSet) {
@@ -155,6 +221,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         this.grammerProductions.push(new GrammarProduction(newStartSymbol, [this.startSymbol, Token.TERMINATED_TOKEN]))
         this.indexGrammerProductions.push(new IndexGrammarProduction(newIndexOfStartSymbol, [this.indexOfStartSymbl, this.getIndexOfToken(Token.TERMINATED_TOKEN)]))
         this.indexGrammerProductionFlags.push(true)
+        this.acceptIndexGrammarProduction = new IndexGrammarProduction(newIndexOfStartSymbol, [this.indexOfStartSymbl])
+        this.acceptState = new LRItemSet([new LRItem(this.indexGrammerProductions.length-1, 2)])
         this.startSymbol = newStartSymbol
         this.indexOfStartSymbl = newIndexOfStartSymbol
     }
