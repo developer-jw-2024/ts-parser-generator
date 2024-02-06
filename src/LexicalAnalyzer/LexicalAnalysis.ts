@@ -75,9 +75,9 @@ export class LexicalAnalysis {
         var nfa_finiteAutomatonPaths : Array<FiniteAutomatonPath> = []
 
         for (var i=0;i<tokenTypes.length;i++) {
-            var token : TokenType = tokenTypes[i]
+            var tokenType : TokenType = tokenTypes[i]
 
-            var dfa = token.regularExpression.dfa
+            var dfa = tokenType.regularExpression.dfa
             dfa.deltaNodeNumber(numOfNodes)
 
             numOfNodes+=dfa.getNumberOfNodes()

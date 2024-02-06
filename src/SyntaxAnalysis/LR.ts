@@ -79,7 +79,85 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         this.calculateFirst()
         this.calculateFollow()
         this.calculateFirstOfGrammaProductions()
+        this.calculateActions()
+        
+    }
 
+    isValid(lexicalAnalysis : LexicalAnalysis, inputString : string) {
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+        var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
+
+        var inputTokens : Array<Token> = lexicalAnalysis.toTokens(inputString)
+        inputTokens.push(Token.TERMINATED_TOKEN)
+        var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
+        var stack : Array<number> = [0]
+        var symbols : Array<number> = [indexOfTerminatedToken]
+
+        var i : number = 0
+        var flag : boolean | null = null
+        
+        var a : number = input[i]
+        var s : number = stack[stack.length-1]
+    
+        while (flag==null) {
+            a = input[i]
+            s = stack[stack.length-1]
+            var action : LRAction = this.actions[s][a]    
+
+            var inputs : Array<string> = []
+            for (var j=i;j<inputTokens.length;j++) {
+                inputs.push(inputTokens[j].toSimpleString())
+            }
+
+            console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
+
+            if (action.type==LRActionType.SHIFT) {
+                stack.push(action.value)
+                symbols.push(a)
+                i++
+            } else if (action.type==LRActionType.REDUCE) {
+                var igp = action.value
+                var gp = this.indexGrammerProductions[igp]
+                var len = gp.factors.length
+                symbols = symbols.slice(0, symbols.length-len)
+                stack = stack.slice(0, stack.length-len)
+                var t : number = stack[stack.length-1]
+                var symbol : number = gp.symbol
+                var gotoAction : LRAction = this.actions[t][symbol]
+                if (gotoAction.type==LRActionType.GOTO) {
+                    stack.push(gotoAction.value)
+                    symbols.push(symbol)
+                } else {
+                    throw new Error('Parse Error')
+                }
+                // break
+            } else if (action.type==LRActionType.ACCEPT) {
+                flag = true
+            } else {
+                console.log('error', action)
+            }
+            // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
+        }
+        // console.log(this.tokens.map((t,i)=>`${i}: ${t.toSimpleString()}`).join('  '))
+        // console.log(inputString)
+        // console.log(input)
+
+    }
+
+    toActionString(action : LRAction) : string {
+        if (action.type==LRActionType.SHIFT) {
+            return `Shift ${action.value}`
+        }
+        if (action.type==LRActionType.REDUCE) {
+            return `Reduce ${this.grammerProductions[action.value].toSimpleString()}`
+        }
+        if (action.type==LRActionType.ACCEPT) {
+            return `Accept`
+        }
+        return 'ERROR'
+    }
+
+    calculateActions() {
         var numOfGrammerProduction : number = this.indexGrammerProductions.findIndex((gp, i)=>gp.symbol==this.indexOfStartSymbl)
         var lrItem = new LRItem(numOfGrammerProduction, 0)
         var lrItemSet = new LRItemSet([lrItem])
@@ -153,7 +231,6 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             }
             source++
         }
-        
     }
 
     showLRItemSet(lrItemSet : LRItemSet) {
