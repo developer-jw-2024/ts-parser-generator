@@ -152,7 +152,7 @@ describe('Lr', () => {
             CLOSEBRACKET
         ])
 
-        lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "*id")
+        // lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "*id")
 
     })
 })

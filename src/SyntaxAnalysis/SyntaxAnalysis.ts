@@ -83,6 +83,7 @@ export class SyntaxAnalysis {
     static ENTER = new TokenType('ENTER', '\n', true)
     static SPACES = new TokenType('SPACES', '[ \t]+', true)
     static GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",false)
+    static TerminatedGrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",true)
 
     startSymbol : Token
     indexOfStartSymbl : number
@@ -114,22 +115,43 @@ export class SyntaxAnalysis {
 
         this.indexGrammerProductions = new Array<IndexGrammarProduction>()
         this.indexGrammerProductionFlags = new Array<boolean>()
+
+        var nonTerminalSymbols : Array<number> = []
         for (var i=0;i<this.grammerProductions.length;i++) {
             var gp = this.grammerProductions[i]
             var indexOfToken = this.getIndexOfToken(gp.symbol)
             var indexArrayOfFactors = gp.factors.map(e=>this.getIndexOfToken(e))
             this.indexGrammerProductions.push(new IndexGrammarProduction(indexOfToken, indexArrayOfFactors))
             this.indexGrammerProductionFlags.push(true)
+            if (nonTerminalSymbols.indexOf(indexOfToken)==-1) nonTerminalSymbols.push(indexOfToken)
         }
 
         this.startSymbol = this.grammerProductions[0].symbol
         this.indexOfStartSymbl = this.indexGrammerProductions[0].symbol
 
+
+        for (var i=0;i<this.indexGrammerProductions.length;i++) {
+            var factors = this.indexGrammerProductions[i].factors
+            for (var j=0;j<factors.length;j++) {
+                var indexOfToken = factors[j]
+                if (this.tokens[indexOfToken].type.isEqual(SyntaxAnalysis.GrammarSymbol) &&
+                 nonTerminalSymbols.indexOf(factors[j])==-1
+                ) {
+                    this.tokens[indexOfToken].type = SyntaxAnalysis.TerminatedGrammarSymbol
+                }
+            }
+        }
         
     }
 
     getIndexOfToken(token : Token) : number {
-        return this.tokens.findIndex(e=>e.isEqual(token))
+        var result = this.tokens.findIndex(e=>e.isEqual(token))
+        if (result>=0) return result
+        return this.getIndexOfTokenByTokenName(token)
+    }
+
+    getIndexOfTokenByTokenName(token : Token) : number {
+        return this.tokens.findIndex(e=>e.value==token.type.name)
     }
 
     toGrammarProduction(list : Array<Token>, derivationToken : Token) : GrammarProduction {

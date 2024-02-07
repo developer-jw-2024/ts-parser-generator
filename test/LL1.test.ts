@@ -9,6 +9,124 @@ import { LL1SyntaxAnalysis } from "../src/SyntaxAnalysis/LL1"
 
 
 describe('LL', () => {
+    test('LL1SyntaxAnalysis 0', () => {
+        var PLUS = new TokenType('PLUS', '\\+', true)
+        var STAR = new TokenType('STAR', '\\*', true)
+        var ID = new TokenType('ID', 'id', true)
+        var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
+        var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
+        var tokens = lexicalAnalysis.toTokens(value)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(true)
+        
+        expect(ll1.tokens.map(t=>{
+            return {
+                type : t.type.name,
+                isTerminal : t.type.isTerminal,
+                value : t.value
+            }
+        })).toEqual([
+            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
+            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: false, type : 'GrammarSymbol', value : 'E'},
+            {isTerminal: false,type : 'GrammarSymbol', value : 'T'},
+            {isTerminal: false,type : 'GrammarSymbol', value : 'E\''},
+            {isTerminal: true,type : 'GrammarSymbol', value : '+'},
+            {isTerminal: false,type : 'GrammarSymbol', value : 'F'},
+            {isTerminal: false,type : 'GrammarSymbol', value : 'T\''},
+            {isTerminal: true,type : 'GrammarSymbol', value : '*'},
+            {isTerminal: true,type : 'GrammarSymbol', value : '('},
+            {isTerminal: true,type : 'GrammarSymbol', value : ')'},
+            {isTerminal: true,type : 'GrammarSymbol', value : 'id'},
+        ])
+
+
+        expect(ll1.first).toEqual([
+            [0], //<TERMINATED>
+            [1], //<EMPTY>
+            [9, 11], //E
+            [9, 11], //T
+            [1, 5], //E'
+            [5], //+
+            [9, 11],  //F
+            [1, 8], //T'
+            [8], //*
+            [9], //(
+            [10], //)
+            [11] //id
+        ])
+
+        expect(ll1.follow).toEqual([
+            [], //<TERMINATED>
+            [],
+            [0, 10],
+            [5, 0, 10],
+            [0, 10],
+            [9, 11],
+            [8,5,0,10],
+            [5, 0, 10],
+            [9,11],
+            [9,11],
+            [8,5,0,10],
+            [8,5,0,10],
+        ])
+
+        expect(ll1.firstOfGrammaProduction).toEqual([
+            [9, 11], 
+            [5],
+            [1],
+            [9, 11],
+            [8],
+            [1], 
+            [9],
+            [11]
+        ])
+
+        var m : Array<string> = []
+        for (var i=0;i<ll1.tokens.length;i++) {
+            for (var j=0;j<ll1.tokens.length;j++) {
+                if (ll1.predictiveParsingTable[i][j].length>0) {
+                    var A = ll1.tokens[i].toSimpleString()
+                    var a = ll1.tokens[j].toSimpleString()
+                    var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
+                        return ll1.grammerProductions[pgi].toSimpleString()
+                    }).join('/')
+                    m.push(`${A} ${a} ${gps}`)
+                }
+            }
+        }
+
+        var m2 : Array<string> = [
+            "F id F -> id",
+            "F ( F -> ( E )",
+            "T' + T' -> <EMPTY>",
+            "T' * T' -> * F T'",
+            "T' ) T' -> <EMPTY>",
+            "T' <TERMINATED> T' -> <EMPTY>",
+            "T id T -> F T'",
+            "T ( T -> F T'",
+            "E' + E' -> + T E'",
+            "E' ) E' -> <EMPTY>",
+            "E' <TERMINATED> E' -> <EMPTY>",
+            "E id E -> T E'",
+            "E ( E -> T E'"
+        ]
+
+        expect(isSetEqual(m, m2)).toBe(true)
+
+    })
+
     test('LL1SyntaxAnalysis 1', () => {
         var PLUS = new TokenType('PLUS', '\\+', true)
         var STAR = new TokenType('STAR', '\\*', true)
@@ -171,6 +289,43 @@ describe('LL', () => {
         
 
     })
+
+    test('LL1SyntaxAnalysis.isValid-1', () => {
+
+        var ll1LexicalAnalysis = new LexicalAnalysis([
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
+        var tokens = ll1LexicalAnalysis.toTokens(value)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(true)
+
+        // console.log(ll1.tokens.map((t, i)=>`${i}:${t.toSimpleString()}`).join(' '))
+        var PLUS = new TokenType('+', '\\+', true)
+        var STAR = new TokenType('*', '\\*', true)
+        var ID = new TokenType('id', '[0-9]+', true)
+        var OPENBRACKET = new TokenType('(', '\\(', true)
+        var CLOSEBRACKET = new TokenType(')', '\\)', true)
+
+        var languageLexicalAnalysis = new LexicalAnalysis([
+            PLUS,
+            STAR,
+            ID,
+            OPENBRACKET,
+            CLOSEBRACKET
+        ])
+        
+        
+        ll1.isValid(languageLexicalAnalysis, "1+2*3")
+        
+
+    })
     
     test('LL1SyntaxAnalysis 2', () => {
         var i_ = new TokenType('i', 'i', true)
@@ -286,6 +441,121 @@ describe('LL', () => {
 
     })
 
+    test('LL1SyntaxAnalysis 2-1', () => {
+        // var i_ = new TokenType('i', 'i', true)
+        // var t_ = new TokenType('t', 't', true)
+        // var e_ = new TokenType('e', 'e', true)
+        // var a_ = new TokenType('a', 'a', true)
+        // var b_ = new TokenType('b', 'b', true)
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            // i_, t_, a_, e_, b_,
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = FileUtils.readFromFileSystem('./test/NOT_LL1_Test.txt')
+        var tokens = lexicalAnalysis.toTokens(value)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(false)
+        
+        expect(ll1.tokens.map(t=>{
+            return {
+                type : t.type.name,
+                isTerminal : t.type.isTerminal,
+                value : t.value
+            }
+        })).toEqual([
+            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
+            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
+            {isTerminal: true, type : 'GrammarSymbol', value : 'i'},
+            {isTerminal: false, type : 'GrammarSymbol', value : 'E'},
+            {isTerminal: true, type : 'GrammarSymbol', value : 't'},
+            {isTerminal: false, type : 'GrammarSymbol', value : 'S\''},
+            {isTerminal: true, type : 'GrammarSymbol', value : 'a'},
+            {isTerminal: true, type : 'GrammarSymbol', value : 'e'},
+            {isTerminal: true, type : 'GrammarSymbol', value : 'b'},
+        ])
+
+        expect(ll1.first).toEqual([
+            [0], //<TERMINATED>
+            [1], //<EMPTY>
+            [3, 7], //S
+            [3], //i
+            [9], //E
+            [5], //t
+            [1,8],  //S'
+            [7], //a
+            [8], //e
+            [9], //b
+        ])
+
+        expect(ll1.follow).toEqual([
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [0, 8],//S 2
+            [9],//i 3
+            [5],//E 4
+            [3, 7],//t 5
+            [0, 8],//S' 6
+            [0, 8],//a 7
+            [3, 7],//e 8 
+            [5],//b 9
+        ])
+
+        expect(ll1.firstOfGrammaProduction).toEqual([
+            [3], 
+            [7],
+            [8],
+            [1],
+            [9],
+        ])
+
+        var m : Array<string> = []
+        var isValidLL1 : boolean = true
+        var hasTerminated : boolean = false
+        for (var i=0;i<ll1.tokens.length;i++) {
+            for (var j=0;j<ll1.tokens.length;j++) {
+                if (ll1.predictiveParsingTable[i][j].length>0) {
+                    var A = ll1.tokens[i].toSimpleString()
+                    var a = ll1.tokens[j].toSimpleString()
+                    var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
+                        return ll1.grammerProductions[pgi].toSimpleString()
+                    })
+                    if (ll1.tokens[j].type.name=='TERMINATED') {
+                        hasTerminated = true
+                    }
+                    if (gps.length>0) {
+                        isValidLL1 = false
+                    }
+                    m.push(`${A} ${a} ${gps.join('/')}`)
+                }
+            }
+        }
+        if (!hasTerminated) {
+            isValidLL1 = false
+        }
+
+        var m2 : Array<string> = [
+            "S a S -> a",
+            "S i S -> i E t S S'",
+            "S' e S' -> e S/S' -> <EMPTY>",
+            "S' <TERMINATED> S' -> <EMPTY>",
+            "E b E -> b",
+        ]
+
+        // console.log(minus(m, m2))
+        // console.log(minus(m2, m))
+
+        expect(isSetEqual(m, m2)).toBe(true)
+
+    })
+
     test('LL1SyntaxAnalysis 3', () => {
         var i_ = new TokenType('i', 'i', true)
         var t_ = new TokenType('t', 't', true)
@@ -313,6 +583,77 @@ describe('LL', () => {
         expect(ll1.tokens.map(t=>{
             return {
                 type : t.type.name,
+                value : t.value
+            }
+        })).toEqual([
+            {type : 'TERMINATED', value : '<TERMINATED>'},
+            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : 'GrammarSymbol', value : 'S'},
+            {type : 'a', value : 'a'},
+        ])
+
+        expect(ll1.first).toEqual([
+            [0], //<TERMINATED>
+            [1], //<EMPTY>
+            [3], //S
+            [3], //a
+        ])
+
+        expect(ll1.follow).toEqual([
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [0],//S 2
+            [3],//a 3
+        ])
+
+        expect(ll1.firstOfGrammaProduction).toEqual([
+            [3], 
+        ])
+
+        var m : Array<string> = []
+        for (var i=0;i<ll1.tokens.length;i++) {
+            for (var j=0;j<ll1.tokens.length;j++) {
+                if (ll1.predictiveParsingTable[i][j].length>0) {
+                    var A = ll1.tokens[i].toSimpleString()
+                    var a = ll1.tokens[j].toSimpleString()
+                    var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
+                        return ll1.grammerProductions[pgi].toSimpleString()
+                    }).join('/')
+                    m.push(`${A} ${a} ${gps}`)
+                }
+            }
+        }
+
+        var m2 : Array<string> = [
+            "S a S -> a S",
+        ]
+
+        expect(isSetEqual(m, m2)).toBe(true)
+
+    })
+
+    test('LL1SyntaxAnalysis 3-1', () => {
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+
+        var value = `
+        S -> a S
+        `
+        var tokens = lexicalAnalysis.toTokens(value)
+        var ll1 = new LL1SyntaxAnalysis(tokens)
+        expect(ll1.isLL1()).toEqual(false)
+        
+        expect(ll1.tokens.map(t=>{
+            return {
+                type : t.type.name,
+                isTerminal : t.type.isTerminal,
                 value : t.value
             }
         })).toEqual([
