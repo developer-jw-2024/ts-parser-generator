@@ -123,6 +123,77 @@ describe('Lr', () => {
         
     })
 
+    test('LR 2', () => {
+        var lexicalAnalysis = new LexicalAnalysis([
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+        var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
+        var tokens = lexicalAnalysis.toTokens(value)
+        var lrSyntaxAnalysis = new LRSyntaxAnalysis(tokens)
+        expect(lrSyntaxAnalysis.states.length).toEqual(12)
+        // console.log(lrSyntaxAnalysis.tokens.filter(t=>!(t.type.isTerminal)).map((t,i)=>`${i}-${t.toSimpleString()}`).join('   '))
+        //0-<TERMINATED>   1-<EMPTY>   2-E   3-+   4-T   5-*   6-F   7-(   8-)   9-id   10-E1
+        expect(lrSyntaxAnalysis.actions[1][0]).toEqual({type: LRActionType.ACCEPT, value: -1})
+        // console.log(lrSyntaxAnalysis.grammerProductions.map(gp=>gp.toString()).join('\n'))
+        // expect(isSetEqual())
+        expect(isSetEqual(
+            convertActionList(lrSyntaxAnalysis),
+            [
+                '0 E Goto 1',
+                '0 T Goto 2',
+                '0 F Goto 3',
+                '0 ( Shift 4',
+                '0 id Shift 5',
+                '1 <TERMINATED> Accept -1',
+                '1 + Shift 6',
+                '2 <TERMINATED> Reduce 1',
+                '2 + Reduce 1',
+                '2 * Shift 7',
+                '2 ) Reduce 1',
+                '3 <TERMINATED> Reduce 3',
+                '3 + Reduce 3',
+                '3 * Reduce 3',
+                '3 ) Reduce 3',
+                '4 E Goto 8',
+                '4 T Goto 2',
+                '4 F Goto 3',
+                '4 ( Shift 4',
+                '4 id Shift 5',
+                '5 <TERMINATED> Reduce 5',
+                '5 + Reduce 5',
+                '5 * Reduce 5',
+                '5 ) Reduce 5',
+                '6 T Goto 9',
+                '6 F Goto 3',
+                '6 ( Shift 4',
+                '6 id Shift 5',
+                '7 F Goto 10',
+                '7 ( Shift 4',
+                '7 id Shift 5',
+                '8 + Shift 6',
+                '8 ) Shift 11',
+                '9 <TERMINATED> Reduce 0',
+                '9 + Reduce 0',
+                '9 * Shift 7',
+                '9 ) Reduce 0',
+                '10 <TERMINATED> Reduce 2',
+                '10 + Reduce 2',
+                '10 * Reduce 2',
+                '10 ) Reduce 2',
+                '11 <TERMINATED> Reduce 4',
+                '11 + Reduce 4',
+                '11 * Reduce 4',
+                '11 ) Reduce 4'
+              ]
+        )).toEqual(true)
+        
+    })
+
     test('LR isValid', () => {
         var PLUS = new TokenType('PLUS', '\\+', true)
         var STAR = new TokenType('STAR', '\\*', true)
@@ -153,6 +224,38 @@ describe('Lr', () => {
         ])
 
         // lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "*id")
+
+    })
+
+    test('LR isValid-1', () => {
+
+        var lexicalAnalysis = new LexicalAnalysis([
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalysis.DERIVATION,
+            SyntaxAnalysis.ENTER,
+            SyntaxAnalysis.SPACES,
+            SyntaxAnalysis.GrammarSymbol
+        ])
+
+        var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
+        var tokens = lexicalAnalysis.toTokens(value)
+        var lrSyntaxAnalysis = new LRSyntaxAnalysis(tokens)
+
+        var PLUS = new TokenType('+', '\\+', true)
+        var STAR = new TokenType('*', '\\*', true)
+        var ID = new TokenType('id', '[0-9]+', true)
+        var OPENBRACKET = new TokenType('(', '\\(', true)
+        var CLOSEBRACKET = new TokenType(')', '\\)', true)
+
+        var languageLexicalAnalysis = new LexicalAnalysis([
+            PLUS,
+            STAR,
+            ID,
+            OPENBRACKET,
+            CLOSEBRACKET
+        ])
+
+        lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "3+4*6")
 
     })
 })
