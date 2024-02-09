@@ -42,7 +42,7 @@ describe('SyntaxAnalysis', ()  => {
 
         var tokens = lexicalAnalysis.toTokens(gptext)
         // 0: <T> 1: <E> 2:S 3:A 4:a 5:b
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
@@ -81,7 +81,7 @@ describe('SyntaxAnalysis', ()  => {
 
         // 0: <T> 1: <E> 2:S 3:A 4:a 5:b
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4]),
@@ -123,7 +123,7 @@ describe('SyntaxAnalysis', ()  => {
         
         // 0: <T> 1:<E> 2:S 3:A 4:a 5:b 6:c 7:d
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4]),
@@ -170,7 +170,7 @@ describe('SyntaxAnalysis', ()  => {
         
         // 0: <T> 1:<E> 2:S 3:A 4:a 5:b 6:c 7:d
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4]),
@@ -222,7 +222,7 @@ describe('SyntaxAnalysis', ()  => {
         
         // 0: <T> 1:<E> 2:S 3:A 4:a 5:b 6:c 7:d
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4]),
@@ -270,7 +270,7 @@ describe('SyntaxAnalysis', ()  => {
         
         // 0: <T> 1:<E> 2:S 3:A 4:a 5:b 6:c 7:d
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4]),
@@ -325,7 +325,7 @@ describe('SyntaxAnalysis', ()  => {
         // 0: <T> 1:<E> 2:S 3:i 4:E 5:t 6:e 7:a 8:b 9:S'
         var tokens = lexicalAnalysis.toTokens(gptext)
         
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4, 5, 2]),
@@ -368,7 +368,7 @@ describe('SyntaxAnalysis', ()  => {
         // 0: <T> 1:<E> 2:S 3:i 4:E 5:t 6:e 7:a 8:b 9:S'
         var tokens = lexicalAnalysis.toTokens(gptext)
         
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4, 5, 2]),
@@ -422,7 +422,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         expect(syntaxAnalysis.leftCommonFactor(0, 1)).toEqual([3, 4])
         expect(syntaxAnalysis.leftCommonFactor(0, 2)).toEqual(null)
     })
@@ -446,7 +446,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         expect(syntaxAnalysis.leftCommonFactor(0, 1)).toEqual([3, 4])
         expect(syntaxAnalysis.leftCommonFactor(0, 2)).toEqual(null)
     })
@@ -466,7 +466,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         syntaxAnalysis.leftFactoring()
 
@@ -505,7 +505,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         syntaxAnalysis.leftFactoring()
 
@@ -544,7 +544,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         syntaxAnalysis.leftFactoring()
 
@@ -573,7 +573,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         syntaxAnalysis.leftFactoring()
 
@@ -613,7 +613,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         syntaxAnalysis.leftFactoring()
 
@@ -641,7 +641,7 @@ describe('SyntaxAnalysis', ()  => {
         `
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         syntaxAnalysis.leftFactoring()
 
@@ -683,7 +683,7 @@ describe('SyntaxAnalysis', ()  => {
          
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
 
         // console.log('---------------------------')
@@ -718,7 +718,7 @@ describe('SyntaxAnalysis', ()  => {
          
         
         var tokens = lexicalAnalysis.toTokens(gptext)
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
 
         // console.log('---------------------------')
@@ -762,7 +762,7 @@ describe('SyntaxAnalysis', ()  => {
         // 0: <T> 1:<E> 2:S 3:i 4:E 5:t 6:e 7:a 8:b 9:S'
         var tokens = lexicalAnalysis.toTokens(gptext)
         
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4, 5, 2]),
@@ -805,7 +805,7 @@ describe('SyntaxAnalysis', ()  => {
         // 0: <T> 1:<E> 2:S 3:i 4:E 5:t 6:e 7:a 8:b 9:S'
         var tokens = lexicalAnalysis.toTokens(gptext)
         
-        var syntaxAnalysis = new SyntaxAnalysis(tokens)
+        var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
             new IndexGrammarProduction(2, [3, 4, 5, 2]),

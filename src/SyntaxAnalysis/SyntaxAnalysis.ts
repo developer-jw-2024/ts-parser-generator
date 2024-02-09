@@ -97,8 +97,11 @@ export class SyntaxAnalysis {
     
     firstOfGrammaProduction : Array<Array<number>> = new Array<Array<number>>()
 
-    constructor(tokens : Array<Token>) {
-        
+    // constructor(tokens : Array<Token>) {
+    //     this.initWithTokens(tokens)
+    // }
+
+    initWithTokens(tokens : Array<Token>) : SyntaxAnalysis {
         var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
         this.tokens = [Token.TERMINATED_TOKEN, Token.EMPTY_TOKEN]
         
@@ -141,7 +144,7 @@ export class SyntaxAnalysis {
                 }
             }
         }
-        
+        return this
     }
 
     getIndexOfToken(token : Token) : number {

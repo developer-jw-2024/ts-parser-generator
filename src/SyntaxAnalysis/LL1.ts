@@ -6,17 +6,17 @@ export class LL1SyntaxAnalysis extends SyntaxAnalysis {
 
     predictiveParsingTable : Array<Array<Array<number>>> = []
     
-    constructor(tokens : Array<Token>) {
-        super(tokens)
+
+    initWithTokens(tokens : Array<Token>) : LL1SyntaxAnalysis {
+        super.initWithTokens(tokens)
         this.eliminateLeftRecursion()
         this.leftFactoring()
         this.calculateFirst()
         this.calculateFollow()
         this.calculateFirstOfGrammaProductions()
         this.constructLL1PredictiveParsingTable()
+        return this
     }
-
-
 
     isLL1() : boolean {
 

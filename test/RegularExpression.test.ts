@@ -1,7 +1,9 @@
-import { toChars, orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree } from '../src/LexicalAnalyzer/RegularExpression'
+import { toChars, orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree, RegularExpression } from '../src/LexicalAnalyzer/RegularExpression'
 
 
 describe('RegularExpression', ()  => {
+
+
     test('toChars', () => { 
         expect(toChars('\\')).toEqual([]);
         expect(toChars('')).toEqual([]);
@@ -19,6 +21,8 @@ describe('RegularExpression', ()  => {
         expect(toChars('[abc]cde')).toEqual(['[', 'a', 'b', 'c', ']', 'c', 'd', 'e'])
         expect(toChars('[^abc]cde')).toEqual(['[^', 'a', 'b', 'c', ']', 'c', 'd', 'e'])
         expect(toChars('[^a-zc]cde')).toEqual(['[^', 'a', '-', 'z' ,'c', ']', 'c', 'd', 'e']) 
+        expect(toChars('[^*]')).toEqual(['[^', '*', ']']);
+        expect(toChars('[^\\*]')).toEqual(['[^', '\\*', ']']);
     });
 
     test('getFollowTermIndex', () => {

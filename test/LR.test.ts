@@ -8,6 +8,9 @@ import { SyntaxAnalysis } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 import { LL1SyntaxAnalysis } from "../src/SyntaxAnalysis/LL1"
 import { LRAction, LRActionType, LRSyntaxAnalysis } from "../src/SyntaxAnalysis/LR"
 
+function appendToFixLen(value : string, len : number) : string {
+    return value + new Array(len-value.length).fill(0).map(t=>' ').join('')
+}
 function convertActionList(lrSyntaxAnalysis : LRSyntaxAnalysis) : Array<string> {
     var result : Array<string> = []
     var actions = lrSyntaxAnalysis.actions
@@ -63,7 +66,7 @@ describe('Lr', () => {
 
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
         var tokens = lexicalAnalysis.toTokens(value)
-        var lrSyntaxAnalysis = new LRSyntaxAnalysis(tokens)
+        var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
         expect(lrSyntaxAnalysis.states.length).toEqual(12)
         // console.log(lrSyntaxAnalysis.tokens.filter(t=>!(t.type.isTerminal)).map((t,i)=>`${i}-${t.toSimpleString()}`).join('   '))
         //0-<TERMINATED>   1-<EMPTY>   2-E   3-+   4-T   5-*   6-F   7-(   8-)   9-id   10-E1
@@ -134,7 +137,7 @@ describe('Lr', () => {
 
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
         var tokens = lexicalAnalysis.toTokens(value)
-        var lrSyntaxAnalysis = new LRSyntaxAnalysis(tokens)
+        var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
         expect(lrSyntaxAnalysis.states.length).toEqual(12)
         // console.log(lrSyntaxAnalysis.tokens.filter(t=>!(t.type.isTerminal)).map((t,i)=>`${i}-${t.toSimpleString()}`).join('   '))
         //0-<TERMINATED>   1-<EMPTY>   2-E   3-+   4-T   5-*   6-F   7-(   8-)   9-id   10-E1
@@ -213,7 +216,7 @@ describe('Lr', () => {
 
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
         var tokens = lexicalAnalysis.toTokens(value)
-        var lrSyntaxAnalysis = new LRSyntaxAnalysis(tokens)
+        var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
 
         var languageLexicalAnalysis = new LexicalAnalysis([
             PLUS,
@@ -239,7 +242,7 @@ describe('Lr', () => {
 
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
         var tokens = lexicalAnalysis.toTokens(value)
-        var lrSyntaxAnalysis = new LRSyntaxAnalysis(tokens)
+        var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
 
         var PLUS = new TokenType('+', '\\+', true)
         var STAR = new TokenType('*', '\\*', true)
@@ -255,7 +258,21 @@ describe('Lr', () => {
             CLOSEBRACKET
         ])
 
-        lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "3+4*6")
+        expect(lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "3+4*6")).toEqual(true)
+        var columnLens : Array<number> = lrSyntaxAnalysis.analysisSteps.map(s=>{
+            return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
+        }).reduce((pre, value)=>{
+            return pre.map((p, i)=> Math.max(pre[i], value[i]))
+        }, [0, 0, 0, 0])
+        columnLens = columnLens.map((v)=>v+10)
 
+        console.log(
+            lrSyntaxAnalysis.analysisSteps.map(s=>{
+                return [appendToFixLen(`[ ${s.stack} ]`, columnLens[0]),
+                        appendToFixLen(`[ ${s.symbols} ]`, columnLens[1]),
+                        appendToFixLen(`[ ${s.inputs} ]`, columnLens[2]),
+                        `[ ${s.action} ]`].join('')
+            }).join('\n')
+        )
     })
 })

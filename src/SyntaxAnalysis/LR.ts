@@ -67,20 +67,41 @@ export class LRAction {
     }
 }
 
+class AnalysisStep {
+    stack : string
+    symbols : string
+    inputs : string
+    action : string
+
+    constructor(stack : string,
+        symbols : string,
+        inputs : string,
+        action : string) {
+        this.stack = stack
+        this.symbols = symbols
+        this.inputs = inputs
+        this.action = action
+    }
+
+    toString() : string {
+        return `[ ${this.stack} ]     [ ${this.symbols} ]     [ ${this.inputs} ]     ${this.action}`
+    }
+}
+
 export class LRSyntaxAnalysis extends SyntaxAnalysis {
     states : Array<LRItemSet> = []
     acceptIndexGrammarProduction : IndexGrammarProduction | null = null
     acceptState : LRItemSet | null = null
     actions : Array<Array<LRAction>> = []
-
-    constructor(tokens : Array<Token>) {
-        super(tokens)
+    analysisSteps : Array<AnalysisStep> = []
+    initWithTokens(tokens: Token[]): LRSyntaxAnalysis {
+        super.initWithTokens(tokens)
         this.argument()
         this.calculateFirst()
         this.calculateFollow()
         this.calculateFirstOfGrammaProductions()
         this.calculateActions()
-        
+        return this
     }
 
     isValid(lexicalAnalysis : LexicalAnalysis, inputString : string) {
@@ -92,6 +113,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
         var symbols : Array<number> = [indexOfTerminatedToken]
+
+        this.analysisSteps = []
 
         var i : number = 0
         var flag : boolean | null = null
@@ -109,7 +132,22 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 inputs.push(inputTokens[j].toSimpleString())
             }
 
-            console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
+            // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
+            var step = new AnalysisStep(
+                stack.join(' '),
+                symbols.map(s=>{
+                    if (this.tokens[s].isEqual(Token.EMPTY_TOKEN)) return '<E>'
+                    if (this.tokens[s].isEqual(Token.TERMINATED_TOKEN)) return '<T>'
+                    return this.tokens[s].toSimpleString()
+                }).join(' '),
+                inputTokens.slice(i).map(s=>{
+                    if (s.isEqual(Token.EMPTY_TOKEN)) return '<E>'
+                    if (s.isEqual(Token.TERMINATED_TOKEN)) return '<T>'
+                    return s.toSimpleString()
+                }).join(' '),
+                this.toActionString(action)
+            )
+            this.analysisSteps.push(step)
 
             if (action.type==LRActionType.SHIFT) {
                 stack.push(action.value)
@@ -134,14 +172,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             } else if (action.type==LRActionType.ACCEPT) {
                 flag = true
             } else {
-                console.log('error', action)
+                throw new Error(this.toActionString(action))
+                // console.log('error', action)
             }
-            // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
         }
-        // console.log(this.tokens.map((t,i)=>`${i}: ${t.toSimpleString()}`).join('  '))
-        // console.log(inputString)
-        // console.log(input)
-
+        return flag
     }
 
     toActionString(action : LRAction) : string {

@@ -52,6 +52,8 @@ export class Token {
         return this.value
     }
 
+    
+
     isEqual(other : Token) {
         return this.type.isEqual(other.type) && this.value==other.value
     }
