@@ -1,0 +1,8 @@
+Equation -> Equation Add Term
+Equation -> Equation Minus Term
+Equation -> Term
+Term -> Term Mult Factor
+Term -> Term Div Factor
+Term -> Factor
+Factor -> OpenBracket Equation CloseBracket
+Factor -> Number

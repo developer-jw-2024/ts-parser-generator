@@ -1,2 +1,4 @@
-Text -> [^* \t\n]+
-DoubleStar -> "**"
+SimpleText -> Text
+SimpleText -> Spaces
+SimpleText -> SimpleText Spaces
+SimpleText -> SimpleText Text

@@ -1,1 +1,4 @@
-Text -> [^* \t\n]+
+Enter \n
+Spaces [\t ]+
+Text  [^* \t\n]+
+DoubleStar -> "**"

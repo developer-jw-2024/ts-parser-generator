@@ -1,15 +1,14 @@
-class A {
-    hi() {
-        console.log("A")
-    }
-}
+import * as ts from "typescript";
 
-class B extends A {
-    hi() {
-        super.hi()
-        console.log("B")
-    }
+var functionText = `
+function(a : number, b : number) : number {
+    return a + b
 }
+`
+var code = `(function(){ return ${functionText.trim()}})()
+`
 
-var object = new B()
-object.hi()
+
+let result = ts.transpile(code);
+let runnalbe :any = eval(result);
+console.log(runnalbe)

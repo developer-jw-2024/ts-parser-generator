@@ -67,6 +67,18 @@ export class LRAction {
     }
 }
 
+class AnalysisToken {
+    indexOfToken : number
+    token : Token
+    value : any 
+
+    constructor(indexOfToken : number, token : Token, value : any) {
+        this.indexOfToken = indexOfToken
+        this.token = token
+        this.value = value
+    }
+}
+
 class AnalysisStep {
     stack : string
     symbols : string
@@ -94,6 +106,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     acceptState : LRItemSet | null = null
     actions : Array<Array<LRAction>> = []
     analysisSteps : Array<AnalysisStep> = []
+
     initWithTokens(tokens: Token[]): LRSyntaxAnalysis {
         super.initWithTokens(tokens)
         this.argument()
@@ -113,6 +126,10 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
         var symbols : Array<number> = [indexOfTerminatedToken]
+        var symbolTokens : Array<AnalysisToken> = [
+            new AnalysisToken(indexOfTerminatedToken, Token.TERMINATED_TOKEN, null)
+        ]
+        
 
         this.analysisSteps = []
 
@@ -120,51 +137,40 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var flag : boolean | null = null
         
         var a : number = input[i]
+        var inputToken : Token = inputTokens[i]
         var s : number = stack[stack.length-1]
     
         while (flag==null) {
             a = input[i]
+            inputToken = inputTokens[i]
             s = stack[stack.length-1]
             var action : LRAction = this.actions[s][a]    
 
-            var inputs : Array<string> = []
-            for (var j=i;j<inputTokens.length;j++) {
-                inputs.push(inputTokens[j].toSimpleString())
-            }
-
             // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
-            var step = new AnalysisStep(
-                stack.join(' '),
-                symbols.map(s=>{
-                    if (this.tokens[s].isEqual(Token.EMPTY_TOKEN)) return '<E>'
-                    if (this.tokens[s].isEqual(Token.TERMINATED_TOKEN)) return '<T>'
-                    return this.tokens[s].toSimpleString()
-                }).join(' '),
-                inputTokens.slice(i).map(s=>{
-                    if (s.isEqual(Token.EMPTY_TOKEN)) return '<E>'
-                    if (s.isEqual(Token.TERMINATED_TOKEN)) return '<T>'
-                    return s.toSimpleString()
-                }).join(' '),
-                this.toActionString(action)
-            )
+            
+            var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, i, action)
             this.analysisSteps.push(step)
 
             if (action.type==LRActionType.SHIFT) {
                 stack.push(action.value)
                 symbols.push(a)
+                symbolTokens.push(new AnalysisToken(a, inputToken, a))
                 i++
             } else if (action.type==LRActionType.REDUCE) {
                 var igp = action.value
                 var gp = this.indexGrammerProductions[igp]
                 var len = gp.factors.length
                 symbols = symbols.slice(0, symbols.length-len)
+                symbolTokens = symbolTokens.slice(0, symbolTokens.length-len)
                 stack = stack.slice(0, stack.length-len)
-                var t : number = stack[stack.length-1]
+                var topState : number = stack[stack.length-1]
                 var symbol : number = gp.symbol
-                var gotoAction : LRAction = this.actions[t][symbol]
+                var gotoAction : LRAction = this.actions[topState][symbol]
+
                 if (gotoAction.type==LRActionType.GOTO) {
                     stack.push(gotoAction.value)
                     symbols.push(symbol)
+                    symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], symbol))
                 } else {
                     throw new Error('Parse Error')
                 }
@@ -177,6 +183,59 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             }
         }
         return flag
+    }
+
+    createAnalysisStep(
+        inputTokens : Array<Token>,
+        stack : Array<number>, 
+        symbols : Array<number>,
+        i : number, //nonProcessIndex
+        action : LRAction
+    ) : AnalysisStep {
+        var inputs : Array<string> = []
+        for (var j=i;j<inputTokens.length;j++) {
+            inputs.push(inputTokens[j].toSimpleString())
+        }
+
+        // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
+        var step = new AnalysisStep(
+            stack.join(' '),
+            symbols.map((s, si)=>{
+                if (this.tokens[s].isEqual(Token.EMPTY_TOKEN)) return '<E>'
+                if (this.tokens[s].isEqual(Token.TERMINATED_TOKEN)) return '<T>'
+                return this.tokens[s].toSimpleString()
+            }).join(' '),
+            inputTokens.slice(i).map(s=>{
+                if (s.isEqual(Token.EMPTY_TOKEN)) return '<E>'
+                if (s.isEqual(Token.TERMINATED_TOKEN)) return '<T>'
+                return s.toSimpleString()
+            }).join(' '),
+            this.toActionString(action)
+        )
+        return step
+    }
+    
+    showValidationSteps() {
+        function appendToFixLen(value : string, len : number) : string {
+            return value + new Array(len-value.length).fill(0).map(t=>' ').join('')
+        }
+        
+        var columnLens : Array<number> = this.analysisSteps.map(s=>{
+            return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
+        }).reduce((pre, value)=>{
+            return pre.map((p, i)=> Math.max(pre[i], value[i]))
+        }, [0, 0, 0, 0])
+        columnLens = columnLens.map((v)=>v+10)
+
+        console.log(
+            this.analysisSteps.map(s=>{
+                return [appendToFixLen(`[ ${s.stack} ]`, columnLens[0]),
+                        appendToFixLen(`[ ${s.symbols} ]`, columnLens[1]),
+                        appendToFixLen(`[ ${s.inputs} ]`, columnLens[2]),
+                        `[ ${s.action} ]`].join('')
+            }).join('\n')
+        )
+        
     }
 
     toActionString(action : LRAction) : string {
