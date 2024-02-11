@@ -67,7 +67,7 @@ export class LRAction {
     }
 }
 
-class AnalysisToken {
+export class AnalysisToken {
     indexOfToken : number
     token : Token
     value : any 

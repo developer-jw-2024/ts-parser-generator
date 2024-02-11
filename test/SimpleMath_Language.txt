@@ -4,6 +4,3 @@ T -> T * F
 T -> F
 F -> ( E )
 F -> integer
-function(integer : string) {
-    return parseInt(integer)
-}

@@ -1,14 +1,14 @@
-import * as ts from "typescript";
+//import * as ts from "typescript";
+
+import { convertTextToFunction } from "../src/Utils/JWUtils"
 
 var functionText = `
 function(a : number, b : number) : number {
     return a + b
 }
 `
-var code = `(function(){ return ${functionText.trim()}})()
-`
+
+var abc : Function =  convertTextToFunction(functionText)
+console.log(abc(5,3))
 
 
-let result = ts.transpile(code);
-let runnalbe :any = eval(result);
-console.log(runnalbe)
