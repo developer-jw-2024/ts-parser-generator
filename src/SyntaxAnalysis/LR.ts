@@ -82,15 +82,18 @@ export class AnalysisToken {
 class AnalysisStep {
     stack : string
     symbols : string
+    symbolTokens : Array<AnalysisToken>
     inputs : string
     action : string
 
     constructor(stack : string,
         symbols : string,
+        symbolTokens : Array<AnalysisToken>,
         inputs : string,
         action : string) {
         this.stack = stack
         this.symbols = symbols
+        this.symbolTokens = symbolTokens
         this.inputs = inputs
         this.action = action
     }
@@ -106,6 +109,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     acceptState : LRItemSet | null = null
     actions : Array<Array<LRAction>> = []
     analysisSteps : Array<AnalysisStep> = []
+
+    // inputTokens
 
     initWithLanguageDefinition(languageDefinition : string) : LRSyntaxAnalysis {
         var tokens = this.lexicalAnalysis.toTokens(languageDefinition)
@@ -134,6 +139,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var symbolTokens : Array<AnalysisToken> = [
             new AnalysisToken(indexOfTerminatedToken, Token.TERMINATED_TOKEN, null)
         ]
+
+        // console.log(inputTokens)
         
 
         this.analysisSteps = []
@@ -153,18 +160,20 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
 
             // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
             
-            var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, i, action)
+            var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
             this.analysisSteps.push(step)
 
             if (action.type==LRActionType.SHIFT) {
                 stack.push(action.value)
                 symbols.push(a)
-                symbolTokens.push(new AnalysisToken(a, inputToken, a))
+                symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value))
                 i++
             } else if (action.type==LRActionType.REDUCE) {
                 var igp = action.value
                 var gp = this.indexGrammerProductions[igp]
                 var len = gp.factors.length
+                // console.log(symbols.slice(symbols.length-len), symbolTokens.slice(symbols.length-len))
+                var parameters = symbolTokens.slice(symbols.length-len)
                 symbols = symbols.slice(0, symbols.length-len)
                 symbolTokens = symbolTokens.slice(0, symbolTokens.length-len)
                 stack = stack.slice(0, stack.length-len)
@@ -175,7 +184,14 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 if (gotoAction.type==LRActionType.GOTO) {
                     stack.push(gotoAction.value)
                     symbols.push(symbol)
-                    symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], symbol))
+                    // var parametersObject = {}
+                    // this.grammerProductions[igp].factors.forEach((token, tokenIndex)=>{
+                    //     parametersObject[token.value] = 
+                    // })
+                    var result = this.grammerProductionFunctions[igp](parameters)
+                    // console.log('goto', symbol, this.tokens[symbol], this.grammerProductionFunctions[igp], parameters)
+                    // console.log('result:', result, this.grammerProductions[igp].factors)
+                    symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result))
                 } else {
                     throw new Error('Parse Error')
                 }
@@ -194,24 +210,27 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         inputTokens : Array<Token>,
         stack : Array<number>, 
         symbols : Array<number>,
+        symbolTokens : Array<AnalysisToken>,
         i : number, //nonProcessIndex
         action : LRAction
     ) : AnalysisStep {
-        console.log('---------')
-        console.log(inputTokens)
+        // console.log('---------')
+        // console.log(inputTokens)
         var inputs : Array<string> = []
         for (var j=i;j<inputTokens.length;j++) {
             inputs.push(inputTokens[j].toSimpleString())
         }
 
+        
         // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
         var step = new AnalysisStep(
             stack.join(' '),
             symbols.map((s, si)=>{
                 if (this.tokens[s].isEqual(Token.EMPTY_TOKEN)) return '<E>'
                 if (this.tokens[s].isEqual(Token.TERMINATED_TOKEN)) return '<T>'
-                return this.tokens[s].toSimpleString()
+                return this.tokens[s].toSimpleString()+`(${symbolTokens[si].value})`
             }).join(' '),
+            symbolTokens,
             inputTokens.slice(i).map(s=>{
                 if (s.isEqual(Token.EMPTY_TOKEN)) return '<E>'
                 if (s.isEqual(Token.TERMINATED_TOKEN)) return '<T>'

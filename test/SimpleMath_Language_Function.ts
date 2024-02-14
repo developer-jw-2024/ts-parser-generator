@@ -3,36 +3,36 @@ import { AnalysisToken } from "../src/SyntaxAnalysis/LR"
 export default {
     
     'E -> E + T':
-    function(e : AnalysisToken, plus : AnalysisToken, t: AnalysisToken) {
-        return e.value + t.value
+    function(args : Array<AnalysisToken>) {
+        return args[0].value + args[2].value
     }
     ,
 
     'E -> T':
-    function(t : AnalysisToken) {
-        return t.value
+    function(args : Array<AnalysisToken>) {
+        return args[0].value
     }
     ,
     
     'T -> T * F':
-    function(t : AnalysisToken, star : AnalysisToken, f : AnalysisToken) {
-        return t.value * f.value
+    function(args : Array<AnalysisToken>) {
+        return args[0].value * args[2].value
     }
     ,
     
     'T -> F':
-    function(f : AnalysisToken) {
-        return f.value
+    function(args : Array<AnalysisToken>) {
+        return args[0].value
     }
     ,
     
     'F -> ( E )':
-    function(ob : AnalysisToken, e : AnalysisToken, cb : AnalysisToken) {
-        return e.value
+    function(args : Array<AnalysisToken>) {
+        return args[1].value
     }
     ,
     'F -> integer':
-    function(integer : AnalysisToken) {
-        return parseInt(integer.value)
+    function(args : Array<AnalysisToken>) {
+        return parseInt(args[0].value)
     }
 }

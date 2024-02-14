@@ -170,6 +170,10 @@ export class SyntaxAnalysis {
             }
             this.grammerProductionFunctions[index] = languageDefinitionFunctions[gpString]
         })
+
+        // this.grammerProductionFunctions.forEach((f, i)=>{
+        //     console.log(i, f)
+        // })
     }
 
     getTheNoInGrammarProductionList(grammarProductionStringExpression : string) : number {
