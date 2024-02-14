@@ -84,6 +84,7 @@ export class SyntaxAnalysis {
     static SPACES = new TokenType('SPACES', '[ \t]+', true)
     static GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",false)
     static TerminatedGrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",true)
+    static DERIVATION_TOKEN = new Token(SyntaxAnalysis.DERIVATION, '->')
 
     startSymbol : Token
     indexOfStartSymbl : number
@@ -91,15 +92,28 @@ export class SyntaxAnalysis {
     grammerProductions : Array<GrammarProduction>
     indexGrammerProductions : Array<IndexGrammarProduction>
     indexGrammerProductionFlags : Array<boolean>
+    grammerProductionFunctions : Array<Function>
 
     first : Array<Array<number>> = new Array<Array<number>>()
     follow : Array<Array<number>> = new Array<Array<number>>()
     
     firstOfGrammaProduction : Array<Array<number>> = new Array<Array<number>>()
 
+    lexicalAnalysis : LexicalAnalysis = new LexicalAnalysis([
+        TokenType.EMPTY_TOKENTYPE,
+        SyntaxAnalysis.DERIVATION,
+        SyntaxAnalysis.ENTER,
+        SyntaxAnalysis.SPACES,
+        SyntaxAnalysis.GrammarSymbol
+    ])
     // constructor(tokens : Array<Token>) {
     //     this.initWithTokens(tokens)
     // }
+    initWithLanguageDefinition(languageDefinition : string) : SyntaxAnalysis {
+        var tokens = this.lexicalAnalysis.toTokens(languageDefinition)
+        this.initWithTokens(tokens)
+        return this
+    }
 
     initWithTokens(tokens : Array<Token>) : SyntaxAnalysis {
         var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
@@ -114,7 +128,7 @@ export class SyntaxAnalysis {
         }
 
         var tokenGroups = SyntaxAnalysis.split(list, new Token(SyntaxAnalysis.ENTER, '\n'))
-        this.grammerProductions = this.toGrammarProductions(tokenGroups, new Token(SyntaxAnalysis.DERIVATION, '->'))
+        this.grammerProductions = this.toGrammarProductions(tokenGroups, SyntaxAnalysis.DERIVATION_TOKEN)
 
         this.indexGrammerProductions = new Array<IndexGrammarProduction>()
         this.indexGrammerProductionFlags = new Array<boolean>()
@@ -122,11 +136,10 @@ export class SyntaxAnalysis {
         var nonTerminalSymbols : Array<number> = []
         for (var i=0;i<this.grammerProductions.length;i++) {
             var gp = this.grammerProductions[i]
-            var indexOfToken = this.getIndexOfToken(gp.symbol)
-            var indexArrayOfFactors = gp.factors.map(e=>this.getIndexOfToken(e))
-            this.indexGrammerProductions.push(new IndexGrammarProduction(indexOfToken, indexArrayOfFactors))
+            var igp = this.toIndexGrammarProduction(gp)
+            this.indexGrammerProductions.push(igp)
             this.indexGrammerProductionFlags.push(true)
-            if (nonTerminalSymbols.indexOf(indexOfToken)==-1) nonTerminalSymbols.push(indexOfToken)
+            if (nonTerminalSymbols.indexOf(igp.symbol)==-1) nonTerminalSymbols.push(igp.symbol)
         }
 
         this.startSymbol = this.grammerProductions[0].symbol
@@ -147,6 +160,30 @@ export class SyntaxAnalysis {
         return this
     }
 
+    setLanguageDefinitionFunctions(languageDefinitionFunctions : Object) {
+        this.grammerProductionFunctions = []
+        var gpExpList = Object.keys(languageDefinitionFunctions)
+        gpExpList.forEach((gpString, index)=>{
+            var index = this.getTheNoInGrammarProductionList(gpString)
+            if (index==-1) {
+                throw new Error(`Can not find grammar production ${gpString}`)
+            }
+            this.grammerProductionFunctions[index] = languageDefinitionFunctions[gpString]
+        })
+    }
+
+    getTheNoInGrammarProductionList(grammarProductionStringExpression : string) : number {
+        var igp = this.convertToIndexGrammarProduction(grammarProductionStringExpression)
+        return this.indexGrammerProductions.findIndex(e=>e.isEqual(igp))
+    }
+
+    convertToIndexGrammarProduction(grammarProductionStringExpression : string) : IndexGrammarProduction {
+        var gpTokens = this.lexicalAnalysis.toTokens(grammarProductionStringExpression).filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
+        var gp = this.toGrammarProduction(gpTokens, SyntaxAnalysis.DERIVATION_TOKEN)
+        var igp = this.toIndexGrammarProduction(gp)
+        return igp
+    }
+
     getIndexOfToken(token : Token) : number {
         var result = this.tokens.findIndex(e=>e.isEqual(token))
         if (result>=0) return result
@@ -155,6 +192,12 @@ export class SyntaxAnalysis {
 
     getIndexOfTokenByTokenName(token : Token) : number {
         return this.tokens.findIndex(e=>e.value==token.type.name)
+    }
+
+    toIndexGrammarProduction(gp : GrammarProduction) :IndexGrammarProduction {
+        var indexOfToken = this.getIndexOfToken(gp.symbol)
+        var indexArrayOfFactors = gp.factors.map(e=>this.getIndexOfToken(e))
+        return new IndexGrammarProduction(indexOfToken, indexArrayOfFactors)
     }
 
     toGrammarProduction(list : Array<Token>, derivationToken : Token) : GrammarProduction {

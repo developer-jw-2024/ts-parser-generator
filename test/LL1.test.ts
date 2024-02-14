@@ -1074,4 +1074,73 @@ describe('LL', () => {
         expect(isSetEqual(m, m2)).toBe(true)
 
     })
+
+    test('LL1SyntaxAnalysis 6-2', () => {
+        
+
+        var languageDefinition = `
+        S -> ( S ) S
+        S -> <EMPTY>
+        `
+        var ll1 = new LL1SyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
+        expect(ll1.isLL1()).toEqual(true)
+        
+        expect(ll1.tokens.map(t=>{
+            return {
+                type : t.type.name,
+                isTerminal : t.type.isTerminal,
+                value : t.value
+            }
+        })).toEqual([
+            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
+            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
+            {isTerminal: true, type : 'GrammarSymbol', value : '('},
+            {isTerminal: true, type : 'GrammarSymbol', value : ')'},
+        ])
+
+        expect(ll1.first).toEqual([
+            [0], //<TERMINATED>
+            [1], //<EMPTY>
+            [1,3], //S
+            [3], //(
+            [4], //)
+        ])
+
+        expect(ll1.follow).toEqual([
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [0,4],//S 2
+            [3],//( 3
+            [3,0,4],//) 4
+        ])
+
+        expect(ll1.firstOfGrammaProduction).toEqual([
+            [3], 
+            [1], 
+        ])
+
+        var m : Array<string> = []
+        for (var i=0;i<ll1.tokens.length;i++) {
+            for (var j=0;j<ll1.tokens.length;j++) {
+                if (ll1.predictiveParsingTable[i][j].length>0) {
+                    var A = ll1.tokens[i].toSimpleString()
+                    var a = ll1.tokens[j].toSimpleString()
+                    var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
+                        return ll1.grammerProductions[pgi].toSimpleString()
+                    }).join('/')
+                    m.push(`${A} ${a} ${gps}`)
+                }
+            }
+        }
+
+        var m2 : Array<string> = [
+            "S <TERMINATED> S -> <EMPTY>",
+            "S ( S -> ( S ) S",
+            "S ) S -> <EMPTY>"
+        ]
+
+        expect(isSetEqual(m, m2)).toBe(true)
+
+    })
 })

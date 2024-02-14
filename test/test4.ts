@@ -1,13 +1,3 @@
-function first() {
-    console.log("first(): factory evaluated");
-    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-      console.log("first(): called");
-    };
-  }
+import languageFunction from './SimpleMath_Language_Function'
 
-@first
-function add(a:number, b:number) : number {
-    return a +b
-}
-
-console.log(add(5,3))
+console.log(Object.keys(languageFunction))

@@ -7,6 +7,8 @@ import { FileUtils } from '../src/Utils/FileUtil'
 import { SyntaxAnalysis } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 import { LL1SyntaxAnalysis } from "../src/SyntaxAnalysis/LL1"
 import { LRAction, LRActionType, LRSyntaxAnalysis } from "../src/SyntaxAnalysis/LR"
+import languageFunction from './SimpleMath_Language_Function'
+
 
 function appendToFixLen(value : string, len : number) : string {
     return value + new Array(len-value.length).fill(0).map(t=>' ').join('')
@@ -47,20 +49,12 @@ function convertActionList(lrSyntaxAnalysis : LRSyntaxAnalysis) : Array<string> 
     return result
 }
 
-var lexicalAnalysis = new LexicalAnalysis([
-    TokenType.EMPTY_TOKENTYPE,
-    SyntaxAnalysis.DERIVATION,
-    SyntaxAnalysis.ENTER,
-    SyntaxAnalysis.SPACES,
-    SyntaxAnalysis.GrammarSymbol
-])
-var value = FileUtils.readFromFileSystem('./test/SimpleMath_Language.txt')
-var tokens = lexicalAnalysis.toTokens(value)
-var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
-// console.log(convertActionList(lrSyntaxAnalysis))
-// lrSyntaxAnalysis.tokens.map(t=>{
-//     console.log(t.toSimpleString(), t.type.isTerminal?'Y':'X')
-// })
+
+var languageDefinition = FileUtils.readFromFileSystem('./test/SimpleMath_Language.txt')
+
+
+var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
+lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
 
 var tokenDefinitionContent = FileUtils.readFromFileSystem('./test/SimpleMath_RegExp.txt')
 var tokenTypes : Array<TokenType> = tokenDefinitionContent.split('\n').map(line=>{

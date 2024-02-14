@@ -107,6 +107,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     actions : Array<Array<LRAction>> = []
     analysisSteps : Array<AnalysisStep> = []
 
+    initWithLanguageDefinition(languageDefinition : string) : LRSyntaxAnalysis {
+        var tokens = this.lexicalAnalysis.toTokens(languageDefinition)
+        return this.initWithTokens(tokens)
+    }
+
     initWithTokens(tokens: Token[]): LRSyntaxAnalysis {
         super.initWithTokens(tokens)
         this.argument()
@@ -192,6 +197,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         i : number, //nonProcessIndex
         action : LRAction
     ) : AnalysisStep {
+        console.log('---------')
+        console.log(inputTokens)
         var inputs : Array<string> = []
         for (var j=i;j<inputTokens.length;j++) {
             inputs.push(inputTokens[j].toSimpleString())
@@ -227,6 +234,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         }, [0, 0, 0, 0])
         columnLens = columnLens.map((v)=>v+10)
 
+        // console.log(this.tokens.map((t,i)=>`${i}: ${t.toSimpleString()}`))
         console.log(
             this.analysisSteps.map(s=>{
                 return [appendToFixLen(`[ ${s.stack} ]`, columnLens[0]),

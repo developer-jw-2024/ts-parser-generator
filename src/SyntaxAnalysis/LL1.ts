@@ -6,6 +6,10 @@ export class LL1SyntaxAnalysis extends SyntaxAnalysis {
 
     predictiveParsingTable : Array<Array<Array<number>>> = []
     
+    initWithLanguageDefinition(languageDefinition : string) : LL1SyntaxAnalysis {
+        var tokens = this.lexicalAnalysis.toTokens(languageDefinition)
+        return this.initWithTokens(tokens)
+    }
 
     initWithTokens(tokens : Array<Token>) : LL1SyntaxAnalysis {
         super.initWithTokens(tokens)
