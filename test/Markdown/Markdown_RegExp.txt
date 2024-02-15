@@ -1,6 +1,7 @@
 Enter \n
 Spaces [\t ]+
-SimpleText  [^*_ \t\n]+
+SimpleText  [^*_\-+ \t\n]+
+Hypen "- "
 SingleStar "*"
 DoubleStar "**"
 SingleUnderline "_"

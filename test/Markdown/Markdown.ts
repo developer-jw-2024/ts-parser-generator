@@ -11,6 +11,9 @@ lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
 lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinitionContent)
 
 var markdownContent = FileUtils.readFromFileSystem('./test/Markdown/Markdown_test_1.txt')
+if (markdownContent[markdownContent.length-1]!='\n') {
+    markdownContent += '\n'
+}
 
 var flag = lrSyntaxAnalysis.isValid(markdownContent)
 

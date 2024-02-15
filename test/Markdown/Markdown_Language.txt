@@ -1,4 +1,5 @@
-Markdown -> Text
+Markdown -> Line
+Line -> Text Enter
 Text -> Text Spaces
 Text -> Text SimpleText
 Text -> Text BoldStarText
@@ -53,3 +54,10 @@ StartItalicStarText -> StartItalicStarText SimpleText
 StartItalicStarText -> StartItalicStarText BoldStarText
 StartItalicStarText -> StartItalicStarText BoldDoubleUnderText
 ItalicStarText -> StartItalicStarText SingleStar
+
+Line -> UnorderedList
+UnorderedList -> UnorderedListItem
+UnorderedList -> UnorderedList UnorderedListItem
+UnorderedListItem -> Hypen Text Enter
+SubUnorderedListItem -> UnorderedListItem Spaces
+SubUnorderedListItem -> SubUnorderedListItem UnorderedListItem
