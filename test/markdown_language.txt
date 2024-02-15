@@ -1,4 +1,0 @@
-SimpleText -> Text
-SimpleText -> Spaces
-SimpleText -> SimpleText Spaces
-SimpleText -> SimpleText Text

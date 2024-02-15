@@ -1,0 +1,55 @@
+Markdown -> Text
+Text -> Text Spaces
+Text -> Text SimpleText
+Text -> Text BoldStarText
+Text -> Text BoldDoubleUnderText
+Text -> Text ItalicStarText
+Text -> Text ItalicUnderlineText
+Text -> SimpleText
+Text -> Spaces
+Text -> BoldStarText
+Text -> BoldDoubleUnderText
+Text -> ItalicStarText
+Text -> ItalicUnderlineText
+
+StartBoldStarText -> DoubleStar Spaces
+StartBoldStarText -> DoubleStar SimpleText
+StartBoldStarText -> DoubleStar BoldDoubleUnderText
+StartBoldStarText -> DoubleStar ItalicStarText
+StartBoldStarText -> DoubleStar ItalicUnderlineText
+StartBoldStarText -> StartBoldStarText Spaces
+StartBoldStarText -> StartBoldStarText SimpleText
+StartBoldStarText -> StartBoldStarText BoldDoubleUnderText
+StartBoldStarText -> StartBoldStarText ItalicStarText
+StartBoldStarText -> StartBoldStarText ItalicUnderlineText
+BoldStarText -> StartBoldStarText DoubleStar
+
+StartBoldDoubleUnderText -> DoubleUnderline Spaces
+StartBoldDoubleUnderText -> DoubleUnderline SimpleText
+StartBoldDoubleUnderText -> DoubleUnderline BoldStarText
+StartBoldDoubleUnderText -> DoubleUnderline ItalicStarText
+StartBoldDoubleUnderText -> StartBoldDoubleUnderText Spaces
+StartBoldDoubleUnderText -> StartBoldDoubleUnderText SimpleText
+StartBoldDoubleUnderText -> StartBoldDoubleUnderText BoldStarText
+StartBoldDoubleUnderText -> StartBoldDoubleUnderText ItalicStarText
+BoldDoubleUnderText -> StartBoldDoubleUnderText DoubleUnderline
+
+StartItalicUnderlineText -> SingleUnderline Spaces
+StartItalicUnderlineText -> SingleUnderline SimpleText
+StartItalicUnderlineText -> SingleUnderline BoldStarText
+StartItalicUnderlineText -> SingleUnderline BoldDoubleUnderText
+StartItalicUnderlineText -> StartItalicUnderlineText Spaces
+StartItalicUnderlineText -> StartItalicUnderlineText SimpleText
+StartItalicUnderlineText -> StartItalicUnderlineText BoldStarText
+StartItalicUnderlineText -> StartItalicUnderlineText BoldDoubleUnderText
+ItalicUnderlineText -> StartItalicUnderlineText SingleUnderline
+
+StartItalicStarText -> SingleStar Spaces
+StartItalicStarText -> SingleStar SimpleText
+StartItalicStarText -> SingleStar BoldStarText
+StartItalicStarText -> SingleStar BoldDoubleUnderText
+StartItalicStarText -> StartItalicStarText Spaces
+StartItalicStarText -> StartItalicStarText SimpleText
+StartItalicStarText -> StartItalicStarText BoldStarText
+StartItalicStarText -> StartItalicStarText BoldDoubleUnderText
+ItalicStarText -> StartItalicStarText SingleStar

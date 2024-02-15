@@ -488,7 +488,7 @@ export function buildRegularExpressionTree(chars : Array<string>, charBlocks ? :
                     tree = new RegularExpressionTree(RegularExpressionTreeOperation.ANYCHAR, chars, [], charBlocks, group.left, group.right, subtrees)
                 } else {
                     if (RegularExpressionSymbol.isRegularExpressionSymbol(chars[group.left])) {
-                        throw new Error('Syntax Error')
+                        throw new Error(`Syntax Error: ${chars[group.left]}`)
                     }
                     tree = new RegularExpressionTree(RegularExpressionTreeOperation.CHAR, chars, [chars[group.left]], charBlocks, group.left, group.right, subtrees)
                 }

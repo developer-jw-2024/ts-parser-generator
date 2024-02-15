@@ -1,7 +1,0 @@
-Mult \*
-Add \+
-Minus \-
-Div \/
-OpenBracket \(
-CloseBracket \)
-Number [0-9]+

@@ -127,11 +127,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         return this
     }
 
-    isValid(lexicalAnalysis : LexicalAnalysis, inputString : string) {
+    isValidWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string) : boolean {
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
-        var inputTokens : Array<Token> = lexicalAnalysis.toTokens(inputString)
+        var inputTokens : Array<Token> = tokenTypeLexicalAnalysis.toTokens(inputString)
         inputTokens.push(Token.TERMINATED_TOKEN)
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
@@ -140,9 +140,10 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             new AnalysisToken(indexOfTerminatedToken, Token.TERMINATED_TOKEN, null)
         ]
 
-        // console.log(inputTokens)
-        
-
+        // console.log(inputTokens.length, input.length)
+        // inputTokens.forEach((it, i)=>{
+        //     console.log(it.toSimpleString(), ':', input[i])
+        // })
         this.analysisSteps = []
 
         var i : number = 0
@@ -152,16 +153,19 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var inputToken : Token = inputTokens[i]
         var s : number = stack[stack.length-1]
     
+        console.log(inputTokens)
+
         while (flag==null) {
             a = input[i]
             inputToken = inputTokens[i]
             s = stack[stack.length-1]
             var action : LRAction = this.actions[s][a]    
 
-            // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
+            console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${input.join(' ')} ]   ${this.toActionString(action)}`)
             
             var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
             this.analysisSteps.push(step)
+            // console.log(step)
 
             if (action.type==LRActionType.SHIFT) {
                 stack.push(action.value)
@@ -184,13 +188,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 if (gotoAction.type==LRActionType.GOTO) {
                     stack.push(gotoAction.value)
                     symbols.push(symbol)
-                    // var parametersObject = {}
-                    // this.grammerProductions[igp].factors.forEach((token, tokenIndex)=>{
-                    //     parametersObject[token.value] = 
-                    // })
-                    var result = this.grammerProductionFunctions[igp](parameters)
-                    // console.log('goto', symbol, this.tokens[symbol], this.grammerProductionFunctions[igp], parameters)
-                    // console.log('result:', result, this.grammerProductions[igp].factors)
+                    // console.log(this.grammerProductions[igp].toString())
+                    var result = null
+                    if (this.grammerProductionFunctions && this.grammerProductionFunctions[igp]) {
+                        result = this.grammerProductionFunctions[igp](parameters)
+                    }
                     symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result))
                 } else {
                     throw new Error('Parse Error')
@@ -204,6 +206,10 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             }
         }
         return flag
+    }
+
+    isValid(inputString : string) : boolean {
+        return this.isValidWithTokenTypeLexicalAnalysis(this.tokenTypeLexicalAnalysis, inputString)
     }
 
     createAnalysisStep(
@@ -228,7 +234,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             symbols.map((s, si)=>{
                 if (this.tokens[s].isEqual(Token.EMPTY_TOKEN)) return '<E>'
                 if (this.tokens[s].isEqual(Token.TERMINATED_TOKEN)) return '<T>'
-                return this.tokens[s].toSimpleString()+`(${symbolTokens[si].value})`
+                return this.tokens[s].toSimpleString()+`:${symbolTokens[si].value}`
             }).join(' '),
             symbolTokens,
             inputTokens.slice(i).map(s=>{

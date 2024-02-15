@@ -1,0 +1,7 @@
+Enter \n
+Spaces [\t ]+
+SimpleText  [^*_ \t\n]+
+SingleStar "*"
+DoubleStar "**"
+SingleUnderline "_"
+DoubleUnderline "__"

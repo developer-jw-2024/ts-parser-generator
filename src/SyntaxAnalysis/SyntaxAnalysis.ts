@@ -68,7 +68,7 @@ export class IndexGrammarProduction {
     }
 
     isEqual(other : IndexGrammarProduction) {
-        return this.symbol==other.symbol && isSetEqual(this.factors, other.factors)
+        return this.symbol==other.symbol && isListEqual(this.factors, other.factors)
     }
 
     copy() : IndexGrammarProduction {
@@ -106,6 +106,8 @@ export class SyntaxAnalysis {
         SyntaxAnalysis.SPACES,
         SyntaxAnalysis.GrammarSymbol
     ])
+
+    tokenTypeLexicalAnalysis : LexicalAnalysis | null = null
     // constructor(tokens : Array<Token>) {
     //     this.initWithTokens(tokens)
     // }
@@ -161,19 +163,33 @@ export class SyntaxAnalysis {
     }
 
     setLanguageDefinitionFunctions(languageDefinitionFunctions : Object) {
+        // console.log(languageDefinitionFunctions)
         this.grammerProductionFunctions = []
         var gpExpList = Object.keys(languageDefinitionFunctions)
         gpExpList.forEach((gpString, index)=>{
             var index = this.getTheNoInGrammarProductionList(gpString)
+            console.log(gpString, index)
             if (index==-1) {
                 throw new Error(`Can not find grammar production ${gpString}`)
             }
             this.grammerProductionFunctions[index] = languageDefinitionFunctions[gpString]
         })
 
-        // this.grammerProductionFunctions.forEach((f, i)=>{
-        //     console.log(i, f)
-        // })
+        this.grammerProductionFunctions.forEach((f, i)=>{
+            console.log(i, f)
+        })
+    }
+
+    setTokenTypeDefinition(tokenTypeDefinitionContent) {
+        var tokenTypes : Array<TokenType> = tokenTypeDefinitionContent.split('\n').map(line=>{
+            var spaceIndex = line.indexOf(' ')
+            var name = line.substring(0, spaceIndex)
+            var reg = line.substring(spaceIndex)
+            name = name.trim()
+            reg = reg.trim()
+            return new TokenType(name, reg, true)
+        })
+        this.tokenTypeLexicalAnalysis = new LexicalAnalysis(tokenTypes)
     }
 
     getTheNoInGrammarProductionList(grammarProductionStringExpression : string) : number {

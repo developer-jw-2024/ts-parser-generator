@@ -321,7 +321,7 @@ describe('Lr', () => {
             CLOSEBRACKET
         ])
 
-        expect(lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "3+4*6")).toEqual(true)
+        expect(lrSyntaxAnalysis.isValidWithTokenTypeLexicalAnalysis(languageLexicalAnalysis, "3+4*6")).toEqual(true)
         var columnLens : Array<number> = lrSyntaxAnalysis.analysisSteps.map(s=>{
             return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
         }).reduce((pre, value)=>{
