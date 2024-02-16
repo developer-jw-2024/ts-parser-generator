@@ -56,8 +56,16 @@ StartItalicStarText -> StartItalicStarText BoldDoubleUnderText
 ItalicStarText -> StartItalicStarText SingleStar
 
 Line -> UnorderedList
+
 UnorderedList -> UnorderedListItem
+UnorderedList -> UnorderedListItemContentLine
 UnorderedList -> UnorderedList UnorderedListItem
-UnorderedListItem -> Hypen Text Enter
-UnorderedList -> UnorderedList SubUnorderedListItem
-SubUnorderedListItem -> TabSpaces Hypen Text Enter
+UnorderedList -> UnorderedList UnorderedListItemContentLine
+
+UnorderedListItem -> ItemHypen Text Enter
+UnorderedListItem -> Spaces ItemHypen Text Enter
+UnorderedListItem -> ItemStar Text Enter
+UnorderedListItem -> Spaces ItemStar Text Enter
+UnorderedListItem -> ItemPlus Text Enter
+UnorderedListItem -> Spaces ItemPlus Text Enter
+UnorderedListItemContentLine -> Spaces Text Enter

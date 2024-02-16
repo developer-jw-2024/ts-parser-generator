@@ -1,6 +1,7 @@
 import { GrammarProduction, IndexGrammarProduction, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
 import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
+import { FileUtils } from "../Utils/FileUtil";
 
 export class LRItem {
     numOfGrammerProduction : number = -1
@@ -349,11 +350,9 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                             throw new Error(`duplicated transfer char for ${source}-${destination}`)
                         }
                         road[source][destination] = symbol
-                        // console.log(source, this.tokens[symbol].toSimpleString(), destination)
                         if (this.tokens[symbol].type.isTerminal) {
                             this.actions[source] = this.actions[source] || []
                             this.actions[source][symbol] = new LRAction(LRActionType.ACCEPT, destination)
-                            // console.log(source, this.tokens[symbol].toSimpleString(), 'ACCEPT', destination)
                         }    
                     } else {
                         this.states.push(destState)
@@ -366,14 +365,17 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                                 var follows = this.follow[igp.symbol]
                                 for (var k=0;k<follows.length;k++) {
                                     this.actions[destination] = this.actions[destination] || []
+                                    if (this.actions[destination][follows[k]]) {
+                                        console.log(this.actions[destination][follows[k]])
+                                        console.log(this.showLRItemSet(this.states[destination]))
+                                        throw new Error(`duplicated action for ${destination}-${follows[k]}(${this.tokens[follows[k]]})`)
+                                    } 
                                     this.actions[destination][follows[k]] = new LRAction(LRActionType.REDUCE, item.numOfGrammerProduction)
-                                    // console.log(destination, this.tokens[follows[k]].toSimpleString(), 'REDUCE', item.numOfGrammerProduction+1, this.grammerProductions[item.numOfGrammerProduction].toSimpleString())
                                 }
                             }
                         }
     
                     }
-                    // console.log(this.showLRItemSet(destState), this.acceptState.isEqual(destState))
                 }
                 if (destination!=-1) {
                     road[source] = road[source] || []
@@ -382,13 +384,10 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                     }
                     road[source][destination] = symbol
                     this.actions[source] = this.actions[source] || []
-                    // console.log(source, this.tokens[symbol].toSimpleString(), destination)
                     if (this.tokens[symbol].type.isTerminal) {
                         this.actions[source][symbol] = new LRAction(LRActionType.SHIFT, destination)
-                        // console.log(source, this.tokens[symbol].toSimpleString(), 'Shift', destination)
                     } else {
                         this.actions[source][symbol] = new LRAction(LRActionType.GOTO, destination)
-                        // console.log(source, this.tokens[symbol].toSimpleString(), 'GOTO', destination)
                     }
 
             
@@ -396,6 +395,33 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             }
             source++
         }
+        // console.log(road.length)
+        var stateListContent = this.states.map((state, no)=>{
+            return `State${no}[[`+this.showLRItemSet(state).join('\n').replace('<TERMINATED>', '_TERMINATED_')+']]'
+        }).join('\n')
+
+        var routes : Array<string> = []
+        for (var i=0;i<road.length;i++) {
+            for (var j=0;road[i] && j<road[i].length;j++) {
+                if (road[i][j]) {
+                    routes.push(`State${i}-->|${this.tokens[road[i][j]].toSimpleString()}|State${j}`)
+                }
+            }
+        }
+        stateListContent += '\n'+routes.join('\n')
+        stateListContent = 
+        `<html>
+        <body>
+        <pre class="mermaid">
+        ${stateListContent}
+        </pre>
+        <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>`
+        FileUtils.writeToFileSystem("./Mermaid.html", stateListContent)
     }
 
     showLRItemSet(lrItemSet : LRItemSet) {
