@@ -1,7 +1,6 @@
 Markdown -> Markdown Line
 Markdown -> Line
 Line -> Enter
-Line -> Text Enter
 Text -> Text Spaces
 Text -> Text SimpleText
 Text -> Text BoldStarText
@@ -13,6 +12,12 @@ Text -> BoldStarText
 Text -> BoldDoubleUnderText
 Text -> ItalicStarText
 Text -> ItalicUnderlineText
+
+Line -> Paragraph
+
+TextLine -> Text Enter
+Paragraph -> TextLine
+Paragraph -> Paragraph TextLine
 
 StartBoldStarText -> DoubleStar Spaces
 StartBoldStarText -> DoubleStar SimpleText

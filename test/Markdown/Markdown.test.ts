@@ -29,6 +29,8 @@ describe('markdown', () => {
 [ <T> SimpleText:abc ]     [ Enter: <T> ]
 [ <T> Text: ]     [ Enter: <T> ]
 [ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
 [ <T> Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )
@@ -44,6 +46,8 @@ describe('markdown', () => {
 [ <T> Text: Spaces:  ]     [ Enter: <T> ]
 [ <T> Text: ]     [ Enter: <T> ]
 [ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
 [ <T> Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
                 )
@@ -64,6 +68,8 @@ describe('markdown', () => {
 [ <T> Text: BoldStarText: ]     [ Enter: <T> ]
 [ <T> Text: ]     [ Enter: <T> ]
 [ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
 [ <T> Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )
@@ -87,6 +93,8 @@ describe('markdown', () => {
 [ <T> ItalicUnderlineText: ]     [ Enter: <T> ]
 [ <T> Text: ]     [ Enter: <T> ]
 [ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
 [ <T> Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )
@@ -404,6 +412,8 @@ describe('markdown', () => {
 [ <T> Text: SimpleText:content. ]     [ Enter: <T> ]
 [ <T> Text: ]     [ Enter: <T> ]
 [ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
 [ <T> Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )
@@ -428,6 +438,8 @@ a`
 [ <T> Markdown: SimpleText:a ]     [ Enter: <T> ]
 [ <T> Markdown: Text: ]     [ Enter: <T> ]
 [ <T> Markdown: Text: Enter: ]     [ <T> ]
+[ <T> Markdown: TextLine: ]     [ <T> ]
+[ <T> Markdown: Paragraph: ]     [ <T> ]
 [ <T> Markdown: Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )
@@ -466,6 +478,8 @@ a`
 [ <T> Markdown: SimpleText:a ]     [ Enter: <T> ]
 [ <T> Markdown: Text: ]     [ Enter: <T> ]
 [ <T> Markdown: Text: Enter: ]     [ <T> ]
+[ <T> Markdown: TextLine: ]     [ <T> ]
+[ <T> Markdown: Paragraph: ]     [ <T> ]
 [ <T> Markdown: Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )
@@ -502,6 +516,8 @@ end of xxyz.`
 [ <T> Markdown: Text: SimpleText:xxyz. ]     [ Enter: <T> ]
 [ <T> Markdown: Text: ]     [ Enter: <T> ]
 [ <T> Markdown: Text: Enter: ]     [ <T> ]
+[ <T> Markdown: TextLine: ]     [ <T> ]
+[ <T> Markdown: Paragraph: ]     [ <T> ]
 [ <T> Markdown: Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )
@@ -538,6 +554,8 @@ end of xxyz.`
 [ <T> Markdown: Text: SimpleText:xxyz. ]     [ Enter: <T> ]
 [ <T> Markdown: Text: ]     [ Enter: <T> ]
 [ <T> Markdown: Text: Enter: ]     [ <T> ]
+[ <T> Markdown: TextLine: ]     [ <T> ]
+[ <T> Markdown: Paragraph: ]     [ <T> ]
 [ <T> Markdown: Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
         )

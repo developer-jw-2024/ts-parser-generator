@@ -5,10 +5,32 @@
 Markdown -> ⏺ Markdown Line
 Markdown -> ⏺ Line
 Line -> ⏺ Enter
-Line -> ⏺ Text Enter
+Line -> ⏺ Paragraph
 Line -> ⏺ UnorderedList
 Line -> ⏺ OrderedList
 Line -> ⏺ Blockquotes
+Paragraph -> ⏺ TextLine
+Paragraph -> ⏺ Paragraph TextLine
+UnorderedList -> ⏺ UnorderedListItem
+UnorderedList -> ⏺ UnorderedList UnorderedListItem
+UnorderedList -> ⏺ UnorderedList AppendListItemContentLine
+UnorderedList -> ⏺ UnorderedList OrderedList
+OrderedList -> ⏺ OrderedListItem
+OrderedList -> ⏺ OrderedList OrderedListItem
+OrderedList -> ⏺ OrderedList AppendListItemContentLine
+OrderedList -> ⏺ OrderedList UnorderedList
+Blockquotes -> ⏺ BlockquoteLine
+Blockquotes -> ⏺ Blockquotes BlockquoteLine
+TextLine -> ⏺ Text Enter
+UnorderedListItem -> ⏺ ItemHypen Text Enter
+UnorderedListItem -> ⏺ Spaces ItemHypen Text Enter
+UnorderedListItem -> ⏺ ItemStar Text Enter
+UnorderedListItem -> ⏺ Spaces ItemStar Text Enter
+UnorderedListItem -> ⏺ ItemPlus Text Enter
+UnorderedListItem -> ⏺ Spaces ItemPlus Text Enter
+OrderedListItem -> ⏺ ItemOrder Text Enter
+OrderedListItem -> ⏺ Spaces ItemOrder Text Enter
+BlockquoteLine -> ⏺ LeftArrow Spaces Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -20,29 +42,10 @@ Text -> ⏺ BoldStarText
 Text -> ⏺ BoldDoubleUnderText
 Text -> ⏺ ItalicStarText
 Text -> ⏺ ItalicUnderlineText
-UnorderedList -> ⏺ UnorderedListItem
-UnorderedList -> ⏺ UnorderedList UnorderedListItem
-UnorderedList -> ⏺ UnorderedList AppendListItemContentLine
-UnorderedList -> ⏺ UnorderedList OrderedList
-OrderedList -> ⏺ OrderedListItem
-OrderedList -> ⏺ OrderedList OrderedListItem
-OrderedList -> ⏺ OrderedList AppendListItemContentLine
-OrderedList -> ⏺ OrderedList UnorderedList
-Blockquotes -> ⏺ BlockquoteLine
-Blockquotes -> ⏺ Blockquotes BlockquoteLine
 BoldStarText -> ⏺ StartBoldStarText DoubleStar
 BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
 ItalicStarText -> ⏺ StartItalicStarText SingleStar
 ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
-UnorderedListItem -> ⏺ ItemHypen Text Enter
-UnorderedListItem -> ⏺ Spaces ItemHypen Text Enter
-UnorderedListItem -> ⏺ ItemStar Text Enter
-UnorderedListItem -> ⏺ Spaces ItemStar Text Enter
-UnorderedListItem -> ⏺ ItemPlus Text Enter
-UnorderedListItem -> ⏺ Spaces ItemPlus Text Enter
-OrderedListItem -> ⏺ ItemOrder Text Enter
-OrderedListItem -> ⏺ Spaces ItemOrder Text Enter
-BlockquoteLine -> ⏺ LeftArrow Spaces Text Enter
 StartBoldStarText -> ⏺ DoubleStar Spaces
 StartBoldStarText -> ⏺ DoubleStar SimpleText
 StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
@@ -80,10 +83,32 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
 State1[[Markdown1 -> Markdown ⏺ _TERMINATED_
 Markdown -> Markdown ⏺ Line
 Line -> ⏺ Enter
-Line -> ⏺ Text Enter
+Line -> ⏺ Paragraph
 Line -> ⏺ UnorderedList
 Line -> ⏺ OrderedList
 Line -> ⏺ Blockquotes
+Paragraph -> ⏺ TextLine
+Paragraph -> ⏺ Paragraph TextLine
+UnorderedList -> ⏺ UnorderedListItem
+UnorderedList -> ⏺ UnorderedList UnorderedListItem
+UnorderedList -> ⏺ UnorderedList AppendListItemContentLine
+UnorderedList -> ⏺ UnorderedList OrderedList
+OrderedList -> ⏺ OrderedListItem
+OrderedList -> ⏺ OrderedList OrderedListItem
+OrderedList -> ⏺ OrderedList AppendListItemContentLine
+OrderedList -> ⏺ OrderedList UnorderedList
+Blockquotes -> ⏺ BlockquoteLine
+Blockquotes -> ⏺ Blockquotes BlockquoteLine
+TextLine -> ⏺ Text Enter
+UnorderedListItem -> ⏺ ItemHypen Text Enter
+UnorderedListItem -> ⏺ Spaces ItemHypen Text Enter
+UnorderedListItem -> ⏺ ItemStar Text Enter
+UnorderedListItem -> ⏺ Spaces ItemStar Text Enter
+UnorderedListItem -> ⏺ ItemPlus Text Enter
+UnorderedListItem -> ⏺ Spaces ItemPlus Text Enter
+OrderedListItem -> ⏺ ItemOrder Text Enter
+OrderedListItem -> ⏺ Spaces ItemOrder Text Enter
+BlockquoteLine -> ⏺ LeftArrow Spaces Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -95,29 +120,10 @@ Text -> ⏺ BoldStarText
 Text -> ⏺ BoldDoubleUnderText
 Text -> ⏺ ItalicStarText
 Text -> ⏺ ItalicUnderlineText
-UnorderedList -> ⏺ UnorderedListItem
-UnorderedList -> ⏺ UnorderedList UnorderedListItem
-UnorderedList -> ⏺ UnorderedList AppendListItemContentLine
-UnorderedList -> ⏺ UnorderedList OrderedList
-OrderedList -> ⏺ OrderedListItem
-OrderedList -> ⏺ OrderedList OrderedListItem
-OrderedList -> ⏺ OrderedList AppendListItemContentLine
-OrderedList -> ⏺ OrderedList UnorderedList
-Blockquotes -> ⏺ BlockquoteLine
-Blockquotes -> ⏺ Blockquotes BlockquoteLine
 BoldStarText -> ⏺ StartBoldStarText DoubleStar
 BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
 ItalicStarText -> ⏺ StartItalicStarText SingleStar
 ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
-UnorderedListItem -> ⏺ ItemHypen Text Enter
-UnorderedListItem -> ⏺ Spaces ItemHypen Text Enter
-UnorderedListItem -> ⏺ ItemStar Text Enter
-UnorderedListItem -> ⏺ Spaces ItemStar Text Enter
-UnorderedListItem -> ⏺ ItemPlus Text Enter
-UnorderedListItem -> ⏺ Spaces ItemPlus Text Enter
-OrderedListItem -> ⏺ ItemOrder Text Enter
-OrderedListItem -> ⏺ Spaces ItemOrder Text Enter
-BlockquoteLine -> ⏺ LeftArrow Spaces Text Enter
 StartBoldStarText -> ⏺ DoubleStar Spaces
 StartBoldStarText -> ⏺ DoubleStar SimpleText
 StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
@@ -154,13 +160,20 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
 State2[[Markdown -> Line ⏺]]
 State3[[Line -> Enter ⏺]]
-State4[[Line -> Text ⏺ Enter
-Text -> Text ⏺ Spaces
-Text -> Text ⏺ SimpleText
-Text -> Text ⏺ BoldStarText
-Text -> Text ⏺ BoldDoubleUnderText
-Text -> Text ⏺ ItalicStarText
-Text -> Text ⏺ ItalicUnderlineText
+State4[[Line -> Paragraph ⏺
+Paragraph -> Paragraph ⏺ TextLine
+TextLine -> ⏺ Text Enter
+Text -> ⏺ Text Spaces
+Text -> ⏺ Text SimpleText
+Text -> ⏺ Text BoldStarText
+Text -> ⏺ Text BoldDoubleUnderText
+Text -> ⏺ Text ItalicStarText
+Text -> ⏺ Text ItalicUnderlineText
+Text -> ⏺ SimpleText
+Text -> ⏺ BoldStarText
+Text -> ⏺ BoldDoubleUnderText
+Text -> ⏺ ItalicStarText
+Text -> ⏺ ItalicUnderlineText
 BoldStarText -> ⏺ StartBoldStarText DoubleStar
 BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
 ItalicStarText -> ⏺ StartItalicStarText SingleStar
@@ -244,15 +257,266 @@ IntentBlockquoteLine -> ⏺ IntentLeftArrow Spaces Text Enter]]
 State7[[Line -> Blockquotes ⏺
 Blockquotes -> Blockquotes ⏺ BlockquoteLine
 BlockquoteLine -> ⏺ LeftArrow Spaces Text Enter]]
-State8[[Text -> SimpleText ⏺]]
-State9[[Text -> BoldStarText ⏺]]
-State10[[Text -> BoldDoubleUnderText ⏺]]
-State11[[Text -> ItalicStarText ⏺]]
-State12[[Text -> ItalicUnderlineText ⏺]]
-State13[[UnorderedList -> UnorderedListItem ⏺]]
-State14[[OrderedList -> OrderedListItem ⏺]]
-State15[[Blockquotes -> BlockquoteLine ⏺]]
-State16[[BoldStarText -> StartBoldStarText ⏺ DoubleStar
+State8[[Paragraph -> TextLine ⏺]]
+State9[[UnorderedList -> UnorderedListItem ⏺]]
+State10[[OrderedList -> OrderedListItem ⏺]]
+State11[[Blockquotes -> BlockquoteLine ⏺]]
+State12[[TextLine -> Text ⏺ Enter
+Text -> Text ⏺ Spaces
+Text -> Text ⏺ SimpleText
+Text -> Text ⏺ BoldStarText
+Text -> Text ⏺ BoldDoubleUnderText
+Text -> Text ⏺ ItalicStarText
+Text -> Text ⏺ ItalicUnderlineText
+BoldStarText -> ⏺ StartBoldStarText DoubleStar
+BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
+ItalicStarText -> ⏺ StartItalicStarText SingleStar
+ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
+StartBoldStarText -> ⏺ DoubleStar Spaces
+StartBoldStarText -> ⏺ DoubleStar SimpleText
+StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
+StartBoldStarText -> ⏺ DoubleStar ItalicStarText
+StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
+StartBoldStarText -> ⏺ StartBoldStarText Spaces
+StartBoldStarText -> ⏺ StartBoldStarText SimpleText
+StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
+StartItalicStarText -> ⏺ SingleStar Spaces
+StartItalicStarText -> ⏺ SingleStar SimpleText
+StartItalicStarText -> ⏺ SingleStar BoldStarText
+StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
+StartItalicStarText -> ⏺ StartItalicStarText Spaces
+StartItalicStarText -> ⏺ StartItalicStarText SimpleText
+StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
+StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
+StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
+State13[[UnorderedListItem -> ItemHypen ⏺ Text Enter
+Text -> ⏺ Text Spaces
+Text -> ⏺ Text SimpleText
+Text -> ⏺ Text BoldStarText
+Text -> ⏺ Text BoldDoubleUnderText
+Text -> ⏺ Text ItalicStarText
+Text -> ⏺ Text ItalicUnderlineText
+Text -> ⏺ SimpleText
+Text -> ⏺ BoldStarText
+Text -> ⏺ BoldDoubleUnderText
+Text -> ⏺ ItalicStarText
+Text -> ⏺ ItalicUnderlineText
+BoldStarText -> ⏺ StartBoldStarText DoubleStar
+BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
+ItalicStarText -> ⏺ StartItalicStarText SingleStar
+ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
+StartBoldStarText -> ⏺ DoubleStar Spaces
+StartBoldStarText -> ⏺ DoubleStar SimpleText
+StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
+StartBoldStarText -> ⏺ DoubleStar ItalicStarText
+StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
+StartBoldStarText -> ⏺ StartBoldStarText Spaces
+StartBoldStarText -> ⏺ StartBoldStarText SimpleText
+StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
+StartItalicStarText -> ⏺ SingleStar Spaces
+StartItalicStarText -> ⏺ SingleStar SimpleText
+StartItalicStarText -> ⏺ SingleStar BoldStarText
+StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
+StartItalicStarText -> ⏺ StartItalicStarText Spaces
+StartItalicStarText -> ⏺ StartItalicStarText SimpleText
+StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
+StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
+StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
+State14[[UnorderedListItem -> Spaces ⏺ ItemHypen Text Enter
+UnorderedListItem -> Spaces ⏺ ItemStar Text Enter
+UnorderedListItem -> Spaces ⏺ ItemPlus Text Enter
+OrderedListItem -> Spaces ⏺ ItemOrder Text Enter]]
+State15[[UnorderedListItem -> ItemStar ⏺ Text Enter
+Text -> ⏺ Text Spaces
+Text -> ⏺ Text SimpleText
+Text -> ⏺ Text BoldStarText
+Text -> ⏺ Text BoldDoubleUnderText
+Text -> ⏺ Text ItalicStarText
+Text -> ⏺ Text ItalicUnderlineText
+Text -> ⏺ SimpleText
+Text -> ⏺ BoldStarText
+Text -> ⏺ BoldDoubleUnderText
+Text -> ⏺ ItalicStarText
+Text -> ⏺ ItalicUnderlineText
+BoldStarText -> ⏺ StartBoldStarText DoubleStar
+BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
+ItalicStarText -> ⏺ StartItalicStarText SingleStar
+ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
+StartBoldStarText -> ⏺ DoubleStar Spaces
+StartBoldStarText -> ⏺ DoubleStar SimpleText
+StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
+StartBoldStarText -> ⏺ DoubleStar ItalicStarText
+StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
+StartBoldStarText -> ⏺ StartBoldStarText Spaces
+StartBoldStarText -> ⏺ StartBoldStarText SimpleText
+StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
+StartItalicStarText -> ⏺ SingleStar Spaces
+StartItalicStarText -> ⏺ SingleStar SimpleText
+StartItalicStarText -> ⏺ SingleStar BoldStarText
+StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
+StartItalicStarText -> ⏺ StartItalicStarText Spaces
+StartItalicStarText -> ⏺ StartItalicStarText SimpleText
+StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
+StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
+StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
+State16[[UnorderedListItem -> ItemPlus ⏺ Text Enter
+Text -> ⏺ Text Spaces
+Text -> ⏺ Text SimpleText
+Text -> ⏺ Text BoldStarText
+Text -> ⏺ Text BoldDoubleUnderText
+Text -> ⏺ Text ItalicStarText
+Text -> ⏺ Text ItalicUnderlineText
+Text -> ⏺ SimpleText
+Text -> ⏺ BoldStarText
+Text -> ⏺ BoldDoubleUnderText
+Text -> ⏺ ItalicStarText
+Text -> ⏺ ItalicUnderlineText
+BoldStarText -> ⏺ StartBoldStarText DoubleStar
+BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
+ItalicStarText -> ⏺ StartItalicStarText SingleStar
+ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
+StartBoldStarText -> ⏺ DoubleStar Spaces
+StartBoldStarText -> ⏺ DoubleStar SimpleText
+StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
+StartBoldStarText -> ⏺ DoubleStar ItalicStarText
+StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
+StartBoldStarText -> ⏺ StartBoldStarText Spaces
+StartBoldStarText -> ⏺ StartBoldStarText SimpleText
+StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
+StartItalicStarText -> ⏺ SingleStar Spaces
+StartItalicStarText -> ⏺ SingleStar SimpleText
+StartItalicStarText -> ⏺ SingleStar BoldStarText
+StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
+StartItalicStarText -> ⏺ StartItalicStarText Spaces
+StartItalicStarText -> ⏺ StartItalicStarText SimpleText
+StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
+StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
+StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
+State17[[OrderedListItem -> ItemOrder ⏺ Text Enter
+Text -> ⏺ Text Spaces
+Text -> ⏺ Text SimpleText
+Text -> ⏺ Text BoldStarText
+Text -> ⏺ Text BoldDoubleUnderText
+Text -> ⏺ Text ItalicStarText
+Text -> ⏺ Text ItalicUnderlineText
+Text -> ⏺ SimpleText
+Text -> ⏺ BoldStarText
+Text -> ⏺ BoldDoubleUnderText
+Text -> ⏺ ItalicStarText
+Text -> ⏺ ItalicUnderlineText
+BoldStarText -> ⏺ StartBoldStarText DoubleStar
+BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
+ItalicStarText -> ⏺ StartItalicStarText SingleStar
+ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
+StartBoldStarText -> ⏺ DoubleStar Spaces
+StartBoldStarText -> ⏺ DoubleStar SimpleText
+StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
+StartBoldStarText -> ⏺ DoubleStar ItalicStarText
+StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
+StartBoldStarText -> ⏺ StartBoldStarText Spaces
+StartBoldStarText -> ⏺ StartBoldStarText SimpleText
+StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
+StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
+StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
+StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
+StartItalicStarText -> ⏺ SingleStar Spaces
+StartItalicStarText -> ⏺ SingleStar SimpleText
+StartItalicStarText -> ⏺ SingleStar BoldStarText
+StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
+StartItalicStarText -> ⏺ StartItalicStarText Spaces
+StartItalicStarText -> ⏺ StartItalicStarText SimpleText
+StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
+StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
+StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
+StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
+StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
+State18[[BlockquoteLine -> LeftArrow ⏺ Spaces Text Enter]]
+State19[[Text -> SimpleText ⏺]]
+State20[[Text -> BoldStarText ⏺]]
+State21[[Text -> BoldDoubleUnderText ⏺]]
+State22[[Text -> ItalicStarText ⏺]]
+State23[[Text -> ItalicUnderlineText ⏺]]
+State24[[BoldStarText -> StartBoldStarText ⏺ DoubleStar
 StartBoldStarText -> StartBoldStarText ⏺ Spaces
 StartBoldStarText -> StartBoldStarText ⏺ SimpleText
 StartBoldStarText -> StartBoldStarText ⏺ BoldDoubleUnderText
@@ -285,7 +549,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State17[[BoldDoubleUnderText -> StartBoldDoubleUnderText ⏺ DoubleUnderline
+State25[[BoldDoubleUnderText -> StartBoldDoubleUnderText ⏺ DoubleUnderline
 StartBoldDoubleUnderText -> StartBoldDoubleUnderText ⏺ Spaces
 StartBoldDoubleUnderText -> StartBoldDoubleUnderText ⏺ SimpleText
 StartBoldDoubleUnderText -> StartBoldDoubleUnderText ⏺ BoldStarText
@@ -310,7 +574,7 @@ StartItalicStarText -> ⏺ StartItalicStarText Spaces
 StartItalicStarText -> ⏺ StartItalicStarText SimpleText
 StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
 StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText]]
-State18[[ItalicStarText -> StartItalicStarText ⏺ SingleStar
+State26[[ItalicStarText -> StartItalicStarText ⏺ SingleStar
 StartItalicStarText -> StartItalicStarText ⏺ Spaces
 StartItalicStarText -> StartItalicStarText ⏺ SimpleText
 StartItalicStarText -> StartItalicStarText ⏺ BoldStarText
@@ -335,7 +599,7 @@ StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText]]
-State19[[ItalicUnderlineText -> StartItalicUnderlineText ⏺ SingleUnderline
+State27[[ItalicUnderlineText -> StartItalicUnderlineText ⏺ SingleUnderline
 StartItalicUnderlineText -> StartItalicUnderlineText ⏺ Spaces
 StartItalicUnderlineText -> StartItalicUnderlineText ⏺ SimpleText
 StartItalicUnderlineText -> StartItalicUnderlineText ⏺ BoldStarText
@@ -360,212 +624,7 @@ StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText]]
-State20[[UnorderedListItem -> ItemHypen ⏺ Text Enter
-Text -> ⏺ Text Spaces
-Text -> ⏺ Text SimpleText
-Text -> ⏺ Text BoldStarText
-Text -> ⏺ Text BoldDoubleUnderText
-Text -> ⏺ Text ItalicStarText
-Text -> ⏺ Text ItalicUnderlineText
-Text -> ⏺ SimpleText
-Text -> ⏺ BoldStarText
-Text -> ⏺ BoldDoubleUnderText
-Text -> ⏺ ItalicStarText
-Text -> ⏺ ItalicUnderlineText
-BoldStarText -> ⏺ StartBoldStarText DoubleStar
-BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
-ItalicStarText -> ⏺ StartItalicStarText SingleStar
-ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
-StartBoldStarText -> ⏺ DoubleStar Spaces
-StartBoldStarText -> ⏺ DoubleStar SimpleText
-StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
-StartBoldStarText -> ⏺ DoubleStar ItalicStarText
-StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
-StartBoldStarText -> ⏺ StartBoldStarText Spaces
-StartBoldStarText -> ⏺ StartBoldStarText SimpleText
-StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
-StartItalicStarText -> ⏺ SingleStar Spaces
-StartItalicStarText -> ⏺ SingleStar SimpleText
-StartItalicStarText -> ⏺ SingleStar BoldStarText
-StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
-StartItalicStarText -> ⏺ StartItalicStarText Spaces
-StartItalicStarText -> ⏺ StartItalicStarText SimpleText
-StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
-StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
-StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State21[[UnorderedListItem -> Spaces ⏺ ItemHypen Text Enter
-UnorderedListItem -> Spaces ⏺ ItemStar Text Enter
-UnorderedListItem -> Spaces ⏺ ItemPlus Text Enter
-OrderedListItem -> Spaces ⏺ ItemOrder Text Enter]]
-State22[[UnorderedListItem -> ItemStar ⏺ Text Enter
-Text -> ⏺ Text Spaces
-Text -> ⏺ Text SimpleText
-Text -> ⏺ Text BoldStarText
-Text -> ⏺ Text BoldDoubleUnderText
-Text -> ⏺ Text ItalicStarText
-Text -> ⏺ Text ItalicUnderlineText
-Text -> ⏺ SimpleText
-Text -> ⏺ BoldStarText
-Text -> ⏺ BoldDoubleUnderText
-Text -> ⏺ ItalicStarText
-Text -> ⏺ ItalicUnderlineText
-BoldStarText -> ⏺ StartBoldStarText DoubleStar
-BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
-ItalicStarText -> ⏺ StartItalicStarText SingleStar
-ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
-StartBoldStarText -> ⏺ DoubleStar Spaces
-StartBoldStarText -> ⏺ DoubleStar SimpleText
-StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
-StartBoldStarText -> ⏺ DoubleStar ItalicStarText
-StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
-StartBoldStarText -> ⏺ StartBoldStarText Spaces
-StartBoldStarText -> ⏺ StartBoldStarText SimpleText
-StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
-StartItalicStarText -> ⏺ SingleStar Spaces
-StartItalicStarText -> ⏺ SingleStar SimpleText
-StartItalicStarText -> ⏺ SingleStar BoldStarText
-StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
-StartItalicStarText -> ⏺ StartItalicStarText Spaces
-StartItalicStarText -> ⏺ StartItalicStarText SimpleText
-StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
-StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
-StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State23[[UnorderedListItem -> ItemPlus ⏺ Text Enter
-Text -> ⏺ Text Spaces
-Text -> ⏺ Text SimpleText
-Text -> ⏺ Text BoldStarText
-Text -> ⏺ Text BoldDoubleUnderText
-Text -> ⏺ Text ItalicStarText
-Text -> ⏺ Text ItalicUnderlineText
-Text -> ⏺ SimpleText
-Text -> ⏺ BoldStarText
-Text -> ⏺ BoldDoubleUnderText
-Text -> ⏺ ItalicStarText
-Text -> ⏺ ItalicUnderlineText
-BoldStarText -> ⏺ StartBoldStarText DoubleStar
-BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
-ItalicStarText -> ⏺ StartItalicStarText SingleStar
-ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
-StartBoldStarText -> ⏺ DoubleStar Spaces
-StartBoldStarText -> ⏺ DoubleStar SimpleText
-StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
-StartBoldStarText -> ⏺ DoubleStar ItalicStarText
-StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
-StartBoldStarText -> ⏺ StartBoldStarText Spaces
-StartBoldStarText -> ⏺ StartBoldStarText SimpleText
-StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
-StartItalicStarText -> ⏺ SingleStar Spaces
-StartItalicStarText -> ⏺ SingleStar SimpleText
-StartItalicStarText -> ⏺ SingleStar BoldStarText
-StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
-StartItalicStarText -> ⏺ StartItalicStarText Spaces
-StartItalicStarText -> ⏺ StartItalicStarText SimpleText
-StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
-StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
-StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State24[[OrderedListItem -> ItemOrder ⏺ Text Enter
-Text -> ⏺ Text Spaces
-Text -> ⏺ Text SimpleText
-Text -> ⏺ Text BoldStarText
-Text -> ⏺ Text BoldDoubleUnderText
-Text -> ⏺ Text ItalicStarText
-Text -> ⏺ Text ItalicUnderlineText
-Text -> ⏺ SimpleText
-Text -> ⏺ BoldStarText
-Text -> ⏺ BoldDoubleUnderText
-Text -> ⏺ ItalicStarText
-Text -> ⏺ ItalicUnderlineText
-BoldStarText -> ⏺ StartBoldStarText DoubleStar
-BoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText DoubleUnderline
-ItalicStarText -> ⏺ StartItalicStarText SingleStar
-ItalicUnderlineText -> ⏺ StartItalicUnderlineText SingleUnderline
-StartBoldStarText -> ⏺ DoubleStar Spaces
-StartBoldStarText -> ⏺ DoubleStar SimpleText
-StartBoldStarText -> ⏺ DoubleStar BoldDoubleUnderText
-StartBoldStarText -> ⏺ DoubleStar ItalicStarText
-StartBoldStarText -> ⏺ DoubleStar ItalicUnderlineText
-StartBoldStarText -> ⏺ StartBoldStarText Spaces
-StartBoldStarText -> ⏺ StartBoldStarText SimpleText
-StartBoldStarText -> ⏺ StartBoldStarText BoldDoubleUnderText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicStarText
-StartBoldStarText -> ⏺ StartBoldStarText ItalicUnderlineText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline Spaces
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline SimpleText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline BoldStarText
-StartBoldDoubleUnderText -> ⏺ DoubleUnderline ItalicStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
-StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText
-StartItalicStarText -> ⏺ SingleStar Spaces
-StartItalicStarText -> ⏺ SingleStar SimpleText
-StartItalicStarText -> ⏺ SingleStar BoldStarText
-StartItalicStarText -> ⏺ SingleStar BoldDoubleUnderText
-StartItalicStarText -> ⏺ StartItalicStarText Spaces
-StartItalicStarText -> ⏺ StartItalicStarText SimpleText
-StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
-StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ SingleUnderline Spaces
-StartItalicUnderlineText -> ⏺ SingleUnderline SimpleText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldStarText
-StartItalicUnderlineText -> ⏺ SingleUnderline BoldDoubleUnderText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
-StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State25[[BlockquoteLine -> LeftArrow ⏺ Spaces Text Enter]]
-State26[[StartBoldStarText -> DoubleStar ⏺ Spaces
+State28[[StartBoldStarText -> DoubleStar ⏺ Spaces
 StartBoldStarText -> DoubleStar ⏺ SimpleText
 StartBoldStarText -> DoubleStar ⏺ BoldDoubleUnderText
 StartBoldStarText -> DoubleStar ⏺ ItalicStarText
@@ -597,7 +656,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State27[[StartBoldDoubleUnderText -> DoubleUnderline ⏺ Spaces
+State29[[StartBoldDoubleUnderText -> DoubleUnderline ⏺ Spaces
 StartBoldDoubleUnderText -> DoubleUnderline ⏺ SimpleText
 StartBoldDoubleUnderText -> DoubleUnderline ⏺ BoldStarText
 StartBoldDoubleUnderText -> DoubleUnderline ⏺ ItalicStarText
@@ -621,7 +680,7 @@ StartItalicStarText -> ⏺ StartItalicStarText Spaces
 StartItalicStarText -> ⏺ StartItalicStarText SimpleText
 StartItalicStarText -> ⏺ StartItalicStarText BoldStarText
 StartItalicStarText -> ⏺ StartItalicStarText BoldDoubleUnderText]]
-State28[[StartItalicStarText -> SingleStar ⏺ Spaces
+State30[[StartItalicStarText -> SingleStar ⏺ Spaces
 StartItalicStarText -> SingleStar ⏺ SimpleText
 StartItalicStarText -> SingleStar ⏺ BoldStarText
 StartItalicStarText -> SingleStar ⏺ BoldDoubleUnderText
@@ -645,7 +704,7 @@ StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText]]
-State29[[StartItalicUnderlineText -> SingleUnderline ⏺ Spaces
+State31[[StartItalicUnderlineText -> SingleUnderline ⏺ Spaces
 StartItalicUnderlineText -> SingleUnderline ⏺ SimpleText
 StartItalicUnderlineText -> SingleUnderline ⏺ BoldStarText
 StartItalicUnderlineText -> SingleUnderline ⏺ BoldDoubleUnderText
@@ -669,17 +728,11 @@ StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText Spaces
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText SimpleText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText BoldStarText
 StartBoldDoubleUnderText -> ⏺ StartBoldDoubleUnderText ItalicStarText]]
-State30[[Markdown -> Markdown Line ⏺]]
-State31[[Line -> Text Enter ⏺]]
-State32[[Text -> Text Spaces ⏺]]
-State33[[Text -> Text SimpleText ⏺]]
-State34[[Text -> Text BoldStarText ⏺]]
-State35[[Text -> Text BoldDoubleUnderText ⏺]]
-State36[[Text -> Text ItalicStarText ⏺]]
-State37[[Text -> Text ItalicUnderlineText ⏺]]
-State38[[UnorderedList -> UnorderedList UnorderedListItem ⏺]]
-State39[[UnorderedList -> UnorderedList AppendListItemContentLine ⏺]]
-State40[[UnorderedList -> UnorderedList OrderedList ⏺
+State32[[Markdown -> Markdown Line ⏺]]
+State33[[Paragraph -> Paragraph TextLine ⏺]]
+State34[[UnorderedList -> UnorderedList UnorderedListItem ⏺]]
+State35[[UnorderedList -> UnorderedList AppendListItemContentLine ⏺]]
+State36[[UnorderedList -> UnorderedList OrderedList ⏺
 OrderedList -> OrderedList ⏺ OrderedListItem
 OrderedList -> OrderedList ⏺ AppendListItemContentLine
 OrderedList -> OrderedList ⏺ UnorderedList
@@ -700,7 +753,7 @@ UnorderedListItem -> ⏺ Spaces ItemStar Text Enter
 UnorderedListItem -> ⏺ ItemPlus Text Enter
 UnorderedListItem -> ⏺ Spaces ItemPlus Text Enter
 IntentBlockquoteLine -> ⏺ IntentLeftArrow Spaces Text Enter]]
-State41[[UnorderedListItem -> Spaces ⏺ ItemHypen Text Enter
+State37[[UnorderedListItem -> Spaces ⏺ ItemHypen Text Enter
 UnorderedListItem -> Spaces ⏺ ItemStar Text Enter
 UnorderedListItem -> Spaces ⏺ ItemPlus Text Enter
 AppendListItemContentLine -> Spaces ⏺ Text Enter
@@ -754,14 +807,14 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State42[[AppendListItemContentLine -> IntentBlockquotes ⏺
+State38[[AppendListItemContentLine -> IntentBlockquotes ⏺
 IntentBlockquotes -> IntentBlockquotes ⏺ IntentBlockquoteLine
 IntentBlockquoteLine -> ⏺ IntentLeftArrow Spaces Text Enter]]
-State43[[IntentBlockquotes -> IntentBlockquoteLine ⏺]]
-State44[[IntentBlockquoteLine -> IntentLeftArrow ⏺ Spaces Text Enter]]
-State45[[OrderedList -> OrderedList OrderedListItem ⏺]]
-State46[[OrderedList -> OrderedList AppendListItemContentLine ⏺]]
-State47[[OrderedList -> OrderedList UnorderedList ⏺
+State39[[IntentBlockquotes -> IntentBlockquoteLine ⏺]]
+State40[[IntentBlockquoteLine -> IntentLeftArrow ⏺ Spaces Text Enter]]
+State41[[OrderedList -> OrderedList OrderedListItem ⏺]]
+State42[[OrderedList -> OrderedList AppendListItemContentLine ⏺]]
+State43[[OrderedList -> OrderedList UnorderedList ⏺
 UnorderedList -> UnorderedList ⏺ UnorderedListItem
 UnorderedList -> UnorderedList ⏺ AppendListItemContentLine
 UnorderedList -> UnorderedList ⏺ OrderedList
@@ -782,29 +835,15 @@ IntentBlockquotes -> ⏺ IntentBlockquotes IntentBlockquoteLine
 OrderedListItem -> ⏺ ItemOrder Text Enter
 OrderedListItem -> ⏺ Spaces ItemOrder Text Enter
 IntentBlockquoteLine -> ⏺ IntentLeftArrow Spaces Text Enter]]
-State48[[Blockquotes -> Blockquotes BlockquoteLine ⏺]]
-State49[[BoldStarText -> StartBoldStarText DoubleStar ⏺]]
-State50[[StartBoldStarText -> StartBoldStarText Spaces ⏺]]
-State51[[StartBoldStarText -> StartBoldStarText SimpleText ⏺]]
-State52[[StartBoldStarText -> StartBoldStarText BoldDoubleUnderText ⏺]]
-State53[[StartBoldStarText -> StartBoldStarText ItalicStarText ⏺]]
-State54[[StartBoldStarText -> StartBoldStarText ItalicUnderlineText ⏺]]
-State55[[BoldDoubleUnderText -> StartBoldDoubleUnderText DoubleUnderline ⏺]]
-State56[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText Spaces ⏺]]
-State57[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText SimpleText ⏺]]
-State58[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText BoldStarText ⏺]]
-State59[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText ItalicStarText ⏺]]
-State60[[ItalicStarText -> StartItalicStarText SingleStar ⏺]]
-State61[[StartItalicStarText -> StartItalicStarText Spaces ⏺]]
-State62[[StartItalicStarText -> StartItalicStarText SimpleText ⏺]]
-State63[[StartItalicStarText -> StartItalicStarText BoldStarText ⏺]]
-State64[[StartItalicStarText -> StartItalicStarText BoldDoubleUnderText ⏺]]
-State65[[ItalicUnderlineText -> StartItalicUnderlineText SingleUnderline ⏺]]
-State66[[StartItalicUnderlineText -> StartItalicUnderlineText Spaces ⏺]]
-State67[[StartItalicUnderlineText -> StartItalicUnderlineText SimpleText ⏺]]
-State68[[StartItalicUnderlineText -> StartItalicUnderlineText BoldStarText ⏺]]
-State69[[StartItalicUnderlineText -> StartItalicUnderlineText BoldDoubleUnderText ⏺]]
-State70[[UnorderedListItem -> ItemHypen Text ⏺ Enter
+State44[[Blockquotes -> Blockquotes BlockquoteLine ⏺]]
+State45[[TextLine -> Text Enter ⏺]]
+State46[[Text -> Text Spaces ⏺]]
+State47[[Text -> Text SimpleText ⏺]]
+State48[[Text -> Text BoldStarText ⏺]]
+State49[[Text -> Text BoldDoubleUnderText ⏺]]
+State50[[Text -> Text ItalicStarText ⏺]]
+State51[[Text -> Text ItalicUnderlineText ⏺]]
+State52[[UnorderedListItem -> ItemHypen Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -849,7 +888,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State71[[UnorderedListItem -> Spaces ItemHypen ⏺ Text Enter
+State53[[UnorderedListItem -> Spaces ItemHypen ⏺ Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -899,7 +938,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State72[[UnorderedListItem -> Spaces ItemStar ⏺ Text Enter
+State54[[UnorderedListItem -> Spaces ItemStar ⏺ Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -949,7 +988,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State73[[UnorderedListItem -> Spaces ItemPlus ⏺ Text Enter
+State55[[UnorderedListItem -> Spaces ItemPlus ⏺ Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -999,7 +1038,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State74[[OrderedListItem -> Spaces ItemOrder ⏺ Text Enter
+State56[[OrderedListItem -> Spaces ItemOrder ⏺ Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -1049,7 +1088,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State75[[UnorderedListItem -> ItemStar Text ⏺ Enter
+State57[[UnorderedListItem -> ItemStar Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1094,7 +1133,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State76[[UnorderedListItem -> ItemPlus Text ⏺ Enter
+State58[[UnorderedListItem -> ItemPlus Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1139,7 +1178,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State77[[OrderedListItem -> ItemOrder Text ⏺ Enter
+State59[[OrderedListItem -> ItemOrder Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1184,7 +1223,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State78[[BlockquoteLine -> LeftArrow Spaces ⏺ Text Enter
+State60[[BlockquoteLine -> LeftArrow Spaces ⏺ Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -1234,24 +1273,45 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State79[[StartBoldStarText -> DoubleStar Spaces ⏺]]
-State80[[StartBoldStarText -> DoubleStar SimpleText ⏺]]
-State81[[StartBoldStarText -> DoubleStar BoldDoubleUnderText ⏺]]
-State82[[StartBoldStarText -> DoubleStar ItalicStarText ⏺]]
-State83[[StartBoldStarText -> DoubleStar ItalicUnderlineText ⏺]]
-State84[[StartBoldDoubleUnderText -> DoubleUnderline Spaces ⏺]]
-State85[[StartBoldDoubleUnderText -> DoubleUnderline SimpleText ⏺]]
-State86[[StartBoldDoubleUnderText -> DoubleUnderline BoldStarText ⏺]]
-State87[[StartBoldDoubleUnderText -> DoubleUnderline ItalicStarText ⏺]]
-State88[[StartItalicStarText -> SingleStar Spaces ⏺]]
-State89[[StartItalicStarText -> SingleStar SimpleText ⏺]]
-State90[[StartItalicStarText -> SingleStar BoldStarText ⏺]]
-State91[[StartItalicStarText -> SingleStar BoldDoubleUnderText ⏺]]
-State92[[StartItalicUnderlineText -> SingleUnderline Spaces ⏺]]
-State93[[StartItalicUnderlineText -> SingleUnderline SimpleText ⏺]]
-State94[[StartItalicUnderlineText -> SingleUnderline BoldStarText ⏺]]
-State95[[StartItalicUnderlineText -> SingleUnderline BoldDoubleUnderText ⏺]]
-State96[[AppendListItemContentLine -> Spaces Text ⏺ Enter
+State61[[BoldStarText -> StartBoldStarText DoubleStar ⏺]]
+State62[[StartBoldStarText -> StartBoldStarText Spaces ⏺]]
+State63[[StartBoldStarText -> StartBoldStarText SimpleText ⏺]]
+State64[[StartBoldStarText -> StartBoldStarText BoldDoubleUnderText ⏺]]
+State65[[StartBoldStarText -> StartBoldStarText ItalicStarText ⏺]]
+State66[[StartBoldStarText -> StartBoldStarText ItalicUnderlineText ⏺]]
+State67[[BoldDoubleUnderText -> StartBoldDoubleUnderText DoubleUnderline ⏺]]
+State68[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText Spaces ⏺]]
+State69[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText SimpleText ⏺]]
+State70[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText BoldStarText ⏺]]
+State71[[StartBoldDoubleUnderText -> StartBoldDoubleUnderText ItalicStarText ⏺]]
+State72[[ItalicStarText -> StartItalicStarText SingleStar ⏺]]
+State73[[StartItalicStarText -> StartItalicStarText Spaces ⏺]]
+State74[[StartItalicStarText -> StartItalicStarText SimpleText ⏺]]
+State75[[StartItalicStarText -> StartItalicStarText BoldStarText ⏺]]
+State76[[StartItalicStarText -> StartItalicStarText BoldDoubleUnderText ⏺]]
+State77[[ItalicUnderlineText -> StartItalicUnderlineText SingleUnderline ⏺]]
+State78[[StartItalicUnderlineText -> StartItalicUnderlineText Spaces ⏺]]
+State79[[StartItalicUnderlineText -> StartItalicUnderlineText SimpleText ⏺]]
+State80[[StartItalicUnderlineText -> StartItalicUnderlineText BoldStarText ⏺]]
+State81[[StartItalicUnderlineText -> StartItalicUnderlineText BoldDoubleUnderText ⏺]]
+State82[[StartBoldStarText -> DoubleStar Spaces ⏺]]
+State83[[StartBoldStarText -> DoubleStar SimpleText ⏺]]
+State84[[StartBoldStarText -> DoubleStar BoldDoubleUnderText ⏺]]
+State85[[StartBoldStarText -> DoubleStar ItalicStarText ⏺]]
+State86[[StartBoldStarText -> DoubleStar ItalicUnderlineText ⏺]]
+State87[[StartBoldDoubleUnderText -> DoubleUnderline Spaces ⏺]]
+State88[[StartBoldDoubleUnderText -> DoubleUnderline SimpleText ⏺]]
+State89[[StartBoldDoubleUnderText -> DoubleUnderline BoldStarText ⏺]]
+State90[[StartBoldDoubleUnderText -> DoubleUnderline ItalicStarText ⏺]]
+State91[[StartItalicStarText -> SingleStar Spaces ⏺]]
+State92[[StartItalicStarText -> SingleStar SimpleText ⏺]]
+State93[[StartItalicStarText -> SingleStar BoldStarText ⏺]]
+State94[[StartItalicStarText -> SingleStar BoldDoubleUnderText ⏺]]
+State95[[StartItalicUnderlineText -> SingleUnderline Spaces ⏺]]
+State96[[StartItalicUnderlineText -> SingleUnderline SimpleText ⏺]]
+State97[[StartItalicUnderlineText -> SingleUnderline BoldStarText ⏺]]
+State98[[StartItalicUnderlineText -> SingleUnderline BoldDoubleUnderText ⏺]]
+State99[[AppendListItemContentLine -> Spaces Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1296,8 +1356,8 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State97[[IntentBlockquotes -> IntentBlockquotes IntentBlockquoteLine ⏺]]
-State98[[IntentBlockquoteLine -> IntentLeftArrow Spaces ⏺ Text Enter
+State100[[IntentBlockquotes -> IntentBlockquotes IntentBlockquoteLine ⏺]]
+State101[[IntentBlockquoteLine -> IntentLeftArrow Spaces ⏺ Text Enter
 Text -> ⏺ Text Spaces
 Text -> ⏺ Text SimpleText
 Text -> ⏺ Text BoldStarText
@@ -1347,8 +1407,8 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State99[[UnorderedListItem -> ItemHypen Text Enter ⏺]]
-State100[[UnorderedListItem -> Spaces ItemHypen Text ⏺ Enter
+State102[[UnorderedListItem -> ItemHypen Text Enter ⏺]]
+State103[[UnorderedListItem -> Spaces ItemHypen Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1393,7 +1453,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State101[[UnorderedListItem -> Spaces ItemStar Text ⏺ Enter
+State104[[UnorderedListItem -> Spaces ItemStar Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1438,7 +1498,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State102[[UnorderedListItem -> Spaces ItemPlus Text ⏺ Enter
+State105[[UnorderedListItem -> Spaces ItemPlus Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1483,7 +1543,7 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State103[[OrderedListItem -> Spaces ItemOrder Text ⏺ Enter
+State106[[OrderedListItem -> Spaces ItemOrder Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1528,10 +1588,10 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State104[[UnorderedListItem -> ItemStar Text Enter ⏺]]
-State105[[UnorderedListItem -> ItemPlus Text Enter ⏺]]
-State106[[OrderedListItem -> ItemOrder Text Enter ⏺]]
-State107[[BlockquoteLine -> LeftArrow Spaces Text ⏺ Enter
+State107[[UnorderedListItem -> ItemStar Text Enter ⏺]]
+State108[[UnorderedListItem -> ItemPlus Text Enter ⏺]]
+State109[[OrderedListItem -> ItemOrder Text Enter ⏺]]
+State110[[BlockquoteLine -> LeftArrow Spaces Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1576,8 +1636,8 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State108[[AppendListItemContentLine -> Spaces Text Enter ⏺]]
-State109[[IntentBlockquoteLine -> IntentLeftArrow Spaces Text ⏺ Enter
+State111[[AppendListItemContentLine -> Spaces Text Enter ⏺]]
+State112[[IntentBlockquoteLine -> IntentLeftArrow Spaces Text ⏺ Enter
 Text -> Text ⏺ Spaces
 Text -> Text ⏺ SimpleText
 Text -> Text ⏺ BoldStarText
@@ -1622,539 +1682,558 @@ StartItalicUnderlineText -> ⏺ StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> ⏺ StartItalicUnderlineText BoldDoubleUnderText]]
-State110[[UnorderedListItem -> Spaces ItemHypen Text Enter ⏺]]
-State111[[UnorderedListItem -> Spaces ItemStar Text Enter ⏺]]
-State112[[UnorderedListItem -> Spaces ItemPlus Text Enter ⏺]]
-State113[[OrderedListItem -> Spaces ItemOrder Text Enter ⏺]]
-State114[[BlockquoteLine -> LeftArrow Spaces Text Enter ⏺]]
-State115[[IntentBlockquoteLine -> IntentLeftArrow Spaces Text Enter ⏺]]
+State113[[UnorderedListItem -> Spaces ItemHypen Text Enter ⏺]]
+State114[[UnorderedListItem -> Spaces ItemStar Text Enter ⏺]]
+State115[[UnorderedListItem -> Spaces ItemPlus Text Enter ⏺]]
+State116[[OrderedListItem -> Spaces ItemOrder Text Enter ⏺]]
+State117[[BlockquoteLine -> LeftArrow Spaces Text Enter ⏺]]
+State118[[IntentBlockquoteLine -> IntentLeftArrow Spaces Text Enter ⏺]]
 State0-->|Markdown|State1
 State0-->|Line|State2
 State0-->|Enter|State3
-State0-->|Text|State4
+State0-->|Paragraph|State4
 State0-->|UnorderedList|State5
 State0-->|OrderedList|State6
 State0-->|Blockquotes|State7
-State0-->|SimpleText|State8
-State0-->|BoldStarText|State9
-State0-->|BoldDoubleUnderText|State10
-State0-->|ItalicStarText|State11
-State0-->|ItalicUnderlineText|State12
-State0-->|UnorderedListItem|State13
-State0-->|OrderedListItem|State14
-State0-->|BlockquoteLine|State15
-State0-->|StartBoldStarText|State16
-State0-->|StartBoldDoubleUnderText|State17
-State0-->|StartItalicStarText|State18
-State0-->|StartItalicUnderlineText|State19
-State0-->|ItemHypen|State20
-State0-->|Spaces|State21
-State0-->|ItemStar|State22
-State0-->|ItemPlus|State23
-State0-->|ItemOrder|State24
-State0-->|LeftArrow|State25
-State0-->|DoubleStar|State26
-State0-->|DoubleUnderline|State27
-State0-->|SingleStar|State28
-State0-->|SingleUnderline|State29
+State0-->|TextLine|State8
+State0-->|UnorderedListItem|State9
+State0-->|OrderedListItem|State10
+State0-->|BlockquoteLine|State11
+State0-->|Text|State12
+State0-->|ItemHypen|State13
+State0-->|Spaces|State14
+State0-->|ItemStar|State15
+State0-->|ItemPlus|State16
+State0-->|ItemOrder|State17
+State0-->|LeftArrow|State18
+State0-->|SimpleText|State19
+State0-->|BoldStarText|State20
+State0-->|BoldDoubleUnderText|State21
+State0-->|ItalicStarText|State22
+State0-->|ItalicUnderlineText|State23
+State0-->|StartBoldStarText|State24
+State0-->|StartBoldDoubleUnderText|State25
+State0-->|StartItalicStarText|State26
+State0-->|StartItalicUnderlineText|State27
+State0-->|DoubleStar|State28
+State0-->|DoubleUnderline|State29
+State0-->|SingleStar|State30
+State0-->|SingleUnderline|State31
 State1-->|Enter|State3
-State1-->|Text|State4
+State1-->|Paragraph|State4
 State1-->|UnorderedList|State5
 State1-->|OrderedList|State6
 State1-->|Blockquotes|State7
-State1-->|SimpleText|State8
-State1-->|BoldStarText|State9
-State1-->|BoldDoubleUnderText|State10
-State1-->|ItalicStarText|State11
-State1-->|ItalicUnderlineText|State12
-State1-->|UnorderedListItem|State13
-State1-->|OrderedListItem|State14
-State1-->|BlockquoteLine|State15
-State1-->|StartBoldStarText|State16
-State1-->|StartBoldDoubleUnderText|State17
-State1-->|StartItalicStarText|State18
-State1-->|StartItalicUnderlineText|State19
-State1-->|ItemHypen|State20
-State1-->|Spaces|State21
-State1-->|ItemStar|State22
-State1-->|ItemPlus|State23
-State1-->|ItemOrder|State24
-State1-->|LeftArrow|State25
-State1-->|DoubleStar|State26
-State1-->|DoubleUnderline|State27
-State1-->|SingleStar|State28
-State1-->|SingleUnderline|State29
-State1-->|Line|State30
-State4-->|StartBoldStarText|State16
-State4-->|StartBoldDoubleUnderText|State17
-State4-->|StartItalicStarText|State18
-State4-->|StartItalicUnderlineText|State19
-State4-->|DoubleStar|State26
-State4-->|DoubleUnderline|State27
-State4-->|SingleStar|State28
-State4-->|SingleUnderline|State29
-State4-->|Enter|State31
-State4-->|Spaces|State32
-State4-->|SimpleText|State33
-State4-->|BoldStarText|State34
-State4-->|BoldDoubleUnderText|State35
-State4-->|ItalicStarText|State36
-State4-->|ItalicUnderlineText|State37
-State5-->|OrderedListItem|State14
-State5-->|ItemHypen|State20
-State5-->|ItemStar|State22
-State5-->|ItemPlus|State23
-State5-->|ItemOrder|State24
-State5-->|UnorderedListItem|State38
-State5-->|AppendListItemContentLine|State39
-State5-->|OrderedList|State40
-State5-->|Spaces|State41
-State5-->|IntentBlockquotes|State42
-State5-->|IntentBlockquoteLine|State43
-State5-->|IntentLeftArrow|State44
-State6-->|UnorderedListItem|State13
-State6-->|ItemHypen|State20
-State6-->|ItemStar|State22
-State6-->|ItemPlus|State23
-State6-->|ItemOrder|State24
-State6-->|Spaces|State41
-State6-->|IntentBlockquotes|State42
-State6-->|IntentBlockquoteLine|State43
-State6-->|IntentLeftArrow|State44
-State6-->|OrderedListItem|State45
-State6-->|AppendListItemContentLine|State46
-State6-->|UnorderedList|State47
-State7-->|LeftArrow|State25
-State7-->|BlockquoteLine|State48
-State16-->|StartBoldDoubleUnderText|State17
-State16-->|StartItalicStarText|State18
-State16-->|StartItalicUnderlineText|State19
-State16-->|DoubleUnderline|State27
-State16-->|SingleStar|State28
-State16-->|SingleUnderline|State29
-State16-->|DoubleStar|State49
-State16-->|Spaces|State50
-State16-->|SimpleText|State51
-State16-->|BoldDoubleUnderText|State52
-State16-->|ItalicStarText|State53
-State16-->|ItalicUnderlineText|State54
-State17-->|StartBoldStarText|State16
-State17-->|StartItalicStarText|State18
-State17-->|DoubleStar|State26
-State17-->|SingleStar|State28
-State17-->|DoubleUnderline|State55
-State17-->|Spaces|State56
-State17-->|SimpleText|State57
-State17-->|BoldStarText|State58
-State17-->|ItalicStarText|State59
-State18-->|StartBoldStarText|State16
-State18-->|StartBoldDoubleUnderText|State17
-State18-->|DoubleStar|State26
-State18-->|DoubleUnderline|State27
-State18-->|SingleStar|State60
-State18-->|Spaces|State61
-State18-->|SimpleText|State62
-State18-->|BoldStarText|State63
-State18-->|BoldDoubleUnderText|State64
-State19-->|StartBoldStarText|State16
-State19-->|StartBoldDoubleUnderText|State17
-State19-->|DoubleStar|State26
-State19-->|DoubleUnderline|State27
-State19-->|SingleUnderline|State65
-State19-->|Spaces|State66
-State19-->|SimpleText|State67
-State19-->|BoldStarText|State68
-State19-->|BoldDoubleUnderText|State69
-State20-->|SimpleText|State8
-State20-->|BoldStarText|State9
-State20-->|BoldDoubleUnderText|State10
-State20-->|ItalicStarText|State11
-State20-->|ItalicUnderlineText|State12
-State20-->|StartBoldStarText|State16
-State20-->|StartBoldDoubleUnderText|State17
-State20-->|StartItalicStarText|State18
-State20-->|StartItalicUnderlineText|State19
-State20-->|DoubleStar|State26
-State20-->|DoubleUnderline|State27
-State20-->|SingleStar|State28
-State20-->|SingleUnderline|State29
-State20-->|Text|State70
-State21-->|ItemHypen|State71
-State21-->|ItemStar|State72
-State21-->|ItemPlus|State73
-State21-->|ItemOrder|State74
-State22-->|SimpleText|State8
-State22-->|BoldStarText|State9
-State22-->|BoldDoubleUnderText|State10
-State22-->|ItalicStarText|State11
-State22-->|ItalicUnderlineText|State12
-State22-->|StartBoldStarText|State16
-State22-->|StartBoldDoubleUnderText|State17
-State22-->|StartItalicStarText|State18
-State22-->|StartItalicUnderlineText|State19
-State22-->|DoubleStar|State26
-State22-->|DoubleUnderline|State27
-State22-->|SingleStar|State28
-State22-->|SingleUnderline|State29
-State22-->|Text|State75
-State23-->|SimpleText|State8
-State23-->|BoldStarText|State9
-State23-->|BoldDoubleUnderText|State10
-State23-->|ItalicStarText|State11
-State23-->|ItalicUnderlineText|State12
-State23-->|StartBoldStarText|State16
-State23-->|StartBoldDoubleUnderText|State17
-State23-->|StartItalicStarText|State18
-State23-->|StartItalicUnderlineText|State19
-State23-->|DoubleStar|State26
-State23-->|DoubleUnderline|State27
-State23-->|SingleStar|State28
-State23-->|SingleUnderline|State29
-State23-->|Text|State76
-State24-->|SimpleText|State8
-State24-->|BoldStarText|State9
-State24-->|BoldDoubleUnderText|State10
-State24-->|ItalicStarText|State11
-State24-->|ItalicUnderlineText|State12
-State24-->|StartBoldStarText|State16
-State24-->|StartBoldDoubleUnderText|State17
-State24-->|StartItalicStarText|State18
-State24-->|StartItalicUnderlineText|State19
-State24-->|DoubleStar|State26
-State24-->|DoubleUnderline|State27
-State24-->|SingleStar|State28
-State24-->|SingleUnderline|State29
-State24-->|Text|State77
-State25-->|Spaces|State78
-State26-->|StartBoldDoubleUnderText|State17
-State26-->|StartItalicStarText|State18
-State26-->|StartItalicUnderlineText|State19
-State26-->|DoubleUnderline|State27
-State26-->|SingleStar|State28
-State26-->|SingleUnderline|State29
-State26-->|Spaces|State79
-State26-->|SimpleText|State80
-State26-->|BoldDoubleUnderText|State81
-State26-->|ItalicStarText|State82
-State26-->|ItalicUnderlineText|State83
-State27-->|StartBoldStarText|State16
-State27-->|StartItalicStarText|State18
-State27-->|DoubleStar|State26
-State27-->|SingleStar|State28
-State27-->|Spaces|State84
-State27-->|SimpleText|State85
-State27-->|BoldStarText|State86
-State27-->|ItalicStarText|State87
-State28-->|StartBoldStarText|State16
-State28-->|StartBoldDoubleUnderText|State17
-State28-->|DoubleStar|State26
-State28-->|DoubleUnderline|State27
-State28-->|Spaces|State88
-State28-->|SimpleText|State89
-State28-->|BoldStarText|State90
-State28-->|BoldDoubleUnderText|State91
-State29-->|StartBoldStarText|State16
-State29-->|StartBoldDoubleUnderText|State17
-State29-->|DoubleStar|State26
-State29-->|DoubleUnderline|State27
-State29-->|Spaces|State92
-State29-->|SimpleText|State93
-State29-->|BoldStarText|State94
-State29-->|BoldDoubleUnderText|State95
-State40-->|UnorderedListItem|State13
-State40-->|ItemHypen|State20
-State40-->|ItemStar|State22
-State40-->|ItemPlus|State23
-State40-->|ItemOrder|State24
-State40-->|Spaces|State41
-State40-->|IntentBlockquotes|State42
-State40-->|IntentBlockquoteLine|State43
-State40-->|IntentLeftArrow|State44
-State40-->|OrderedListItem|State45
-State40-->|AppendListItemContentLine|State46
-State40-->|UnorderedList|State47
-State41-->|SimpleText|State8
-State41-->|BoldStarText|State9
-State41-->|BoldDoubleUnderText|State10
-State41-->|ItalicStarText|State11
-State41-->|ItalicUnderlineText|State12
-State41-->|StartBoldStarText|State16
-State41-->|StartBoldDoubleUnderText|State17
-State41-->|StartItalicStarText|State18
-State41-->|StartItalicUnderlineText|State19
-State41-->|DoubleStar|State26
-State41-->|DoubleUnderline|State27
-State41-->|SingleStar|State28
-State41-->|SingleUnderline|State29
-State41-->|ItemHypen|State71
-State41-->|ItemStar|State72
-State41-->|ItemPlus|State73
-State41-->|ItemOrder|State74
-State41-->|Text|State96
-State42-->|IntentLeftArrow|State44
-State42-->|IntentBlockquoteLine|State97
-State44-->|Spaces|State98
-State47-->|OrderedListItem|State14
-State47-->|ItemHypen|State20
-State47-->|ItemStar|State22
-State47-->|ItemPlus|State23
-State47-->|ItemOrder|State24
-State47-->|UnorderedListItem|State38
-State47-->|AppendListItemContentLine|State39
-State47-->|OrderedList|State40
-State47-->|Spaces|State41
-State47-->|IntentBlockquotes|State42
-State47-->|IntentBlockquoteLine|State43
-State47-->|IntentLeftArrow|State44
-State70-->|StartBoldStarText|State16
-State70-->|StartBoldDoubleUnderText|State17
-State70-->|StartItalicStarText|State18
-State70-->|StartItalicUnderlineText|State19
-State70-->|DoubleStar|State26
-State70-->|DoubleUnderline|State27
-State70-->|SingleStar|State28
-State70-->|SingleUnderline|State29
-State70-->|Spaces|State32
-State70-->|SimpleText|State33
-State70-->|BoldStarText|State34
-State70-->|BoldDoubleUnderText|State35
-State70-->|ItalicStarText|State36
-State70-->|ItalicUnderlineText|State37
-State70-->|Enter|State99
-State71-->|SimpleText|State8
-State71-->|BoldStarText|State9
-State71-->|BoldDoubleUnderText|State10
-State71-->|ItalicStarText|State11
-State71-->|ItalicUnderlineText|State12
-State71-->|StartBoldStarText|State16
-State71-->|StartBoldDoubleUnderText|State17
-State71-->|StartItalicStarText|State18
-State71-->|StartItalicUnderlineText|State19
-State71-->|DoubleStar|State26
-State71-->|DoubleUnderline|State27
-State71-->|SingleStar|State28
-State71-->|SingleUnderline|State29
-State71-->|Text|State100
-State72-->|SimpleText|State8
-State72-->|BoldStarText|State9
-State72-->|BoldDoubleUnderText|State10
-State72-->|ItalicStarText|State11
-State72-->|ItalicUnderlineText|State12
-State72-->|StartBoldStarText|State16
-State72-->|StartBoldDoubleUnderText|State17
-State72-->|StartItalicStarText|State18
-State72-->|StartItalicUnderlineText|State19
-State72-->|DoubleStar|State26
-State72-->|DoubleUnderline|State27
-State72-->|SingleStar|State28
-State72-->|SingleUnderline|State29
-State72-->|Text|State101
-State73-->|SimpleText|State8
-State73-->|BoldStarText|State9
-State73-->|BoldDoubleUnderText|State10
-State73-->|ItalicStarText|State11
-State73-->|ItalicUnderlineText|State12
-State73-->|StartBoldStarText|State16
-State73-->|StartBoldDoubleUnderText|State17
-State73-->|StartItalicStarText|State18
-State73-->|StartItalicUnderlineText|State19
-State73-->|DoubleStar|State26
-State73-->|DoubleUnderline|State27
-State73-->|SingleStar|State28
-State73-->|SingleUnderline|State29
-State73-->|Text|State102
-State74-->|SimpleText|State8
-State74-->|BoldStarText|State9
-State74-->|BoldDoubleUnderText|State10
-State74-->|ItalicStarText|State11
-State74-->|ItalicUnderlineText|State12
-State74-->|StartBoldStarText|State16
-State74-->|StartBoldDoubleUnderText|State17
-State74-->|StartItalicStarText|State18
-State74-->|StartItalicUnderlineText|State19
-State74-->|DoubleStar|State26
-State74-->|DoubleUnderline|State27
-State74-->|SingleStar|State28
-State74-->|SingleUnderline|State29
-State74-->|Text|State103
-State75-->|StartBoldStarText|State16
-State75-->|StartBoldDoubleUnderText|State17
-State75-->|StartItalicStarText|State18
-State75-->|StartItalicUnderlineText|State19
-State75-->|DoubleStar|State26
-State75-->|DoubleUnderline|State27
-State75-->|SingleStar|State28
-State75-->|SingleUnderline|State29
-State75-->|Spaces|State32
-State75-->|SimpleText|State33
-State75-->|BoldStarText|State34
-State75-->|BoldDoubleUnderText|State35
-State75-->|ItalicStarText|State36
-State75-->|ItalicUnderlineText|State37
-State75-->|Enter|State104
-State76-->|StartBoldStarText|State16
-State76-->|StartBoldDoubleUnderText|State17
-State76-->|StartItalicStarText|State18
-State76-->|StartItalicUnderlineText|State19
-State76-->|DoubleStar|State26
-State76-->|DoubleUnderline|State27
-State76-->|SingleStar|State28
-State76-->|SingleUnderline|State29
-State76-->|Spaces|State32
-State76-->|SimpleText|State33
-State76-->|BoldStarText|State34
-State76-->|BoldDoubleUnderText|State35
-State76-->|ItalicStarText|State36
-State76-->|ItalicUnderlineText|State37
-State76-->|Enter|State105
-State77-->|StartBoldStarText|State16
-State77-->|StartBoldDoubleUnderText|State17
-State77-->|StartItalicStarText|State18
-State77-->|StartItalicUnderlineText|State19
-State77-->|DoubleStar|State26
-State77-->|DoubleUnderline|State27
-State77-->|SingleStar|State28
-State77-->|SingleUnderline|State29
-State77-->|Spaces|State32
-State77-->|SimpleText|State33
-State77-->|BoldStarText|State34
-State77-->|BoldDoubleUnderText|State35
-State77-->|ItalicStarText|State36
-State77-->|ItalicUnderlineText|State37
-State77-->|Enter|State106
-State78-->|SimpleText|State8
-State78-->|BoldStarText|State9
-State78-->|BoldDoubleUnderText|State10
-State78-->|ItalicStarText|State11
-State78-->|ItalicUnderlineText|State12
-State78-->|StartBoldStarText|State16
-State78-->|StartBoldDoubleUnderText|State17
-State78-->|StartItalicStarText|State18
-State78-->|StartItalicUnderlineText|State19
-State78-->|DoubleStar|State26
-State78-->|DoubleUnderline|State27
-State78-->|SingleStar|State28
-State78-->|SingleUnderline|State29
-State78-->|Text|State107
-State96-->|StartBoldStarText|State16
-State96-->|StartBoldDoubleUnderText|State17
-State96-->|StartItalicStarText|State18
-State96-->|StartItalicUnderlineText|State19
-State96-->|DoubleStar|State26
-State96-->|DoubleUnderline|State27
-State96-->|SingleStar|State28
-State96-->|SingleUnderline|State29
-State96-->|Spaces|State32
-State96-->|SimpleText|State33
-State96-->|BoldStarText|State34
-State96-->|BoldDoubleUnderText|State35
-State96-->|ItalicStarText|State36
-State96-->|ItalicUnderlineText|State37
-State96-->|Enter|State108
-State98-->|SimpleText|State8
-State98-->|BoldStarText|State9
-State98-->|BoldDoubleUnderText|State10
-State98-->|ItalicStarText|State11
-State98-->|ItalicUnderlineText|State12
-State98-->|StartBoldStarText|State16
-State98-->|StartBoldDoubleUnderText|State17
-State98-->|StartItalicStarText|State18
-State98-->|StartItalicUnderlineText|State19
-State98-->|DoubleStar|State26
-State98-->|DoubleUnderline|State27
-State98-->|SingleStar|State28
-State98-->|SingleUnderline|State29
-State98-->|Text|State109
-State100-->|StartBoldStarText|State16
-State100-->|StartBoldDoubleUnderText|State17
-State100-->|StartItalicStarText|State18
-State100-->|StartItalicUnderlineText|State19
-State100-->|DoubleStar|State26
-State100-->|DoubleUnderline|State27
-State100-->|SingleStar|State28
-State100-->|SingleUnderline|State29
-State100-->|Spaces|State32
-State100-->|SimpleText|State33
-State100-->|BoldStarText|State34
-State100-->|BoldDoubleUnderText|State35
-State100-->|ItalicStarText|State36
-State100-->|ItalicUnderlineText|State37
-State100-->|Enter|State110
-State101-->|StartBoldStarText|State16
-State101-->|StartBoldDoubleUnderText|State17
-State101-->|StartItalicStarText|State18
-State101-->|StartItalicUnderlineText|State19
-State101-->|DoubleStar|State26
-State101-->|DoubleUnderline|State27
-State101-->|SingleStar|State28
-State101-->|SingleUnderline|State29
-State101-->|Spaces|State32
-State101-->|SimpleText|State33
-State101-->|BoldStarText|State34
-State101-->|BoldDoubleUnderText|State35
-State101-->|ItalicStarText|State36
-State101-->|ItalicUnderlineText|State37
-State101-->|Enter|State111
-State102-->|StartBoldStarText|State16
-State102-->|StartBoldDoubleUnderText|State17
-State102-->|StartItalicStarText|State18
-State102-->|StartItalicUnderlineText|State19
-State102-->|DoubleStar|State26
-State102-->|DoubleUnderline|State27
-State102-->|SingleStar|State28
-State102-->|SingleUnderline|State29
-State102-->|Spaces|State32
-State102-->|SimpleText|State33
-State102-->|BoldStarText|State34
-State102-->|BoldDoubleUnderText|State35
-State102-->|ItalicStarText|State36
-State102-->|ItalicUnderlineText|State37
-State102-->|Enter|State112
-State103-->|StartBoldStarText|State16
-State103-->|StartBoldDoubleUnderText|State17
-State103-->|StartItalicStarText|State18
-State103-->|StartItalicUnderlineText|State19
-State103-->|DoubleStar|State26
-State103-->|DoubleUnderline|State27
-State103-->|SingleStar|State28
-State103-->|SingleUnderline|State29
-State103-->|Spaces|State32
-State103-->|SimpleText|State33
-State103-->|BoldStarText|State34
-State103-->|BoldDoubleUnderText|State35
-State103-->|ItalicStarText|State36
-State103-->|ItalicUnderlineText|State37
+State1-->|TextLine|State8
+State1-->|UnorderedListItem|State9
+State1-->|OrderedListItem|State10
+State1-->|BlockquoteLine|State11
+State1-->|Text|State12
+State1-->|ItemHypen|State13
+State1-->|Spaces|State14
+State1-->|ItemStar|State15
+State1-->|ItemPlus|State16
+State1-->|ItemOrder|State17
+State1-->|LeftArrow|State18
+State1-->|SimpleText|State19
+State1-->|BoldStarText|State20
+State1-->|BoldDoubleUnderText|State21
+State1-->|ItalicStarText|State22
+State1-->|ItalicUnderlineText|State23
+State1-->|StartBoldStarText|State24
+State1-->|StartBoldDoubleUnderText|State25
+State1-->|StartItalicStarText|State26
+State1-->|StartItalicUnderlineText|State27
+State1-->|DoubleStar|State28
+State1-->|DoubleUnderline|State29
+State1-->|SingleStar|State30
+State1-->|SingleUnderline|State31
+State1-->|Line|State32
+State4-->|Text|State12
+State4-->|SimpleText|State19
+State4-->|BoldStarText|State20
+State4-->|BoldDoubleUnderText|State21
+State4-->|ItalicStarText|State22
+State4-->|ItalicUnderlineText|State23
+State4-->|StartBoldStarText|State24
+State4-->|StartBoldDoubleUnderText|State25
+State4-->|StartItalicStarText|State26
+State4-->|StartItalicUnderlineText|State27
+State4-->|DoubleStar|State28
+State4-->|DoubleUnderline|State29
+State4-->|SingleStar|State30
+State4-->|SingleUnderline|State31
+State4-->|TextLine|State33
+State5-->|OrderedListItem|State10
+State5-->|ItemHypen|State13
+State5-->|ItemStar|State15
+State5-->|ItemPlus|State16
+State5-->|ItemOrder|State17
+State5-->|UnorderedListItem|State34
+State5-->|AppendListItemContentLine|State35
+State5-->|OrderedList|State36
+State5-->|Spaces|State37
+State5-->|IntentBlockquotes|State38
+State5-->|IntentBlockquoteLine|State39
+State5-->|IntentLeftArrow|State40
+State6-->|UnorderedListItem|State9
+State6-->|ItemHypen|State13
+State6-->|ItemStar|State15
+State6-->|ItemPlus|State16
+State6-->|ItemOrder|State17
+State6-->|Spaces|State37
+State6-->|IntentBlockquotes|State38
+State6-->|IntentBlockquoteLine|State39
+State6-->|IntentLeftArrow|State40
+State6-->|OrderedListItem|State41
+State6-->|AppendListItemContentLine|State42
+State6-->|UnorderedList|State43
+State7-->|LeftArrow|State18
+State7-->|BlockquoteLine|State44
+State12-->|StartBoldStarText|State24
+State12-->|StartBoldDoubleUnderText|State25
+State12-->|StartItalicStarText|State26
+State12-->|StartItalicUnderlineText|State27
+State12-->|DoubleStar|State28
+State12-->|DoubleUnderline|State29
+State12-->|SingleStar|State30
+State12-->|SingleUnderline|State31
+State12-->|Enter|State45
+State12-->|Spaces|State46
+State12-->|SimpleText|State47
+State12-->|BoldStarText|State48
+State12-->|BoldDoubleUnderText|State49
+State12-->|ItalicStarText|State50
+State12-->|ItalicUnderlineText|State51
+State13-->|SimpleText|State19
+State13-->|BoldStarText|State20
+State13-->|BoldDoubleUnderText|State21
+State13-->|ItalicStarText|State22
+State13-->|ItalicUnderlineText|State23
+State13-->|StartBoldStarText|State24
+State13-->|StartBoldDoubleUnderText|State25
+State13-->|StartItalicStarText|State26
+State13-->|StartItalicUnderlineText|State27
+State13-->|DoubleStar|State28
+State13-->|DoubleUnderline|State29
+State13-->|SingleStar|State30
+State13-->|SingleUnderline|State31
+State13-->|Text|State52
+State14-->|ItemHypen|State53
+State14-->|ItemStar|State54
+State14-->|ItemPlus|State55
+State14-->|ItemOrder|State56
+State15-->|SimpleText|State19
+State15-->|BoldStarText|State20
+State15-->|BoldDoubleUnderText|State21
+State15-->|ItalicStarText|State22
+State15-->|ItalicUnderlineText|State23
+State15-->|StartBoldStarText|State24
+State15-->|StartBoldDoubleUnderText|State25
+State15-->|StartItalicStarText|State26
+State15-->|StartItalicUnderlineText|State27
+State15-->|DoubleStar|State28
+State15-->|DoubleUnderline|State29
+State15-->|SingleStar|State30
+State15-->|SingleUnderline|State31
+State15-->|Text|State57
+State16-->|SimpleText|State19
+State16-->|BoldStarText|State20
+State16-->|BoldDoubleUnderText|State21
+State16-->|ItalicStarText|State22
+State16-->|ItalicUnderlineText|State23
+State16-->|StartBoldStarText|State24
+State16-->|StartBoldDoubleUnderText|State25
+State16-->|StartItalicStarText|State26
+State16-->|StartItalicUnderlineText|State27
+State16-->|DoubleStar|State28
+State16-->|DoubleUnderline|State29
+State16-->|SingleStar|State30
+State16-->|SingleUnderline|State31
+State16-->|Text|State58
+State17-->|SimpleText|State19
+State17-->|BoldStarText|State20
+State17-->|BoldDoubleUnderText|State21
+State17-->|ItalicStarText|State22
+State17-->|ItalicUnderlineText|State23
+State17-->|StartBoldStarText|State24
+State17-->|StartBoldDoubleUnderText|State25
+State17-->|StartItalicStarText|State26
+State17-->|StartItalicUnderlineText|State27
+State17-->|DoubleStar|State28
+State17-->|DoubleUnderline|State29
+State17-->|SingleStar|State30
+State17-->|SingleUnderline|State31
+State17-->|Text|State59
+State18-->|Spaces|State60
+State24-->|StartBoldDoubleUnderText|State25
+State24-->|StartItalicStarText|State26
+State24-->|StartItalicUnderlineText|State27
+State24-->|DoubleUnderline|State29
+State24-->|SingleStar|State30
+State24-->|SingleUnderline|State31
+State24-->|DoubleStar|State61
+State24-->|Spaces|State62
+State24-->|SimpleText|State63
+State24-->|BoldDoubleUnderText|State64
+State24-->|ItalicStarText|State65
+State24-->|ItalicUnderlineText|State66
+State25-->|StartBoldStarText|State24
+State25-->|StartItalicStarText|State26
+State25-->|DoubleStar|State28
+State25-->|SingleStar|State30
+State25-->|DoubleUnderline|State67
+State25-->|Spaces|State68
+State25-->|SimpleText|State69
+State25-->|BoldStarText|State70
+State25-->|ItalicStarText|State71
+State26-->|StartBoldStarText|State24
+State26-->|StartBoldDoubleUnderText|State25
+State26-->|DoubleStar|State28
+State26-->|DoubleUnderline|State29
+State26-->|SingleStar|State72
+State26-->|Spaces|State73
+State26-->|SimpleText|State74
+State26-->|BoldStarText|State75
+State26-->|BoldDoubleUnderText|State76
+State27-->|StartBoldStarText|State24
+State27-->|StartBoldDoubleUnderText|State25
+State27-->|DoubleStar|State28
+State27-->|DoubleUnderline|State29
+State27-->|SingleUnderline|State77
+State27-->|Spaces|State78
+State27-->|SimpleText|State79
+State27-->|BoldStarText|State80
+State27-->|BoldDoubleUnderText|State81
+State28-->|StartBoldDoubleUnderText|State25
+State28-->|StartItalicStarText|State26
+State28-->|StartItalicUnderlineText|State27
+State28-->|DoubleUnderline|State29
+State28-->|SingleStar|State30
+State28-->|SingleUnderline|State31
+State28-->|Spaces|State82
+State28-->|SimpleText|State83
+State28-->|BoldDoubleUnderText|State84
+State28-->|ItalicStarText|State85
+State28-->|ItalicUnderlineText|State86
+State29-->|StartBoldStarText|State24
+State29-->|StartItalicStarText|State26
+State29-->|DoubleStar|State28
+State29-->|SingleStar|State30
+State29-->|Spaces|State87
+State29-->|SimpleText|State88
+State29-->|BoldStarText|State89
+State29-->|ItalicStarText|State90
+State30-->|StartBoldStarText|State24
+State30-->|StartBoldDoubleUnderText|State25
+State30-->|DoubleStar|State28
+State30-->|DoubleUnderline|State29
+State30-->|Spaces|State91
+State30-->|SimpleText|State92
+State30-->|BoldStarText|State93
+State30-->|BoldDoubleUnderText|State94
+State31-->|StartBoldStarText|State24
+State31-->|StartBoldDoubleUnderText|State25
+State31-->|DoubleStar|State28
+State31-->|DoubleUnderline|State29
+State31-->|Spaces|State95
+State31-->|SimpleText|State96
+State31-->|BoldStarText|State97
+State31-->|BoldDoubleUnderText|State98
+State36-->|UnorderedListItem|State9
+State36-->|ItemHypen|State13
+State36-->|ItemStar|State15
+State36-->|ItemPlus|State16
+State36-->|ItemOrder|State17
+State36-->|Spaces|State37
+State36-->|IntentBlockquotes|State38
+State36-->|IntentBlockquoteLine|State39
+State36-->|IntentLeftArrow|State40
+State36-->|OrderedListItem|State41
+State36-->|AppendListItemContentLine|State42
+State36-->|UnorderedList|State43
+State37-->|SimpleText|State19
+State37-->|BoldStarText|State20
+State37-->|BoldDoubleUnderText|State21
+State37-->|ItalicStarText|State22
+State37-->|ItalicUnderlineText|State23
+State37-->|StartBoldStarText|State24
+State37-->|StartBoldDoubleUnderText|State25
+State37-->|StartItalicStarText|State26
+State37-->|StartItalicUnderlineText|State27
+State37-->|DoubleStar|State28
+State37-->|DoubleUnderline|State29
+State37-->|SingleStar|State30
+State37-->|SingleUnderline|State31
+State37-->|ItemHypen|State53
+State37-->|ItemStar|State54
+State37-->|ItemPlus|State55
+State37-->|ItemOrder|State56
+State37-->|Text|State99
+State38-->|IntentLeftArrow|State40
+State38-->|IntentBlockquoteLine|State100
+State40-->|Spaces|State101
+State43-->|OrderedListItem|State10
+State43-->|ItemHypen|State13
+State43-->|ItemStar|State15
+State43-->|ItemPlus|State16
+State43-->|ItemOrder|State17
+State43-->|UnorderedListItem|State34
+State43-->|AppendListItemContentLine|State35
+State43-->|OrderedList|State36
+State43-->|Spaces|State37
+State43-->|IntentBlockquotes|State38
+State43-->|IntentBlockquoteLine|State39
+State43-->|IntentLeftArrow|State40
+State52-->|StartBoldStarText|State24
+State52-->|StartBoldDoubleUnderText|State25
+State52-->|StartItalicStarText|State26
+State52-->|StartItalicUnderlineText|State27
+State52-->|DoubleStar|State28
+State52-->|DoubleUnderline|State29
+State52-->|SingleStar|State30
+State52-->|SingleUnderline|State31
+State52-->|Spaces|State46
+State52-->|SimpleText|State47
+State52-->|BoldStarText|State48
+State52-->|BoldDoubleUnderText|State49
+State52-->|ItalicStarText|State50
+State52-->|ItalicUnderlineText|State51
+State52-->|Enter|State102
+State53-->|SimpleText|State19
+State53-->|BoldStarText|State20
+State53-->|BoldDoubleUnderText|State21
+State53-->|ItalicStarText|State22
+State53-->|ItalicUnderlineText|State23
+State53-->|StartBoldStarText|State24
+State53-->|StartBoldDoubleUnderText|State25
+State53-->|StartItalicStarText|State26
+State53-->|StartItalicUnderlineText|State27
+State53-->|DoubleStar|State28
+State53-->|DoubleUnderline|State29
+State53-->|SingleStar|State30
+State53-->|SingleUnderline|State31
+State53-->|Text|State103
+State54-->|SimpleText|State19
+State54-->|BoldStarText|State20
+State54-->|BoldDoubleUnderText|State21
+State54-->|ItalicStarText|State22
+State54-->|ItalicUnderlineText|State23
+State54-->|StartBoldStarText|State24
+State54-->|StartBoldDoubleUnderText|State25
+State54-->|StartItalicStarText|State26
+State54-->|StartItalicUnderlineText|State27
+State54-->|DoubleStar|State28
+State54-->|DoubleUnderline|State29
+State54-->|SingleStar|State30
+State54-->|SingleUnderline|State31
+State54-->|Text|State104
+State55-->|SimpleText|State19
+State55-->|BoldStarText|State20
+State55-->|BoldDoubleUnderText|State21
+State55-->|ItalicStarText|State22
+State55-->|ItalicUnderlineText|State23
+State55-->|StartBoldStarText|State24
+State55-->|StartBoldDoubleUnderText|State25
+State55-->|StartItalicStarText|State26
+State55-->|StartItalicUnderlineText|State27
+State55-->|DoubleStar|State28
+State55-->|DoubleUnderline|State29
+State55-->|SingleStar|State30
+State55-->|SingleUnderline|State31
+State55-->|Text|State105
+State56-->|SimpleText|State19
+State56-->|BoldStarText|State20
+State56-->|BoldDoubleUnderText|State21
+State56-->|ItalicStarText|State22
+State56-->|ItalicUnderlineText|State23
+State56-->|StartBoldStarText|State24
+State56-->|StartBoldDoubleUnderText|State25
+State56-->|StartItalicStarText|State26
+State56-->|StartItalicUnderlineText|State27
+State56-->|DoubleStar|State28
+State56-->|DoubleUnderline|State29
+State56-->|SingleStar|State30
+State56-->|SingleUnderline|State31
+State56-->|Text|State106
+State57-->|StartBoldStarText|State24
+State57-->|StartBoldDoubleUnderText|State25
+State57-->|StartItalicStarText|State26
+State57-->|StartItalicUnderlineText|State27
+State57-->|DoubleStar|State28
+State57-->|DoubleUnderline|State29
+State57-->|SingleStar|State30
+State57-->|SingleUnderline|State31
+State57-->|Spaces|State46
+State57-->|SimpleText|State47
+State57-->|BoldStarText|State48
+State57-->|BoldDoubleUnderText|State49
+State57-->|ItalicStarText|State50
+State57-->|ItalicUnderlineText|State51
+State57-->|Enter|State107
+State58-->|StartBoldStarText|State24
+State58-->|StartBoldDoubleUnderText|State25
+State58-->|StartItalicStarText|State26
+State58-->|StartItalicUnderlineText|State27
+State58-->|DoubleStar|State28
+State58-->|DoubleUnderline|State29
+State58-->|SingleStar|State30
+State58-->|SingleUnderline|State31
+State58-->|Spaces|State46
+State58-->|SimpleText|State47
+State58-->|BoldStarText|State48
+State58-->|BoldDoubleUnderText|State49
+State58-->|ItalicStarText|State50
+State58-->|ItalicUnderlineText|State51
+State58-->|Enter|State108
+State59-->|StartBoldStarText|State24
+State59-->|StartBoldDoubleUnderText|State25
+State59-->|StartItalicStarText|State26
+State59-->|StartItalicUnderlineText|State27
+State59-->|DoubleStar|State28
+State59-->|DoubleUnderline|State29
+State59-->|SingleStar|State30
+State59-->|SingleUnderline|State31
+State59-->|Spaces|State46
+State59-->|SimpleText|State47
+State59-->|BoldStarText|State48
+State59-->|BoldDoubleUnderText|State49
+State59-->|ItalicStarText|State50
+State59-->|ItalicUnderlineText|State51
+State59-->|Enter|State109
+State60-->|SimpleText|State19
+State60-->|BoldStarText|State20
+State60-->|BoldDoubleUnderText|State21
+State60-->|ItalicStarText|State22
+State60-->|ItalicUnderlineText|State23
+State60-->|StartBoldStarText|State24
+State60-->|StartBoldDoubleUnderText|State25
+State60-->|StartItalicStarText|State26
+State60-->|StartItalicUnderlineText|State27
+State60-->|DoubleStar|State28
+State60-->|DoubleUnderline|State29
+State60-->|SingleStar|State30
+State60-->|SingleUnderline|State31
+State60-->|Text|State110
+State99-->|StartBoldStarText|State24
+State99-->|StartBoldDoubleUnderText|State25
+State99-->|StartItalicStarText|State26
+State99-->|StartItalicUnderlineText|State27
+State99-->|DoubleStar|State28
+State99-->|DoubleUnderline|State29
+State99-->|SingleStar|State30
+State99-->|SingleUnderline|State31
+State99-->|Spaces|State46
+State99-->|SimpleText|State47
+State99-->|BoldStarText|State48
+State99-->|BoldDoubleUnderText|State49
+State99-->|ItalicStarText|State50
+State99-->|ItalicUnderlineText|State51
+State99-->|Enter|State111
+State101-->|SimpleText|State19
+State101-->|BoldStarText|State20
+State101-->|BoldDoubleUnderText|State21
+State101-->|ItalicStarText|State22
+State101-->|ItalicUnderlineText|State23
+State101-->|StartBoldStarText|State24
+State101-->|StartBoldDoubleUnderText|State25
+State101-->|StartItalicStarText|State26
+State101-->|StartItalicUnderlineText|State27
+State101-->|DoubleStar|State28
+State101-->|DoubleUnderline|State29
+State101-->|SingleStar|State30
+State101-->|SingleUnderline|State31
+State101-->|Text|State112
+State103-->|StartBoldStarText|State24
+State103-->|StartBoldDoubleUnderText|State25
+State103-->|StartItalicStarText|State26
+State103-->|StartItalicUnderlineText|State27
+State103-->|DoubleStar|State28
+State103-->|DoubleUnderline|State29
+State103-->|SingleStar|State30
+State103-->|SingleUnderline|State31
+State103-->|Spaces|State46
+State103-->|SimpleText|State47
+State103-->|BoldStarText|State48
+State103-->|BoldDoubleUnderText|State49
+State103-->|ItalicStarText|State50
+State103-->|ItalicUnderlineText|State51
 State103-->|Enter|State113
-State107-->|StartBoldStarText|State16
-State107-->|StartBoldDoubleUnderText|State17
-State107-->|StartItalicStarText|State18
-State107-->|StartItalicUnderlineText|State19
-State107-->|DoubleStar|State26
-State107-->|DoubleUnderline|State27
-State107-->|SingleStar|State28
-State107-->|SingleUnderline|State29
-State107-->|Spaces|State32
-State107-->|SimpleText|State33
-State107-->|BoldStarText|State34
-State107-->|BoldDoubleUnderText|State35
-State107-->|ItalicStarText|State36
-State107-->|ItalicUnderlineText|State37
-State107-->|Enter|State114
-State109-->|StartBoldStarText|State16
-State109-->|StartBoldDoubleUnderText|State17
-State109-->|StartItalicStarText|State18
-State109-->|StartItalicUnderlineText|State19
-State109-->|DoubleStar|State26
-State109-->|DoubleUnderline|State27
-State109-->|SingleStar|State28
-State109-->|SingleUnderline|State29
-State109-->|Spaces|State32
-State109-->|SimpleText|State33
-State109-->|BoldStarText|State34
-State109-->|BoldDoubleUnderText|State35
-State109-->|ItalicStarText|State36
-State109-->|ItalicUnderlineText|State37
-State109-->|Enter|State115
+State104-->|StartBoldStarText|State24
+State104-->|StartBoldDoubleUnderText|State25
+State104-->|StartItalicStarText|State26
+State104-->|StartItalicUnderlineText|State27
+State104-->|DoubleStar|State28
+State104-->|DoubleUnderline|State29
+State104-->|SingleStar|State30
+State104-->|SingleUnderline|State31
+State104-->|Spaces|State46
+State104-->|SimpleText|State47
+State104-->|BoldStarText|State48
+State104-->|BoldDoubleUnderText|State49
+State104-->|ItalicStarText|State50
+State104-->|ItalicUnderlineText|State51
+State104-->|Enter|State114
+State105-->|StartBoldStarText|State24
+State105-->|StartBoldDoubleUnderText|State25
+State105-->|StartItalicStarText|State26
+State105-->|StartItalicUnderlineText|State27
+State105-->|DoubleStar|State28
+State105-->|DoubleUnderline|State29
+State105-->|SingleStar|State30
+State105-->|SingleUnderline|State31
+State105-->|Spaces|State46
+State105-->|SimpleText|State47
+State105-->|BoldStarText|State48
+State105-->|BoldDoubleUnderText|State49
+State105-->|ItalicStarText|State50
+State105-->|ItalicUnderlineText|State51
+State105-->|Enter|State115
+State106-->|StartBoldStarText|State24
+State106-->|StartBoldDoubleUnderText|State25
+State106-->|StartItalicStarText|State26
+State106-->|StartItalicUnderlineText|State27
+State106-->|DoubleStar|State28
+State106-->|DoubleUnderline|State29
+State106-->|SingleStar|State30
+State106-->|SingleUnderline|State31
+State106-->|Spaces|State46
+State106-->|SimpleText|State47
+State106-->|BoldStarText|State48
+State106-->|BoldDoubleUnderText|State49
+State106-->|ItalicStarText|State50
+State106-->|ItalicUnderlineText|State51
+State106-->|Enter|State116
+State110-->|StartBoldStarText|State24
+State110-->|StartBoldDoubleUnderText|State25
+State110-->|StartItalicStarText|State26
+State110-->|StartItalicUnderlineText|State27
+State110-->|DoubleStar|State28
+State110-->|DoubleUnderline|State29
+State110-->|SingleStar|State30
+State110-->|SingleUnderline|State31
+State110-->|Spaces|State46
+State110-->|SimpleText|State47
+State110-->|BoldStarText|State48
+State110-->|BoldDoubleUnderText|State49
+State110-->|ItalicStarText|State50
+State110-->|ItalicUnderlineText|State51
+State110-->|Enter|State117
+State112-->|StartBoldStarText|State24
+State112-->|StartBoldDoubleUnderText|State25
+State112-->|StartItalicStarText|State26
+State112-->|StartItalicUnderlineText|State27
+State112-->|DoubleStar|State28
+State112-->|DoubleUnderline|State29
+State112-->|SingleStar|State30
+State112-->|SingleUnderline|State31
+State112-->|Spaces|State46
+State112-->|SimpleText|State47
+State112-->|BoldStarText|State48
+State112-->|BoldDoubleUnderText|State49
+State112-->|ItalicStarText|State50
+State112-->|ItalicUnderlineText|State51
+State112-->|Enter|State118
         </pre>
         <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
