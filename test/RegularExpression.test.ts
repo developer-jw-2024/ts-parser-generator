@@ -950,7 +950,7 @@ describe('RegularExpression', ()  => {
             var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
             expect(true).toBe(false)
         } catch(e) {
-            expect(e.message).toEqual('Syntax Error')
+            expect(e.message).toEqual('Syntax Error: ,')
         }
 
         var value = '\n'

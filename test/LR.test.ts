@@ -329,13 +329,14 @@ describe('Lr', () => {
         }, [0, 0, 0, 0])
         columnLens = columnLens.map((v)=>v+10)
 
-        console.log(
-            lrSyntaxAnalysis.analysisSteps.map(s=>{
-                return [appendToFixLen(`[ ${s.stack} ]`, columnLens[0]),
-                        appendToFixLen(`[ ${s.symbols} ]`, columnLens[1]),
-                        appendToFixLen(`[ ${s.inputs} ]`, columnLens[2]),
-                        `[ ${s.action} ]`].join('')
-            }).join('\n')
-        )
+
+        // console.log(
+        //     lrSyntaxAnalysis.analysisSteps.map(s=>{
+        //         return [appendToFixLen(`[ ${s.stack} ]`, columnLens[0]),
+        //                 appendToFixLen(`[ ${s.symbols} ]`, columnLens[1]),
+        //                 appendToFixLen(`[ ${s.inputs} ]`, columnLens[2]),
+        //                 `[ ${s.action} ]`].join('')
+        //     }).join('\n')
+        // )
     })
 })

@@ -71,15 +71,32 @@ export class AnalysisToken {
     indexOfToken : number
     token : Token
     value : any 
+    children : Array<AnalysisToken> = []
 
-    constructor(indexOfToken : number, token : Token, value : any) {
+    constructor(indexOfToken : number, token : Token, value : any, children : Array<AnalysisToken>) {
         this.indexOfToken = indexOfToken
         this.token = token
         this.value = value
+        this.children = children
+    }
+
+    toSimpleString() : string | null {
+        if (this.value==null) return ''
+        var result = ''
+        for (var i=0;i<this.value.length;i++) {
+            if (this.value[i]=='\n') {
+                result += ''
+            } else if (this.value[i]=='\t') {
+                result += ''
+            } else {
+                result += this.value[i]
+            }
+        }
+        return result
     }
 }
 
-class AnalysisStep {
+export class AnalysisStep {
     stack : string
     symbols : string
     symbolTokens : Array<AnalysisToken>
@@ -127,7 +144,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         return this
     }
 
-    isValidWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string) : boolean {
+    isValidWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string, debug : boolean = false) : boolean {
+        
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
@@ -137,7 +155,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var stack : Array<number> = [0]
         var symbols : Array<number> = [indexOfTerminatedToken]
         var symbolTokens : Array<AnalysisToken> = [
-            new AnalysisToken(indexOfTerminatedToken, Token.TERMINATED_TOKEN, null)
+            new AnalysisToken(indexOfTerminatedToken, Token.TERMINATED_TOKEN, null, [])
         ]
 
         // console.log(inputTokens.length, input.length)
@@ -153,7 +171,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var inputToken : Token = inputTokens[i]
         var s : number = stack[stack.length-1]
     
-        console.log(inputTokens)
+        if (debug) console.log(inputTokens)
 
         while (flag==null) {
             a = input[i]
@@ -161,16 +179,17 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             s = stack[stack.length-1]
             var action : LRAction = this.actions[s][a]    
 
-            console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${input.join(' ')} ]   ${this.toActionString(action)}`)
+            if (debug) console.log(`==>[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action)
             
+            // if (debug) console.log(s, inputTokens[i], action)
             var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
             this.analysisSteps.push(step)
-            // console.log(step)
+            // if (debug) console.log(step.toString())
 
             if (action.type==LRActionType.SHIFT) {
                 stack.push(action.value)
                 symbols.push(a)
-                symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value))
+                symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value, []))
                 i++
             } else if (action.type==LRActionType.REDUCE) {
                 var igp = action.value
@@ -193,7 +212,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                     if (this.grammerProductionFunctions && this.grammerProductionFunctions[igp]) {
                         result = this.grammerProductionFunctions[igp](parameters)
                     }
-                    symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result))
+                    symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result, parameters))
                 } else {
                     throw new Error('Parse Error')
                 }
@@ -208,8 +227,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         return flag
     }
 
-    isValid(inputString : string) : boolean {
-        return this.isValidWithTokenTypeLexicalAnalysis(this.tokenTypeLexicalAnalysis, inputString)
+    isValid(inputString : string, debug : boolean = false) : boolean {
+        return this.isValidWithTokenTypeLexicalAnalysis(this.tokenTypeLexicalAnalysis, inputString, debug)
     }
 
     createAnalysisStep(
@@ -234,20 +253,20 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             symbols.map((s, si)=>{
                 if (this.tokens[s].isEqual(Token.EMPTY_TOKEN)) return '<E>'
                 if (this.tokens[s].isEqual(Token.TERMINATED_TOKEN)) return '<T>'
-                return this.tokens[s].toSimpleString()+`:${symbolTokens[si].value}`
+                return this.tokens[s].value+`:${symbolTokens[si].toSimpleString()}`
             }).join(' '),
             symbolTokens,
             inputTokens.slice(i).map(s=>{
                 if (s.isEqual(Token.EMPTY_TOKEN)) return '<E>'
                 if (s.isEqual(Token.TERMINATED_TOKEN)) return '<T>'
-                return s.toSimpleString()
+                return s.type.name+':'+s.toSimpleString()
             }).join(' '),
             this.toActionString(action)
         )
         return step
     }
     
-    showValidationSteps() {
+    getValidationSteps() : string {
         function appendToFixLen(value : string, len : number) : string {
             return value + new Array(len-value.length).fill(0).map(t=>' ').join('')
         }
@@ -260,14 +279,33 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         columnLens = columnLens.map((v)=>v+10)
 
         // console.log(this.tokens.map((t,i)=>`${i}: ${t.toSimpleString()}`))
-        console.log(
-            this.analysisSteps.map(s=>{
+        return this.analysisSteps.map(s=>{
                 return [appendToFixLen(`[ ${s.stack} ]`, columnLens[0]),
                         appendToFixLen(`[ ${s.symbols} ]`, columnLens[1]),
                         appendToFixLen(`[ ${s.inputs} ]`, columnLens[2]),
                         `[ ${s.action} ]`].join('')
             }).join('\n')
-        )
+        
+    }
+
+    getValidationSteps_NoActions() : string {
+        function appendToFixLen(value : string, len : number) : string {
+            return value + new Array(len-value.length).fill(0).map(t=>' ').join('')
+        }
+        
+        var columnLens : Array<number> = this.analysisSteps.map(s=>{
+            return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
+        }).reduce((pre, value)=>{
+            return pre.map((p, i)=> Math.max(pre[i], value[i]))
+        }, [0, 0, 0, 0])
+        columnLens = columnLens.map((v)=>v+10)
+
+        // console.log(this.tokens.map((t,i)=>`${i}: ${t.toSimpleString()}`))
+        return this.analysisSteps.map(s=>{
+                return [`[ ${s.symbols} ]`,
+                        '     ',
+                        `[ ${s.inputs} ]`].join('')
+            }).join('\n')
         
     }
 

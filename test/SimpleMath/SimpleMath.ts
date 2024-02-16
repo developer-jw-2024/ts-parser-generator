@@ -12,5 +12,5 @@ lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinitionContent)
 
 var flag = lrSyntaxAnalysis.isValid("  3 / (1 - (-1))  ")
 
-lrSyntaxAnalysis.showValidationSteps()
+console.log(lrSyntaxAnalysis.getValidationSteps())
 

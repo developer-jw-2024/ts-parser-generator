@@ -49,7 +49,18 @@ export class Token {
     }
 
     toSimpleString() : string | null {
-        return this.value
+        if (this.value==null) return ''
+        var result = ''
+        for (var i=0;i<this.value.length;i++) {
+            if (this.value[i]=='\n') {
+                result += ''
+            } else if (this.value[i]=='\t') {
+                result += ''
+            } else {
+                result += this.value[i]
+            }
+        }
+        return result
     }
 
     

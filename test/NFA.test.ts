@@ -29,7 +29,7 @@ describe('NFA', ()  => {
             var tree = buildRegularExpressionTree(chars)
             expect(true).toBe(false)
         } catch(e) {
-            expect(e.message).toBe('Syntax Error');
+            expect(e.message).toBe('Syntax Error: -');
         }
 
         var value = 'a'

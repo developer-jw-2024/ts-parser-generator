@@ -1,7 +1,9 @@
 Enter \n
 Spaces [\t ]+
 SimpleText  [^*_\-+ \t\n]+
-Hypen "- "
+ItemHypen "- "
+ItemStar "* "
+ItemPlus "+ "
 SingleStar "*"
 DoubleStar "**"
 SingleUnderline "_"

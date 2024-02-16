@@ -1,21 +1,43 @@
 import { FileUtils } from '../../src/Utils/FileUtil'
-import { LRSyntaxAnalysis } from "../../src/SyntaxAnalysis/LR"
+import { AnalysisStep, LRSyntaxAnalysis } from "../../src/SyntaxAnalysis/LR"
 import languageFunction from './Markdown_Language_Function'
 
+export class Markdown {
 
-var languageDefinition = FileUtils.readFromFileSystem('./test/Markdown/Markdown_Language.txt')
-var tokenTypeDefinitionContent = FileUtils.readFromFileSystem('./test/Markdown/Markdown_RegExp.txt')
+    lrSyntaxAnalysis : LRSyntaxAnalysis
 
-var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
-lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
-lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinitionContent)
+    constructor(languageDefinitionPath : string, tokenTypeDefinitionPath : string) {
+        var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+        var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+        
+        this.lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
+        this.lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
+        this.lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinition)                
+    }
 
-var markdownContent = FileUtils.readFromFileSystem('./test/Markdown/Markdown_test_1.txt')
-if (markdownContent[markdownContent.length-1]!='\n') {
-    markdownContent += '\n'
+    isValid(markdownContent : string, debug : boolean = false) : boolean {
+        if (markdownContent[markdownContent.length-1]!='\n') {
+            markdownContent += '\n'
+        }
+        var flag = this.lrSyntaxAnalysis.isValid(markdownContent, debug)
+        return flag
+    }
+
+    getLastValidationStep() : AnalysisStep {
+        return this.lrSyntaxAnalysis.analysisSteps[this.lrSyntaxAnalysis.analysisSteps.length-1]
+    }
+
+    getValidationSteps() : string {
+        return this.lrSyntaxAnalysis.getValidationSteps()
+    }
+
+    getValidationSteps_NoActions() : string {
+        return this.lrSyntaxAnalysis.getValidationSteps_NoActions()
+    }
 }
 
-var flag = lrSyntaxAnalysis.isValid(markdownContent)
+// var markdownContent = FileUtils.readFromFileSystem('./test/Markdown/Markdown_test_1.txt')
 
-lrSyntaxAnalysis.showValidationSteps()
+
+// console.log(lrSyntaxAnalysis.getValidationSteps())
 
