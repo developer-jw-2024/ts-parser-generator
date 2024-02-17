@@ -145,13 +145,22 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         return this
     }
 
+    toTokens(inputString : string) : Array<Token> {
+        return this.toTokensWithTokenTypeLexicalAnalysis(this.tokenTypeLexicalAnalysis, inputString)
+    }
+
+    toTokensWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string) : Array<Token> {
+        var inputTokens : Array<Token> = tokenTypeLexicalAnalysis.toTokens(inputString)
+        inputTokens.push(Token.TERMINATED_TOKEN)
+        return inputTokens
+    }
+
     isValidWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string, debug : boolean = false) : boolean {
         
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
-        var inputTokens : Array<Token> = tokenTypeLexicalAnalysis.toTokens(inputString)
-        inputTokens.push(Token.TERMINATED_TOKEN)
+        var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis, inputString)
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
         var symbols : Array<number> = [indexOfTerminatedToken]
@@ -370,8 +379,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                                 for (var k=0;k<follows.length;k++) {
                                     this.actions[destination] = this.actions[destination] || []
                                     if (this.actions[destination][follows[k]]) {
-                                        console.log(this.actions[destination][follows[k]])
-                                        console.log(this.showLRItemSet(this.states[destination]))
+                                        // console.log(this.actions[destination][follows[k]])
+                                        // console.log(this.showLRItemSet(this.states[destination]))
                                         throw new Error(`duplicated action for ${destination}-${follows[k]}(${this.tokens[follows[k]]})`)
                                     } 
                                     this.actions[destination][follows[k]] = new LRAction(LRActionType.REDUCE, item.numOfGrammerProduction)
@@ -500,4 +509,35 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     }
 
 
+}
+
+export class LRSyntaxAnalysisRunner {
+
+    lrSyntaxAnalysis : LRSyntaxAnalysis
+
+    constructor(languageDefinitionPath : string, tokenTypeDefinitionPath : string, languageFunction : Object) {
+        var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+        var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+        
+        this.lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
+        this.lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
+        this.lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinition)                
+    }
+
+    isValid(markdownContent : string, debug : boolean = false) : boolean {
+        var flag = this.lrSyntaxAnalysis.isValid(markdownContent, debug)
+        return flag
+    }
+
+    getLastValidationStep() : AnalysisStep {
+        return this.lrSyntaxAnalysis.analysisSteps[this.lrSyntaxAnalysis.analysisSteps.length-1]
+    }
+
+    getValidationSteps() : string {
+        return this.lrSyntaxAnalysis.getValidationSteps()
+    }
+
+    getValidationSteps_NoActions() : string {
+        return this.lrSyntaxAnalysis.getValidationSteps_NoActions()
+    }
 }

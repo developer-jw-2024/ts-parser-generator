@@ -1,16 +1,15 @@
 import { FileUtils } from '../../src/Utils/FileUtil'
-import { LRSyntaxAnalysis } from "../../src/SyntaxAnalysis/LR"
+import { LRSyntaxAnalysis, LRSyntaxAnalysisRunner } from "../../src/SyntaxAnalysis/LR"
 import languageFunction from './SimpleMath_Language_Function'
 
 
-var languageDefinition = FileUtils.readFromFileSystem('./test/SimpleMath/SimpleMath_Language.txt')
-var tokenTypeDefinitionContent = FileUtils.readFromFileSystem('./test/SimpleMath/SimpleMath_RegExp.txt')
+var languageDefinitionPath = './test/SimpleMath/SimpleMath_Language.txt'
+var tokenTypeDefinitionPath = './test/SimpleMath/SimpleMath_RegExp.txt'
 
-var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
-lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
-lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinitionContent)
+var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
 
-var flag = lrSyntaxAnalysis.isValid("  3 / (1 - (-1))  ")
-
-console.log(lrSyntaxAnalysis.getValidationSteps())
+var equation = "  3 / (1 - (-1))  "
+var flag = simpleMath.isValid(equation)
+var a = simpleMath.lrSyntaxAnalysis.analysisSteps.at(-1).symbolTokens.at(-1)
+console.log(equation , '=', a.value)
 

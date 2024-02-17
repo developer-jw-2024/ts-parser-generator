@@ -168,16 +168,16 @@ export class SyntaxAnalysis {
         var gpExpList = Object.keys(languageDefinitionFunctions)
         gpExpList.forEach((gpString, index)=>{
             var index = this.getTheNoInGrammarProductionList(gpString)
-            console.log(gpString, index)
+            // console.log(gpString, index)
             if (index==-1) {
                 throw new Error(`Can not find grammar production ${gpString}`)
             }
             this.grammerProductionFunctions[index] = languageDefinitionFunctions[gpString]
         })
 
-        this.grammerProductionFunctions.forEach((f, i)=>{
-            console.log(i, f)
-        })
+        // this.grammerProductionFunctions.forEach((f, i)=>{
+        //     console.log(i, f)
+        // })
     }
 
     setTokenTypeDefinition(tokenTypeDefinitionContent) {

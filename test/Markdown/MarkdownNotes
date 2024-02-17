@@ -1,0 +1,64 @@
+HorizontalRule
+
+Tables
+TaskList
+DefinitionList
+FencedCodeBlock
+Footnote
+
+Blockquote
+    BlockquoteLine
+
+BlockquoteLine
+    > Inline Enter
+    > OrderItem
+    > UnorderedItem
+    > HorizontalRule
+
+ItemComplement
+    ItemComplementLine
+
+ItemComplementLine
+    Space Inline Enter
+    Space OrderItem
+    Space OrderItem
+
+
+
+OrderedList
+    OrderItem
+    OrderItem
+
+UnorderedList
+    UnorderedItem
+    UnorderedItem
+
+OrderItem
+    Spaces (-/+/*) Inline Enter ItemComplement
+
+UnorderedItem
+    Spaces Number . Inline Enter ItemComplement
+    
+Paragraph
+    Inline Enter Inline Enter
+
+Heading 
+    Inline HeadingID Enter
+
+Inline
+    EscapingCode
+    Code
+    Link
+    Image
+    Spaces
+    NormalText
+    Emphasis
+        Bold
+        Italic
+    Strikethrough
+    Emoji
+    Highlight
+    Subscript
+    Superscript
+    AutomaticURLLinking
+    FootnoteReference

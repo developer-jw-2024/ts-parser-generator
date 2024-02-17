@@ -1,0 +1,4 @@
+Enter \n
+FirstLevel [^、\(\)\.]+、[^\n]*\n
+SecondLevel \([^、\(\)\.]+\)[^\n]*\n
+ThirdLevel [0-9]+\.[^\n]*\n

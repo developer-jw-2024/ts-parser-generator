@@ -1,0 +1,58 @@
+Inline
+    EscapingCode
+    Code
+    Link
+    Image
+    Spaces
+    NormalText
+    Emphasis
+        Bold
+        Italic
+    Strikethrough
+    Emoji
+    Highlight
+    Subscript
+    Superscript
+    AutomaticURLLinking
+    FootnoteReference
+
+Element
+    HorizontalRule
+    Tables
+    TaskList
+    DefinitionList
+    FencedCodeBlock
+    Footnote
+    Blockquote
+    OrderedList
+    UnorderedList
+    Paragraph
+    Heading
+
+Blockquote
+    > Element
+
+
+OrderedList
+    OrderItem
+    
+
+UnorderedList
+    UnorderedItem
+    
+ItemComplement
+    Space Element
+
+OrderItem
+    Spaces (-/+/*) Inline Enter ItemComplement
+
+UnorderedItem
+    Spaces Number . Inline Enter ItemComplement
+    
+Paragraph
+    Inline Enter Inline Enter
+
+Heading 
+    Inline HeadingID Enter
+
+

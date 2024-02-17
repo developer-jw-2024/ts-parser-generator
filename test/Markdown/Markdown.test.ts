@@ -1,10 +1,9 @@
-import { FileUtils } from '../../src/Utils/FileUtil'
-import { Markdown } from './Markdown'
-
+import { LRSyntaxAnalysisRunner } from '../../src/SyntaxAnalysis/LR'
+import languageFunction from './Markdown_Language_Function'
 
 var languageDefinitionPath : string = './test/Markdown/Markdown_Language.txt'
 var tokenTypeDefinitionPath : string = './test/Markdown/Markdown_RegExp.txt'
-var markdown : Markdown = new Markdown(languageDefinitionPath, tokenTypeDefinitionPath)
+var markdown : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
 
 describe('markdown', () => {
         test('markdown - 0', () => {
@@ -23,7 +22,7 @@ describe('markdown', () => {
         })
 
         test('markdown - 1', () => {
-        expect(markdown.isValid("abc")).toEqual(true)
+        expect(markdown.isValid("abc\n")).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
 `[ <T> ]     [ SimpleText:abc Enter: <T> ]
@@ -38,7 +37,7 @@ describe('markdown', () => {
     })
 
     test('markdown - 2', () => {
-        expect(markdown.isValid("a ")).toEqual(true)
+        expect(markdown.isValid("a \n")).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
 `[ <T> ]     [ SimpleText:a Spaces:  Enter: <T> ]
@@ -56,7 +55,7 @@ describe('markdown', () => {
         
 
         test('markdown - 3', () => {
-                expect(markdown.isValid("a**T**")).toEqual(true)
+                expect(markdown.isValid("a**T**\n")).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
 `[ <T> ]     [ SimpleText:a DoubleStar:** SimpleText:T DoubleStar:** Enter: <T> ]
@@ -77,7 +76,7 @@ describe('markdown', () => {
     })
 
     test('markdown - 4', () => {
-        expect(markdown.isValid("_a**T**_")).toEqual(true)
+        expect(markdown.isValid("_a**T**_\n")).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
 `[ <T> ]     [ SingleUnderline:_ SimpleText:a DoubleStar:** SimpleText:T DoubleStar:** SingleUnderline:_ Enter: <T> ]
@@ -103,7 +102,8 @@ describe('markdown', () => {
 
     test('markdown - 5', () => {
         expect(markdown.isValid(
-`- One`
+`- One
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -122,7 +122,8 @@ describe('markdown', () => {
     test('markdown - 6', () => {
         expect(markdown.isValid(
 `- One
-- Two`
+- Two
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -147,7 +148,8 @@ describe('markdown', () => {
     test('markdown - 7', () => {
         expect(markdown.isValid(
 `- One
-    Apple`
+    Apple
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -173,7 +175,8 @@ describe('markdown', () => {
         expect(markdown.isValid(
 `- One
     Apple
-- Two`
+- Two
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -205,7 +208,8 @@ describe('markdown', () => {
         expect(markdown.isValid(
 `* One
     Apple
-* Two`
+* Two
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -237,7 +241,8 @@ describe('markdown', () => {
         expect(markdown.isValid(
 `* One Tow Hree
     Apple
-* Two`
+* Two
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -278,7 +283,8 @@ describe('markdown', () => {
 `* One Tow Hree
     Apple
     Orange
-* Two three four`
+* Two three four
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -333,7 +339,8 @@ describe('markdown', () => {
 `+ One Tow Hree
     Apple
     Orange
-+ Two three four`
++ Two three four
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -385,7 +392,8 @@ describe('markdown', () => {
 
     test('markdown - 13', () => {
         expect(markdown.isValid(
-`This is the end of content.`
+`This is the end of content.
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -423,7 +431,8 @@ describe('markdown', () => {
     test('markdown - 14', () => {
         expect(markdown.isValid(
 `- list
-a`
+a
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -451,7 +460,8 @@ a`
 `- list
     one
     two
-a`
+a
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -489,7 +499,8 @@ a`
     test('markdown - 15', () => {
         expect(markdown.isValid(
 `- this is
-end of xxyz.`
+end of xxyz.
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -527,7 +538,8 @@ end of xxyz.`
     test('markdown - 16', () => {
         expect(markdown.isValid(
 `1. this is
-end of xxyz.`
+end of xxyz.
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -568,7 +580,8 @@ end of xxyz.`
 `1. this is
     8. fruite
     9. apple
-2. that are`
+2. that are
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -618,7 +631,8 @@ end of xxyz.`
 `1. this is
     - fruite
     - apple
-2. that are`
+2. that are
+`
 )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -667,7 +681,8 @@ end of xxyz.`
 
     test('markdown - 19', () => {
         expect(markdown.isValid(
-`> abc`
+`> abc
+`
         )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -687,7 +702,8 @@ end of xxyz.`
 test('markdown - 20', () => {
         expect(markdown.isValid(
 `> abc
-> d**e**f`
+> d**e**f
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -722,7 +738,8 @@ test('markdown - 20', () => {
 test('markdown - 21', () => {
         expect(markdown.isValid(
 `- dabc
-> d**e**f`
+> d**e**f
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -758,7 +775,8 @@ test('markdown - 21', () => {
 test('markdown - 22', () => {
         expect(markdown.isValid(
 `- dabc
-    > d**e**f`
+    > d**e**f
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -795,7 +813,8 @@ test('markdown - 23', () => {
         expect(markdown.isValid(
 `- dabc
         > d**e**f
-        > this is _A_`
+        > this is _A_
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -851,7 +870,8 @@ test('markdown - 24', () => {
         expect(markdown.isValid(
 `- dabc
         > ddef
-        ahelo abc`
+        ahelo abc
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -892,7 +912,8 @@ test('markdown - 25', () => {
         > ddef
         ahelo abc
         > fruite
-        > animal`
+        > animal
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -946,7 +967,8 @@ test('markdown - 25', () => {
 test('markdown - 26', () => {
         expect(markdown.isValid(
 `I am a boy.
-You are a girl.`
+You are a girl.
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -994,7 +1016,8 @@ test('markdown - 27', () => {
         expect(markdown.isValid(
 `I am a boy.
 
-You are a girl.`
+You are a girl.
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1046,7 +1069,8 @@ You are a girl.`
 
 test('markdown - 28', () => {
         expect(markdown.isValid(
-`# hello`
+`# hello
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1070,7 +1094,8 @@ test('markdown - 28', () => {
 
 test('markdown - 29', () => {
         expect(markdown.isValid(
-`# hello **world**`
+`# hello **world**
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1102,7 +1127,8 @@ test('markdown - 29', () => {
 
 test('markdown - 30', () => {
         expect(markdown.isValid(
-`#_hello **world**_`
+`#_hello **world**_
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1135,7 +1161,8 @@ test('markdown - 30', () => {
 
 test('markdown - 31', () => {
         expect(markdown.isValid(
-`> # hello world`
+`> # hello world
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1165,7 +1192,8 @@ test('markdown - 31', () => {
 test('markdown - 32', () => {
         expect(markdown.isValid(
 `> # hello world
-> the world is greate`
+> the world is greate
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1215,7 +1243,8 @@ test('markdown - 33', () => {
         expect(markdown.isValid(
 `> # hello world
 > - one
-> - two`
+> - two
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1266,7 +1295,8 @@ test('markdown - 34', () => {
         expect(markdown.isValid(
 `> # hello world
 > 1. one
-> 2. two`
+> 2. two
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1316,7 +1346,8 @@ test('markdown - 34', () => {
 test('markdown - 35', () => {
         expect(markdown.isValid(
 `> hello
->> world`
+>> world
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1347,7 +1378,8 @@ test('markdown - 36', () => {
         expect(markdown.isValid(
 `> hello
 >> world
->> war`
+>> war
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1387,7 +1419,8 @@ test('markdown - 36', () => {
 test('markdown - 37', () => {
         expect(markdown.isValid(
 `> hello
-> world`
+> world
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1413,7 +1446,8 @@ test('markdown - 37', () => {
 
 test('markdown - 38', () => {
         expect(markdown.isValid(
-`\`\``
+`\`\`
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1430,7 +1464,8 @@ test('markdown - 38', () => {
 
 test('markdown - 39', () => {
         expect(markdown.isValid(
-`type \`nano\`.`
+`type \`nano\`.
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
@@ -1453,7 +1488,8 @@ test('markdown - 39', () => {
 
 test('markdown - 40', () => {
         expect(markdown.isValid(
-`[a](http://google.com)`
+`[a](http://google.com)
+`
                 )).toEqual(true)
                 // console.log(markdown.getValidationSteps_NoActions())
                 expect(markdown.getValidationSteps_NoActions()).toEqual(
