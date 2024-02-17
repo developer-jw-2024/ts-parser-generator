@@ -16,6 +16,7 @@ describe('markdown', () => {
         expect(markdown.getValidationSteps_NoActions()).toEqual(
 `[ <T> ]     [ Enter: <T> ]
 [ <T> Enter: ]     [ <T> ]
+[ <T> BlankLine: ]     [ <T> ]
 [ <T> Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
                 )
@@ -937,6 +938,531 @@ test('markdown - 25', () => {
 [ <T> UnorderedList: IntentBlockquotes: ]     [ <T> ]
 [ <T> UnorderedList: AppendListItemContentLine: ]     [ <T> ]
 [ <T> UnorderedList: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 26', () => {
+        expect(markdown.isValid(
+`I am a boy.
+You are a girl.`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: SimpleText:am ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ SimpleText:a Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: SimpleText:a ]     [ Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Spaces:  SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Spaces:  ]     [ SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ SimpleText:boy. Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: SimpleText:boy. ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Enter: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> TextLine: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: SimpleText:You ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: Spaces:  ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: SimpleText:are ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: ]     [ SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: SimpleText:a ]     [ Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: ]     [ Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: Spaces:  ]     [ SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: ]     [ SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: Text: SimpleText:girl. ]     [ Enter: <T> ]
+[ <T> Paragraph: Text: ]     [ Enter: <T> ]
+[ <T> Paragraph: Text: Enter: ]     [ <T> ]
+[ <T> Paragraph: TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 27', () => {
+        expect(markdown.isValid(
+`I am a boy.
+
+You are a girl.`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: SimpleText:am ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ SimpleText:a Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: SimpleText:a ]     [ Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Spaces:  SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Spaces:  ]     [ SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ SimpleText:boy. Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: SimpleText:boy. ]     [ Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: ]     [ Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Text: Enter: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> TextLine: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Paragraph: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Line: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Enter: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: BlankLine: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Line: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: SimpleText:You ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: Spaces:  ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: SimpleText:are ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: ]     [ SimpleText:a Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: SimpleText:a ]     [ Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: ]     [ Spaces:  SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: Spaces:  ]     [ SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: ]     [ SimpleText:girl. Enter: <T> ]
+[ <T> Markdown: Text: SimpleText:girl. ]     [ Enter: <T> ]
+[ <T> Markdown: Text: ]     [ Enter: <T> ]
+[ <T> Markdown: Text: Enter: ]     [ <T> ]
+[ <T> Markdown: TextLine: ]     [ <T> ]
+[ <T> Markdown: Paragraph: ]     [ <T> ]
+[ <T> Markdown: Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 28', () => {
+        expect(markdown.isValid(
+`# hello`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ SharpSign:# Spaces:  SimpleText:hello Enter: <T> ]
+[ <T> SharpSign:# ]     [ Spaces:  SimpleText:hello Enter: <T> ]
+[ <T> HeadingLevel: ]     [ Spaces:  SimpleText:hello Enter: <T> ]
+[ <T> HeadingLevel: Spaces:  ]     [ SimpleText:hello Enter: <T> ]
+[ <T> HeadingLevel: ]     [ SimpleText:hello Enter: <T> ]
+[ <T> HeadingLevel: SimpleText:hello ]     [ Enter: <T> ]
+[ <T> HeadingLevel: Text: ]     [ Enter: <T> ]
+[ <T> HeadingLevel: ]     [ Enter: <T> ]
+[ <T> Text: ]     [ Enter: <T> ]
+[ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+
+test('markdown - 29', () => {
+        expect(markdown.isValid(
+`# hello **world**`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ SharpSign:# Spaces:  SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> SharpSign:# ]     [ Spaces:  SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: ]     [ Spaces:  SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Spaces:  ]     [ SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: ]     [ SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: SimpleText:hello ]     [ Spaces:  DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Text: ]     [ Spaces:  DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Text: Spaces:  ]     [ DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Text: ]     [ DoubleStar:** SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Text: DoubleStar:** ]     [ SimpleText:world DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Text: DoubleStar:** SimpleText:world ]     [ DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Text: StartBoldStarText: ]     [ DoubleStar:** Enter: <T> ]
+[ <T> HeadingLevel: Text: StartBoldStarText: DoubleStar:** ]     [ Enter: <T> ]
+[ <T> HeadingLevel: Text: BoldStarText: ]     [ Enter: <T> ]
+[ <T> HeadingLevel: Text: ]     [ Enter: <T> ]
+[ <T> HeadingLevel: ]     [ Enter: <T> ]
+[ <T> Text: ]     [ Enter: <T> ]
+[ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+
+test('markdown - 30', () => {
+        expect(markdown.isValid(
+`#_hello **world**_`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ SharpSign:# SingleUnderline:_ SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> SharpSign:# ]     [ SingleUnderline:_ SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: ]     [ SingleUnderline:_ SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: SingleUnderline:_ ]     [ SimpleText:hello Spaces:  DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: SingleUnderline:_ SimpleText:hello ]     [ Spaces:  DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: ]     [ Spaces:  DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: Spaces:  ]     [ DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: ]     [ DoubleStar:** SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: DoubleStar:** ]     [ SimpleText:world DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: DoubleStar:** SimpleText:world ]     [ DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: StartBoldStarText: ]     [ DoubleStar:** SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: StartBoldStarText: DoubleStar:** ]     [ SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: BoldStarText: ]     [ SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: ]     [ SingleUnderline:_ Enter: <T> ]
+[ <T> HeadingLevel: StartItalicUnderlineText: SingleUnderline:_ ]     [ Enter: <T> ]
+[ <T> HeadingLevel: ItalicUnderlineText: ]     [ Enter: <T> ]
+[ <T> HeadingLevel: Text: ]     [ Enter: <T> ]
+[ <T> HeadingLevel: ]     [ Enter: <T> ]
+[ <T> Text: ]     [ Enter: <T> ]
+[ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 31', () => {
+        expect(markdown.isValid(
+`> # hello world`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ LeftArrow:> Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> ]     [ Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  ]     [ SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  SharpSign:# ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Spaces:  ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: SimpleText:hello ]     [ Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: Spaces:  ]     [ SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: SimpleText:world ]     [ Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: ]     [ Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: Enter: ]     [ <T> ]
+[ <T> BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 32', () => {
+        expect(markdown.isValid(
+`> # hello world
+> the world is greate`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ LeftArrow:> Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> ]     [ Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  ]     [ SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  SharpSign:# ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Spaces:  ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: SimpleText:hello ]     [ Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: Spaces:  ]     [ SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ SimpleText:world Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: SimpleText:world ]     [ Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: ]     [ Enter: LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: Enter: ]     [ LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> BlockquoteLine: ]     [ LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ Spaces:  SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ]     [ SimpleText:the Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  SimpleText:the ]     [ Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ Spaces:  SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: Spaces:  ]     [ SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ SimpleText:world Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: SimpleText:world ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ SimpleText:is Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: SimpleText:is ]     [ Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ Spaces:  SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: Spaces:  ]     [ SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ SimpleText:greate Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: SimpleText:greate ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: Enter: ]     [ <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 33', () => {
+        expect(markdown.isValid(
+`> # hello world
+> - one
+> - two`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ LeftArrow:> Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> ]     [ Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  ]     [ SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  SharpSign:# ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Spaces:  ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: SimpleText:hello ]     [ Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: Spaces:  ]     [ SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ SimpleText:world Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: SimpleText:world ]     [ Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: ]     [ Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: Enter: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> BlockquoteLine: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ Spaces:  ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ]     [ ItemHypen:-  SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  ]     [ SimpleText:one Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:one ]     [ Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  Text: ]     [ Enter: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  Text: Enter: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  UnorderedListItem: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  UnorderedList: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ Spaces:  ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ]     [ ItemHypen:-  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  ]     [ SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  SimpleText:two ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  Text: ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemHypen:-  Text: Enter: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  UnorderedListItem: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  UnorderedList: ]     [ <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 34', () => {
+        expect(markdown.isValid(
+`> # hello world
+> 1. one
+> 2. two`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ LeftArrow:> Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> ]     [ Spaces:  SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  ]     [ SharpSign:# Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  SharpSign:# ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Spaces:  SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Spaces:  ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ SimpleText:hello Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: SimpleText:hello ]     [ Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Spaces:  SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: Spaces:  ]     [ SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ SimpleText:world Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: SimpleText:world ]     [ Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: Text: ]     [ Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  HeadingLevel: ]     [ Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: ]     [ Enter: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: Enter: ]     [ LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> BlockquoteLine: ]     [ LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ Spaces:  ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ]     [ ItemOrder:1.  SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:1.  ]     [ SimpleText:one Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:1.  SimpleText:one ]     [ Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:1.  Text: ]     [ Enter: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:1.  Text: Enter: ]     [ LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  OrderedListItem: ]     [ LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  OrderedList: ]     [ LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ Spaces:  ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ]     [ ItemOrder:2.  SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:2.  ]     [ SimpleText:two Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:2.  SimpleText:two ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:2.  Text: ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ItemOrder:2.  Text: Enter: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  OrderedListItem: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  OrderedList: ]     [ <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 35', () => {
+        expect(markdown.isValid(
+`> hello
+>> world`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ LeftArrow:> Spaces:  SimpleText:hello Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> ]     [ Spaces:  SimpleText:hello Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  ]     [ SimpleText:hello Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  SimpleText:hello ]     [ Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: ]     [ Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: Enter: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> BlockquoteLine: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> ]     [ Spaces:  SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  ]     [ SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  Text: ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  Text: Enter: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: ]     [ <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 36', () => {
+        expect(markdown.isValid(
+`> hello
+>> world
+>> war`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ LeftArrow:> Spaces:  SimpleText:hello Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> LeftArrow:> ]     [ Spaces:  SimpleText:hello Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  ]     [ SimpleText:hello Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  SimpleText:hello ]     [ Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: ]     [ Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: Enter: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> BlockquoteLine: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ LeftArrow:> Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> ]     [ Spaces:  SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  ]     [ SimpleText:world Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  SimpleText:world ]     [ Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  Text: ]     [ Enter: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  Text: Enter: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> BlockquoteLine: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: ]     [ LeftArrow:> LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> ]     [ LeftArrow:> Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> LeftArrow:> ]     [ Spaces:  SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  ]     [ SimpleText:war Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  SimpleText:war ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  Text: ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> LeftArrow:> Spaces:  Text: Enter: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: LeftArrow:> Blockquotes: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: LeftArrow:> Blockquotes: ]     [ <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 37', () => {
+        expect(markdown.isValid(
+`> hello
+> world`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ LeftArrow:> Spaces:  SimpleText:hello Enter: LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> ]     [ Spaces:  SimpleText:hello Enter: LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  ]     [ SimpleText:hello Enter: LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  SimpleText:hello ]     [ Enter: LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: ]     [ Enter: LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> LeftArrow:> Spaces:  Text: Enter: ]     [ LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> BlockquoteLine: ]     [ LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: ]     [ LeftArrow:> Spaces:  SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> ]     [ Spaces:  SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  ]     [ SimpleText:world Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  SimpleText:world ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: ]     [ Enter: <T> ]
+[ <T> Blockquotes: LeftArrow:> Spaces:  Text: Enter: ]     [ <T> ]
+[ <T> Blockquotes: BlockquoteLine: ]     [ <T> ]
+[ <T> Blockquotes: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 38', () => {
+        expect(markdown.isValid(
+`\`\``
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ Backtick:\`\` Enter: <T> ]
+[ <T> Backtick:\`\` ]     [ Enter: <T> ]
+[ <T> Text: ]     [ Enter: <T> ]
+[ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 39', () => {
+        expect(markdown.isValid(
+`type \`nano\`.`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ SimpleText:type Spaces:  Backtick:\`nano\` SimpleText:. Enter: <T> ]
+[ <T> SimpleText:type ]     [ Spaces:  Backtick:\`nano\` SimpleText:. Enter: <T> ]
+[ <T> Text: ]     [ Spaces:  Backtick:\`nano\` SimpleText:. Enter: <T> ]
+[ <T> Text: Spaces:  ]     [ Backtick:\`nano\` SimpleText:. Enter: <T> ]
+[ <T> Text: ]     [ Backtick:\`nano\` SimpleText:. Enter: <T> ]
+[ <T> Text: Backtick:\`nano\` ]     [ SimpleText:. Enter: <T> ]
+[ <T> Text: ]     [ SimpleText:. Enter: <T> ]
+[ <T> Text: SimpleText:. ]     [ Enter: <T> ]
+[ <T> Text: ]     [ Enter: <T> ]
+[ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> Line: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]`
+)
+})
+
+test('markdown - 40', () => {
+        expect(markdown.isValid(
+`[a](http://google.com)`
+                )).toEqual(true)
+                // console.log(markdown.getValidationSteps_NoActions())
+                expect(markdown.getValidationSteps_NoActions()).toEqual(
+`[ <T> ]     [ Link:[a](http://google.com) Enter: <T> ]
+[ <T> Link:[a](http://google.com) ]     [ Enter: <T> ]
+[ <T> Text: ]     [ Enter: <T> ]
+[ <T> Text: Enter: ]     [ <T> ]
+[ <T> TextLine: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
 [ <T> Line: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]`
 )

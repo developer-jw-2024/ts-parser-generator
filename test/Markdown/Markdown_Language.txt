@@ -1,17 +1,27 @@
 Markdown -> Markdown Line
 Markdown -> Line
-Line -> Enter
+
 Text -> Text Spaces
 Text -> Text SimpleText
 Text -> Text BoldStarText
 Text -> Text BoldDoubleUnderText
 Text -> Text ItalicStarText
 Text -> Text ItalicUnderlineText
+Text -> Text Backtick
+Text -> Text DoubleBackticks
+Text -> Text Link
 Text -> SimpleText
 Text -> BoldStarText
 Text -> BoldDoubleUnderText
 Text -> ItalicStarText
 Text -> ItalicUnderlineText
+Text -> Backtick
+Text -> DoubleBackticks
+Text -> Link
+
+Line -> BlankLine
+
+BlankLine -> Enter
 
 Line -> Paragraph
 
@@ -49,6 +59,7 @@ StartItalicUnderlineText -> StartItalicUnderlineText Spaces
 StartItalicUnderlineText -> StartItalicUnderlineText SimpleText
 StartItalicUnderlineText -> StartItalicUnderlineText BoldStarText
 StartItalicUnderlineText -> StartItalicUnderlineText BoldDoubleUnderText
+StartItalicUnderlineText -> StartItalicUnderlineText HeadingLevel
 ItalicUnderlineText -> StartItalicUnderlineText SingleUnderline
 
 StartItalicStarText -> SingleStar Spaces
@@ -92,7 +103,16 @@ Line -> Blockquotes
 Blockquotes -> BlockquoteLine
 Blockquotes -> Blockquotes BlockquoteLine
 BlockquoteLine -> LeftArrow Spaces Text Enter
+BlockquoteLine -> LeftArrow Spaces UnorderedList
+BlockquoteLine -> LeftArrow Spaces OrderedList
+BlockquoteLine -> LeftArrow Blockquotes 
 
 IntentBlockquotes -> IntentBlockquoteLine
 IntentBlockquotes -> IntentBlockquotes IntentBlockquoteLine
 IntentBlockquoteLine -> IntentLeftArrow Spaces Text Enter
+
+HeadingLevel -> SharpSign
+HeadingLevel -> HeadingLevel Spaces
+HeadingLevel -> HeadingLevel Text
+Text -> HeadingLevel
+

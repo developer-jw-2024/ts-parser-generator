@@ -1,13 +1,17 @@
 Enter \n
 Spaces [\t ]+
-SimpleText  [^*_\-+> \t\n]+
+SimpleText  [^*_\-+>#`\(\)\[\] \t\n]+
 ItemHypen "- "
 ItemStar "* "
 ItemPlus "+ "
 ItemOrder [0-9]+". "
 SingleStar "*"
 DoubleStar "**"
+SharpSign #+
 SingleUnderline "_"
 DoubleUnderline "__"
-LeftArrow ">"+
+LeftArrow ">"
+DoubleBackticks ``[^`]*``
+Backtick `[^`]*`
 IntentLeftArrow [\t ]+">"+
+Link \[[^\[\]]*\]\([^\(\)]*\)

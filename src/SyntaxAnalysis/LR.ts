@@ -183,46 +183,50 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             if (debug) console.log(`==>[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action)
             
             // if (debug) console.log(s, inputTokens[i], action)
-            var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
-            this.analysisSteps.push(step)
             // if (debug) console.log(step.toString())
 
-            if (action.type==LRActionType.SHIFT) {
-                stack.push(action.value)
-                symbols.push(a)
-                symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value, []))
-                i++
-            } else if (action.type==LRActionType.REDUCE) {
-                var igp = action.value
-                var gp = this.indexGrammerProductions[igp]
-                var len = gp.factors.length
-                // console.log(symbols.slice(symbols.length-len), symbolTokens.slice(symbols.length-len))
-                var parameters = symbolTokens.slice(symbols.length-len)
-                symbols = symbols.slice(0, symbols.length-len)
-                symbolTokens = symbolTokens.slice(0, symbolTokens.length-len)
-                stack = stack.slice(0, stack.length-len)
-                var topState : number = stack[stack.length-1]
-                var symbol : number = gp.symbol
-                var gotoAction : LRAction = this.actions[topState][symbol]
-
-                if (gotoAction.type==LRActionType.GOTO) {
-                    stack.push(gotoAction.value)
-                    symbols.push(symbol)
-                    // console.log(this.grammerProductions[igp].toString())
-                    var result = null
-                    if (this.grammerProductionFunctions && this.grammerProductionFunctions[igp]) {
-                        result = this.grammerProductionFunctions[igp](parameters)
-                    }
-                    symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result, parameters))
-                } else {
-                    throw new Error('Parse Error')
-                }
-                // break
-            } else if (action.type==LRActionType.ACCEPT) {
-                flag = true
+            if (action==null || action==undefined) {
+                throw new Error(`There is no action for state [${s}] with token ${inputToken}`)
             } else {
-                throw new Error(this.toActionString(action))
-                // console.log('error', action)
+                var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
+                this.analysisSteps.push(step)
+                if (action.type==LRActionType.SHIFT) {
+                    stack.push(action.value)
+                    symbols.push(a)
+                    symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value, []))
+                    i++
+                } else if (action.type==LRActionType.REDUCE) {
+                    var igp = action.value
+                    var gp = this.indexGrammerProductions[igp]
+                    var len = gp.factors.length
+                    // console.log(symbols.slice(symbols.length-len), symbolTokens.slice(symbols.length-len))
+                    var parameters = symbolTokens.slice(symbols.length-len)
+                    symbols = symbols.slice(0, symbols.length-len)
+                    symbolTokens = symbolTokens.slice(0, symbolTokens.length-len)
+                    stack = stack.slice(0, stack.length-len)
+                    var topState : number = stack[stack.length-1]
+                    var symbol : number = gp.symbol
+                    var gotoAction : LRAction = this.actions[topState][symbol]
+
+                    if (gotoAction.type==LRActionType.GOTO) {
+                        stack.push(gotoAction.value)
+                        symbols.push(symbol)
+                        // console.log(this.grammerProductions[igp].toString())
+                        var result = null
+                        if (this.grammerProductionFunctions && this.grammerProductionFunctions[igp]) {
+                            result = this.grammerProductionFunctions[igp](parameters)
+                        }
+                        symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result, parameters))
+                    } else {
+                        throw new Error('Parse Error')
+                    }
+                    // break
+                } else if (action.type==LRActionType.ACCEPT) {
+                    flag = true
+                } else {
+                    throw new Error(this.toActionString(action))
+                    // console.log('error', action)
+                }
             }
         }
         return flag
