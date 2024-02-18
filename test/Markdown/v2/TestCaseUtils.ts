@@ -76,6 +76,7 @@ export class TestCaseUtils {
             
             var testCase = new TestCase(nameLines.join('\n'), contentLines.join('\n'), resultLines.join('\n'))
             testCases.push(testCase)
+            
         }
         return testCases
     }

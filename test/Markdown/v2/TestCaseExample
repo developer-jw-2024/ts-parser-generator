@@ -1,0 +1,15 @@
+........StartName
+Example
+........EndName
+........StartContent
+Example
+........EndContent
+........StartCompareResult
+[ <T> ]     [ SimpleText:Example Enter: <T> ]
+[ <T> SimpleText:Example ]     [ Enter: <T> ]
+[ <T> Inline: ]     [ Enter: <T> ]
+[ <T> Inline: Enter: ]     [ <T> ]
+[ <T> ParagraphLine: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult

@@ -1,173 +1,813 @@
 ........StartName
-Test 1
+blank line
 ........EndName
 ........StartContent
     
 ........EndContent
 ........StartCompareResult
-[ <T> ]     [ Tab1:     Enter: <T> ]
-[ <T> Tab1:     ]     [ Enter: <T> ]
+[ <T> ]     [ Spaces:     Enter: <T> ]
+[ <T> Spaces:     ]     [ Enter: <T> ]
 [ <T> Inline: ]     [ Enter: <T> ]
 [ <T> Inline: Enter: ]     [ <T> ]
-[ <T> Paragraph: ]     [ <T> ]
-[ <T> MarkdownSegment: ]     [ <T> ]
-[ <T> Markdown: ]     [ <T> ]
-........EndCompareResult
-
-
-........StartName
-Test 2
-........EndName
-........StartContent
-abc
-........EndContent
-........StartCompareResult
-[ <T> ]     [ SimpleText:abc Enter: <T> ]
-[ <T> SimpleText:abc ]     [ Enter: <T> ]
-[ <T> Inline: ]     [ Enter: <T> ]
-[ <T> Inline: Enter: ]     [ <T> ]
-[ <T> Paragraph: ]     [ <T> ]
-[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> ParagraphLine: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]
 ........EndCompareResult
 
 ........StartName
-Inline With space
+a word
 ........EndName
 ........StartContent
-    This    is world.
+boy
 ........EndContent
 ........StartCompareResult
-[ <T> ]     [ Tab1:     SimpleText:This Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Tab1:     ]     [ SimpleText:This Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: ]     [ SimpleText:This Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: SimpleText:This ]     [ Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: ]     [ Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: Tab1:     ]     [ SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: ]     [ SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: SimpleText:is ]     [ Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: ]     [ Spaces:  SimpleText:world. Enter: <T> ]
-[ <T> Inline: Spaces:  ]     [ SimpleText:world. Enter: <T> ]
-[ <T> Inline: ]     [ SimpleText:world. Enter: <T> ]
-[ <T> Inline: SimpleText:world. ]     [ Enter: <T> ]
+[ <T> ]     [ SimpleText:boy Enter: <T> ]
+[ <T> SimpleText:boy ]     [ Enter: <T> ]
 [ <T> Inline: ]     [ Enter: <T> ]
 [ <T> Inline: Enter: ]     [ <T> ]
-[ <T> Paragraph: ]     [ <T> ]
-[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> ParagraphLine: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]
 ........EndCompareResult
 
 ........StartName
-Single Unorder Item
+a word 2
 ........EndName
 ........StartContent
--abc
+boy
+
 ........EndContent
 ........StartCompareResult
-[ <T> ]     [ ItemStart:- SimpleText:abc Enter: <T> ]
-[ <T> ItemStart:- ]     [ SimpleText:abc Enter: <T> ]
-[ <T> ItemStart:- SimpleText:abc ]     [ Enter: <T> ]
+[ <T> ]     [ SimpleText:boy Enter: <T> ]
+[ <T> SimpleText:boy ]     [ Enter: <T> ]
+[ <T> Inline: ]     [ Enter: <T> ]
+[ <T> Inline: Enter: ]     [ <T> ]
+[ <T> ParagraphLine: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+a sentence
+........EndName
+........StartContent
+I am a boy
+........EndContent
+........StartCompareResult
+[ <T> ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: SimpleText:am ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: SimpleText:a ]     [ Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:boy Enter: <T> ]
+[ <T> Inline: SimpleText:boy ]     [ Enter: <T> ]
+[ <T> Inline: ]     [ Enter: <T> ]
+[ <T> Inline: Enter: ]     [ <T> ]
+[ <T> ParagraphLine: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+a sentence 2
+........EndName
+........StartContent
+I am a boy
+
+........EndContent
+........StartCompareResult
+[ <T> ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: SimpleText:am ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: SimpleText:a ]     [ Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:boy Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:boy Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:boy Enter: <T> ]
+[ <T> Inline: SimpleText:boy ]     [ Enter: <T> ]
+[ <T> Inline: ]     [ Enter: <T> ]
+[ <T> Inline: Enter: ]     [ <T> ]
+[ <T> ParagraphLine: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+two sentences
+........EndName
+........StartContent
+I am a boy
+You are a girl
+........EndContent
+........StartCompareResult
+[ <T> ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: SimpleText:am ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: SimpleText:a ]     [ Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:boy Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: SimpleText:boy ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Enter: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ParagraphLine: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> MarkdownLine: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: SimpleText:You ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:are ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:a ]     [ Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:girl ]     [ Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: ParagraphLine: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+two sentences 2
+........EndName
+........StartContent
+I am a boy
+
+You are a girl
+........EndContent
+........StartCompareResult
+[ <T> ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: SimpleText:am ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: SimpleText:a ]     [ Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:boy Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: SimpleText:boy ]     [ Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: ]     [ Enter: Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Inline: Enter: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ParagraphLine: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> MarkdownLine: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ]     [ Enter: SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Enter: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: BlankLine: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: SimpleText:You ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:are ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:a ]     [ Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:girl Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:girl ]     [ Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: ParagraphLine: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Simple UnorderedItem 1
+........EndName
+........StartContent
+-boy
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- SimpleText:boy Enter: <T> ]
+[ <T> ItemStart:- ]     [ SimpleText:boy Enter: <T> ]
+[ <T> ItemStart:- SimpleText:boy ]     [ Enter: <T> ]
 [ <T> ItemStart:- Inline: ]     [ Enter: <T> ]
 [ <T> ItemStart:- Inline: Enter: ]     [ <T> ]
 [ <T> UnorderedItem: ]     [ <T> ]
-[ <T> UnorderedList: ]     [ <T> ]
-[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]
 ........EndCompareResult
 
 ........StartName
-Single Unorder Item 2
+Simple UnorderedItem 2
 ........EndName
 ........StartContent
-- abc
-    This is inline complement
+-I am a
 ........EndContent
 ........StartCompareResult
-[ <T> ]     [ ItemStart:- Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> ItemStart:- ]     [ Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> ItemStart:- Spaces:  ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> ItemStart:- Inline: ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> ItemStart:- Inline: SimpleText:abc ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> ItemStart:- Inline: ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> ItemStart:- Inline: Enter: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> UnorderedItem: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> UnorderedItem: Tab1:     ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: SimpleText:This ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:is ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:inline ]     [ Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:complement Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:complement ]     [ Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: ]     [ Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Enter: ]     [ <T> ]
-[ <T> UnorderedItemWithComplement: ]     [ <T> ]
-[ <T> UnorderedList: ]     [ <T> ]
-[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> ]     [ ItemStart:- SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:am ]     [ Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: Spaces:  ]     [ SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:a ]     [ Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> UnorderedItem: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]
 ........EndCompareResult
 
 ........StartName
-Single Unorder Item 3
+Simple UnorderedItem 3
 ........EndName
 ........StartContent
-- abc
-    This is inline complement
-    the the end
+- I am a
 ........EndContent
 ........StartCompareResult
-[ <T> ]     [ ItemStart:- Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> ItemStart:- ]     [ Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> ItemStart:- Spaces:  ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> ItemStart:- Inline: ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> ItemStart:- Inline: SimpleText:abc ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> ItemStart:- Inline: ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> ItemStart:- Inline: Enter: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> UnorderedItem: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> UnorderedItem: Tab1:     ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: SimpleText:This ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:is ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:inline ]     [ Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:complement ]     [ Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: ]     [ Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> StartUnorderedItemWithComplement: Enter: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> UnorderedItemWithComplement: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> UnorderedList: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> MarkdownSegment: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Tab1:     ]     [ SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: ]     [ SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: SimpleText:the ]     [ Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: ]     [ SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: SimpleText:the ]     [ Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: ]     [ SimpleText:end Enter: <T> ]
-[ <T> Markdown: Inline: SimpleText:end ]     [ Enter: <T> ]
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:am Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:am ]     [ Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Spaces:  SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: Spaces:  ]     [ SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:a Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:a ]     [ Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> UnorderedItem: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Simple Multi UnorderedItem
+........EndName
+........StartContent
+- I am a boy
+- You are a girl
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:I Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:I ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Spaces:  SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: Spaces:  ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:am Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:am ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:a Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:a ]     [ Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Spaces:  SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: Spaces:  ]     [ SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:boy Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:boy ]     [ Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> UnorderedItem: ]     [ ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> MarkdownLine: ]     [ ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ]     [ ItemStart:- Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- ]     [ Spaces:  SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Spaces:  ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:You Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:You ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Spaces:  SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Spaces:  ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:are Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:are ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Spaces:  SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Spaces:  ]     [ SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:a Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:a ]     [ Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Spaces:  SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Spaces:  ]     [ SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:girl Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:girl ]     [ Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+UnorderedItem with Complement
+........EndName
+........StartContent
+- Fruit
+    Apple is red
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Fruit ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     SimpleText:Apple ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:red Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:red ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Enter: ]     [ <T> ]
+[ <T> UnorderedItem: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+UnorderedItem with Complement 2
+........EndName
+........StartContent
+- Fruit
+    Apple is red
+    Banana is yellow
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Fruit ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     SimpleText:Apple ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:red ]     [ Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Enter: ]     [ Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     SimpleText:Banana ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:yellow Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:yellow ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Enter: ]     [ <T> ]
+[ <T> UnorderedItem: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+UnorderedItem with Complement 3
+........EndName
+........StartContent
+- Fruit
+    Apple is red
+    Banana is yellow
+- Animal
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Fruit ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     SimpleText:Apple ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:red ]     [ Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Enter: ]     [ Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     SimpleText:Banana ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:yellow ]     [ Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Enter: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> UnorderedItem: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> MarkdownLine: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> Markdown: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> Markdown: ItemStart:- ]     [ Spaces:  SimpleText:Animal Enter: <T> ]
+[ <T> Markdown: ItemStart:- Spaces:  ]     [ SimpleText:Animal Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:Animal Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:Animal ]     [ Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+UnorderedItem with Complement 4
+........EndName
+........StartContent
+- Fruit
+- Animal
+    Ant is brown
+    Bear is big
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Fruit Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Fruit Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Fruit Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Fruit Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Fruit ]     [ Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> MarkdownLine: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- ]     [ Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Spaces:  ]     [ SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:Animal ]     [ Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Enter: ]     [ Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     ]     [ SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     SimpleText:Ant ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:brown ]     [ Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Enter: ]     [ Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     ]     [ SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     SimpleText:Bear ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:big ]     [ Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+UnorderedItem with Complement 5
+........EndName
+........StartContent
+- Fruit
+    Apple is red
+    Banana is yellow
+- Animal
+    Ant is brown
+    Bear is big
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Fruit Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Fruit ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ SimpleText:Apple Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     SimpleText:Apple ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:red Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:red ]     [ Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Enter: Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Enter: ]     [ Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ SimpleText:Banana Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     SimpleText:Banana ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ SimpleText:yellow Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: SimpleText:yellow ]     [ Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: ]     [ Enter: ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     Inline: Enter: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> UnorderedItem: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> MarkdownLine: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ]     [ ItemStart:- Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- ]     [ Spaces:  SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Spaces:  ]     [ SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:Animal Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:Animal ]     [ Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Enter: Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Enter: ]     [ Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ Spaces:     SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     ]     [ SimpleText:Ant Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     SimpleText:Ant ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:brown Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:brown ]     [ Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Enter: Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Enter: ]     [ Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ Spaces:     SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     ]     [ SimpleText:Bear Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     SimpleText:Bear ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:is Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:is ]     [ Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Spaces:  SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Spaces:  ]     [ SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ SimpleText:big Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: SimpleText:big ]     [ Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: UnorderedItem: Spaces:     Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+UnorderedItem with paragraph
+........EndName
+........StartContent
+- Fruit
+
+The list above is about fruit.
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Fruit Enter: Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Fruit Enter: Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Fruit Enter: Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Fruit Enter: Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Fruit ]     [ Enter: Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> MarkdownLine: ]     [ Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: ]     [ Enter: SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Enter: ]     [ SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: BlankLine: ]     [ SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: ]     [ SimpleText:The Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: SimpleText:The ]     [ Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:list Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:list ]     [ Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:above Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:above ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:is Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:is ]     [ Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:about Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:about ]     [ Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:fruit. Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:fruit. ]     [ Enter: <T> ]
 [ <T> Markdown: Inline: ]     [ Enter: <T> ]
 [ <T> Markdown: Inline: Enter: ]     [ <T> ]
-[ <T> Markdown: Paragraph: ]     [ <T> ]
-[ <T> Markdown: MarkdownSegment: ]     [ <T> ]
+[ <T> Markdown: ParagraphLine: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
 [ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Multi Level UnorderList
+........EndName
+........StartContent
+- Language
+    - Computer
+    - Human
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Language ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- ]     [ Spaces:  SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Spaces:  ]     [ SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ SimpleText:Computer Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: SimpleText:Computer ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: Enter: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ]     [ ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- ]     [ Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Spaces:  ]     [ SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: SimpleText:Human ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     UnorderedItem: ]     [ <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ <T> ]
+[ <T> UnorderedItem: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Multi Level UnorderList 2
+........EndName
+........StartContent
+- Language
+    - Computer
+        C\+\+
+        Java
+    - Human
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Language ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- ]     [ Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Spaces:  ]     [ SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: SimpleText:Computer ]     [ Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: Enter: ]     [ Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         ]     [ SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         SimpleText:C\+\+ ]     [ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: ]     [ Enter: Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: Enter: ]     [ Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ Spaces:         SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         ]     [ SimpleText:Java Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         SimpleText:Java ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: Enter: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ]     [ ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- ]     [ Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Spaces:  ]     [ SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: SimpleText:Human ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:     UnorderedItem: ]     [ <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ <T> ]
+[ <T> UnorderedItem: ]     [ <T> ]
+[ <T> MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Multi Level UnorderList 3
+........EndName
+........StartContent
+- Language
+    - Computer
+        C\+\+
+        Java
+- Human
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:Language Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:Language ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Spaces:     ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ]     [ ItemStart:- Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- ]     [ Spaces:  SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Spaces:  ]     [ SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ SimpleText:Computer Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: SimpleText:Computer ]     [ Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: ]     [ Enter: Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     ItemStart:- Inline: Enter: ]     [ Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ Spaces:         SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         ]     [ SimpleText:C\+\+ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         SimpleText:C\+\+ ]     [ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: ]     [ Enter: Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: Enter: ]     [ Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ Spaces:         SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         ]     [ SimpleText:Java Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         SimpleText:Java ]     [ Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: ]     [ Enter: ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: Spaces:         Inline: Enter: ]     [ ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: Spaces:     UnorderedItem: ]     [ ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> UnorderedItem: ]     [ ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> MarkdownLine: ]     [ ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> Markdown: ]     [ ItemStart:- Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> Markdown: ItemStart:- ]     [ Spaces:  SimpleText:Human Enter: <T> ]
+[ <T> Markdown: ItemStart:- Spaces:  ]     [ SimpleText:Human Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ SimpleText:Human Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: SimpleText:Human ]     [ Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: UnorderedItem: ]     [ <T> ]
+[ <T> Markdown: MarkdownLine: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Multi Level UnorderList 4
+........EndName
+........StartContent
+- Language
+    - Computer
+        - PC
+        - Mac
+    - Human
+- Car
+    - Racing
+........EndContent
+........StartCompareResult
+
 ........EndCompareResult

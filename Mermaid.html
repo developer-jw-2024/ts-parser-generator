@@ -1,62 +1,114 @@
 <html>
         <body>
         <pre class="mermaid">
-        State0[[E1 -> ⏺ E _TERMINATED_
-E -> ⏺ E + T
-E -> ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State1[[E1 -> E ⏺ _TERMINATED_
-E -> E ⏺ + T]]
-State2[[E -> T ⏺
-T -> T ⏺ * F]]
-State3[[T -> F ⏺]]
-State4[[F -> ( ⏺ E )
-E -> ⏺ E + T
-E -> ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State5[[F -> id ⏺]]
-State6[[E -> E + ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State7[[T -> T * ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State8[[F -> ( E ⏺ )
-E -> E ⏺ + T]]
-State9[[E -> E + T ⏺
-T -> T ⏺ * F]]
-State10[[T -> T * F ⏺]]
-State11[[F -> ( E ) ⏺]]
-State0-->|E|State1
-State0-->|T|State2
-State0-->|F|State3
-State0-->|(|State4
-State0-->|id|State5
-State1-->|+|State6
-State2-->|*|State7
-State4-->|T|State2
-State4-->|F|State3
-State4-->|(|State4
-State4-->|id|State5
-State4-->|E|State8
-State6-->|F|State3
-State6-->|(|State4
-State6-->|id|State5
-State6-->|T|State9
-State7-->|(|State4
-State7-->|id|State5
-State7-->|F|State10
-State8-->|+|State6
-State8-->|)|State11
-State9-->|*|State7
+        State0[[Markdown1 -> ⏺ Markdown _TERMINATED_
+Markdown -> ⏺ MarkdownLine
+Markdown -> ⏺ Markdown MarkdownLine
+MarkdownLine -> ⏺ ParagraphLine
+MarkdownLine -> ⏺ BlankLine
+MarkdownLine -> ⏺ UnorderedItem
+ParagraphLine -> ⏺ Inline Enter
+BlankLine -> ⏺ Enter
+UnorderedItem -> ⏺ ItemStart Inline Enter
+UnorderedItem -> ⏺ UnorderedItem Spaces Inline Enter
+UnorderedItem -> ⏺ UnorderedItem Spaces UnorderedItem
+Inline -> ⏺ Spaces
+Inline -> ⏺ SimpleText
+Inline -> ⏺ Inline Spaces
+Inline -> ⏺ Inline SimpleText]]
+State1[[Markdown1 -> Markdown ⏺ _TERMINATED_
+Markdown -> Markdown ⏺ MarkdownLine
+MarkdownLine -> ⏺ ParagraphLine
+MarkdownLine -> ⏺ BlankLine
+MarkdownLine -> ⏺ UnorderedItem
+ParagraphLine -> ⏺ Inline Enter
+BlankLine -> ⏺ Enter
+UnorderedItem -> ⏺ ItemStart Inline Enter
+UnorderedItem -> ⏺ UnorderedItem Spaces Inline Enter
+UnorderedItem -> ⏺ UnorderedItem Spaces UnorderedItem
+Inline -> ⏺ Spaces
+Inline -> ⏺ SimpleText
+Inline -> ⏺ Inline Spaces
+Inline -> ⏺ Inline SimpleText]]
+State2[[Markdown -> MarkdownLine ⏺]]
+State3[[MarkdownLine -> ParagraphLine ⏺]]
+State4[[MarkdownLine -> BlankLine ⏺]]
+State5[[MarkdownLine -> UnorderedItem ⏺
+UnorderedItem -> UnorderedItem ⏺ Spaces Inline Enter
+UnorderedItem -> UnorderedItem ⏺ Spaces UnorderedItem]]
+State6[[ParagraphLine -> Inline ⏺ Enter
+Inline -> Inline ⏺ Spaces
+Inline -> Inline ⏺ SimpleText]]
+State7[[BlankLine -> Enter ⏺]]
+State8[[UnorderedItem -> ItemStart ⏺ Inline Enter
+Inline -> ⏺ Spaces
+Inline -> ⏺ SimpleText
+Inline -> ⏺ Inline Spaces
+Inline -> ⏺ Inline SimpleText]]
+State9[[Inline -> Spaces ⏺]]
+State10[[Inline -> SimpleText ⏺]]
+State11[[Markdown -> Markdown MarkdownLine ⏺]]
+State12[[UnorderedItem -> UnorderedItem Spaces ⏺ Inline Enter
+UnorderedItem -> UnorderedItem Spaces ⏺ UnorderedItem
+Inline -> ⏺ Spaces
+Inline -> ⏺ SimpleText
+Inline -> ⏺ Inline Spaces
+Inline -> ⏺ Inline SimpleText
+UnorderedItem -> ⏺ ItemStart Inline Enter
+UnorderedItem -> ⏺ UnorderedItem Spaces Inline Enter
+UnorderedItem -> ⏺ UnorderedItem Spaces UnorderedItem]]
+State13[[ParagraphLine -> Inline Enter ⏺]]
+State14[[Inline -> Inline Spaces ⏺]]
+State15[[Inline -> Inline SimpleText ⏺]]
+State16[[UnorderedItem -> ItemStart Inline ⏺ Enter
+Inline -> Inline ⏺ Spaces
+Inline -> Inline ⏺ SimpleText]]
+State17[[UnorderedItem -> UnorderedItem Spaces Inline ⏺ Enter
+Inline -> Inline ⏺ Spaces
+Inline -> Inline ⏺ SimpleText]]
+State18[[UnorderedItem -> UnorderedItem Spaces UnorderedItem ⏺
+UnorderedItem -> UnorderedItem ⏺ Spaces Inline Enter
+UnorderedItem -> UnorderedItem ⏺ Spaces UnorderedItem]]
+State19[[UnorderedItem -> ItemStart Inline Enter ⏺]]
+State20[[UnorderedItem -> UnorderedItem Spaces Inline Enter ⏺]]
+State0-->|Markdown|State1
+State0-->|MarkdownLine|State2
+State0-->|ParagraphLine|State3
+State0-->|BlankLine|State4
+State0-->|UnorderedItem|State5
+State0-->|Inline|State6
+State0-->|Enter|State7
+State0-->|ItemStart|State8
+State0-->|Spaces|State9
+State0-->|SimpleText|State10
+State1-->|ParagraphLine|State3
+State1-->|BlankLine|State4
+State1-->|UnorderedItem|State5
+State1-->|Inline|State6
+State1-->|Enter|State7
+State1-->|ItemStart|State8
+State1-->|Spaces|State9
+State1-->|SimpleText|State10
+State1-->|MarkdownLine|State11
+State5-->|Spaces|State12
+State6-->|Enter|State13
+State6-->|Spaces|State14
+State6-->|SimpleText|State15
+State8-->|Spaces|State9
+State8-->|SimpleText|State10
+State8-->|Inline|State16
+State12-->|ItemStart|State8
+State12-->|Spaces|State9
+State12-->|SimpleText|State10
+State12-->|Inline|State17
+State12-->|UnorderedItem|State18
+State16-->|Spaces|State14
+State16-->|SimpleText|State15
+State16-->|Enter|State19
+State17-->|Spaces|State14
+State17-->|SimpleText|State15
+State17-->|Enter|State20
+State18-->|Spaces|State12
         </pre>
         <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
