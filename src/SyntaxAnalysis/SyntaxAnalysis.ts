@@ -86,8 +86,8 @@ export class SyntaxAnalysis {
     static TerminatedGrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",true)
     static DERIVATION_TOKEN = new Token(SyntaxAnalysis.DERIVATION, '->')
 
-    startSymbol : Token
-    indexOfStartSymbl : number
+    startSymbol : Token | null = null
+    indexOfStartSymbl : number | null = null
     tokens : Array<Token> =  []
     grammerProductions : Array<GrammarProduction>
     indexGrammerProductions : Array<IndexGrammarProduction>
@@ -145,8 +145,7 @@ export class SyntaxAnalysis {
         }
 
         this.startSymbol = this.grammerProductions[0].symbol
-        this.indexOfStartSymbl = this.indexGrammerProductions[0].symbol
-
+        this.indexOfStartSymbl = this.indexGrammerProductions[0].symbol    
 
         for (var i=0;i<this.indexGrammerProductions.length;i++) {
             var factors = this.indexGrammerProductions[i].factors
@@ -181,7 +180,7 @@ export class SyntaxAnalysis {
     }
 
     setTokenTypeDefinition(tokenTypeDefinitionContent) {
-        var tokenTypes : Array<TokenType> = tokenTypeDefinitionContent.split('\n').map(line=>{
+        var tokenTypes : Array<TokenType> = tokenTypeDefinitionContent.split('\n').filter(t=>t.trim().length>0).map(line=>{
             var spaceIndex = line.indexOf(' ')
             var name = line.substring(0, spaceIndex)
             var reg = line.substring(spaceIndex)

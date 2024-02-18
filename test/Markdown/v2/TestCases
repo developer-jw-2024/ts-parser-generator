@@ -1,0 +1,173 @@
+........StartName
+Test 1
+........EndName
+........StartContent
+    
+........EndContent
+........StartCompareResult
+[ <T> ]     [ Tab1:     Enter: <T> ]
+[ <T> Tab1:     ]     [ Enter: <T> ]
+[ <T> Inline: ]     [ Enter: <T> ]
+[ <T> Inline: Enter: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+
+........StartName
+Test 2
+........EndName
+........StartContent
+abc
+........EndContent
+........StartCompareResult
+[ <T> ]     [ SimpleText:abc Enter: <T> ]
+[ <T> SimpleText:abc ]     [ Enter: <T> ]
+[ <T> Inline: ]     [ Enter: <T> ]
+[ <T> Inline: Enter: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Inline With space
+........EndName
+........StartContent
+    This    is world.
+........EndContent
+........StartCompareResult
+[ <T> ]     [ Tab1:     SimpleText:This Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Tab1:     ]     [ SimpleText:This Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:This Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: SimpleText:This ]     [ Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: ]     [ Tab1:     SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: Tab1:     ]     [ SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:is Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: SimpleText:is ]     [ Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: ]     [ Spaces:  SimpleText:world. Enter: <T> ]
+[ <T> Inline: Spaces:  ]     [ SimpleText:world. Enter: <T> ]
+[ <T> Inline: ]     [ SimpleText:world. Enter: <T> ]
+[ <T> Inline: SimpleText:world. ]     [ Enter: <T> ]
+[ <T> Inline: ]     [ Enter: <T> ]
+[ <T> Inline: Enter: ]     [ <T> ]
+[ <T> Paragraph: ]     [ <T> ]
+[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Single Unorder Item
+........EndName
+........StartContent
+-abc
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- SimpleText:abc Enter: <T> ]
+[ <T> ItemStart:- ]     [ SimpleText:abc Enter: <T> ]
+[ <T> ItemStart:- SimpleText:abc ]     [ Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ <T> ]
+[ <T> UnorderedItem: ]     [ <T> ]
+[ <T> UnorderedList: ]     [ <T> ]
+[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Single Unorder Item 2
+........EndName
+........StartContent
+- abc
+    This is inline complement
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:abc ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> UnorderedItem: Tab1:     ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: SimpleText:This ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:is ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:inline ]     [ Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:complement Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:complement ]     [ Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: ]     [ Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Enter: ]     [ <T> ]
+[ <T> UnorderedItemWithComplement: ]     [ <T> ]
+[ <T> UnorderedList: ]     [ <T> ]
+[ <T> MarkdownSegment: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult
+
+........StartName
+Single Unorder Item 3
+........EndName
+........StartContent
+- abc
+    This is inline complement
+    the the end
+........EndContent
+........StartCompareResult
+[ <T> ]     [ ItemStart:- Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> ItemStart:- ]     [ Spaces:  SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> ItemStart:- Spaces:  ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ SimpleText:abc Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> ItemStart:- Inline: SimpleText:abc ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> ItemStart:- Inline: ]     [ Enter: Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> ItemStart:- Inline: Enter: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> UnorderedItem: ]     [ Tab1:     SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> UnorderedItem: Tab1:     ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: ]     [ SimpleText:This Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: SimpleText:This ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:is Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:is ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:inline Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:inline ]     [ Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Spaces:  SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: Spaces:  ]     [ SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ SimpleText:complement Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: SimpleText:complement ]     [ Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Inline: ]     [ Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: ]     [ Enter: Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> StartUnorderedItemWithComplement: Enter: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> UnorderedItemWithComplement: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> UnorderedList: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> MarkdownSegment: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: ]     [ Tab1:     SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Tab1:     ]     [ SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:the Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:the ]     [ Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:the Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:the ]     [ Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Spaces:  SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: Spaces:  ]     [ SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ SimpleText:end Enter: <T> ]
+[ <T> Markdown: Inline: SimpleText:end ]     [ Enter: <T> ]
+[ <T> Markdown: Inline: ]     [ Enter: <T> ]
+[ <T> Markdown: Inline: Enter: ]     [ <T> ]
+[ <T> Markdown: Paragraph: ]     [ <T> ]
+[ <T> Markdown: MarkdownSegment: ]     [ <T> ]
+[ <T> Markdown: ]     [ <T> ]
+........EndCompareResult

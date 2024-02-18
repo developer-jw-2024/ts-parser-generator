@@ -136,12 +136,14 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     }
 
     initWithTokens(tokens: Token[]): LRSyntaxAnalysis {
-        super.initWithTokens(tokens)
-        this.argument()
-        this.calculateFirst()
-        this.calculateFollow()
-        this.calculateFirstOfGrammaProductions()
-        this.calculateActions()
+        if (tokens.length>0) {
+            super.initWithTokens(tokens)
+            this.argument()
+            this.calculateFirst()
+            this.calculateFollow()
+            this.calculateFirstOfGrammaProductions()
+            this.calculateActions()    
+        }
         return this
     }
 

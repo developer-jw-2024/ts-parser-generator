@@ -1,0 +1,26 @@
+Markdown -> MarkdownSegment
+Markdown -> Markdown MarkdownSegment
+
+MarkdownSegment -> Paragraph
+MarkdownSegment -> UnorderedList
+
+Paragraph -> Inline Enter
+Paragraph -> Paragraph Inline Enter
+
+Inline -> Tab1
+Inline -> Spaces
+Inline -> SimpleText
+Inline -> Inline Tab1
+Inline -> Inline Spaces
+Inline -> Inline SimpleText
+
+UnorderedItem -> ItemStart Inline Enter
+StartUnorderedItemWithComplement -> UnorderedItem Tab1
+StartUnorderedItemWithComplement -> StartUnorderedItemWithComplement Tab1
+StartUnorderedItemWithComplement -> StartUnorderedItemWithComplement Inline Enter
+UnorderedItemWithComplement -> StartUnorderedItemWithComplement Enter
+
+UnorderedList -> UnorderedItem
+UnorderedList -> UnorderedList UnorderedItem
+UnorderedList -> UnorderedItemWithComplement
+UnorderedList -> UnorderedList UnorderedItemWithComplement

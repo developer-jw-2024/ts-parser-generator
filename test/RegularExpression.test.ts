@@ -23,6 +23,8 @@ describe('RegularExpression', ()  => {
         expect(toChars('[^a-zc]cde')).toEqual(['[^', 'a', '-', 'z' ,'c', ']', 'c', 'd', 'e']) 
         expect(toChars('[^*]')).toEqual(['[^', '*', ']']);
         expect(toChars('[^\\*]')).toEqual(['[^', '\\*', ']']);
+        expect(toChars('[\\-\\*\\+]')).toEqual(['[', '\\-', '\\*', '\\+', ']']);
+        
     });
 
     test('getFollowTermIndex', () => {

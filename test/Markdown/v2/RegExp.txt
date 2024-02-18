@@ -1,0 +1,5 @@
+Enter \n
+Tab1 " "{4}|\t
+Spaces [\t ]+
+SimpleText  [^*_\-+>#`\(\)\[\] \t\n]+
+ItemStart [\-\*\+]

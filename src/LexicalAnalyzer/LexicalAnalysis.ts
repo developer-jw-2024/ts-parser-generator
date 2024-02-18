@@ -18,7 +18,12 @@ export class TokenType {
     constructor(name : string, regularExpressionValue : string | null, isTerminal : boolean) {
         this.name = name
         this.regularExpressionValue = regularExpressionValue
-        this.regularExpression = regularExpressionValue==null?null:new RegularExpression(this.regularExpressionValue)
+        try {
+            this.regularExpression = regularExpressionValue==null?null:new RegularExpression(this.regularExpressionValue)
+        } catch(error) {
+
+            throw new Error(`Can not solve token type for [ ${name} ]`)
+        }
         this.isTerminal = isTerminal
     }
 

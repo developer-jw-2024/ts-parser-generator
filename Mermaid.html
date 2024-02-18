@@ -1,36 +1,62 @@
 <html>
         <body>
         <pre class="mermaid">
-        State0[[ItemList1 -> ⏺ ItemList _TERMINATED_
-ItemList -> ⏺ Item
-ItemList -> ⏺ ItemList Item
-Item -> ⏺ FirstLevel
-Item -> ⏺ SecondLevel
-Item -> ⏺ ThirdLevel
-Item -> ⏺ Enter]]
-State1[[ItemList1 -> ItemList ⏺ _TERMINATED_
-ItemList -> ItemList ⏺ Item
-Item -> ⏺ FirstLevel
-Item -> ⏺ SecondLevel
-Item -> ⏺ ThirdLevel
-Item -> ⏺ Enter]]
-State2[[ItemList -> Item ⏺]]
-State3[[Item -> FirstLevel ⏺]]
-State4[[Item -> SecondLevel ⏺]]
-State5[[Item -> ThirdLevel ⏺]]
-State6[[Item -> Enter ⏺]]
-State7[[ItemList -> ItemList Item ⏺]]
-State0-->|ItemList|State1
-State0-->|Item|State2
-State0-->|FirstLevel|State3
-State0-->|SecondLevel|State4
-State0-->|ThirdLevel|State5
-State0-->|Enter|State6
-State1-->|FirstLevel|State3
-State1-->|SecondLevel|State4
-State1-->|ThirdLevel|State5
-State1-->|Enter|State6
-State1-->|Item|State7
+        State0[[E1 -> ⏺ E _TERMINATED_
+E -> ⏺ E + T
+E -> ⏺ T
+T -> ⏺ T * F
+T -> ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State1[[E1 -> E ⏺ _TERMINATED_
+E -> E ⏺ + T]]
+State2[[E -> T ⏺
+T -> T ⏺ * F]]
+State3[[T -> F ⏺]]
+State4[[F -> ( ⏺ E )
+E -> ⏺ E + T
+E -> ⏺ T
+T -> ⏺ T * F
+T -> ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State5[[F -> id ⏺]]
+State6[[E -> E + ⏺ T
+T -> ⏺ T * F
+T -> ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State7[[T -> T * ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State8[[F -> ( E ⏺ )
+E -> E ⏺ + T]]
+State9[[E -> E + T ⏺
+T -> T ⏺ * F]]
+State10[[T -> T * F ⏺]]
+State11[[F -> ( E ) ⏺]]
+State0-->|E|State1
+State0-->|T|State2
+State0-->|F|State3
+State0-->|(|State4
+State0-->|id|State5
+State1-->|+|State6
+State2-->|*|State7
+State4-->|T|State2
+State4-->|F|State3
+State4-->|(|State4
+State4-->|id|State5
+State4-->|E|State8
+State6-->|F|State3
+State6-->|(|State4
+State6-->|id|State5
+State6-->|T|State9
+State7-->|(|State4
+State7-->|id|State5
+State7-->|F|State10
+State8-->|+|State6
+State8-->|)|State11
+State9-->|*|State7
         </pre>
         <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
