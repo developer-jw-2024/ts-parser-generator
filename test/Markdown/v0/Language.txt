@@ -1,0 +1,77 @@
+Sentence -> Spaces
+Sentence -> Sentence Spaces
+
+Sentence -> Text
+Sentence -> Sentence Text
+
+BeginStarBoldText -> StarBoldTag Spaces
+BeginStarBoldText -> StarBoldTag Text
+BeginStarBoldText -> StarBoldTag ItalicText
+BeginStarBoldText -> StarBoldTag UnderlineBoldText
+BeginStarBoldText -> BeginStarBoldText Spaces
+BeginStarBoldText -> BeginStarBoldText Text
+BeginStarBoldText -> BeginStarBoldText ItalicText
+BeginStarBoldText -> BeginStarBoldText UnderlineBoldText
+StarBoldText -> BeginStarBoldText StarBoldTag
+BoldText -> StarBoldText
+Sentence -> BoldText
+Sentence -> Sentence BoldText
+
+BeginUnderlineBoldText -> UnderlineBoldTag Spaces
+BeginUnderlineBoldText -> UnderlineBoldTag Text
+BeginUnderlineBoldText -> UnderlineBoldTag ItalicText
+BeginUnderlineBoldText -> UnderlineBoldTag StarBoldText
+BeginUnderlineBoldText -> BeginUnderlineBoldText Spaces
+BeginUnderlineBoldText -> BeginUnderlineBoldText Text
+BeginUnderlineBoldText -> BeginUnderlineBoldText ItalicText
+BeginUnderlineBoldText -> BeginUnderlineBoldText StarBoldText
+UnderlineBoldText -> BeginUnderlineBoldText UnderlineBoldTag
+BoldText -> UnderlineBoldText
+
+BeginStarItalicText -> StarItalicTag Spaces
+BeginStarItalicText -> StarItalicTag Text
+BeginStarItalicText -> StarItalicTag BoldText
+BeginStarItalicText -> StarItalicTag BoldItalicText
+BeginStarItalicText -> StarItalicTag UnderlineItalicText
+BeginStarItalicText -> BeginStarItalicText Spaces
+BeginStarItalicText -> BeginStarItalicText Text
+BeginStarItalicText -> BeginStarItalicText BoldText
+BeginStarItalicText -> BeginStarItalicText BoldItalicText
+BeginStarItalicText -> BeginStarItalicText UnderlineItalicText
+StarItalicText -> BeginStarItalicText StarItalicTag
+ItalicText -> StarItalicText
+Sentence -> ItalicText
+Sentence -> Sentence ItalicText
+
+BeginUnderlineItalicText -> UnderlineItalicTag Spaces
+BeginUnderlineItalicText -> UnderlineItalicTag Text
+BeginUnderlineItalicText -> UnderlineItalicTag BoldText
+BeginUnderlineItalicText -> UnderlineItalicTag BoldItalicText
+BeginUnderlineItalicText -> UnderlineItalicTag StarItalicText
+BeginUnderlineItalicText -> BeginUnderlineItalicText Spaces
+BeginUnderlineItalicText -> BeginUnderlineItalicText Text
+BeginUnderlineItalicText -> BeginUnderlineItalicText BoldText
+BeginUnderlineItalicText -> BeginUnderlineItalicText BoldItalicText
+BeginUnderlineItalicText -> BeginUnderlineItalicText StarItalicText
+UnderlineItalicText -> BeginUnderlineItalicText UnderlineItalicTag
+ItalicText -> UnderlineItalicText
+
+BeginStarBoldItalicText -> StarBoldItalicTag Spaces
+BeginStarBoldItalicText -> StarBoldItalicTag Text
+BeginStarBoldItalicText -> StarBoldItalicTag ItalicText
+BeginStarBoldItalicText -> BeginStarBoldItalicText Spaces
+BeginStarBoldItalicText -> BeginStarBoldItalicText Text
+BeginStarBoldItalicText -> BeginStarBoldItalicText ItalicText
+StarBoldItalicText -> BeginStarBoldItalicText StarBoldItalicTag
+BoldItalicText -> StarBoldItalicText
+Sentence -> BoldItalicText
+Sentence -> Sentence BoldItalicText
+
+BeginUnderlineBoldItalicText -> UnderlineBoldItalicTag Spaces
+BeginUnderlineBoldItalicText -> UnderlineBoldItalicTag Text
+BeginUnderlineBoldItalicText -> UnderlineBoldItalicTag ItalicText
+BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText Spaces
+BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText Text
+BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText ItalicText
+UnderlineBoldItalicText -> BeginUnderlineBoldItalicText UnderlineBoldItalicTag
+BoldItalicText -> UnderlineBoldItalicText

@@ -22,8 +22,10 @@ MarkdownLineSegment -> ItemComplement
 
 Sentence -> Spaces
 Sentence -> SimpleText
+
 Sentence -> Sentence Spaces
 Sentence -> Sentence SimpleText
+
 Sentence -> StarBoldSign Sentence StarBoldSign
 Sentence -> UnderlineBoldSign Sentence UnderlineBoldSign
 Sentence -> UnderlineItalicSign Sentence UnderlineItalicSign
@@ -31,6 +33,12 @@ Sentence -> SingleStarSign Sentence SingleStarSign
 Sentence -> StarBoldItalicSign Sentence StarBoldItalicSign
 Sentence -> UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign
 
+Sentence -> Sentence StarBoldSign Sentence StarBoldSign
+Sentence -> Sentence UnderlineBoldSign Sentence UnderlineBoldSign
+Sentence -> Sentence UnderlineItalicSign Sentence UnderlineItalicSign
+Sentence -> Sentence SingleStarSign Sentence SingleStarSign
+Sentence -> Sentence StarBoldItalicSign Sentence StarBoldItalicSign
+Sentence -> Sentence UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign
 
 
 MarkdownLineSegment -> Sentence

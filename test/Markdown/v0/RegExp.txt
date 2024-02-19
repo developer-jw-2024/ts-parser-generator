@@ -1,0 +1,8 @@
+Spaces [\t ]+
+Text  [^*_\-+>#`\(\)\[\] \t\n]+
+StarBoldTag "**"
+UnderlineBoldTag "__"
+StarItalicTag "*"
+UnderlineItalicTag "_"
+StarBoldItalicTag "***"
+UnderlineBoldItalicTag "___"

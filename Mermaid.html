@@ -1,492 +1,62 @@
 <html>
         <body>
         <pre class="mermaid">
-        State0[[Markdown1 -> ⏺ Markdown _TERMINATED_
-Markdown -> ⏺ MarkdownLine
-Markdown -> ⏺ Markdown MarkdownLine
-MarkdownLine -> ⏺ MarkdownLineSegment Enter
-MarkdownLine -> ⏺ BlankLine
-MarkdownLineSegment -> ⏺ BlockquoteLine
-MarkdownLineSegment -> ⏺ OrderedItem
-MarkdownLineSegment -> ⏺ UnorderedItem
-MarkdownLineSegment -> ⏺ ItemComplement
-MarkdownLineSegment -> ⏺ Sentence
-BlankLine -> ⏺ Enter
-BlockquoteLine -> ⏺ LeftArrow MarkdownLineSegment
-BlockquoteLine -> ⏺ LeftArrow
-OrderedItem -> ⏺ OrderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ SingleStarSign MarkdownLineSegment
-ItemComplement -> ⏺ Spaces MarkdownLineSegment
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State1[[Markdown1 -> Markdown ⏺ _TERMINATED_
-Markdown -> Markdown ⏺ MarkdownLine
-MarkdownLine -> ⏺ MarkdownLineSegment Enter
-MarkdownLine -> ⏺ BlankLine
-MarkdownLineSegment -> ⏺ BlockquoteLine
-MarkdownLineSegment -> ⏺ OrderedItem
-MarkdownLineSegment -> ⏺ UnorderedItem
-MarkdownLineSegment -> ⏺ ItemComplement
-MarkdownLineSegment -> ⏺ Sentence
-BlankLine -> ⏺ Enter
-BlockquoteLine -> ⏺ LeftArrow MarkdownLineSegment
-BlockquoteLine -> ⏺ LeftArrow
-OrderedItem -> ⏺ OrderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ SingleStarSign MarkdownLineSegment
-ItemComplement -> ⏺ Spaces MarkdownLineSegment
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State2[[Markdown -> MarkdownLine ⏺]]
-State3[[MarkdownLine -> MarkdownLineSegment ⏺ Enter]]
-State4[[MarkdownLine -> BlankLine ⏺]]
-State5[[MarkdownLineSegment -> BlockquoteLine ⏺]]
-State6[[MarkdownLineSegment -> OrderedItem ⏺]]
-State7[[MarkdownLineSegment -> UnorderedItem ⏺]]
-State8[[MarkdownLineSegment -> ItemComplement ⏺]]
-State9[[MarkdownLineSegment -> Sentence ⏺
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State10[[BlankLine -> Enter ⏺]]
-State11[[BlockquoteLine -> LeftArrow ⏺ MarkdownLineSegment
-BlockquoteLine -> LeftArrow ⏺
-MarkdownLineSegment -> ⏺ BlockquoteLine
-MarkdownLineSegment -> ⏺ OrderedItem
-MarkdownLineSegment -> ⏺ UnorderedItem
-MarkdownLineSegment -> ⏺ ItemComplement
-MarkdownLineSegment -> ⏺ Sentence
-BlockquoteLine -> ⏺ LeftArrow MarkdownLineSegment
-BlockquoteLine -> ⏺ LeftArrow
-OrderedItem -> ⏺ OrderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ SingleStarSign MarkdownLineSegment
-ItemComplement -> ⏺ Spaces MarkdownLineSegment
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State12[[OrderedItem -> OrderedItemStart ⏺ MarkdownLineSegment
-MarkdownLineSegment -> ⏺ BlockquoteLine
-MarkdownLineSegment -> ⏺ OrderedItem
-MarkdownLineSegment -> ⏺ UnorderedItem
-MarkdownLineSegment -> ⏺ ItemComplement
-MarkdownLineSegment -> ⏺ Sentence
-BlockquoteLine -> ⏺ LeftArrow MarkdownLineSegment
-BlockquoteLine -> ⏺ LeftArrow
-OrderedItem -> ⏺ OrderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ SingleStarSign MarkdownLineSegment
-ItemComplement -> ⏺ Spaces MarkdownLineSegment
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State13[[UnorderedItem -> UnorderedItemStart ⏺ MarkdownLineSegment
-MarkdownLineSegment -> ⏺ BlockquoteLine
-MarkdownLineSegment -> ⏺ OrderedItem
-MarkdownLineSegment -> ⏺ UnorderedItem
-MarkdownLineSegment -> ⏺ ItemComplement
-MarkdownLineSegment -> ⏺ Sentence
-BlockquoteLine -> ⏺ LeftArrow MarkdownLineSegment
-BlockquoteLine -> ⏺ LeftArrow
-OrderedItem -> ⏺ OrderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ SingleStarSign MarkdownLineSegment
-ItemComplement -> ⏺ Spaces MarkdownLineSegment
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State14[[UnorderedItem -> SingleStarSign ⏺ MarkdownLineSegment
-Sentence -> SingleStarSign ⏺ Sentence SingleStarSign
-MarkdownLineSegment -> ⏺ BlockquoteLine
-MarkdownLineSegment -> ⏺ OrderedItem
-MarkdownLineSegment -> ⏺ UnorderedItem
-MarkdownLineSegment -> ⏺ ItemComplement
-MarkdownLineSegment -> ⏺ Sentence
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign
-BlockquoteLine -> ⏺ LeftArrow MarkdownLineSegment
-BlockquoteLine -> ⏺ LeftArrow
-OrderedItem -> ⏺ OrderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ SingleStarSign MarkdownLineSegment
-ItemComplement -> ⏺ Spaces MarkdownLineSegment]]
-State15[[ItemComplement -> Spaces ⏺ MarkdownLineSegment
-Sentence -> Spaces ⏺
-MarkdownLineSegment -> ⏺ BlockquoteLine
-MarkdownLineSegment -> ⏺ OrderedItem
-MarkdownLineSegment -> ⏺ UnorderedItem
-MarkdownLineSegment -> ⏺ ItemComplement
-MarkdownLineSegment -> ⏺ Sentence
-BlockquoteLine -> ⏺ LeftArrow MarkdownLineSegment
-BlockquoteLine -> ⏺ LeftArrow
-OrderedItem -> ⏺ OrderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> ⏺ SingleStarSign MarkdownLineSegment
-ItemComplement -> ⏺ Spaces MarkdownLineSegment
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State16[[Sentence -> SimpleText ⏺]]
-State17[[Sentence -> StarBoldSign ⏺ Sentence StarBoldSign
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State18[[Sentence -> UnderlineBoldSign ⏺ Sentence UnderlineBoldSign
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State19[[Sentence -> UnderlineItalicSign ⏺ Sentence UnderlineItalicSign
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State20[[Sentence -> StarBoldItalicSign ⏺ Sentence StarBoldItalicSign
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State21[[Sentence -> UnderlineBoldItalicSign ⏺ Sentence UnderlineBoldItalicSign
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State22[[Markdown -> Markdown MarkdownLine ⏺]]
-State23[[MarkdownLine -> MarkdownLineSegment Enter ⏺]]
-State24[[Sentence -> Sentence Spaces ⏺]]
-State25[[Sentence -> Sentence SimpleText ⏺]]
-State26[[BlockquoteLine -> LeftArrow MarkdownLineSegment ⏺]]
-State27[[OrderedItem -> OrderedItemStart MarkdownLineSegment ⏺]]
-State28[[UnorderedItem -> UnorderedItemStart MarkdownLineSegment ⏺]]
-State29[[UnorderedItem -> SingleStarSign MarkdownLineSegment ⏺]]
-State30[[Sentence -> SingleStarSign Sentence ⏺ SingleStarSign
-MarkdownLineSegment -> Sentence ⏺
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State31[[ItemComplement -> Spaces MarkdownLineSegment ⏺]]
-State32[[Sentence -> StarBoldSign Sentence ⏺ StarBoldSign
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State33[[Sentence -> Spaces ⏺]]
-State34[[Sentence -> SingleStarSign ⏺ Sentence SingleStarSign
-Sentence -> ⏺ Spaces
-Sentence -> ⏺ SimpleText
-Sentence -> ⏺ Sentence Spaces
-Sentence -> ⏺ Sentence SimpleText
-Sentence -> ⏺ StarBoldSign Sentence StarBoldSign
-Sentence -> ⏺ UnderlineBoldSign Sentence UnderlineBoldSign
-Sentence -> ⏺ UnderlineItalicSign Sentence UnderlineItalicSign
-Sentence -> ⏺ SingleStarSign Sentence SingleStarSign
-Sentence -> ⏺ StarBoldItalicSign Sentence StarBoldItalicSign
-Sentence -> ⏺ UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign]]
-State35[[Sentence -> UnderlineBoldSign Sentence ⏺ UnderlineBoldSign
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State36[[Sentence -> UnderlineItalicSign Sentence ⏺ UnderlineItalicSign
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State37[[Sentence -> StarBoldItalicSign Sentence ⏺ StarBoldItalicSign
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State38[[Sentence -> UnderlineBoldItalicSign Sentence ⏺ UnderlineBoldItalicSign
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State39[[Sentence -> SingleStarSign Sentence SingleStarSign ⏺]]
-State40[[Sentence -> StarBoldSign Sentence StarBoldSign ⏺]]
-State41[[Sentence -> SingleStarSign Sentence ⏺ SingleStarSign
-Sentence -> Sentence ⏺ Spaces
-Sentence -> Sentence ⏺ SimpleText]]
-State42[[Sentence -> UnderlineBoldSign Sentence UnderlineBoldSign ⏺]]
-State43[[Sentence -> UnderlineItalicSign Sentence UnderlineItalicSign ⏺]]
-State44[[Sentence -> StarBoldItalicSign Sentence StarBoldItalicSign ⏺]]
-State45[[Sentence -> UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign ⏺]]
-State0-->|Markdown|State1
-State0-->|MarkdownLine|State2
-State0-->|MarkdownLineSegment|State3
-State0-->|BlankLine|State4
-State0-->|BlockquoteLine|State5
-State0-->|OrderedItem|State6
-State0-->|UnorderedItem|State7
-State0-->|ItemComplement|State8
-State0-->|Sentence|State9
-State0-->|Enter|State10
-State0-->|LeftArrow|State11
-State0-->|OrderedItemStart|State12
-State0-->|UnorderedItemStart|State13
-State0-->|SingleStarSign|State14
-State0-->|Spaces|State15
-State0-->|SimpleText|State16
-State0-->|StarBoldSign|State17
-State0-->|UnderlineBoldSign|State18
-State0-->|UnderlineItalicSign|State19
-State0-->|StarBoldItalicSign|State20
-State0-->|UnderlineBoldItalicSign|State21
-State1-->|MarkdownLineSegment|State3
-State1-->|BlankLine|State4
-State1-->|BlockquoteLine|State5
-State1-->|OrderedItem|State6
-State1-->|UnorderedItem|State7
-State1-->|ItemComplement|State8
-State1-->|Sentence|State9
-State1-->|Enter|State10
-State1-->|LeftArrow|State11
-State1-->|OrderedItemStart|State12
-State1-->|UnorderedItemStart|State13
-State1-->|SingleStarSign|State14
-State1-->|Spaces|State15
-State1-->|SimpleText|State16
-State1-->|StarBoldSign|State17
-State1-->|UnderlineBoldSign|State18
-State1-->|UnderlineItalicSign|State19
-State1-->|StarBoldItalicSign|State20
-State1-->|UnderlineBoldItalicSign|State21
-State1-->|MarkdownLine|State22
-State3-->|Enter|State23
-State9-->|Spaces|State24
-State9-->|SimpleText|State25
-State11-->|BlockquoteLine|State5
-State11-->|OrderedItem|State6
-State11-->|UnorderedItem|State7
-State11-->|ItemComplement|State8
-State11-->|Sentence|State9
-State11-->|LeftArrow|State11
-State11-->|OrderedItemStart|State12
-State11-->|UnorderedItemStart|State13
-State11-->|SingleStarSign|State14
-State11-->|Spaces|State15
-State11-->|SimpleText|State16
-State11-->|StarBoldSign|State17
-State11-->|UnderlineBoldSign|State18
-State11-->|UnderlineItalicSign|State19
-State11-->|StarBoldItalicSign|State20
-State11-->|UnderlineBoldItalicSign|State21
-State11-->|MarkdownLineSegment|State26
-State12-->|BlockquoteLine|State5
-State12-->|OrderedItem|State6
-State12-->|UnorderedItem|State7
-State12-->|ItemComplement|State8
-State12-->|Sentence|State9
-State12-->|LeftArrow|State11
-State12-->|OrderedItemStart|State12
-State12-->|UnorderedItemStart|State13
-State12-->|SingleStarSign|State14
-State12-->|Spaces|State15
-State12-->|SimpleText|State16
-State12-->|StarBoldSign|State17
-State12-->|UnderlineBoldSign|State18
-State12-->|UnderlineItalicSign|State19
-State12-->|StarBoldItalicSign|State20
-State12-->|UnderlineBoldItalicSign|State21
-State12-->|MarkdownLineSegment|State27
-State13-->|BlockquoteLine|State5
-State13-->|OrderedItem|State6
-State13-->|UnorderedItem|State7
-State13-->|ItemComplement|State8
-State13-->|Sentence|State9
-State13-->|LeftArrow|State11
-State13-->|OrderedItemStart|State12
-State13-->|UnorderedItemStart|State13
-State13-->|SingleStarSign|State14
-State13-->|Spaces|State15
-State13-->|SimpleText|State16
-State13-->|StarBoldSign|State17
-State13-->|UnderlineBoldSign|State18
-State13-->|UnderlineItalicSign|State19
-State13-->|StarBoldItalicSign|State20
-State13-->|UnderlineBoldItalicSign|State21
-State13-->|MarkdownLineSegment|State28
-State14-->|BlockquoteLine|State5
-State14-->|OrderedItem|State6
-State14-->|UnorderedItem|State7
-State14-->|ItemComplement|State8
-State14-->|LeftArrow|State11
-State14-->|OrderedItemStart|State12
-State14-->|UnorderedItemStart|State13
-State14-->|SingleStarSign|State14
-State14-->|Spaces|State15
-State14-->|SimpleText|State16
-State14-->|StarBoldSign|State17
-State14-->|UnderlineBoldSign|State18
-State14-->|UnderlineItalicSign|State19
-State14-->|StarBoldItalicSign|State20
-State14-->|UnderlineBoldItalicSign|State21
-State14-->|MarkdownLineSegment|State29
-State14-->|Sentence|State30
-State15-->|BlockquoteLine|State5
-State15-->|OrderedItem|State6
-State15-->|UnorderedItem|State7
-State15-->|ItemComplement|State8
-State15-->|Sentence|State9
-State15-->|LeftArrow|State11
-State15-->|OrderedItemStart|State12
-State15-->|UnorderedItemStart|State13
-State15-->|SingleStarSign|State14
-State15-->|Spaces|State15
-State15-->|SimpleText|State16
-State15-->|StarBoldSign|State17
-State15-->|UnderlineBoldSign|State18
-State15-->|UnderlineItalicSign|State19
-State15-->|StarBoldItalicSign|State20
-State15-->|UnderlineBoldItalicSign|State21
-State15-->|MarkdownLineSegment|State31
-State17-->|SimpleText|State16
-State17-->|StarBoldSign|State17
-State17-->|UnderlineBoldSign|State18
-State17-->|UnderlineItalicSign|State19
-State17-->|StarBoldItalicSign|State20
-State17-->|UnderlineBoldItalicSign|State21
-State17-->|Sentence|State32
-State17-->|Spaces|State33
-State17-->|SingleStarSign|State34
-State18-->|SimpleText|State16
-State18-->|StarBoldSign|State17
-State18-->|UnderlineBoldSign|State18
-State18-->|UnderlineItalicSign|State19
-State18-->|StarBoldItalicSign|State20
-State18-->|UnderlineBoldItalicSign|State21
-State18-->|Spaces|State33
-State18-->|SingleStarSign|State34
-State18-->|Sentence|State35
-State19-->|SimpleText|State16
-State19-->|StarBoldSign|State17
-State19-->|UnderlineBoldSign|State18
-State19-->|UnderlineItalicSign|State19
-State19-->|StarBoldItalicSign|State20
-State19-->|UnderlineBoldItalicSign|State21
-State19-->|Spaces|State33
-State19-->|SingleStarSign|State34
-State19-->|Sentence|State36
-State20-->|SimpleText|State16
-State20-->|StarBoldSign|State17
-State20-->|UnderlineBoldSign|State18
-State20-->|UnderlineItalicSign|State19
-State20-->|StarBoldItalicSign|State20
-State20-->|UnderlineBoldItalicSign|State21
-State20-->|Spaces|State33
-State20-->|SingleStarSign|State34
-State20-->|Sentence|State37
-State21-->|SimpleText|State16
-State21-->|StarBoldSign|State17
-State21-->|UnderlineBoldSign|State18
-State21-->|UnderlineItalicSign|State19
-State21-->|StarBoldItalicSign|State20
-State21-->|UnderlineBoldItalicSign|State21
-State21-->|Spaces|State33
-State21-->|SingleStarSign|State34
-State21-->|Sentence|State38
-State30-->|Spaces|State24
-State30-->|SimpleText|State25
-State30-->|SingleStarSign|State39
-State32-->|Spaces|State24
-State32-->|SimpleText|State25
-State32-->|StarBoldSign|State40
-State34-->|SimpleText|State16
-State34-->|StarBoldSign|State17
-State34-->|UnderlineBoldSign|State18
-State34-->|UnderlineItalicSign|State19
-State34-->|StarBoldItalicSign|State20
-State34-->|UnderlineBoldItalicSign|State21
-State34-->|Spaces|State33
-State34-->|SingleStarSign|State34
-State34-->|Sentence|State41
-State35-->|Spaces|State24
-State35-->|SimpleText|State25
-State35-->|UnderlineBoldSign|State42
-State36-->|Spaces|State24
-State36-->|SimpleText|State25
-State36-->|UnderlineItalicSign|State43
-State37-->|Spaces|State24
-State37-->|SimpleText|State25
-State37-->|StarBoldItalicSign|State44
-State38-->|Spaces|State24
-State38-->|SimpleText|State25
-State38-->|UnderlineBoldItalicSign|State45
-State41-->|Spaces|State24
-State41-->|SimpleText|State25
-State41-->|SingleStarSign|State39
+        State0[[E1 -> ⏺ E _TERMINATED_
+E -> ⏺ E + T
+E -> ⏺ T
+T -> ⏺ T * F
+T -> ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State1[[E1 -> E ⏺ _TERMINATED_
+E -> E ⏺ + T]]
+State2[[E -> T ⏺
+T -> T ⏺ * F]]
+State3[[T -> F ⏺]]
+State4[[F -> ( ⏺ E )
+E -> ⏺ E + T
+E -> ⏺ T
+T -> ⏺ T * F
+T -> ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State5[[F -> id ⏺]]
+State6[[E -> E + ⏺ T
+T -> ⏺ T * F
+T -> ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State7[[T -> T * ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ id]]
+State8[[F -> ( E ⏺ )
+E -> E ⏺ + T]]
+State9[[E -> E + T ⏺
+T -> T ⏺ * F]]
+State10[[T -> T * F ⏺]]
+State11[[F -> ( E ) ⏺]]
+State0-->|E|State1
+State0-->|T|State2
+State0-->|F|State3
+State0-->|(|State4
+State0-->|id|State5
+State1-->|+|State6
+State2-->|*|State7
+State4-->|T|State2
+State4-->|F|State3
+State4-->|(|State4
+State4-->|id|State5
+State4-->|E|State8
+State6-->|F|State3
+State6-->|(|State4
+State6-->|id|State5
+State6-->|T|State9
+State7-->|(|State4
+State7-->|id|State5
+State7-->|F|State10
+State8-->|+|State6
+State8-->|)|State11
+State9-->|*|State7
         </pre>
         <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
