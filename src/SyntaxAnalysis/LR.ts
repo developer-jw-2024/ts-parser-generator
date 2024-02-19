@@ -412,7 +412,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         }
         // console.log(road.length)
         var stateListContent = this.states.map((state, no)=>{
-            return `State${no}[[`+this.showLRItemSet(state).join('\n').replace('<TERMINATED>', '_TERMINATED_')+']]'
+            return `State${no}[[State${no}`+'\n'+this.showLRItemSet(state).join('\n').replace('<TERMINATED>', '_TERMINATED_')+']]'
         }).join('\n')
 
         var routes : Array<string> = []
@@ -428,6 +428,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         `<html>
         <body>
         <pre class="mermaid">
+        graph TB
         ${stateListContent}
         </pre>
         <script type="module">

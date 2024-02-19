@@ -1,7 +1,24 @@
-PlainText
-StarBoldText
-UnderlineBoldText
-StarItalicText
-UnderlineItalicText
-StarBoldItalicText
-UnderlineBoldItalicText
+Sentence -> Match_emphasis
+Sentence -> Sentence Match_emphasis
+
+PlainText -> Text
+PlainText -> Spaces
+PlainText -> PlainText Text
+PlainText -> PlainText Spaces
+
+StarBoldText -> StarBoldTag Match_emphasis StarBoldText
+UnderlineBoldText -> UnderlineBoldTag Match_emphasis UnderlineBoldTag
+StarItalicText -> StarItalicTag Match_emphasis StarItalicTag
+UnderlineItalicText -> UnderlineItalicTag Match_emphasis UnderlineItalicTag
+StarBoldItalicText -> StarBoldItalicTag Match_emphasis StarBoldItalicTag
+UnderlineBoldItalicText -> UnderlineBoldItalicTag Match_emphasis UnderlineBoldItalicTag
+
+
+Match_emphasis -> PlainText
+Match_emphasis -> StarBoldText
+Match_emphasis -> UnderlineBoldText
+Match_emphasis -> StarItalicText
+Match_emphasis -> UnderlineItalicText
+Match_emphasis -> StarBoldItalicText
+Match_emphasis -> UnderlineBoldItalicText
+

@@ -1,0 +1,28 @@
+
+Sentence -> Match_emphasis
+Sentence -> Sentence Match_emphasis
+
+PlainText -> Text
+PlainText -> Spaces
+PlainText -> PlainText Text
+PlainText -> PlainText Spaces
+
+BeginBoldText -> StarBoldTag NO_BoldText_Match_emphasis
+BeginBoldText -> BeginBoldText NO_BoldText_Match_emphasis
+BoldText -> BeginBoldText StarBoldTag
+
+BeginItalicText -> UnderlineItalicTag NO_ItalicText_Match_emphasis
+BeginItalicText -> BeginItalicText NO_ItalicText_Match_emphasis
+ItalicText -> BeginItalicText UnderlineItalicTag
+
+NO_BoldText_Match_emphasis -> PlainText
+NO_BoldText_Match_emphasis -> ItalicText
+
+NO_ItalicText_Match_emphasis -> PlainText
+NO_ItalicText_Match_emphasis -> BoldText
+
+Match_emphasis -> PlainText
+Match_emphasis -> BoldText
+Match_emphasis -> ItalicText
+
+

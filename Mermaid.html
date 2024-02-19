@@ -1,62 +1,187 @@
 <html>
         <body>
         <pre class="mermaid">
-        State0[[E1 -> ⏺ E _TERMINATED_
-E -> ⏺ E + T
-E -> ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State1[[E1 -> E ⏺ _TERMINATED_
-E -> E ⏺ + T]]
-State2[[E -> T ⏺
-T -> T ⏺ * F]]
-State3[[T -> F ⏺]]
-State4[[F -> ( ⏺ E )
-E -> ⏺ E + T
-E -> ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State5[[F -> id ⏺]]
-State6[[E -> E + ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State7[[T -> T * ⏺ F
-F -> ⏺ ( E )
-F -> ⏺ id]]
-State8[[F -> ( E ⏺ )
-E -> E ⏺ + T]]
-State9[[E -> E + T ⏺
-T -> T ⏺ * F]]
-State10[[T -> T * F ⏺]]
-State11[[F -> ( E ) ⏺]]
-State0-->|E|State1
-State0-->|T|State2
-State0-->|F|State3
-State0-->|(|State4
-State0-->|id|State5
-State1-->|+|State6
-State2-->|*|State7
-State4-->|T|State2
-State4-->|F|State3
-State4-->|(|State4
-State4-->|id|State5
-State4-->|E|State8
-State6-->|F|State3
-State6-->|(|State4
-State6-->|id|State5
-State6-->|T|State9
-State7-->|(|State4
-State7-->|id|State5
-State7-->|F|State10
-State8-->|+|State6
-State8-->|)|State11
-State9-->|*|State7
+        graph TB
+        State0[[State0
+Sentence1 -> ⏺ Sentence _TERMINATED_
+Sentence -> ⏺ Match_emphasis
+Sentence -> ⏺ Sentence Match_emphasis
+Match_emphasis -> ⏺ PlainText
+Match_emphasis -> ⏺ BoldText
+Match_emphasis -> ⏺ ItalicText
+PlainText -> ⏺ Text
+PlainText -> ⏺ Spaces
+PlainText -> ⏺ PlainText Text
+PlainText -> ⏺ PlainText Spaces
+BoldText -> ⏺ BeginBoldText StarBoldTag
+ItalicText -> ⏺ BeginItalicText UnderlineItalicTag
+BeginBoldText -> ⏺ StarBoldTag NO_BoldText_Match_emphasis
+BeginBoldText -> ⏺ BeginBoldText NO_BoldText_Match_emphasis
+BeginItalicText -> ⏺ UnderlineItalicTag NO_ItalicText_Match_emphasis
+BeginItalicText -> ⏺ BeginItalicText NO_ItalicText_Match_emphasis]]
+State1[[State1
+Sentence1 -> Sentence ⏺ _TERMINATED_
+Sentence -> Sentence ⏺ Match_emphasis
+Match_emphasis -> ⏺ PlainText
+Match_emphasis -> ⏺ BoldText
+Match_emphasis -> ⏺ ItalicText
+PlainText -> ⏺ Text
+PlainText -> ⏺ Spaces
+PlainText -> ⏺ PlainText Text
+PlainText -> ⏺ PlainText Spaces
+BoldText -> ⏺ BeginBoldText StarBoldTag
+ItalicText -> ⏺ BeginItalicText UnderlineItalicTag
+BeginBoldText -> ⏺ StarBoldTag NO_BoldText_Match_emphasis
+BeginBoldText -> ⏺ BeginBoldText NO_BoldText_Match_emphasis
+BeginItalicText -> ⏺ UnderlineItalicTag NO_ItalicText_Match_emphasis
+BeginItalicText -> ⏺ BeginItalicText NO_ItalicText_Match_emphasis]]
+State2[[State2
+Sentence -> Match_emphasis ⏺]]
+State3[[State3
+Match_emphasis -> PlainText ⏺
+PlainText -> PlainText ⏺ Text
+PlainText -> PlainText ⏺ Spaces]]
+State4[[State4
+Match_emphasis -> BoldText ⏺]]
+State5[[State5
+Match_emphasis -> ItalicText ⏺]]
+State6[[State6
+PlainText -> Text ⏺]]
+State7[[State7
+PlainText -> Spaces ⏺]]
+State8[[State8
+BoldText -> BeginBoldText ⏺ StarBoldTag
+BeginBoldText -> BeginBoldText ⏺ NO_BoldText_Match_emphasis
+NO_BoldText_Match_emphasis -> ⏺ PlainText
+NO_BoldText_Match_emphasis -> ⏺ ItalicText
+PlainText -> ⏺ Text
+PlainText -> ⏺ Spaces
+PlainText -> ⏺ PlainText Text
+PlainText -> ⏺ PlainText Spaces
+ItalicText -> ⏺ BeginItalicText UnderlineItalicTag
+BeginItalicText -> ⏺ UnderlineItalicTag NO_ItalicText_Match_emphasis
+BeginItalicText -> ⏺ BeginItalicText NO_ItalicText_Match_emphasis]]
+State9[[State9
+ItalicText -> BeginItalicText ⏺ UnderlineItalicTag
+BeginItalicText -> BeginItalicText ⏺ NO_ItalicText_Match_emphasis
+NO_ItalicText_Match_emphasis -> ⏺ PlainText
+NO_ItalicText_Match_emphasis -> ⏺ BoldText
+PlainText -> ⏺ Text
+PlainText -> ⏺ Spaces
+PlainText -> ⏺ PlainText Text
+PlainText -> ⏺ PlainText Spaces
+BoldText -> ⏺ BeginBoldText StarBoldTag
+BeginBoldText -> ⏺ StarBoldTag NO_BoldText_Match_emphasis
+BeginBoldText -> ⏺ BeginBoldText NO_BoldText_Match_emphasis]]
+State10[[State10
+BeginBoldText -> StarBoldTag ⏺ NO_BoldText_Match_emphasis
+NO_BoldText_Match_emphasis -> ⏺ PlainText
+NO_BoldText_Match_emphasis -> ⏺ ItalicText
+PlainText -> ⏺ Text
+PlainText -> ⏺ Spaces
+PlainText -> ⏺ PlainText Text
+PlainText -> ⏺ PlainText Spaces
+ItalicText -> ⏺ BeginItalicText UnderlineItalicTag
+BeginItalicText -> ⏺ UnderlineItalicTag NO_ItalicText_Match_emphasis
+BeginItalicText -> ⏺ BeginItalicText NO_ItalicText_Match_emphasis]]
+State11[[State11
+BeginItalicText -> UnderlineItalicTag ⏺ NO_ItalicText_Match_emphasis
+NO_ItalicText_Match_emphasis -> ⏺ PlainText
+NO_ItalicText_Match_emphasis -> ⏺ BoldText
+PlainText -> ⏺ Text
+PlainText -> ⏺ Spaces
+PlainText -> ⏺ PlainText Text
+PlainText -> ⏺ PlainText Spaces
+BoldText -> ⏺ BeginBoldText StarBoldTag
+BeginBoldText -> ⏺ StarBoldTag NO_BoldText_Match_emphasis
+BeginBoldText -> ⏺ BeginBoldText NO_BoldText_Match_emphasis]]
+State12[[State12
+Sentence -> Sentence Match_emphasis ⏺]]
+State13[[State13
+PlainText -> PlainText Text ⏺]]
+State14[[State14
+PlainText -> PlainText Spaces ⏺]]
+State15[[State15
+BoldText -> BeginBoldText StarBoldTag ⏺]]
+State16[[State16
+BeginBoldText -> BeginBoldText NO_BoldText_Match_emphasis ⏺]]
+State17[[State17
+NO_BoldText_Match_emphasis -> PlainText ⏺
+PlainText -> PlainText ⏺ Text
+PlainText -> PlainText ⏺ Spaces]]
+State18[[State18
+NO_BoldText_Match_emphasis -> ItalicText ⏺]]
+State19[[State19
+ItalicText -> BeginItalicText UnderlineItalicTag ⏺]]
+State20[[State20
+BeginItalicText -> BeginItalicText NO_ItalicText_Match_emphasis ⏺]]
+State21[[State21
+NO_ItalicText_Match_emphasis -> PlainText ⏺
+PlainText -> PlainText ⏺ Text
+PlainText -> PlainText ⏺ Spaces]]
+State22[[State22
+NO_ItalicText_Match_emphasis -> BoldText ⏺]]
+State23[[State23
+BeginBoldText -> StarBoldTag NO_BoldText_Match_emphasis ⏺]]
+State24[[State24
+BeginItalicText -> UnderlineItalicTag NO_ItalicText_Match_emphasis ⏺]]
+State0-->|Sentence|State1
+State0-->|Match_emphasis|State2
+State0-->|PlainText|State3
+State0-->|BoldText|State4
+State0-->|ItalicText|State5
+State0-->|Text|State6
+State0-->|Spaces|State7
+State0-->|BeginBoldText|State8
+State0-->|BeginItalicText|State9
+State0-->|StarBoldTag|State10
+State0-->|UnderlineItalicTag|State11
+State1-->|PlainText|State3
+State1-->|BoldText|State4
+State1-->|ItalicText|State5
+State1-->|Text|State6
+State1-->|Spaces|State7
+State1-->|BeginBoldText|State8
+State1-->|BeginItalicText|State9
+State1-->|StarBoldTag|State10
+State1-->|UnderlineItalicTag|State11
+State1-->|Match_emphasis|State12
+State3-->|Text|State13
+State3-->|Spaces|State14
+State8-->|Text|State6
+State8-->|Spaces|State7
+State8-->|BeginItalicText|State9
+State8-->|UnderlineItalicTag|State11
+State8-->|StarBoldTag|State15
+State8-->|NO_BoldText_Match_emphasis|State16
+State8-->|PlainText|State17
+State8-->|ItalicText|State18
+State9-->|Text|State6
+State9-->|Spaces|State7
+State9-->|BeginBoldText|State8
+State9-->|StarBoldTag|State10
+State9-->|UnderlineItalicTag|State19
+State9-->|NO_ItalicText_Match_emphasis|State20
+State9-->|PlainText|State21
+State9-->|BoldText|State22
+State10-->|Text|State6
+State10-->|Spaces|State7
+State10-->|BeginItalicText|State9
+State10-->|UnderlineItalicTag|State11
+State10-->|PlainText|State17
+State10-->|ItalicText|State18
+State10-->|NO_BoldText_Match_emphasis|State23
+State11-->|Text|State6
+State11-->|Spaces|State7
+State11-->|BeginBoldText|State8
+State11-->|StarBoldTag|State10
+State11-->|PlainText|State21
+State11-->|BoldText|State22
+State11-->|NO_ItalicText_Match_emphasis|State24
+State17-->|Text|State13
+State17-->|Spaces|State14
+State21-->|Text|State13
+State21-->|Spaces|State14
         </pre>
         <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
