@@ -1,20 +1,39 @@
 Markdown -> MarkdownLine
 Markdown -> Markdown MarkdownLine
 
-ParagraphLine -> Inline Enter
-MarkdownLine -> ParagraphLine
+MarkdownLine -> MarkdownLineSegment Enter
 
 BlankLine -> Enter
 MarkdownLine -> BlankLine
 
-UnorderedItem -> ItemStart Inline Enter
-UnorderedItem -> UnorderedItem Spaces Inline Enter
-UnorderedItem -> UnorderedItem Spaces UnorderedItem
+BlockquoteLine -> LeftArrow MarkdownLineSegment
+BlockquoteLine -> LeftArrow
+MarkdownLineSegment -> BlockquoteLine
 
-MarkdownLine -> UnorderedItem
+OrderedItem -> OrderedItemStart MarkdownLineSegment
+MarkdownLineSegment -> OrderedItem
 
-Inline -> Spaces
-Inline -> SimpleText
-Inline -> Inline Spaces
-Inline -> Inline SimpleText
+UnorderedItem -> UnorderedItemStart MarkdownLineSegment
+UnorderedItem -> SingleStarSign MarkdownLineSegment
+MarkdownLineSegment -> UnorderedItem
+
+ItemComplement -> Spaces MarkdownLineSegment
+MarkdownLineSegment -> ItemComplement
+
+Sentence -> Spaces
+Sentence -> SimpleText
+Sentence -> Sentence Spaces
+Sentence -> Sentence SimpleText
+Sentence -> StarBoldSign Sentence StarBoldSign
+Sentence -> UnderlineBoldSign Sentence UnderlineBoldSign
+Sentence -> UnderlineItalicSign Sentence UnderlineItalicSign
+Sentence -> SingleStarSign Sentence SingleStarSign
+Sentence -> StarBoldItalicSign Sentence StarBoldItalicSign
+Sentence -> UnderlineBoldItalicSign Sentence UnderlineBoldItalicSign
+
+
+
+MarkdownLineSegment -> Sentence
+
+
 

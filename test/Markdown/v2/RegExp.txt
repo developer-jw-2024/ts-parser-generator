@@ -1,4 +1,15 @@
 Enter \n
 Spaces [\t ]+
 SimpleText  [^*_\-+>#`\(\)\[\] \t\n]+
-ItemStart [\-\*\+]
+UnorderedItemStart [\t ]*[\-\+][\t ]*
+OrderedItemStart [\t ]*[0-9]\.[\t ]*
+LeftArrow >+
+StarBoldSign "**"
+UnderlineBoldSign "__"
+SingleStarSign "*"
+UnderlineItalicSign "_"
+StarBoldItalicSign "***"
+UnderlineBoldItalicSign "___"
+SharpSign #+
+DoubleBackticks ``[^`]*``
+Backtick `[^`]*`

@@ -77,6 +77,7 @@ export class TestCaseUtils {
             var testCase = new TestCase(nameLines.join('\n'), contentLines.join('\n'), resultLines.join('\n'))
             testCases.push(testCase)
             
+            while (i<lines.length && lines[i].trim().length==0) i++
         }
         return testCases
     }
