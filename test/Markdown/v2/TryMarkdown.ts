@@ -18,10 +18,11 @@ for (var i=0;continueFlag && i<testCases.length;i++) {
     if (testCase.content.at(-1)!='\n') {
         testCase.content += '\n'
     }
+    console.log(testCase.name)
     try {
         markdown.isValid(testCase.content)
     } catch(error) {
-        console.log(testCase.name)
+        
         markdown.isValid(testCase.content, true)
     }
     if (markdown.getValidationSteps_NoActions()!=testCase.result) {

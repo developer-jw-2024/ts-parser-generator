@@ -1,26 +1,3 @@
-Markdown -> MarkdownLine
-Markdown -> Markdown MarkdownLine
-
-MarkdownLine -> MarkdownLineSegment Enter
-
-BlankLine -> Enter
-MarkdownLine -> BlankLine
-
-BlockquoteLine -> LeftArrow MarkdownLineSegment
-BlockquoteLine -> LeftArrow
-MarkdownLineSegment -> BlockquoteLine
-
-OrderedItem -> OrderedItemStart MarkdownLineSegment
-MarkdownLineSegment -> OrderedItem
-
-UnorderedItem -> UnorderedItemStart MarkdownLineSegment
-UnorderedItem -> StarItalicTag MarkdownLineSegment
-MarkdownLineSegment -> UnorderedItem
-
-ItemComplement -> Spaces MarkdownLineSegment
-MarkdownLineSegment -> ItemComplement
-
-MarkdownLineSegment -> Sentence
 
 Sentence -> Match_emphasis
 Sentence -> Sentence Match_emphasis
@@ -191,7 +168,3 @@ Match_emphasis -> StrikethroughText
 Match_emphasis -> HighlightText
 Match_emphasis -> SubscriptText
 Match_emphasis -> SuperscriptText
-
-
-
-

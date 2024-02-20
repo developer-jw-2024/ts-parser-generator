@@ -1,0 +1,84 @@
+
+Sentence -> Match_emphasis
+Sentence -> Sentence Match_emphasis
+
+PlainText -> Text
+PlainText -> Spaces
+PlainText -> PlainText Text
+PlainText -> PlainText Spaces
+
+BeginStarBoldText -> StarBoldTag No_StarBoldText_Match_emphasis
+BeginStarBoldText -> BeginStarBoldText No_StarBoldText_Match_emphasis
+StarBoldText -> BeginStarBoldText StarBoldTag
+
+BeginUnderlineBoldText -> UnderlineItalicTag No_UnderlineBoldText_Match_emphasis
+BeginUnderlineBoldText -> BeginUnderlineBoldText No_UnderlineBoldText_Match_emphasis
+UnderlineBoldText -> BeginUnderlineBoldText UnderlineItalicTag
+
+BeginStarItalicText -> StarItalicTag No_StarItalicText_Match_emphasis
+BeginStarItalicText -> BeginStarItalicText No_StarItalicText_Match_emphasis
+StarItalicText -> BeginStarItalicText StarItalicTag
+
+BeginUnderlineItalicText -> UnderlineItalicTag No_UnderlineItalicText_Match_emphasis
+BeginUnderlineItalicText -> BeginUnderlineItalicText No_UnderlineItalicText_Match_emphasis
+UnderlineItalicText -> BeginUnderlineItalicText UnderlineItalicTag
+
+BeginStarBoldItalicText -> StarBoldItalicTag No_StarBoldItalicText_Match_emphasis
+BeginStarBoldItalicText -> BeginStarBoldItalicText No_StarBoldItalicText_Match_emphasis
+StarBoldItalicText -> BeginStarBoldItalicText StarBoldItalicTag
+
+BeginUnderlineBoldItalicText -> UnderlineBoldItalicTag No_UnderlineBoldItalicText_Match_emphasis
+BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText No_UnderlineBoldItalicText_Match_emphasis
+UnderlineBoldItalicText -> BeginUnderlineBoldItalicText UnderlineBoldItalicTag
+
+No_StarBoldText_Match_emphasis -> PlainText
+No_StarBoldText_Match_emphasis -> UnderlineBoldText
+No_StarBoldText_Match_emphasis -> StarItalicText
+No_StarBoldText_Match_emphasis -> UnderlineItalicText
+No_StarBoldText_Match_emphasis -> StarBoldItalicText
+No_StarBoldText_Match_emphasis -> UnderlineBoldItalicText
+
+No_UnderlineBoldText_Match_emphasis -> PlainText
+No_UnderlineBoldText_Match_emphasis -> StarBoldText
+No_UnderlineBoldText_Match_emphasis -> StarItalicText
+No_UnderlineBoldText_Match_emphasis -> UnderlineItalicText
+No_UnderlineBoldText_Match_emphasis -> StarBoldItalicText
+No_UnderlineBoldText_Match_emphasis -> UnderlineBoldItalicText
+
+No_StarItalicText_Match_emphasis -> PlainText
+No_StarItalicText_Match_emphasis -> StarBoldText
+No_StarItalicText_Match_emphasis -> UnderlineBoldText
+No_StarItalicText_Match_emphasis -> UnderlineItalicText
+No_StarItalicText_Match_emphasis -> StarBoldItalicText
+No_StarItalicText_Match_emphasis -> UnderlineBoldItalicText
+
+No_UnderlineItalicText_Match_emphasis -> PlainText
+No_UnderlineItalicText_Match_emphasis -> StarBoldText
+No_UnderlineItalicText_Match_emphasis -> UnderlineBoldText
+No_UnderlineItalicText_Match_emphasis -> StarItalicText
+No_UnderlineItalicText_Match_emphasis -> StarBoldItalicText
+No_UnderlineItalicText_Match_emphasis -> UnderlineBoldItalicText
+
+No_StarBoldItalicText_Match_emphasis -> PlainText
+No_StarBoldItalicText_Match_emphasis -> StarBoldText
+No_StarBoldItalicText_Match_emphasis -> UnderlineBoldText
+No_StarBoldItalicText_Match_emphasis -> StarItalicText
+No_StarBoldItalicText_Match_emphasis -> UnderlineItalicText
+No_StarBoldItalicText_Match_emphasis -> UnderlineBoldItalicText
+
+No_UnderlineBoldItalicText_Match_emphasis -> PlainText
+No_UnderlineBoldItalicText_Match_emphasis -> StarBoldText
+No_UnderlineBoldItalicText_Match_emphasis -> UnderlineBoldText
+No_UnderlineBoldItalicText_Match_emphasis -> StarItalicText
+No_UnderlineBoldItalicText_Match_emphasis -> UnderlineItalicText
+No_UnderlineBoldItalicText_Match_emphasis -> StarBoldItalicText
+
+Match_emphasis -> PlainText
+Match_emphasis -> StarBoldText
+Match_emphasis -> UnderlineBoldText
+Match_emphasis -> StarItalicText
+Match_emphasis -> UnderlineItalicText
+Match_emphasis -> StarBoldItalicText
+Match_emphasis -> UnderlineBoldItalicText
+
+

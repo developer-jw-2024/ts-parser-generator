@@ -3,13 +3,19 @@ Spaces [\t ]+
 SimpleText  [^*_\-+>#`\(\)\[\] \t\n]+
 UnorderedItemStart [\t ]*[\-\+][\t ]*
 OrderedItemStart [\t ]*[0-9]\.[\t ]*
-LeftArrow >+
-StarBoldSign "**"
-UnderlineBoldSign "__"
-SingleStarSign "*"
-UnderlineItalicSign "_"
-StarBoldItalicSign "***"
-UnderlineBoldItalicSign "___"
-SharpSign #+
+LeftArrow >+" "
+
+StarBoldTag "**"
+UnderlineBoldTag "__"
+StarItalicTag "*"
+UnderlineItalicTag "_"
+StarBoldItalicTag "***"
+UnderlineBoldItalicTag "___"
+StrikethroughTag "~~"
+HighlightTag "=="
+SubscriptTag "~"
+SuperscriptTag "^"
+
+SharpSign #+" "
 DoubleBackticks ``[^`]*``
 Backtick `[^`]*`

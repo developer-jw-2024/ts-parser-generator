@@ -381,8 +381,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                                 for (var k=0;k<follows.length;k++) {
                                     this.actions[destination] = this.actions[destination] || []
                                     if (this.actions[destination][follows[k]]) {
-                                        // console.log(this.actions[destination][follows[k]])
-                                        // console.log(this.showLRItemSet(this.states[destination]))
+                                        console.log(this.actions[destination][follows[k]])
+                                        console.log(this.showLRItemSet(this.states[destination]))
                                         throw new Error(`duplicated action for ${destination}-${follows[k]}(${this.tokens[follows[k]]})`)
                                     } 
                                     this.actions[destination][follows[k]] = new LRAction(LRActionType.REDUCE, item.numOfGrammerProduction)

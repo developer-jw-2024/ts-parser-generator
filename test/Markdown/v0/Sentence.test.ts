@@ -1,12 +1,12 @@
 import { LRSyntaxAnalysisRunner } from '../../../src/SyntaxAnalysis/LR'
 import languageFunction from './Language_Function'
 
-var languageDefinitionPath: string = `${__dirname}/Language.v1.txt`
+var languageDefinitionPath: string = `${__dirname}/Language.v2.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
 var markdown: LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
 
 describe('Sentence', () => {
-/*
+
     test('Sentence - 0', () => {
         expect(markdown.isValid(
             `  `
@@ -31,7 +31,7 @@ describe('Sentence', () => {
 
     test('Sentence - 3', () => {
         expect(markdown.isValid(
-            `**hello wolrd**`, true
+            `**hello wolrd**`
         )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
        
@@ -108,15 +108,15 @@ describe('Sentence', () => {
         // console.log(markdown.getValidationSteps_NoActions())
         
     })
-*/
+
     test('Sentence - 13', () => {
         expect(markdown.isValid(
-            `**hello _toys_ wolrd**`, true
+            `**hello _toys_ wolrd**`
         )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         
     })
-/*
+
     test('Sentence - 14', () => {
         expect(markdown.isValid(
             `__*toys* wolrd__`
@@ -214,7 +214,432 @@ describe('Sentence', () => {
         // console.log(markdown.getValidationSteps_NoActions())
         
     })
-*/
+
+    ////
+    test('Sentence - P0', () => {
+        expect(markdown.isValid(
+            `  `
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+    })
+
+    test('Sentence - P1', () => {
+        expect(markdown.isValid(
+            `abc`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+    })
+
+    test('Sentence - P2', () => {
+        expect(markdown.isValid(
+            `I am`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+
+    })
+
+    test('Sentence - P3', () => {
+        expect(markdown.isValid(
+            `This is **hello wolrd**`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+       
+    })
+
+    test('Sentence - P4', () => {
+        expect(markdown.isValid(
+            `This is __hello wolrd__`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P5', () => {
+        expect(markdown.isValid(
+            `This is *hello wolrd*`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P6', () => {
+        expect(markdown.isValid(
+            `This is hello **Toys** wolrd`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P7', () => {
+        expect(markdown.isValid(
+            `This is **hello** wolrd`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P8', () => {
+        expect(markdown.isValid(
+            `This is hello **wolrd**`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P9', () => {
+        expect(markdown.isValid(
+            `This is *hello wolrd*`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P10', () => {
+        expect(markdown.isValid(
+            `This is *hello* wolrd`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P11', () => {
+        expect(markdown.isValid(
+            `This is hello *wolrd*`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P12', () => {
+        expect(markdown.isValid(
+            `This is hello *toys* wolrd`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P13', () => {
+        expect(markdown.isValid(
+            `This is **hello _toys_ wolrd**`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P14', () => {
+        expect(markdown.isValid(
+            `This is __*toys* wolrd__`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+
+    test('Sentence - P15', () => {
+        expect(markdown.isValid(
+            `*This is __toys__*`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+
+    test('Sentence - P16', () => {
+        expect(markdown.isValid(
+            `This is _toys_`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P17', () => {
+        expect(markdown.isValid(
+            `This is _**toys**_`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P18', () => {
+        expect(markdown.isValid(
+            `This is **_toys_**`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P19', () => {
+        expect(markdown.isValid(
+            `This is ***toys***`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P20', () => {
+        expect(markdown.isValid(
+            `This is _***toys***_`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P21', () => {
+        expect(markdown.isValid(
+            `This is ***_toys_***`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P23', () => {
+        expect(markdown.isValid(
+            `This is *_toys_*`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P24', () => {
+        expect(markdown.isValid(
+            `This is _*toys*_`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P25', () => {
+        expect(markdown.isValid(
+            `This is **__toys__**`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - P26', () => {
+        expect(markdown.isValid(
+            `This is __**toys**__`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+
+    test('Sentence - 0', () => {
+        expect(markdown.isValid(
+            `  `
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+    })
+
+    test('Sentence - 1P', () => {
+        expect(markdown.isValid(
+            `abc  this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+    })
+
+    test('Sentence - 2P', () => {
+        expect(markdown.isValid(
+            `I am this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+
+    })
+
+    test('Sentence - 3P', () => {
+        expect(markdown.isValid(
+            `**hello wolrd** this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+       
+    })
+
+    test('Sentence - 4P', () => {
+        expect(markdown.isValid(
+            `__hello wolrd__ this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 5P', () => {
+        expect(markdown.isValid(
+            `*hello wolrd* this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 6P', () => {
+        expect(markdown.isValid(
+            `hello **Toys** wolrd this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 7P', () => {
+        expect(markdown.isValid(
+            `**hello** wolrd this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 8P', () => {
+        expect(markdown.isValid(
+            `hello **wolrd** this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 9P', () => {
+        expect(markdown.isValid(
+            `*hello wolrd* this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 10P', () => {
+        expect(markdown.isValid(
+            `*hello* wolrd this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 11P', () => {
+        expect(markdown.isValid(
+            `hello *wolrd* this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 12P', () => {
+        expect(markdown.isValid(
+            `hello *toys* wolrd this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 13P', () => {
+        expect(markdown.isValid(
+            `**hello _toys_ wolrd** this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 14P', () => {
+        expect(markdown.isValid(
+            `__*toys* wolrd__ this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+
+    test('Sentence - 15P', () => {
+        expect(markdown.isValid(
+            `*__toys__* this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+
+    test('Sentence - 16P', () => {
+        expect(markdown.isValid(
+            `_toys_ this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 17P', () => {
+        expect(markdown.isValid(
+            `_**toys**_ this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 18P', () => {
+        expect(markdown.isValid(
+            `**_toys_** this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 19P', () => {
+        expect(markdown.isValid(
+            `***toys*** this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 20P', () => {
+        expect(markdown.isValid(
+            `_***toys***_ this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 21P', () => {
+        expect(markdown.isValid(
+            `***_toys_*** this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 23P', () => {
+        expect(markdown.isValid(
+            `*_toys_* this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 24P', () => {
+        expect(markdown.isValid(
+            `_*toys*_ this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 25P', () => {
+        expect(markdown.isValid(
+            `**__toys__** this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 26P', () => {
+        expect(markdown.isValid(
+            `__**toys**__ this is`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 27', () => {
+        expect(markdown.isValid(
+            `** **A** **`, true
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
 })//end
 
 
