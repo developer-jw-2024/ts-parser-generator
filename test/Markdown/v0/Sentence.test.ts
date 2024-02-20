@@ -1,9 +1,16 @@
 import { LRSyntaxAnalysisRunner } from '../../../src/SyntaxAnalysis/LR'
 import languageFunction from './Language_Function'
 
-var languageDefinitionPath: string = `${__dirname}/Language.v2.txt`
+var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
-var markdown: LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
+class MarkdownRunner extends LRSyntaxAnalysisRunner {
+    isValid(markdownContent : string, debug : boolean = false) : boolean {
+        if (markdownContent.at(-1)!='\n') markdownContent += '\n'
+        var flag = super.isValid(markdownContent, debug)
+        return flag
+    }
+}
+var markdown: MarkdownRunner = new MarkdownRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
 
 describe('Sentence', () => {
 
@@ -635,7 +642,7 @@ describe('Sentence', () => {
 
     test('Sentence - 27', () => {
         expect(markdown.isValid(
-            `** **A** **`, true
+            `** **A** **`
         )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
         

@@ -3,7 +3,7 @@ Spaces [\t ]+
 SimpleText  [^*_\-+>#`\(\)\[\] \t\n]+
 UnorderedItemStart [\t ]*[\-\+][\t ]*
 OrderedItemStart [\t ]*[0-9]\.[\t ]*
-LeftArrow >+" "
+
 
 StarBoldTag "**"
 UnderlineBoldTag "__"
@@ -16,6 +16,7 @@ HighlightTag "=="
 SubscriptTag "~"
 SuperscriptTag "^"
 
+LeftArrow >+" "
 SharpSign #+" "
 DoubleBackticks ``[^`]*``
 Backtick `[^`]*`

@@ -1,5 +1,24 @@
+Enter \n
 Spaces [\t ]+
-Text  [^*_\-+>#`\(\)\[\] \t\n]+
+SimpleText  [^*_\-+>#`\:\/\"\.\(\)\[\] \t\n]+
+URL [^\<\>\[\]\(\) \n\t]+\:\/\/[^\<\>\[\]\(\) \n\t]+
+URLAddress "<"[^\<\>\[\]\(\) \n\t]+\:\/\/[^\<\>\[\]\(\) \n\t]+">"
+EmailAddress "<"[^\<\>\[\]\(\) \n\t]+"@"[^\<\>\[\]\(\) \n\t]+">"
+DoubleQuotationMarkText \"[^\"\n]*\"
+UnorderedItemTag [\-\+]
+OrderedItemTag [0-9]\.
+
+OpenParentheses "("
+CloseParentheses ")"
+OpenSquareBracket "["
+CloseSquareBracket "]"
+
+DoubleBackticks ``[^`]*``
+Backtick `[^`]*`
+
+LeftArrow >+" "
+SharpSign #+" "
+
 StarBoldTag "**"
 UnderlineBoldTag "__"
 StarItalicTag "*"
@@ -10,3 +29,4 @@ StrikethroughTag "~~"
 HighlightTag "=="
 SubscriptTag "~"
 SuperscriptTag "^"
+

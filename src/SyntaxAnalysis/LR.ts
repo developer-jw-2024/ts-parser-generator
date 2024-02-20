@@ -191,7 +191,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             s = stack[stack.length-1]
             var action : LRAction = this.actions[s][a]    
 
-            if (debug) console.log(`==>[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action)
+            if (debug) console.log(`==>[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action, '\n')
             
             // if (debug) console.log(s, inputTokens[i], action)
             // if (debug) console.log(step.toString())

@@ -19,9 +19,9 @@ var result =
 Sentence -> Match_emphasis
 Sentence -> Sentence Match_emphasis
 
-PlainText -> Text
+PlainText -> SimpleText
 PlainText -> Spaces
-PlainText -> PlainText Text
+PlainText -> PlainText SimpleText
 PlainText -> PlainText Spaces
 
 `
@@ -58,7 +58,7 @@ var Match_emphasis = [`Match_emphasis -> PlainText`].concat(
 
 result += `${Match_emphasis}\n`
 
-FileUtils.writeToFileSystem(`${__dirname}/Language.v2.txt`, result)
+FileUtils.writeToFileSystem(`${__dirname}/GenerateLanguage.txt`, result)
 // console.log(tag)
 // console.log('Begin'+tag.substring(0, tag.length-3)+'Text')
 // console.log('NO_'+tag.substring(0, tag.length-3)+'Text_Match_emphasis')

@@ -1,8 +1,7 @@
 
 
-WholeMarkdownLine -> MarkdownLine Enter
-WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
-
+MarkdownLine -> MarkdownLine Enter
+MarkdownLine -> MarkdownLine MarkdownLine
 
 Blockquote -> LeftArrow MarkdownLine
 MarkdownLine -> Blockquote
@@ -26,23 +25,11 @@ MarkdownLine -> Sentence
 PlainText -> SimpleText
 PlainText -> Spaces
 PlainText -> Backtick
-PlainText -> DoubleBackticks
 PlainText -> Link
-PlainText -> URLAddress
-PlainText -> EmailAddress
 PlainText -> PlainText SimpleText
 PlainText -> PlainText Spaces
 PlainText -> PlainText Backtick
-PlainText -> PlainText DoubleBackticks
 PlainText -> PlainText Link
-PlainText -> PlainText URLAddress
-PlainText -> PlainText EmailAddress
-
-Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL CloseParentheses
-Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
-
-
-
 
 BeginStarBoldText -> StarBoldTag NO_StarBoldText_Match_emphasis
 BeginStarBoldText -> BeginStarBoldText NO_StarBoldText_Match_emphasis
