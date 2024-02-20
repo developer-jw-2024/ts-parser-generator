@@ -40,6 +40,15 @@ describe('Markdown', () => {
         )).toEqual(true)
         // console.log(markdown.getValidationSteps_NoActions())
     })
+
+    test('markdown - 4', () => {
+        expect(markdown.isValid(
+`**<https://www.blogs.com>**
+`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+    })
+
 })//end
 
 

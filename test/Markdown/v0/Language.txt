@@ -30,6 +30,7 @@ PlainText -> DoubleBackticks
 PlainText -> Link
 PlainText -> URLAddress
 PlainText -> EmailAddress
+PlainText -> Image
 PlainText -> PlainText SimpleText
 PlainText -> PlainText Spaces
 PlainText -> PlainText Backtick
@@ -37,10 +38,11 @@ PlainText -> PlainText DoubleBackticks
 PlainText -> PlainText Link
 PlainText -> PlainText URLAddress
 PlainText -> PlainText EmailAddress
+PlainText -> PlainText Image
 
 Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL CloseParentheses
 Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
-
+Image -> ExclamationMarkOpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
 
 
 

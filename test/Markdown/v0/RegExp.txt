@@ -1,9 +1,9 @@
 Enter \n
 Spaces [\t ]+
-SimpleText  [^*_\-+>#`\:\/\"\.\(\)\[\] \t\n]+
-URL [^\<\>\[\]\(\) \n\t]+\:\/\/[^\<\>\[\]\(\) \n\t]+
-URLAddress "<"[^\<\>\[\]\(\) \n\t]+\:\/\/[^\<\>\[\]\(\) \n\t]+">"
-EmailAddress "<"[^\<\>\[\]\(\) \n\t]+"@"[^\<\>\[\]\(\) \n\t]+">"
+SimpleText  [^*_\-+>#`\:\/\"\.\(\)\[\]\! \t\n]+
+URL [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
+URLAddress "<"[^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+">"
+EmailAddress "<"[^\!\<\>\[\]\(\) \n\t]+"@"[^\!\<\>\[\]\(\) \n\t]+">"
 DoubleQuotationMarkText \"[^\"\n]*\"
 UnorderedItemTag [\-\+]
 OrderedItemTag [0-9]\.
@@ -12,6 +12,7 @@ OpenParentheses "("
 CloseParentheses ")"
 OpenSquareBracket "["
 CloseSquareBracket "]"
+ExclamationMarkOpenSquareBracket "!["
 
 DoubleBackticks ``[^`]*``
 Backtick `[^`]*`
