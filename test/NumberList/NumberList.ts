@@ -46,6 +46,7 @@ var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDef
 // console.log(convertActionList(simpleMath.lrSyntaxAnalysis))
 var equation = 
 `1 a 2
+b
 `
 var flag = simpleMath.isValid(equation, true)
 // var a = simpleMath.lrSyntaxAnalysis.analysisSteps.at(-1).symbolTokens.at(-1)

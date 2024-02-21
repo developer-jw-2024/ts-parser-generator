@@ -224,7 +224,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                     var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
                     return `<${typename}, ${t.value}>`
                 }).join(' ')
-                console.log(`==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                console.log(`0 ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
             }
 
             //console.log(s, a, this.tokens[a].toString(), action, stack.length>0 && (action==null || action==undefined))
@@ -234,20 +234,54 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 inputToken = errorToken
                 a = indexOfErrorToken
                 action  = this.actions[s][a]
+
+                if (debug) {
+                    var symbolTokenString = symbolTokens.map(t=>{
+                        var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
+                        return `<${typename}, ${t.value}>`
+                    }).join(' ')
+                    console.log(`1 ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                }
+
                 i++
             }
             
             if (action==null || action==undefined) {
-                if (stack.length>1) {
+                if (symbolTokens.at(-1).token.type.isEqual(TokenType.ERROR_TOKENTYPE)) {
+                    while (stack.length>1 && (action==null || action==undefined)) {
+                        var symbol = symbols.pop()
+                        var lastSymbolToken : AnalysisToken = symbolTokens.pop()
+                        var lastStack = stack.pop()
+                        errorToken = new Token(TokenType.ERROR_TOKENTYPE, lastSymbolToken.value+inputToken.value)
+    
+                        stack.push(lastStack)
+                        symbols.push(symbol)
+                        symbolTokens.push(new AnalysisToken(a, errorToken, inputToken.value, []))
+                        i++
+                        a = input[i]
+                        inputToken = inputTokens[i]
+                        s = stack[stack.length-1]
+                        action = this.actions[s][a]  
+
+                        if (debug) {
+                            var symbolTokenString = symbolTokens.map(t=>{
+                                var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
+                                return `<${typename}, ${t.value}>`
+                            }).join(' ')
+                            console.log(`forward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                        }
+
+                    }
+                } else {
                     while (stack.length>1 && (action==null || action==undefined)) {
                         if (debug) console.log(`There is no action for state [${s}] with token ${inputToken} (${a})`)
                         symbols.pop()
                         var lastSymbolToken : AnalysisToken = symbolTokens.pop()
                         stack.pop()
                         
-                        if (debug) {
-                            console.log(errorToken, lastSymbolToken)
-                        }
+                        // if (debug) {
+                        //     console.log(errorToken, lastSymbolToken)
+                        // }
 
                         s = stack[stack.length-1]
                         a = indexOfErrorToken
@@ -260,15 +294,19 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         inputToken = errorToken
                         action  = this.actions[s][a]
         
+                        if (debug) {
+                            var symbolTokenString = symbolTokens.map(t=>{
+                                var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
+                                return `<${typename}, ${t.value}>`
+                            }).join(' ')
+                            console.log(`backward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                        }
 
                         if (debug) {
                             // console.log(lastSymbolToken)
                             console.log('Try', s, a, this.tokens[a].toString(), action)
                         }
                     }
-                } else if (stack.length==1) {
-                    console.log('...')
-                    throw new Error('...')
                 }
 
             }
