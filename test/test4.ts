@@ -1,3 +1,4 @@
-import languageFunction from './SimpleMath/SimpleMath_Language_Function'
-
-console.log(Object.keys(languageFunction))
+var a = [1,2,3]
+console.log(a)
+a.pop()
+console.log(a)

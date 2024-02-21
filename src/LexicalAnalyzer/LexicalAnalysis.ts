@@ -7,8 +7,9 @@ import { intersection } from '../Utils/SetUtils'
 export class TokenType {
 
     static EMPTY_TOKENTYPE : TokenType = new TokenType("EMPTY", '<EMPTY>', true)
+    static ERROR_TOKENTYPE : TokenType = new TokenType("ERROR", '<ERROR>', false)
     static TERMINATED_TOKENTYPE : TokenType = new TokenType("TERMINATED", null, true)
-    static UNKNOWN_TOKENTYPE : TokenType = new TokenType("UNKNOWN", null, true)
+    static UNKNOWN_TOKENTYPE : TokenType = new TokenType("<UNKNOWN>", null, true)
 
     name : string
     regularExpressionValue : string | null
@@ -36,6 +37,8 @@ export class Token {
 
     static EMPTY_TOKEN : Token = new Token(TokenType.EMPTY_TOKENTYPE, '<EMPTY>')
     static TERMINATED_TOKEN : Token = new Token(TokenType.TERMINATED_TOKENTYPE, '<TERMINATED>')
+    static ERROR_TOKEN : Token = new Token(TokenType.ERROR_TOKENTYPE, '<ERROR>')
+    static UNKNOWN_TOKEN : Token = new Token(TokenType.UNKNOWN_TOKENTYPE, '<UNKNOWN>')
 
     type : TokenType
     value : string

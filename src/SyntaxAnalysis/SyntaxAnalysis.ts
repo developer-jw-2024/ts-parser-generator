@@ -100,6 +100,7 @@ export class SyntaxAnalysis {
     firstOfGrammaProduction : Array<Array<number>> = new Array<Array<number>>()
 
     lexicalAnalysis : LexicalAnalysis = new LexicalAnalysis([
+        TokenType.ERROR_TOKENTYPE,
         TokenType.EMPTY_TOKENTYPE,
         SyntaxAnalysis.DERIVATION,
         SyntaxAnalysis.ENTER,
@@ -117,9 +118,16 @@ export class SyntaxAnalysis {
         return this
     }
 
-    initWithTokens(tokens : Array<Token>) : SyntaxAnalysis {
+    initWithTokens(tokens : Array<Token>, withErrorTokenFlag : boolean = false) : SyntaxAnalysis {
         var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
-        this.tokens = [Token.TERMINATED_TOKEN, Token.EMPTY_TOKEN]
+        this.tokens = [
+            Token.TERMINATED_TOKEN, 
+            Token.EMPTY_TOKEN, 
+        ]
+        if (withErrorTokenFlag) {
+            this.tokens.push(Token.ERROR_TOKEN)
+            this.tokens.push(Token.UNKNOWN_TOKEN)
+        }
         
 
         for (var i=0;i<list.length;i++) {
@@ -132,6 +140,9 @@ export class SyntaxAnalysis {
         var tokenGroups = SyntaxAnalysis.split(list, new Token(SyntaxAnalysis.ENTER, '\n'))
         this.grammerProductions = this.toGrammarProductions(tokenGroups, SyntaxAnalysis.DERIVATION_TOKEN)
 
+        // this.grammerProductions.forEach(gp=>{
+        //     console.log(gp.toString())
+        // })
         this.indexGrammerProductions = new Array<IndexGrammarProduction>()
         this.indexGrammerProductionFlags = new Array<boolean>()
 
@@ -206,10 +217,18 @@ export class SyntaxAnalysis {
     getIndexOfToken(token : Token) : number {
         var result = this.tokens.findIndex(e=>e.isEqual(token))
         if (result>=0) return result
-        return this.getIndexOfTokenByTokenName(token)
+        result = this.getIndexOfTokenByTokenName(token)
+        // console.log(token, result)
+        return result
     }
 
     getIndexOfTokenByTokenName(token : Token) : number {
+        // if (token.type==TokenType.UNKNOWN_TOKENTYPE) {
+        //     console.log('***', this.tokens.findIndex(e=>e.value==token.type.name))
+        //     this.tokens.forEach(t=>{
+        //         console.log(t.value, token.type.name, t.value==token.type.name)
+        //     })
+        // }
         return this.tokens.findIndex(e=>e.value==token.type.name)
     }
 

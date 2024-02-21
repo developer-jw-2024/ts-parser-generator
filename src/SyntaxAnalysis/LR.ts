@@ -66,6 +66,23 @@ export class LRAction {
         this.type = type
         this.value = value
     }
+
+    toString() : string {
+        if (this.type==LRActionType.SHIFT) {
+            return (`Shift ${this.value}`)
+        } else if (this.type==LRActionType.REDUCE) {
+            return (`Reduce ${this.value}`)
+        } else if (this.type==LRActionType.ACCEPT) {
+            return (`Accept ${this.value}`)
+        } else if (this.type==LRActionType.ERROR) {
+            return (`Error ${this.value}`)
+        } else if (this.type==LRActionType.GOTO) {
+            return (`Goto ${this.value}`)
+        }
+        return 'Error'
+
+    }
+
 }
 
 export class AnalysisToken {
@@ -137,7 +154,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
 
     initWithTokens(tokens: Token[]): LRSyntaxAnalysis {
         if (tokens.length>0) {
-            super.initWithTokens(tokens)
+            super.initWithTokens(tokens, true)
             this.argument()
             this.calculateFirst()
             this.calculateFollow()
@@ -160,9 +177,12 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     isValidWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string, debug : boolean = false) : boolean {
         
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+        var indexOfErrorToken = this.getIndexOfToken(Token.ERROR_TOKEN)
+        var indexOfUnknownToken = this.getIndexOfToken(Token.UNKNOWN_TOKEN)
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
         var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis, inputString)
+        // console.log('---------------')
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
         var symbols : Array<number> = [indexOfTerminatedToken]
@@ -170,6 +190,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             new AnalysisToken(indexOfTerminatedToken, Token.TERMINATED_TOKEN, null, [])
         ]
 
+        // console.log('indexOfUnknownToken:', indexOfUnknownToken)
+        // console.log(this.tokens)
+        // console.log(this.grammerProductions.length, this.indexGrammerProductions.length)
+        // console.log(this.grammerProductions.map(gp=>gp.toString()).join('\n'))
+        // console.log(this.indexGrammerProductions)
         // console.log(inputTokens.length, input.length)
         // inputTokens.forEach((it, i)=>{
         //     console.log(it.toSimpleString(), ':', input[i])
@@ -183,21 +208,43 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var inputToken : Token = inputTokens[i]
         var s : number = stack[stack.length-1]
     
-        if (debug) console.log(inputTokens)
+        if (debug) {
+            console.log(inputTokens)
+            console.log(input)
+        }
 
         while (flag==null) {
             a = input[i]
             inputToken = inputTokens[i]
             s = stack[stack.length-1]
             var action : LRAction = this.actions[s][a]    
+            if (debug) console.log(`==>[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
 
-            if (debug) console.log(`==>[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action, '\n')
+            
+            // console.log(s, a, this.tokens[a].toString(), action, stack.length>0 && (action==null || action==undefined))
+            
+            while (stack.length>1 && (action==null || action==undefined)) {
+                // console.log(`There is no action for state [${s}] with token ${inputToken} (${a})`)
+                symbols.pop()
+                symbolTokens.pop()
+                stack.pop()
+                
+                s = stack[stack.length-1]
+                a = indexOfErrorToken
+                inputToken = Token.ERROR_TOKEN
+                action  = this.actions[s][a]
+
+                // console.log('Try', s, a, this.tokens[a].toString(), action)
+
+            }
+            
+
             
             // if (debug) console.log(s, inputTokens[i], action)
             // if (debug) console.log(step.toString())
 
             if (action==null || action==undefined) {
-                throw new Error(`There is no action for state [${s}] with token ${inputToken}`)
+                throw new Error(`There is no action for state [${s}] with token ${inputToken}(${a})`)
             } else {
                 var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
                 this.analysisSteps.push(step)
@@ -212,26 +259,34 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                     var len = gp.factors.length
                     // console.log(symbols.slice(symbols.length-len), symbolTokens.slice(symbols.length-len))
                     var parameters = symbolTokens.slice(symbols.length-len)
+
                     symbols = symbols.slice(0, symbols.length-len)
                     symbolTokens = symbolTokens.slice(0, symbolTokens.length-len)
                     stack = stack.slice(0, stack.length-len)
+
                     var topState : number = stack[stack.length-1]
                     var symbol : number = gp.symbol
                     var gotoAction : LRAction = this.actions[topState][symbol]
-
+                    
                     if (gotoAction.type==LRActionType.GOTO) {
                         stack.push(gotoAction.value)
                         symbols.push(symbol)
-                        // console.log(this.grammerProductions[igp].toString())
                         var result = null
                         if (this.grammerProductionFunctions && this.grammerProductionFunctions[igp]) {
                             result = this.grammerProductionFunctions[igp](parameters)
+                        }
+                        if (debug) {
+                            console.log(this.grammerProductions[igp].toString(),null)
                         }
                         symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result, parameters))
                     } else {
                         throw new Error('Parse Error')
                     }
                     // break
+                } else if (action.type==LRActionType.GOTO) {
+                    stack.push(action.value)
+                    symbols.push(a)
+                    symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value, []))
                 } else if (action.type==LRActionType.ACCEPT) {
                     flag = true
                 } else {
@@ -347,6 +402,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         this.states.push(lrState2)
 
         this.actions = []
+        
        
         
         var road : Array<Array<number>> = []
@@ -410,6 +466,10 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             }
             source++
         }
+        
+    }
+
+    saveAsMermaidHtml(road : Array<Array<number>>) {
         // console.log(road.length)
         var stateListContent = this.states.map((state, no)=>{
             return `State${no}[[State${no}`+'\n'+this.showLRItemSet(state).join('\n').replace('<TERMINATED>', '_TERMINATED_')+']]'
@@ -429,14 +489,14 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         <body>
         <pre class="mermaid">
         graph TB
-        ${stateListContent}
+        ${stateListContent.replace('<ERROR>', '\\ERROR/')}
         </pre>
         <script type="module">
-      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-      mermaid.initialize({ startOnLoad: true });
-    </script>
-  </body>
-</html>`
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+        </script>
+        </body>
+        </html>`
         FileUtils.writeToFileSystem("./Mermaid.html", stateListContent)
     }
 

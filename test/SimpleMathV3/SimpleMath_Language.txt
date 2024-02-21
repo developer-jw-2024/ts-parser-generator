@@ -1,0 +1,9 @@
+C -> E
+C -> <ERROR>
+E -> E + T
+E -> T
+<ERROR> -> E <ERROR>
+T -> T * F
+T -> F
+F -> < E >
+F -> id
