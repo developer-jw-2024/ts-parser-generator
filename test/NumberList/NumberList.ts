@@ -1,6 +1,6 @@
 import { FileUtils } from '../../src/Utils/FileUtil'
 import { LRActionType, LRSyntaxAnalysis, LRSyntaxAnalysisRunner } from "../../src/SyntaxAnalysis/LR"
-import languageFunction from './SimpleMath_Language_Function'
+import languageFunction from './Language_Function'
  
 
 function convertActionList(lrSyntaxAnalysis : LRSyntaxAnalysis) : Array<string> {
@@ -38,14 +38,16 @@ function convertActionList(lrSyntaxAnalysis : LRSyntaxAnalysis) : Array<string> 
     return result
 }
 
-var languageDefinitionPath = `${__dirname}/SimpleMath_Language.txt`
-var tokenTypeDefinitionPath = `${__dirname}/SimpleMath_RegExp.txt`
+var languageDefinitionPath = `${__dirname}/Language.txt`
+var tokenTypeDefinitionPath = `${__dirname}/RegExp.txt`
 
 var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
 
 // console.log(convertActionList(simpleMath.lrSyntaxAnalysis))
-var equation = "+"
+var equation = 
+`1 a 2
+`
 var flag = simpleMath.isValid(equation, true)
 // var a = simpleMath.lrSyntaxAnalysis.analysisSteps.at(-1).symbolTokens.at(-1)
-console.log(equation , '=', `[${simpleMath.getResult()}]`)
+console.log(equation , '=', simpleMath.getResult())
 

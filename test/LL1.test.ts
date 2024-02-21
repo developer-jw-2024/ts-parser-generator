@@ -37,8 +37,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
-            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
+            {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'E'},
             {isTerminal: false,type : 'GrammarSymbol', value : 'T'},
             {isTerminal: false,type : 'GrammarSymbol', value : 'E\''},
@@ -159,8 +159,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {type : 'TERMINATED', value : '<TERMINATED>'},
-            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : '<TERMINATED>', value : '<TERMINATED>'},
+            {type : '<EMPTY>', value : '<EMPTY>'},
             {type : 'GrammarSymbol', value : 'E'},
             {type : 'GrammarSymbol', value : 'T'},
             {type : 'GrammarSymbol', value : 'E\''},
@@ -355,8 +355,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {type : 'TERMINATED', value : '<TERMINATED>'},
-            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : '<TERMINATED>', value : '<TERMINATED>'},
+            {type : '<EMPTY>', value : '<EMPTY>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : 'i', value : 'i'},
             {type : 'GrammarSymbol', value : 'E'},
@@ -412,7 +412,8 @@ describe('LL', () => {
                     var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
                         return ll1.grammerProductions[pgi].toSimpleString()
                     })
-                    if (ll1.tokens[j].type.name=='TERMINATED') {
+
+                    if (ll1.tokens[j].type.isTerminal) {
                         hasTerminated = true
                     }
                     if (gps.length>0) {
@@ -470,8 +471,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
-            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
+            {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : 'i'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'E'},
@@ -527,7 +528,7 @@ describe('LL', () => {
                     var gps = ll1.predictiveParsingTable[i][j].map(pgi=>{
                         return ll1.grammerProductions[pgi].toSimpleString()
                     })
-                    if (ll1.tokens[j].type.name=='TERMINATED') {
+                    if (ll1.tokens[j].type.isTerminal) {
                         hasTerminated = true
                     }
                     if (gps.length>0) {
@@ -586,8 +587,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {type : 'TERMINATED', value : '<TERMINATED>'},
-            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : '<TERMINATED>', value : '<TERMINATED>'},
+            {type : '<EMPTY>', value : '<EMPTY>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : 'a', value : 'a'},
         ])
@@ -657,8 +658,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
-            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
+            {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : 'a'},
         ])
@@ -785,8 +786,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {type : 'TERMINATED', value : '<TERMINATED>'},
-            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : '<TERMINATED>', value : '<TERMINATED>'},
+            {type : '<EMPTY>', value : '<EMPTY>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : 'a', value : 'a'},
             {type : 'GrammarSymbol', value : 'A'},
@@ -864,8 +865,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
-            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
+            {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : 'a'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'A'},
@@ -946,8 +947,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {type : 'TERMINATED', value : '<TERMINATED>'},
-            {type : 'EMPTY', value : '<EMPTY>'},
+            {type : '<TERMINATED>', value : '<TERMINATED>'},
+            {type : '<EMPTY>', value : '<EMPTY>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : '(', value : '('},
             {type : ')', value : ')'},
@@ -1023,8 +1024,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
-            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
+            {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : '('},
             {isTerminal: true, type : 'GrammarSymbol', value : ')'},
@@ -1092,8 +1093,8 @@ describe('LL', () => {
                 value : t.value
             }
         })).toEqual([
-            {isTerminal: true, type : 'TERMINATED', value : '<TERMINATED>'},
-            {isTerminal: true, type : 'EMPTY', value : '<EMPTY>'},
+            {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
+            {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : '('},
             {isTerminal: true, type : 'GrammarSymbol', value : ')'},

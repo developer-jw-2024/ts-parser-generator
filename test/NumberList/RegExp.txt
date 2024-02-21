@@ -1,0 +1,5 @@
+Enter \n
+Spaces [ \t]+
+Integer [0-9]+
+
+

@@ -3,119 +3,63 @@
         <pre class="mermaid">
         graph TB
         State0[[State0
-C1 -> ⏺ C _TERMINATED_
-C -> ⏺ E
-C -> ⏺ \ERROR/
-E -> ⏺ E + T
-E -> ⏺ T
-\ERROR/ -> ⏺ E \ERROR/
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ < E >
-F -> ⏺ id]]
+Lines1 -> ⏺ Lines _TERMINATED_
+Lines -> ⏺ WholeList
+Lines -> ⏺ Lines WholeList
+Lines -> ⏺ \ERROR/ Enter
+WholeList -> ⏺ List Enter
+List -> ⏺ Integer
+List -> ⏺ Spaces
+List -> ⏺ List Integer
+List -> ⏺ List Spaces]]
 State1[[State1
-C1 -> C ⏺ _TERMINATED_]]
+Lines1 -> Lines ⏺ _TERMINATED_
+Lines -> Lines ⏺ WholeList
+WholeList -> ⏺ List Enter
+List -> ⏺ Integer
+List -> ⏺ Spaces
+List -> ⏺ List Integer
+List -> ⏺ List Spaces]]
 State2[[State2
-C -> E ⏺
-E -> E ⏺ + T
-\ERROR/ -> E ⏺ \ERROR/
-\ERROR/ -> ⏺ E \ERROR/
-E -> ⏺ E + T
-E -> ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ < E >
-F -> ⏺ id]]
+Lines -> WholeList ⏺]]
 State3[[State3
-C -> \ERROR/ ⏺]]
+Lines -> \ERROR/ ⏺ Enter]]
 State4[[State4
-E -> T ⏺
-T -> T ⏺ * F]]
+WholeList -> List ⏺ Enter
+List -> List ⏺ Integer
+List -> List ⏺ Spaces]]
 State5[[State5
-T -> F ⏺]]
+List -> Integer ⏺]]
 State6[[State6
-F -> < ⏺ E >
-E -> ⏺ E + T
-E -> ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ < E >
-F -> ⏺ id]]
+List -> Spaces ⏺]]
 State7[[State7
-F -> id ⏺]]
+Lines -> Lines WholeList ⏺]]
 State8[[State8
-E -> E + ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ < E >
-F -> ⏺ id]]
+Lines -> \ERROR/ Enter ⏺]]
 State9[[State9
-\ERROR/ -> E \ERROR/ ⏺]]
+WholeList -> List Enter ⏺]]
 State10[[State10
-\ERROR/ -> E ⏺ \ERROR/
-E -> E ⏺ + T
-\ERROR/ -> ⏺ E \ERROR/
-E -> ⏺ E + T
-E -> ⏺ T
-T -> ⏺ T * F
-T -> ⏺ F
-F -> ⏺ < E >
-F -> ⏺ id]]
+List -> List Integer ⏺]]
 State11[[State11
-T -> T * ⏺ F
-F -> ⏺ < E >
-F -> ⏺ id]]
-State12[[State12
-F -> < E ⏺ >
-E -> E ⏺ + T]]
-State13[[State13
-E -> E + T ⏺
-T -> T ⏺ * F]]
-State14[[State14
-T -> T * F ⏺]]
-State15[[State15
-F -> < E > ⏺]]
-State0-->|C|State1
-State0-->|E|State2
+List -> List Spaces ⏺]]
+State0-->|Lines|State1
+State0-->|WholeList|State2
 State0-->|\ERROR/|State3
-State0-->|T|State4
-State0-->|F|State5
-State0-->|<|State6
-State0-->|id|State7
-State2-->|T|State4
-State2-->|F|State5
-State2-->|<|State6
-State2-->|id|State7
-State2-->|+|State8
-State2-->|\ERROR/|State9
-State2-->|E|State10
-State4-->|*|State11
-State6-->|T|State4
-State6-->|F|State5
-State6-->|<|State6
-State6-->|id|State7
-State6-->|E|State12
-State8-->|F|State5
-State8-->|<|State6
-State8-->|id|State7
-State8-->|T|State13
-State10-->|T|State4
-State10-->|F|State5
-State10-->|<|State6
-State10-->|id|State7
-State10-->|+|State8
-State10-->|\ERROR/|State9
-State10-->|E|State10
-State11-->|<|State6
-State11-->|id|State7
-State11-->|F|State14
-State12-->|+|State8
-State12-->|>|State15
-State13-->|*|State11
+State0-->|List|State4
+State0-->|Integer|State5
+State0-->|Spaces|State6
+State1-->|List|State4
+State1-->|Integer|State5
+State1-->|Spaces|State6
+State1-->|WholeList|State7
+State3-->|Enter|State8
+State4-->|Enter|State9
+State4-->|Integer|State10
+State4-->|Spaces|State11
         </pre>
         <script type="module">
-      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-      mermaid.initialize({ startOnLoad: true });
-    </script>
-  </body>
-</html>
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+        </script>
+        </body>
+        </html>

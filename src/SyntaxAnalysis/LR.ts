@@ -217,29 +217,62 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             a = input[i]
             inputToken = inputTokens[i]
             s = stack[stack.length-1]
-            var action : LRAction = this.actions[s][a]    
-            if (debug) console.log(`==>[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+            var action : LRAction = this.actions[s][a]   
 
-            
-            // console.log(s, a, this.tokens[a].toString(), action, stack.length>0 && (action==null || action==undefined))
-            
-            while (stack.length>1 && (action==null || action==undefined)) {
-                // console.log(`There is no action for state [${s}] with token ${inputToken} (${a})`)
-                symbols.pop()
-                symbolTokens.pop()
-                stack.pop()
-                
-                s = stack[stack.length-1]
+            if (debug) {
+                var symbolTokenString = symbolTokens.map(t=>{
+                    var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
+                    return `<${typename}, ${t.value}>`
+                }).join(' ')
+                console.log(`==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+            }
+
+            //console.log(s, a, this.tokens[a].toString(), action, stack.length>0 && (action==null || action==undefined))
+            var errorToken : Token | null = null
+            if (inputToken.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {
+                errorToken = new Token(TokenType.ERROR_TOKENTYPE, inputToken.value)
+                inputToken = errorToken
                 a = indexOfErrorToken
-                inputToken = Token.ERROR_TOKEN
                 action  = this.actions[s][a]
-
-                // console.log('Try', s, a, this.tokens[a].toString(), action)
-
+                i++
             }
             
+            if (action==null || action==undefined) {
+                if (stack.length>1) {
+                    while (stack.length>1 && (action==null || action==undefined)) {
+                        if (debug) console.log(`There is no action for state [${s}] with token ${inputToken} (${a})`)
+                        symbols.pop()
+                        var lastSymbolToken : AnalysisToken = symbolTokens.pop()
+                        stack.pop()
+                        
+                        if (debug) {
+                            console.log(errorToken, lastSymbolToken)
+                        }
 
-            
+                        s = stack[stack.length-1]
+                        a = indexOfErrorToken
+                        if (errorToken!=null) {
+                            errorToken.value = lastSymbolToken.value + errorToken.value
+                        } else {
+                            errorToken = new Token(TokenType.ERROR_TOKENTYPE, lastSymbolToken.value)
+                        }
+                        
+                        inputToken = errorToken
+                        action  = this.actions[s][a]
+        
+
+                        if (debug) {
+                            // console.log(lastSymbolToken)
+                            console.log('Try', s, a, this.tokens[a].toString(), action)
+                        }
+                    }
+                } else if (stack.length==1) {
+                    console.log('...')
+                    throw new Error('...')
+                }
+
+            }
+
             // if (debug) console.log(s, inputTokens[i], action)
             // if (debug) console.log(step.toString())
 
@@ -276,7 +309,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                             result = this.grammerProductionFunctions[igp](parameters)
                         }
                         if (debug) {
-                            console.log(this.grammerProductions[igp].toString(),null)
+                            console.log(this.grammerProductions[igp].toString(), result, '\n')
                         }
                         symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result, parameters))
                     } else {
@@ -403,7 +436,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
 
         this.actions = []
         
-       
+        var errors = []
         
         var road : Array<Array<number>> = []
         var source : number = 0
@@ -437,9 +470,17 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                                 for (var k=0;k<follows.length;k++) {
                                     this.actions[destination] = this.actions[destination] || []
                                     if (this.actions[destination][follows[k]]) {
-                                        console.log(this.actions[destination][follows[k]])
-                                        console.log(this.showLRItemSet(this.states[destination]))
-                                        throw new Error(`duplicated action for ${destination}-${follows[k]}(${this.tokens[follows[k]]})`)
+                                        errors.push({
+                                            state : destination,
+                                            follow : follows[k],
+                                            followToken : this.tokens[follows[k]],
+                                            action : this.actions[destination][follows[k]],
+                                            lrItemSet : this.showLRItemSet(this.states[destination]),
+                                            errorMessage : `duplicated action for ${destination}-${follows[k]}(${this.tokens[follows[k]]})`
+                                        })
+                                        // console.log(this.actions[destination][follows[k]])
+                                        // console.log(this.showLRItemSet(this.states[destination]))
+                                        // throw new Error(`duplicated action for ${destination}-${follows[k]}(${this.tokens[follows[k]]})`)
                                     } 
                                     this.actions[destination][follows[k]] = new LRAction(LRActionType.REDUCE, item.numOfGrammerProduction)
                                 }
@@ -467,6 +508,17 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             source++
         }
         
+        this.saveAsMermaidHtml(road)
+
+        if (errors) {
+            for (var i=0;i<errors.length;i++) {
+                console.log(errors[i].action)
+                console.log(errors[i].lrItemSet)
+                console.error(`duplicated action for ${errors[i].state}-${errors[i].follow}(${errors[i].followToken})`)
+                if (i==errors.length-1) throw new Error(`duplicated action for ${errors[i].state}-${errors[i].follow}(${errors[i].followToken})`)
+
+            }
+        }
     }
 
     saveAsMermaidHtml(road : Array<Array<number>>) {
@@ -489,7 +541,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         <body>
         <pre class="mermaid">
         graph TB
-        ${stateListContent.replace('<ERROR>', '\\ERROR/')}
+        ${stateListContent.replace(new RegExp('<ERROR>', 'g'), '\\ERROR/')}
         </pre>
         <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -585,6 +637,11 @@ export class LRSyntaxAnalysisRunner {
         this.lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
         this.lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
         this.lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinition)                
+    }
+
+    getResult() : any {
+        var lastSymbolToken : AnalysisToken = this.lrSyntaxAnalysis.analysisSteps.at(-1).symbolTokens.at(-1)
+        return lastSymbolToken.value
     }
 
     isValid(markdownContent : string, debug : boolean = false) : boolean {

@@ -1,0 +1,12 @@
+
+Lines -> WholeList
+Lines -> Lines WholeList
+Lines -> <ERROR> Enter
+
+WholeList -> List Enter
+
+
+List -> Integer
+List -> Spaces
+List -> List Integer
+List -> List Spaces

@@ -1,7 +1,16 @@
 import { AnalysisToken } from "../../src/SyntaxAnalysis/LR"
 
 export default {
-    
+    'C -> E' : 
+    function(args : Array<AnalysisToken>) {
+        return args[0].value
+    }
+    ,
+    'C -> <ERROR>' : 
+    function(args : Array<AnalysisToken>) {
+        return args[0].value
+    }
+    ,
     'E -> E + T':
     function(args : Array<AnalysisToken>) {
         return args[0].value + args[2].value
@@ -12,7 +21,11 @@ export default {
         return args[0].value
     }
     ,
-    
+    '<ERROR> -> E <ERROR>':
+    function(args : Array<AnalysisToken>) {
+        return args[0].value + args[1].value
+    }
+    ,
     'T -> T * F':
     function(args : Array<AnalysisToken>) {
         return args[0].value * args[2].value

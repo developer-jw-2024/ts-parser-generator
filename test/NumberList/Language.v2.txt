@@ -1,0 +1,12 @@
+
+Lines -> List Enter
+Lines -> <ERROR> Enter
+Lines -> Lines List Enter
+Lines -> Lines <ERROR> Enter
+
+<ERROR> -> List <ERROR>
+
+List -> Integer
+List -> Spaces
+List -> List Integer
+List -> List Spaces

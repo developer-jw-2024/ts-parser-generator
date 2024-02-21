@@ -6,9 +6,9 @@ import { intersection } from '../Utils/SetUtils'
 
 export class TokenType {
 
-    static EMPTY_TOKENTYPE : TokenType = new TokenType("EMPTY", '<EMPTY>', true)
-    static ERROR_TOKENTYPE : TokenType = new TokenType("ERROR", '<ERROR>', false)
-    static TERMINATED_TOKENTYPE : TokenType = new TokenType("TERMINATED", null, true)
+    static EMPTY_TOKENTYPE : TokenType = new TokenType("<EMPTY>", '<EMPTY>', true)
+    static ERROR_TOKENTYPE : TokenType = new TokenType("<ERROR>", '<ERROR>', false)
+    static TERMINATED_TOKENTYPE : TokenType = new TokenType("<TERMINATED>", null, true)
     static UNKNOWN_TOKENTYPE : TokenType = new TokenType("<UNKNOWN>", null, true)
 
     name : string
