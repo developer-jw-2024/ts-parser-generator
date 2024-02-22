@@ -1,0 +1,136 @@
+[
+  '0 2 <ERROR> Goto 4',
+  '0 4 Lines Goto 1',
+  '0 5 WholeList Goto 2',
+  '0 6 List Goto 3',
+  '0 8 Integer Shift 5',
+  '0 9 Spaces Shift 6',
+  '1 0 <TERMINATED> Accept -1',
+  '1 2 <ERROR> Goto 4',
+  '1 5 WholeList Goto 7',
+  '1 6 List Goto 3',
+  '1 8 Integer Shift 5',
+  '1 9 Spaces Shift 6',
+  '2 0 <TERMINATED> Reduce 0',
+  '2 8 Integer Reduce 0',
+  '2 9 Spaces Reduce 0',
+  '3 7 Enter Shift 8',
+  '3 8 Integer Shift 9',
+  '3 9 Spaces Shift 10',
+  '4 7 Enter Shift 11',
+  '5 7 Enter Reduce 4',
+  '5 8 Integer Reduce 4',
+  '5 9 Spaces Reduce 4',
+  '6 7 Enter Reduce 5',
+  '6 8 Integer Reduce 5',
+  '6 9 Spaces Reduce 5',
+  '7 0 <TERMINATED> Reduce 1',
+  '7 8 Integer Reduce 1',
+  '7 9 Spaces Reduce 1',
+  '8 0 <TERMINATED> Reduce 2',
+  '8 8 Integer Reduce 2',
+  '8 9 Spaces Reduce 2',
+  '9 7 Enter Reduce 6',
+  '9 8 Integer Reduce 6',
+  '9 9 Spaces Reduce 6',
+  '10 7 Enter Reduce 7',
+  '10 8 Integer Reduce 7',
+  '10 9 Spaces Reduce 7',
+  '11 0 <TERMINATED> Reduce 3',
+  '11 8 Integer Reduce 3',
+  '11 9 Spaces Reduce 3'
+]
+Follow
+0)  <<TERMINATED> , <TERMINATED>> [ <<TERMINATED> , <TERMINATED>> ]
+1)  <<EMPTY> , <EMPTY>> [  ]
+2)  <<ERROR> , <ERROR>> [ <GrammarSymbol , Enter> ]
+3)  <<UNKNOWN> , <UNKNOWN>> [  ]
+4)  <GrammarSymbol , Lines> [ <GrammarSymbol , Integer> <GrammarSymbol , Spaces> <<TERMINATED> , <TERMINATED>> ]
+5)  <GrammarSymbol , WholeList> [ <GrammarSymbol , Integer> <GrammarSymbol , Spaces> <<TERMINATED> , <TERMINATED>> ]
+6)  <GrammarSymbol , List> [ <GrammarSymbol , Enter> <GrammarSymbol , Integer> <GrammarSymbol , Spaces> ]
+7)  <GrammarSymbol , Enter> [ <GrammarSymbol , Integer> <GrammarSymbol , Spaces> <<TERMINATED> , <TERMINATED>> ]
+8)  <GrammarSymbol , Integer> [ <GrammarSymbol , Enter> <GrammarSymbol , Integer> <GrammarSymbol , Spaces> ]
+9)  <GrammarSymbol , Spaces> [ <GrammarSymbol , Enter> <GrammarSymbol , Integer> <GrammarSymbol , Spaces> ]
+10)  <GrammarSymbol , Lines1> [ <<TERMINATED> , <TERMINATED>> ]
+<GrammarSymbol , Lines> -> <GrammarSymbol , WholeList>
+<GrammarSymbol , Lines> -> <GrammarSymbol , Lines> <GrammarSymbol , WholeList>
+<GrammarSymbol , WholeList> -> <GrammarSymbol , List> <GrammarSymbol , Enter>
+<GrammarSymbol , WholeList> -> <<ERROR> , <ERROR>> <GrammarSymbol , Enter>
+<GrammarSymbol , List> -> <GrammarSymbol , Integer>
+<GrammarSymbol , List> -> <GrammarSymbol , Spaces>
+<GrammarSymbol , List> -> <GrammarSymbol , List> <GrammarSymbol , Integer>
+<GrammarSymbol , List> -> <GrammarSymbol , List> <GrammarSymbol , Spaces>
+<GrammarSymbol , Lines1> -> <GrammarSymbol , Lines> <<TERMINATED> , <TERMINATED>>
+4 -> 5
+4 -> 4 5
+5 -> 6 7
+5 -> 2 7
+6 -> 8
+6 -> 9
+6 -> 6 8
+6 -> 6 9
+10 -> 4 0
+<Integer , 1> <Spaces ,  > <Integer , 3> <Spaces ,  > <Integer , 2> <Enter , \n> <<UNKNOWN> , b> <Enter , \n> <<TERMINATED> , <TERMINATED>>
+[
+  8, 9, 8, 9, 8,
+  7, 3, 7, 0
+]
+0 ==>[ 0 ]   [ <<TERMINATED>, >(0) ]   [ <Integer , 1>(8) <Spaces ,  >(9) <Integer , 3>(8) <Spaces ,  >(9) <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Shift 5 
+
+0 ==>[ 0 5 ]   [ <<TERMINATED>, >(0) <Integer, 1>(8) ]   [ <Spaces ,  >(9) <Integer , 3>(8) <Spaces ,  >(9) <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Reduce 4 
+
+<GrammarSymbol , List> -> <GrammarSymbol , Integer> null 
+
+0 ==>[ 0 3 ]   [ <<TERMINATED>, >(0) <List, >(6) ]   [ <Spaces ,  >(9) <Integer , 3>(8) <Spaces ,  >(9) <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Shift 10 
+
+0 ==>[ 0 3 10 ]   [ <<TERMINATED>, >(0) <List, >(6) <Spaces,  >(9) ]   [ <Integer , 3>(8) <Spaces ,  >(9) <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Reduce 7 
+
+<GrammarSymbol , List> -> <GrammarSymbol , List> <GrammarSymbol , Spaces> null 
+
+0 ==>[ 0 3 ]   [ <<TERMINATED>, >(0) <List, >(6) ]   [ <Integer , 3>(8) <Spaces ,  >(9) <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Shift 9 
+
+0 ==>[ 0 3 9 ]   [ <<TERMINATED>, >(0) <List, >(6) <Integer, 3>(8) ]   [ <Spaces ,  >(9) <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Reduce 6 
+
+<GrammarSymbol , List> -> <GrammarSymbol , List> <GrammarSymbol , Integer> null 
+
+0 ==>[ 0 3 ]   [ <<TERMINATED>, >(0) <List, >(6) ]   [ <Spaces ,  >(9) <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Shift 10 
+
+0 ==>[ 0 3 10 ]   [ <<TERMINATED>, >(0) <List, >(6) <Spaces,  >(9) ]   [ <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Reduce 7 
+
+<GrammarSymbol , List> -> <GrammarSymbol , List> <GrammarSymbol , Spaces> null 
+
+0 ==>[ 0 3 ]   [ <<TERMINATED>, >(0) <List, >(6) ]   [ <Integer , 2>(8) <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Shift 9 
+
+0 ==>[ 0 3 9 ]   [ <<TERMINATED>, >(0) <List, >(6) <Integer, 2>(8) ]   [ <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Reduce 6 
+
+<GrammarSymbol , List> -> <GrammarSymbol , List> <GrammarSymbol , Integer> null 
+
+0 ==>[ 0 3 ]   [ <<TERMINATED>, >(0) <List, >(6) ]   [ <Enter , \n>(7) <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Shift 8 
+
+0 ==>[ 0 3 8 ]   [ <<TERMINATED>, >(0) <List, >(6) <Enter, \n>(7) ]   [ <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    undefined 
+
+1 ==>[ 0 3 8 ]   [ <<TERMINATED>, >(0) <List, >(6) <Enter, \n>(7) ]   [ <<UNKNOWN> , b>(3) <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    undefined 
+
+There is no action for state [8] with token <<ERROR> , b> (2)
+backward ==>[ 0 3 ]   [ <<TERMINATED>, >(0) <List, >(6) ]   [ <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    undefined 
+
+Try 3 2 <<ERROR> , <ERROR>> undefined
+There is no action for state [3] with token <<ERROR> , \nb> (2)
+backward ==>[ 0 ]   [ <<TERMINATED>, >(0) ]   [ <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Goto 4 
+
+Try 0 2 <<ERROR> , <ERROR>> LRAction { type: 3, value: 4 }
+0 ==>[ 0 4 ]   [ <<TERMINATED>, >(0) <<ERROR>, null\nb>(2) ]   [ <Enter , \n>(7) <<TERMINATED> , <TERMINATED>>(0) ]    Shift 11 
+
+0 ==>[ 0 4 11 ]   [ <<TERMINATED>, >(0) <<ERROR>, null\nb>(2) <Enter, \n>(7) ]   [ <<TERMINATED> , <TERMINATED>>(0) ]    Reduce 3 
+
+<GrammarSymbol , WholeList> -> <<ERROR> , <ERROR>> <GrammarSymbol , Enter> null 
+
+0 ==>[ 0 2 ]   [ <<TERMINATED>, >(0) <WholeList, >(5) ]   [ <<TERMINATED> , <TERMINATED>>(0) ]    Reduce 0 
+
+<GrammarSymbol , Lines> -> <GrammarSymbol , WholeList> null 
+
+0 ==>[ 0 1 ]   [ <<TERMINATED>, >(0) <Lines, >(4) ]   [ <<TERMINATED> , <TERMINATED>>(0) ]    Accept -1 
+
+1 3 2
+b
+ = null

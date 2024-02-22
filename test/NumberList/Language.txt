@@ -1,10 +1,15 @@
 
-Lines -> WholeList
-Lines -> Lines WholeList
-Lines -> <ERROR> Enter
+All -> Lines
+All -> WholeList
+All -> Lines WholeList
 
-WholeList -> List Enter
+Lines -> WholeLine
+Lines -> Lines WholeLine
 
+WholeList -> List
+WholeList -> <ERROR>
+
+WholeLine -> WholeList Enter
 
 List -> Integer
 List -> Spaces

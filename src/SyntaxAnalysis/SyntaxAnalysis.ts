@@ -74,6 +74,10 @@ export class IndexGrammarProduction {
     copy() : IndexGrammarProduction {
         return new IndexGrammarProduction(this.symbol, this.factors)
     }
+
+    toString() {
+        return `${this.symbol} -> ${this.factors.join(' ')}`
+    }
 }
 
 
@@ -614,7 +618,7 @@ export class SyntaxAnalysis {
     showFollow() {
         console.log('Follow')
         for (var i=0;i<this.tokens.length;i++) {
-            console.log(`${i}) `, this.tokens[i].toString(), this.follow[i])
+            console.log(`${i}) `, this.tokens[i].toString(), `[ ${this.follow[i].map(f=>this.tokens[f].toString()).join(' ')} ]`)
         }
 
     }

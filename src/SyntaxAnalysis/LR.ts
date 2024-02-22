@@ -193,8 +193,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         // console.log('indexOfUnknownToken:', indexOfUnknownToken)
         // console.log(this.tokens)
         // console.log(this.grammerProductions.length, this.indexGrammerProductions.length)
-        // console.log(this.grammerProductions.map(gp=>gp.toString()).join('\n'))
-        // console.log(this.indexGrammerProductions)
+        if (debug) {
+            this.showFollow()
+            console.log(this.grammerProductions.map(gp=>gp.toString()).join('\n'))
+            console.log(this.indexGrammerProductions.map(igp=>igp.toString()).join('\n'))    
+        }
         // console.log(inputTokens.length, input.length)
         // inputTokens.forEach((it, i)=>{
         //     console.log(it.toSimpleString(), ':', input[i])
@@ -209,7 +212,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var s : number = stack[stack.length-1]
     
         if (debug) {
-            console.log(inputTokens)
+            console.log(inputTokens.map(t=>t.toString()).join(' '))
             console.log(input)
         }
 
@@ -222,11 +225,18 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             if (debug) {
                 var symbolTokenString = symbolTokens.map(t=>{
                     var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
-                    return `<${typename}, ${t.value}>`
+                    var value = t.value?(t.value.replace(new RegExp('\n', 'g'), '\\n').replace(new RegExp('\t', 'g'), '\\t')):''
+                    return `<${typename}, ${value}>(${t.indexOfToken})`
                 }).join(' ')
-                console.log(`0 ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                var inputTokenLeft = []
+                for (var l=i;l<inputTokens.length;l++) {
+                    inputTokenLeft.push(inputTokens[l].toString()+`(${this.getIndexOfToken(inputTokens[l])})`)
+                }
+                // console.log(inputTokens)
+                console.log(`0 ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokenLeft.join(' ')} ]   `, action?action.toString():action, '\n')
             }
 
+            
             //console.log(s, a, this.tokens[a].toString(), action, stack.length>0 && (action==null || action==undefined))
             var errorToken : Token | null = null
             if (inputToken.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {
@@ -238,12 +248,18 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 if (debug) {
                     var symbolTokenString = symbolTokens.map(t=>{
                         var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
-                        return `<${typename}, ${t.value}>`
+                        var value = t.value?(t.value.replace(new RegExp('\n', 'g'), '\\n').replace(new RegExp('\t', 'g'), '\\t')):''
+                        return `<${typename}, ${value}>(${t.indexOfToken})`
                     }).join(' ')
-                    console.log(`1 ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                    var inputTokenLeft = []
+                    for (var l=i;l<inputTokens.length;l++) {
+                        inputTokenLeft.push(inputTokens[l].toString()+`(${this.getIndexOfToken(inputTokens[l])})`)
+                    }
+                    // console.log(inputTokens)
+                    console.log(`1 ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokenLeft.join(' ')} ]   `, action?action.toString():action, '\n')
                 }
 
-                i++
+                // i++
             }
             
             if (action==null || action==undefined) {
@@ -266,9 +282,15 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         if (debug) {
                             var symbolTokenString = symbolTokens.map(t=>{
                                 var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
-                                return `<${typename}, ${t.value}>`
+                                var value = t.value?(t.value.replace(new RegExp('\n', 'g'), '\\n').replace(new RegExp('\t', 'g'), '\\t')):''
+                                return `<${typename}, ${value}>(${t.indexOfToken})`
                             }).join(' ')
-                            console.log(`forward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                            var inputTokenLeft = []
+                            for (var l=i;l<inputTokens.length;l++) {
+                                inputTokenLeft.push(inputTokens[l].toString()+`(${this.getIndexOfToken(inputTokens[l])})`)
+                            }
+                            // console.log(inputTokens)
+                            console.log(`forward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokenLeft.join(' ')} ]   `, action?action.toString():action, '\n')
                         }
 
                     }
@@ -297,9 +319,15 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         if (debug) {
                             var symbolTokenString = symbolTokens.map(t=>{
                                 var typename = (t.token.type.name=='GrammarSymbol')?(t.token.value):(t.token.type.name)
-                                return `<${typename}, ${t.value}>`
+                                var value = t.value?(t.value.replace(new RegExp('\n', 'g'), '\\n').replace(new RegExp('\t', 'g'), '\\t')):''
+                                return `<${typename}, ${value}>(${t.indexOfToken})`
                             }).join(' ')
-                            console.log(`backward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokens.slice(i).join(' ')} ]   `, action?action.toString():action, '\n')
+                            var inputTokenLeft = []
+                            for (var l=i;l<inputTokens.length;l++) {
+                                inputTokenLeft.push(inputTokens[l].toString()+`(${this.getIndexOfToken(inputTokens[l])})`)
+                            }
+                            // console.log(inputTokens)
+                            console.log(`backward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokenLeft.join(' ')} ]   `, action?action.toString():action, '\n')
                         }
 
                         if (debug) {
@@ -310,7 +338,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 }
 
             }
-
+            
             // if (debug) console.log(s, inputTokens[i], action)
             // if (debug) console.log(step.toString())
 
