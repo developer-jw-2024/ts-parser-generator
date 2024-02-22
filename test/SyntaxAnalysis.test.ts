@@ -46,8 +46,8 @@ describe('SyntaxAnalysis', ()  => {
         
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(3, [2, 5]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(5, [4, 7]),
         ])).toEqual(true)
 
         
@@ -84,8 +84,8 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(3, [2, 5]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(5, [4, 7]),
         ])).toEqual(true)
 
         
@@ -126,11 +126,11 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [3, 6]),
-            new IndexGrammarProduction(3, [2, 7]),
-            new IndexGrammarProduction(3, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [5, 8]),
+            new IndexGrammarProduction(5, [4, 9]),
+            new IndexGrammarProduction(5, [1]),
         ])).toEqual(true)
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true ,true])
         syntaxAnalysis.eliminateLeftRecursion()
@@ -139,13 +139,13 @@ describe('SyntaxAnalysis', ()  => {
         
         // 0: <T> 1:<E> 2:S 3:A 4:a 5:b 6:c 7:d
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [5, 7, 8]),
-            new IndexGrammarProduction(3, [8]),
-            new IndexGrammarProduction(8, [6, 8]),
-            new IndexGrammarProduction(8, [4, 7, 8]),
-            new IndexGrammarProduction(8, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [7, 9, 10]),
+            new IndexGrammarProduction(5, [10]),
+            new IndexGrammarProduction(10, [8, 10]),
+            new IndexGrammarProduction(10, [6, 9, 10]),
+            new IndexGrammarProduction(10, [1]),
 
         ])).toEqual(true)
     })
@@ -173,11 +173,11 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [3, 6]),
-            new IndexGrammarProduction(3, [2, 7]),
-            new IndexGrammarProduction(3, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [5, 8]),
+            new IndexGrammarProduction(5, [4, 9]),
+            new IndexGrammarProduction(5, [1]),
         ])).toEqual(true)
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true ,true])
         syntaxAnalysis.eliminateLeftRecursion()
@@ -186,13 +186,13 @@ describe('SyntaxAnalysis', ()  => {
         
         // 0: <T> 1:<E> 2:S 3:A 4:a 5:b 6:c 7:d
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [5, 7, 8]),
-            new IndexGrammarProduction(3, [8]),
-            new IndexGrammarProduction(8, [6, 8]),
-            new IndexGrammarProduction(8, [4, 7, 8]),
-            new IndexGrammarProduction(8, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [7, 9, 10]),
+            new IndexGrammarProduction(5, [10]),
+            new IndexGrammarProduction(10, [8, 10]),
+            new IndexGrammarProduction(10, [6, 9, 10]),
+            new IndexGrammarProduction(10, [1]),
 
         ])).toEqual(true)
     })
@@ -225,26 +225,26 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [3, 6]),
-            new IndexGrammarProduction(3, [2, 7]),
-            new IndexGrammarProduction(3, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [5, 8]),
+            new IndexGrammarProduction(5, [4, 9]),
+            new IndexGrammarProduction(5, [1]),
         ])).toEqual(true)
         expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true ,true])).toBe(true)
 
-        syntaxAnalysis.eliminateTheImmediateLeftRecursion(3)
+        syntaxAnalysis.eliminateTheImmediateLeftRecursion(5)
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, false, false, false, true, true, true ,true])
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [3, 6]),
-            new IndexGrammarProduction(3, [2, 7]),
-            new IndexGrammarProduction(3, [1]),
-            new IndexGrammarProduction(3, [2, 7, 8]),
-            new IndexGrammarProduction(3, [8]),
-            new IndexGrammarProduction(8, [6, 8]),
-            new IndexGrammarProduction(8, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [5, 8]),
+            new IndexGrammarProduction(5, [4, 9]),
+            new IndexGrammarProduction(5, [1]),
+            new IndexGrammarProduction(5, [4, 9, 10]),
+            new IndexGrammarProduction(5, [10]),
+            new IndexGrammarProduction(10, [8, 10]),
+            new IndexGrammarProduction(10, [1]),
         ])).toEqual(true)
 
 
@@ -273,26 +273,26 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [3, 6]),
-            new IndexGrammarProduction(3, [2, 7]),
-            new IndexGrammarProduction(3, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [5, 8]),
+            new IndexGrammarProduction(5, [4, 9]),
+            new IndexGrammarProduction(5, [1]),
         ])).toEqual(true)
         expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true ,true])).toBe(true)
 
-        syntaxAnalysis.eliminateTheImmediateLeftRecursion(3)
+        syntaxAnalysis.eliminateTheImmediateLeftRecursion(5)
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, false, false, false, true, true, true ,true])
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4]),
-            new IndexGrammarProduction(2, [5]),
-            new IndexGrammarProduction(3, [3, 6]),
-            new IndexGrammarProduction(3, [2, 7]),
-            new IndexGrammarProduction(3, [1]),
-            new IndexGrammarProduction(3, [2, 7, 8]),
-            new IndexGrammarProduction(3, [8]),
-            new IndexGrammarProduction(8, [6, 8]),
-            new IndexGrammarProduction(8, [1]),
+            new IndexGrammarProduction(4, [5, 6]),
+            new IndexGrammarProduction(4, [7]),
+            new IndexGrammarProduction(5, [5, 8]),
+            new IndexGrammarProduction(5, [4, 9]),
+            new IndexGrammarProduction(5, [1]),
+            new IndexGrammarProduction(5, [4, 9, 10]),
+            new IndexGrammarProduction(5, [10]),
+            new IndexGrammarProduction(10, [8, 10]),
+            new IndexGrammarProduction(10, [1]),
         ])).toEqual(true)
 
 
@@ -328,10 +328,10 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2]),
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 8, 4]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
         expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true])).toBe(true)
 
@@ -339,10 +339,10 @@ describe('SyntaxAnalysis', ()  => {
 
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true])
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2]),
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 8, 4]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
 
 
@@ -371,10 +371,10 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2]),
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 8, 4]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
         expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true])).toBe(true)
 
@@ -382,10 +382,10 @@ describe('SyntaxAnalysis', ()  => {
 
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true])
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2]),
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 8, 4]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
 
 
@@ -423,7 +423,7 @@ describe('SyntaxAnalysis', ()  => {
         
         var tokens = lexicalAnalysis.toTokens(gptext)
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
-        expect(syntaxAnalysis.leftCommonFactor(0, 1)).toEqual([3, 4])
+        expect(syntaxAnalysis.leftCommonFactor(0, 1)).toEqual([5, 6])
         expect(syntaxAnalysis.leftCommonFactor(0, 2)).toEqual(null)
     })
 
@@ -447,7 +447,7 @@ describe('SyntaxAnalysis', ()  => {
         
         var tokens = lexicalAnalysis.toTokens(gptext)
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
-        expect(syntaxAnalysis.leftCommonFactor(0, 1)).toEqual([3, 4])
+        expect(syntaxAnalysis.leftCommonFactor(0, 1)).toEqual([5, 6])
         expect(syntaxAnalysis.leftCommonFactor(0, 2)).toEqual(null)
     })
 
@@ -473,8 +473,8 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 6, 7]),
-            new IndexGrammarProduction(2, [5, 7]),
+            new IndexGrammarProduction(4, [5, 6, 7, 8, 9]),
+            new IndexGrammarProduction(4, [7, 9]),
         ])).toEqual(true)
     })
 
@@ -512,8 +512,8 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 6, 7]),
-            new IndexGrammarProduction(2, [5, 7]),
+            new IndexGrammarProduction(4, [5, 6, 7, 8, 9]),
+            new IndexGrammarProduction(4, [7, 9]),
         ])).toEqual(true)
     })
 
@@ -551,9 +551,9 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 8]),
-            new IndexGrammarProduction(8, [5, 6, 7]),
-            new IndexGrammarProduction(8, [6]),
+            new IndexGrammarProduction(4, [5, 6, 10]),
+            new IndexGrammarProduction(10, [7, 8, 9]),
+            new IndexGrammarProduction(10, [8]),
         ])).toEqual(true)
     })
 
@@ -580,9 +580,9 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 8]),
-            new IndexGrammarProduction(8, [5, 6, 7]),
-            new IndexGrammarProduction(8, [6]),
+            new IndexGrammarProduction(4, [5, 6, 10]),
+            new IndexGrammarProduction(10, [7, 8, 9]),
+            new IndexGrammarProduction(10, [8]),
         ])).toEqual(true)
     })
 
@@ -620,9 +620,9 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 8]),
-            new IndexGrammarProduction(8, [5, 6, 7]),
-            new IndexGrammarProduction(8, [1]),
+            new IndexGrammarProduction(4, [5, 6, 10]),
+            new IndexGrammarProduction(10, [7, 8, 9]),
+            new IndexGrammarProduction(10, [1]),
         ])).toEqual(true)
     })
 
@@ -648,9 +648,9 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 8]),
-            new IndexGrammarProduction(8, [5, 6, 7]),
-            new IndexGrammarProduction(8, [1]),
+            new IndexGrammarProduction(4, [5, 6, 10]),
+            new IndexGrammarProduction(10, [7, 8, 9]),
+            new IndexGrammarProduction(10, [1]),
         ])).toEqual(true)
     })
 
@@ -693,11 +693,11 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(9, [6, 7]),
-            new IndexGrammarProduction(9, [8]),
-            new IndexGrammarProduction(2, [3,4, 10]),
-            new IndexGrammarProduction(10, [6]),
-            new IndexGrammarProduction(10, [5, 9]),
+            new IndexGrammarProduction(11, [8, 9]),
+            new IndexGrammarProduction(11, [10]),
+            new IndexGrammarProduction(4, [5, 6, 12]),
+            new IndexGrammarProduction(12, [8]),
+            new IndexGrammarProduction(12, [7, 11]),
         ])).toEqual(true)
     })
 
@@ -728,11 +728,11 @@ describe('SyntaxAnalysis', ()  => {
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true, true])
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(9, [6, 7]),
-            new IndexGrammarProduction(9, [8]),
-            new IndexGrammarProduction(2, [3,4, 10]),
-            new IndexGrammarProduction(10, [6]),
-            new IndexGrammarProduction(10, [5, 9]),
+            new IndexGrammarProduction(11, [8, 9]),
+            new IndexGrammarProduction(11, [10]),
+            new IndexGrammarProduction(4, [5, 6, 12]),
+            new IndexGrammarProduction(12, [8]),
+            new IndexGrammarProduction(12, [7, 11]),
         ])).toEqual(true)
     })
 
@@ -765,21 +765,21 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2]),
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 8, 4]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
         expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true])).toBe(true)
 
         syntaxAnalysis.leftFactoring()
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true ,true])
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 9]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(9, [6, 2]),
-            new IndexGrammarProduction(9, [1]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 11]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(11, [8, 4]),
+            new IndexGrammarProduction(11, [1]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
 
 
@@ -808,21 +808,21 @@ describe('SyntaxAnalysis', ()  => {
         var syntaxAnalysis = new SyntaxAnalysis().initWithTokens(tokens)
         
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2]),
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 6, 2]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 8, 4]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
         expect(isSetEqual(syntaxAnalysis.indexGrammerProductionFlags, [true, true, true, true])).toBe(true)
 
         syntaxAnalysis.leftFactoring()
         expect(syntaxAnalysis.indexGrammerProductionFlags).toEqual([true, true, true, true ,true])
         expect(isIndexGrammarProductionSetEqual(syntaxAnalysis.indexGrammerProductions,[
-            new IndexGrammarProduction(2, [3, 4, 5, 2, 9]),
-            new IndexGrammarProduction(2, [7]),
-            new IndexGrammarProduction(9, [6, 2]),
-            new IndexGrammarProduction(9, [1]),
-            new IndexGrammarProduction(4, [8]),
+            new IndexGrammarProduction(4, [5, 6, 7, 4, 11]),
+            new IndexGrammarProduction(4, [9]),
+            new IndexGrammarProduction(11, [8, 4]),
+            new IndexGrammarProduction(11, [1]),
+            new IndexGrammarProduction(6, [10]),
         ])).toEqual(true)
 
 

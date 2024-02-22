@@ -39,6 +39,8 @@ describe('LL', () => {
         })).toEqual([
             {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
             {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
+            {isTerminal: true, type : '<ERROR>', value : '<ERROR>'},
+            {isTerminal: true, type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'E'},
             {isTerminal: false,type : 'GrammarSymbol', value : 'T'},
             {isTerminal: false,type : 'GrammarSymbol', value : 'E\''},
@@ -55,42 +57,46 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [9, 11], //E
-            [9, 11], //T
-            [1, 5], //E'
-            [5], //+
-            [9, 11],  //F
-            [1, 8], //T'
-            [8], //*
-            [9], //(
-            [10], //)
-            [11] //id
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [11, 13], //E
+            [11, 13], //T
+            [1, 7], //E'
+            [7], //+
+            [11, 13],  //F
+            [1, 10], //T'
+            [10], //*
+            [11], //(
+            [12], //)
+            [13] //id
         ])
 
         expect(ll1.follow).toEqual([
-            [], //<TERMINATED>
-            [],
-            [0, 10],
-            [5, 0, 10],
-            [0, 10],
-            [9, 11],
-            [8,5,0,10],
-            [5, 0, 10],
-            [9,11],
-            [9,11],
-            [8,5,0,10],
-            [8,5,0,10],
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
+            [0, 12],
+            [7, 0, 12],
+            [0, 12],
+            [11, 13],
+            [10,7,0,12],
+            [7, 0, 12],
+            [11,13],
+            [11,13],
+            [10,7,0,12],
+            [10,7,0,12],
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [9, 11], 
-            [5],
+            [11, 13], 
+            [7],
             [1],
-            [9, 11],
-            [8],
+            [11, 13],
+            [10],
             [1], 
-            [9],
-            [11]
+            [11],
+            [13]
         ])
 
         var m : Array<string> = []
@@ -161,6 +167,8 @@ describe('LL', () => {
         })).toEqual([
             {type : '<TERMINATED>', value : '<TERMINATED>'},
             {type : '<EMPTY>', value : '<EMPTY>'},
+            {type : '<ERROR>', value : '<ERROR>'},
+            {type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {type : 'GrammarSymbol', value : 'E'},
             {type : 'GrammarSymbol', value : 'T'},
             {type : 'GrammarSymbol', value : 'E\''},
@@ -177,42 +185,46 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [9, 11], //E
-            [9, 11], //T
-            [1, 5], //E'
-            [5], //+
-            [9, 11],  //F
-            [1, 8], //T'
-            [8], //*
-            [9], //(
-            [10], //)
-            [11] //id
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [11, 13], //E
+            [11, 13], //T
+            [1, 7], //E'
+            [7], //+
+            [11, 13],  //F
+            [1, 10], //T'
+            [10], //*
+            [11], //(
+            [12], //)
+            [13] //id
         ])
 
         expect(ll1.follow).toEqual([
-            [], //<TERMINATED>
-            [],
-            [0, 10],
-            [5, 0, 10],
-            [0, 10],
-            [9, 11],
-            [8,5,0,10],
-            [5, 0, 10],
-            [9,11],
-            [9,11],
-            [8,5,0,10],
-            [8,5,0,10],
+            [], //<TERMINATED> 0
+            [], //<EMPTY> 1
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
+            [0, 12],
+            [7, 0, 12],
+            [0, 12],
+            [11, 13],
+            [10,7,0,12],
+            [7, 0, 12],
+            [11,13],
+            [11,13],
+            [10,7,0,12],
+            [10,7,0,12],
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [9, 11], 
-            [5],
+            [11, 13], 
+            [7],
             [1],
-            [9, 11],
-            [8],
+            [11, 13],
+            [10],
             [1], 
-            [9],
-            [11]
+            [11],
+            [13]
         ])
 
         var m : Array<string> = []
@@ -357,6 +369,8 @@ describe('LL', () => {
         })).toEqual([
             {type : '<TERMINATED>', value : '<TERMINATED>'},
             {type : '<EMPTY>', value : '<EMPTY>'},
+            {type : '<ERROR>', value : '<ERROR>'},
+            {type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : 'i', value : 'i'},
             {type : 'GrammarSymbol', value : 'E'},
@@ -370,35 +384,39 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [3, 7], //S
-            [3], //i
-            [9], //E
-            [5], //t
-            [1,8],  //S'
-            [7], //a
-            [8], //e
-            [9], //b
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [5, 9], //S
+            [5], //i
+            [11], //E
+            [7], //t
+            [1,10],  //S'
+            [9], //a
+            [10], //e
+            [11], //b
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
-            [0, 8],//S 2
-            [9],//i 3
-            [5],//E 4
-            [3, 7],//t 5
-            [0, 8],//S' 6
-            [0, 8],//a 7
-            [3, 7],//e 8 
-            [5],//b 9
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
+            [0, 10],//S 2
+            [11],//i 3
+            [7],//E 4
+            [5, 9],//t 5
+            [0, 10],//S' 6
+            [0, 10],//a 7
+            [5, 9],//e 8 
+            [7],//b 9
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
-            [7],
-            [8],
-            [1],
+            [5], 
             [9],
+            [10],
+            [1],
+            [11],
         ])
 
         var m : Array<string> = []
@@ -473,6 +491,8 @@ describe('LL', () => {
         })).toEqual([
             {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
             {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
+            {isTerminal: true, type : '<ERROR>', value : '<ERROR>'},
+            {isTerminal: true, type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : 'i'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'E'},
@@ -486,35 +506,39 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [3, 7], //S
-            [3], //i
-            [9], //E
-            [5], //t
-            [1,8],  //S'
-            [7], //a
-            [8], //e
-            [9], //b
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [5, 9], //S
+            [5], //i
+            [11], //E
+            [7], //t
+            [1,10],  //S'
+            [9], //a
+            [10], //e
+            [11], //b
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
-            [0, 8],//S 2
-            [9],//i 3
-            [5],//E 4
-            [3, 7],//t 5
-            [0, 8],//S' 6
-            [0, 8],//a 7
-            [3, 7],//e 8 
-            [5],//b 9
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
+            [0, 10],//S 2
+            [11],//i 3
+            [7],//E 4
+            [5, 9],//t 5
+            [0, 10],//S' 6
+            [0, 10],//a 7
+            [5, 9],//e 8 
+            [7],//b 9
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
-            [7],
-            [8],
-            [1],
+            [5], 
             [9],
+            [10],
+            [1],
+            [11],
         ])
 
         var m : Array<string> = []
@@ -589,6 +613,8 @@ describe('LL', () => {
         })).toEqual([
             {type : '<TERMINATED>', value : '<TERMINATED>'},
             {type : '<EMPTY>', value : '<EMPTY>'},
+            {type : '<ERROR>', value : '<ERROR>'},
+            {type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : 'a', value : 'a'},
         ])
@@ -596,19 +622,23 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [3], //S
-            [3], //a
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [5], //S
+            [5], //a
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
             [0],//S 2
-            [3],//a 3
+            [5],//a 3
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
+            [5], 
         ])
 
         var m : Array<string> = []
@@ -660,6 +690,8 @@ describe('LL', () => {
         })).toEqual([
             {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
             {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
+            {isTerminal: true, type : '<ERROR>', value : '<ERROR>'},
+            {isTerminal: true, type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : 'a'},
         ])
@@ -667,19 +699,23 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [3], //S
-            [3], //a
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [5], //S
+            [5], //a
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
             [0],//S 2
-            [3],//a 3
+            [5],//a 3
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
+            [5], 
         ])
 
         var m : Array<string> = []
@@ -788,6 +824,8 @@ describe('LL', () => {
         })).toEqual([
             {type : '<TERMINATED>', value : '<TERMINATED>'},
             {type : '<EMPTY>', value : '<EMPTY>'},
+            {type : '<ERROR>', value : '<ERROR>'},
+            {type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : 'a', value : 'a'},
             {type : 'GrammarSymbol', value : 'A'},
@@ -797,24 +835,28 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [3], //S
-            [3], //a
-            [5], //A
-            [5], //b
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [5], //S
+            [5], //a
+            [7], //A
+            [7], //b
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
             [0],//S 2
-            [5],//a 3 
+            [7],//a 3 
             [0],//A 4 
-            [3],//b 5 
+            [5],//b 5 
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
             [5], 
+            [7], 
         ])
 
         var m : Array<string> = []
@@ -867,6 +909,8 @@ describe('LL', () => {
         })).toEqual([
             {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
             {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
+            {isTerminal: true, type : '<ERROR>', value : '<ERROR>'},
+            {isTerminal: true, type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : 'a'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'A'},
@@ -876,24 +920,28 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [3], //S
-            [3], //a
-            [5], //A
-            [5], //b
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [5], //S
+            [5], //a
+            [7], //A
+            [7], //b
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
             [0],//S 2
-            [5],//a 3 
+            [7],//a 3 
             [0],//A 4 
-            [3],//b 5 
+            [5],//b 5 
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
             [5], 
+            [7], 
         ])
 
         var m : Array<string> = []
@@ -949,6 +997,8 @@ describe('LL', () => {
         })).toEqual([
             {type : '<TERMINATED>', value : '<TERMINATED>'},
             {type : '<EMPTY>', value : '<EMPTY>'},
+            {type : '<ERROR>', value : '<ERROR>'},
+            {type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {type : 'GrammarSymbol', value : 'S'},
             {type : '(', value : '('},
             {type : ')', value : ')'},
@@ -957,21 +1007,25 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [1,3], //S
-            [3], //(
-            [4], //)
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [1,5], //S
+            [5], //(
+            [6], //)
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
-            [0,4],//S 2
-            [3],//( 3
-            [3,0,4],//) 4
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
+            [0,6],//S 2
+            [5],//( 3
+            [5,0,6],//) 4
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
+            [5], 
             [1], 
         ])
 
@@ -1026,6 +1080,8 @@ describe('LL', () => {
         })).toEqual([
             {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
             {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
+            {isTerminal: true, type : '<ERROR>', value : '<ERROR>'},
+            {isTerminal: true, type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : '('},
             {isTerminal: true, type : 'GrammarSymbol', value : ')'},
@@ -1034,21 +1090,25 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [1,3], //S
-            [3], //(
-            [4], //)
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [1,5], //S
+            [5], //(
+            [6], //)
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
-            [0,4],//S 2
-            [3],//( 3
-            [3,0,4],//) 4
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
+            [0,6],//S 2
+            [5],//( 3
+            [5,0,6],//) 4
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
+            [5], 
             [1], 
         ])
 
@@ -1095,6 +1155,8 @@ describe('LL', () => {
         })).toEqual([
             {isTerminal: true, type : '<TERMINATED>', value : '<TERMINATED>'},
             {isTerminal: true, type : '<EMPTY>', value : '<EMPTY>'},
+            {isTerminal: true, type : '<ERROR>', value : '<ERROR>'},
+            {isTerminal: true, type : '<UNKNOWN>', value : '<UNKNOWN>'},
             {isTerminal: false, type : 'GrammarSymbol', value : 'S'},
             {isTerminal: true, type : 'GrammarSymbol', value : '('},
             {isTerminal: true, type : 'GrammarSymbol', value : ')'},
@@ -1103,21 +1165,25 @@ describe('LL', () => {
         expect(ll1.first).toEqual([
             [0], //<TERMINATED>
             [1], //<EMPTY>
-            [1,3], //S
-            [3], //(
-            [4], //)
+            [2], //<ERROR>
+            [3], //<UNKNOWN>
+            [1,5], //S
+            [5], //(
+            [6], //)
         ])
 
         expect(ll1.follow).toEqual([
             [], //<TERMINATED> 0
             [], //<EMPTY> 1
-            [0,4],//S 2
-            [3],//( 3
-            [3,0,4],//) 4
+            [], //<ERROR> 2
+            [], //<UNKNOWN> 3
+            [0,6],//S 2
+            [5],//( 3
+            [5,0,6],//) 4
         ])
 
         expect(ll1.firstOfGrammaProduction).toEqual([
-            [3], 
+            [5], 
             [1], 
         ])
 

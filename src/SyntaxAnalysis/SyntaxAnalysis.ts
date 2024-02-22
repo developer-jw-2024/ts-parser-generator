@@ -126,12 +126,14 @@ export class SyntaxAnalysis {
         var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
         this.tokens = [
             Token.TERMINATED_TOKEN, 
-            Token.EMPTY_TOKEN, 
+            Token.EMPTY_TOKEN,
+            Token.ERROR_TOKEN,
+            Token.UNKNOWN_TOKEN 
         ]
-        if (withErrorTokenFlag) {
-            this.tokens.push(Token.ERROR_TOKEN)
-            this.tokens.push(Token.UNKNOWN_TOKEN)
-        }
+        // if (withErrorTokenFlag) {
+        //     this.tokens.push(Token.ERROR_TOKEN)
+        //     this.tokens.push(Token.UNKNOWN_TOKEN)
+        // }
         
 
         for (var i=0;i<list.length;i++) {
