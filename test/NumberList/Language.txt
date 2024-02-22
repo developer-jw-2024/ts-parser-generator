@@ -1,4 +1,4 @@
-
+WriteToFile -> All
 All -> Lines
 All -> WholeList
 All -> Lines WholeList
@@ -10,6 +10,7 @@ WholeList -> List
 WholeList -> <ERROR>
 
 WholeLine -> WholeList Enter
+WholeLine -> Enter
 
 List -> Integer
 List -> Spaces

@@ -261,39 +261,6 @@ describe('Lr', () => {
     })
 
     test('LR isValid', () => {
-        var PLUS = new TokenType('PLUS', '\\+', true)
-        var STAR = new TokenType('STAR', '\\*', true)
-        var ID = new TokenType('ID', 'id', true)
-        var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
-        var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
-
-        var lexicalAnalysis = new LexicalAnalysis([
-            PLUS, STAR, ID, 
-            OPENBRACKET, CLOSEBRACKET,
-            TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
-        ])
-
-        var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
-        var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
-
-        var languageLexicalAnalysis = new LexicalAnalysis([
-            PLUS,
-            STAR,
-            ID,
-            OPENBRACKET,
-            CLOSEBRACKET
-        ])
-
-        // lrSyntaxAnalysis.isValid(languageLexicalAnalysis, "*id")
-
-    })
-
-    test('LR isValid-1', () => {
 
         var lexicalAnalysis = new LexicalAnalysis([
             TokenType.EMPTY_TOKENTYPE,
@@ -322,12 +289,12 @@ describe('Lr', () => {
         ])
 
         expect(lrSyntaxAnalysis.isValidWithTokenTypeLexicalAnalysis(languageLexicalAnalysis, "3+4*6")).toEqual(true)
-        var columnLens : Array<number> = lrSyntaxAnalysis.analysisSteps.map(s=>{
-            return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
-        }).reduce((pre, value)=>{
-            return pre.map((p, i)=> Math.max(pre[i], value[i]))
-        }, [0, 0, 0, 0])
-        columnLens = columnLens.map((v)=>v+10)
+        // var columnLens : Array<number> = lrSyntaxAnalysis.analysisSteps.map(s=>{
+        //     return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
+        // }).reduce((pre, value)=>{
+        //     return pre.map((p, i)=> Math.max(pre[i], value[i]))
+        // }, [0, 0, 0, 0])
+        // columnLens = columnLens.map((v)=>v+10)
 
 
         // console.log(

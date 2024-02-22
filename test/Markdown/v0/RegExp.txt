@@ -17,6 +17,10 @@ ExclamationMarkOpenSquareBracket "!["
 DoubleBackticks ``[^`]*``
 Backtick `[^`]*`
 
+asterisks4 "*"{4,}
+dahes3 "-"{3,}
+underscores "_"{4,}
+
 LeftArrow >+" "
 SharpSign #+" "
 

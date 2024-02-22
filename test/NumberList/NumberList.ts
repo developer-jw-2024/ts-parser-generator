@@ -43,11 +43,9 @@ var tokenTypeDefinitionPath = `${__dirname}/RegExp.txt`
 
 var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
 
-console.log(convertActionList(simpleMath.lrSyntaxAnalysis))
-var equation = 
-`1 3 2
-b`
-var flag = simpleMath.isValid(equation, true)
+// console.log(convertActionList(simpleMath.lrSyntaxAnalysis))
+var equation = FileUtils.readFromFileSystem(`${__dirname}/Input.txt`)
+var flag = simpleMath.isValid(equation)
 // var a = simpleMath.lrSyntaxAnalysis.analysisSteps.at(-1).symbolTokens.at(-1)
 console.log(equation , '=', simpleMath.getResult())
 

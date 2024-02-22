@@ -347,5 +347,16 @@ describe('DFA', ()  => {
         expect(regExp.test(" ")).toBe(false)
         expect(regExp.test("abc")).toBe(true)
         expect(regExp.test("ab c")).toBe(false)
+
+        var regExp : RegularExpression = new RegularExpression(`"*"{4,}`)
+        expect(regExp.test("\\")).toBe(false)
+        expect(regExp.test("\\\\")).toBe(false)
+        expect(regExp.test("(")).toBe(false)
+        expect(regExp.test("*")).toBe(false)
+        expect(regExp.test("**")).toBe(false)
+        expect(regExp.test("***")).toBe(false)
+        expect(regExp.test("****")).toBe(true)
+        expect(regExp.test("*****")).toBe(true)
+
     })
 })
