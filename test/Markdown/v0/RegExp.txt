@@ -1,6 +1,6 @@
 Enter \n
 Spaces [\t ]+
-SimpleText  [^*_\-+>#`\:\/\"\.\(\)\[\]\! \t\n]+
+SimpleText  [^*_\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n]+
 URL [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
 URLAddress "<"[^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+">"
 EmailAddress "<"[^\!\<\>\[\]\(\) \n\t]+"@"[^\!\<\>\[\]\(\) \n\t]+">"
@@ -13,9 +13,7 @@ CloseParentheses ")"
 OpenSquareBracket "["
 CloseSquareBracket "]"
 ExclamationMarkOpenSquareBracket "!["
-
-DoubleBackticks ``[^`]*``
-Backtick `[^`]*`
+OpenSquareBracketWithCaret "[^"
 
 asterisks4 "*"{4,}
 dahes3 "-"{3,}
@@ -23,6 +21,7 @@ underscores "_"{4,}
 
 LeftArrow >+" "
 SharpSign #+" "
+ColonSign ":"
 
 StarBoldTag "**"
 UnderlineBoldTag "__"
@@ -34,4 +33,8 @@ StrikethroughTag "~~"
 HighlightTag "=="
 SubscriptTag "~"
 SuperscriptTag "^"
+DoubleBacktickTag "``"
+BacktickTag "`"
+FencedCodeBlockTag "```"
+
 

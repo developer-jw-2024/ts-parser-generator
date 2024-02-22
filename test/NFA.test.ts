@@ -1,4 +1,4 @@
-import { toChars, orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree } from '../src/LexicalAnalyzer/RegularExpression'
+import { toRegularExpressionChars, orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree } from '../src/LexicalAnalyzer/RegularExpression'
 import { NFA, TransferChar } from '../src/LexicalAnalyzer/NFA'
 import { isSetEqual } from '../src/Utils/SetUtils'
 import { FileUtils } from '../src/Utils/FileUtil'
@@ -7,7 +7,7 @@ describe('NFA', ()  => {
     test('NFA', () => { 
         try {
             var value = ''
-            var chars = toChars(value)
+            var chars = toRegularExpressionChars(value)
             var tree = buildRegularExpressionTree(chars)
             expect(true).toBe(false)
         } catch(e) {
@@ -16,7 +16,7 @@ describe('NFA', ()  => {
 
         try {
             var value = '\\'
-            var chars = toChars(value)
+            var chars = toRegularExpressionChars(value)
             var tree = buildRegularExpressionTree(chars)
             expect(true).toBe(false)
         } catch(e) {
@@ -25,7 +25,7 @@ describe('NFA', ()  => {
         
         try {
             var value = '-'
-            var chars = toChars(value)
+            var chars = toRegularExpressionChars(value)
             var tree = buildRegularExpressionTree(chars)
             expect(true).toBe(false)
         } catch(e) {
@@ -33,7 +33,7 @@ describe('NFA', ()  => {
         }
 
         var value = 'a'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -42,7 +42,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '\\-'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -52,7 +52,7 @@ describe('NFA', ()  => {
 
         var enterText = FileUtils.readFromFileSystem('./test/Enter.txt')
         var value = enterText[0]+enterText[1]
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -61,7 +61,7 @@ describe('NFA', ()  => {
         ])
 
         var value = enterText[3]
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -71,7 +71,7 @@ describe('NFA', ()  => {
 
         var tabText = FileUtils.readFromFileSystem('./test/Tab.txt')
         var value = tabText[0]+tabText[1]
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -80,7 +80,7 @@ describe('NFA', ()  => {
         ])
         
         var value = '\t'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -89,7 +89,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '\\\\'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -98,7 +98,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '.'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -107,7 +107,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'ab'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -117,7 +117,7 @@ describe('NFA', ()  => {
         ])
         
         var value = '((ab))'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -127,7 +127,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'abc'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -138,7 +138,7 @@ describe('NFA', ()  => {
         ])
         
         var value = 'a|b'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -152,7 +152,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'ab|c'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -167,7 +167,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a|b|c'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -188,7 +188,7 @@ describe('NFA', ()  => {
 
 
         var value = '(((a)|b|c))'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -205,7 +205,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[a-c]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -221,9 +221,22 @@ describe('NFA', ()  => {
             {"source": 7, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
+        var value = '[ab]'
+        var chars = toRegularExpressionChars(value)
+        var tree = buildRegularExpressionTree(chars)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
+        expect(nfa.finiteAutomatonPaths).toEqual([
+            {"source": 0, "destination": 2, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 3, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 0, "destination": 4, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 4, "destination": 5, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+            {"source": 5, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
+        ])
 
         var value = '[^a-c]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -232,8 +245,20 @@ describe('NFA', ()  => {
         ])
         expect((new TransferChar("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
 
+        var value = '[^\\[\\^]'
+        var chars = toRegularExpressionChars(value)
+        var tree = buildRegularExpressionTree(chars)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
+        expect(nfa.finiteAutomatonPaths).toEqual([
+            {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['[','^'], "isAnyCharPath" : false}},
+        ])
+        expect((new TransferChar("^", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
+        expect((new TransferChar("[", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
+        expect((new TransferChar("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(true)
+
         var value = 'a*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -246,7 +271,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '\\a*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -259,7 +284,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[\\a]*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -274,7 +299,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[\\\\]*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -289,7 +314,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -303,7 +328,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a?'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -315,7 +340,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a*b+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -336,7 +361,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '"a"*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -349,7 +374,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[ \t]+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -373,7 +398,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[A-C][A-C_]+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -431,7 +456,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '" "*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -444,7 +469,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '"\\a"*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -458,7 +483,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '(\\a)*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -471,7 +496,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '(\\\\)*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -484,7 +509,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '" "+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -499,7 +524,7 @@ describe('NFA', ()  => {
 
 
         var value = '[^ #]+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -513,7 +538,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a|.'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -541,14 +566,14 @@ describe('NFA', ()  => {
 
     test('NFA.epsilonClosure', () => { 
         var value = 'a'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
         expect(isSetEqual(nfa.epsilonClosure([0]), [0])).toBe(true)
 
         var value = 'a?'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -556,7 +581,7 @@ describe('NFA', ()  => {
 
 
         var value = 'a|b'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -574,7 +599,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a|[^b]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -592,7 +617,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a|[^ab]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -610,7 +635,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[^ab]|a'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -628,7 +653,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[^ab]|[^bc]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -647,7 +672,7 @@ describe('NFA', ()  => {
         ])
 
         var value = 'a|.'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -665,7 +690,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '.|a'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -683,7 +708,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[^a]|.'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -701,7 +726,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '[^ab]|.'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -720,7 +745,7 @@ describe('NFA', ()  => {
         ])
         
         var value = '.|[^a]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -738,7 +763,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '.|[^ab]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -757,7 +782,7 @@ describe('NFA', ()  => {
         ])
 
         var value = '.|.'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)

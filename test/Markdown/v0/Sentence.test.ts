@@ -4,11 +4,11 @@ import languageFunction from './Language_Function'
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
 class MarkdownRunner extends LRSyntaxAnalysisRunner {
-    isValid(markdownContent : string, debug : boolean = false) : boolean {
-        if (markdownContent.at(-1)!='\n') markdownContent += '\n'
-        var flag = super.isValid(markdownContent, debug)
-        return flag
-    }
+    // isValid(markdownContent : string, debug : boolean = false) : boolean {
+    //     if (markdownContent.at(-1)!='\n') markdownContent += '\n'
+    //     var flag = super.isValid(markdownContent, debug)
+    //     return flag
+    // }
 }
 var markdown: MarkdownRunner = new MarkdownRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
 
@@ -647,6 +647,48 @@ describe('Sentence', () => {
         // console.log(markdown.getValidationSteps_NoActions())
         
     })
+
+    test('Sentence - 28', () => {
+        expect(markdown.isValid(
+            `***`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    
+    test('Sentence - 29', () => {
+        expect(markdown.isValid(
+            "``Use `code` in your Markdown file.``"
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 30', () => {
+        expect(markdown.isValid(
+            "```Use `code` in your Markdown file.```"
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+    
+    test('Sentence - 31', () => {
+        expect(markdown.isValid(
+            `[^Variable]`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 32', () => {
+        expect(markdown.isValid(
+            `[^Variable]: This is good foot note.`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+    
 })//end
 
 

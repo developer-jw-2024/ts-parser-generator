@@ -94,7 +94,7 @@ export function getEndTermIndex(chars: Array<string>, index: number): number {
     return result
 }
 
-export function toChars(content: string): string[] {
+export function toRegularExpressionChars(content: string): string[] {
     var chars: Array<string> = []
     var hasDoubleQuotes : boolean = false
     for (var i = 0; i < content.length; i++) {
@@ -111,7 +111,11 @@ export function toChars(content: string): string[] {
             }
         }
         if (!handleFlag && content[i] == RegularExpressionSymbol.OpenSquareBracket) {
-            if (i + 1 < content.length) {
+            if (!handleFlag && hasDoubleQuotes) {
+                chars.push(content[i])
+                handleFlag = true   
+            }
+            if (!handleFlag && !hasDoubleQuotes && i + 1 < content.length) {
                 if (content[i + 1] == RegularExpressionSymbol.Caret) {
                     chars.push(content[i] + content[i + 1])
                     handleFlag = true
@@ -119,6 +123,47 @@ export function toChars(content: string): string[] {
                 }
             }
         }
+
+        if (!handleFlag) {
+            chars.push(content[i])
+            handleFlag = true
+            if (content[i]==RegularExpressionSymbol.DoubleQuotes) {
+                hasDoubleQuotes = !hasDoubleQuotes
+            }
+        }
+        
+    }
+    if (chars[chars.length - 1] == RegularExpressionSymbol.BackSlash) {
+        chars.pop()
+    }
+    return chars
+}
+
+export function toContentChars(content: string): string[] {
+    var chars: Array<string> = []
+    var hasDoubleQuotes : boolean = false
+    for (var i = 0; i < content.length; i++) {
+        var handleFlag = false
+        if (!handleFlag && content[i] == RegularExpressionSymbol.BackSlash) {
+            if (!handleFlag && hasDoubleQuotes) {
+                chars.push(content[i])
+                handleFlag = true    
+            }
+            if (!handleFlag && i + 1 < content.length) {
+                chars.push(content[i] + content[i + 1])
+                handleFlag = true
+                i++
+            }
+        }
+        // if (!handleFlag && content[i] == RegularExpressionSymbol.OpenSquareBracket) {
+        //     if (i + 1 < content.length) {
+        //         if (content[i + 1] == RegularExpressionSymbol.Caret) {
+        //             chars.push(content[i] + content[i + 1])
+        //             handleFlag = true
+        //             i++
+        //         }
+        //     }
+        // }
 
         if (!handleFlag) {
             chars.push(content[i])
@@ -508,7 +553,7 @@ export function buildRegularExpressionTree(chars : Array<string>, charBlocks ? :
 export class RegularExpression {
     dfa : DFA
     constructor(regularExpression : string) {
-        var chars = toChars(regularExpression)
+        var chars = toRegularExpressionChars(regularExpression)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)

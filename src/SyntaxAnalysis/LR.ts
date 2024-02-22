@@ -375,7 +375,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                             result = this.grammerProductionFunctions[igp](parameters)
                         }
                         if (debug) {
-                            console.log(this.grammerProductions[igp].toString(), result, '\n')
+                            console.log(this.grammerProductions[igp].toSimpleString(), '===>', result, '\n')
                         }
                         symbolTokens.push(new AnalysisToken(symbol, this.tokens[symbol], result, parameters))
                     } else {

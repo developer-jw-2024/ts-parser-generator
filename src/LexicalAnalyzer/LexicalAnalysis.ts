@@ -1,5 +1,5 @@
 import { DFA } from './DFA'
-import { RegularExpression, toChars } from './RegularExpression'
+import { RegularExpression, toContentChars, toRegularExpressionChars } from './RegularExpression'
 import { FiniteAutomatonPath, NFA } from './NFA'
 import { TransferChar } from './NFA'
 import { intersection } from '../Utils/SetUtils'
@@ -178,7 +178,8 @@ export class LexicalAnalysis {
 
     toTokens(input : string) {
         var tokens : Array<Token> = []
-        var chars : Array<string> = toChars(input)
+        var chars : Array<string> = toContentChars(input)
+        // var chars : Array<string> = toChars(input)
 
         var nodeStartIndex : number = 0
         var lastSuccessCharIndex : number = 0

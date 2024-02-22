@@ -1,8 +1,20 @@
 
+Markdown -> WholeMarkdownLine
+Markdown -> MarkdownLine
+Markdown -> WholeMarkdownLine MarkdownLine
 
 WholeMarkdownLine -> MarkdownLine Enter
 WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
 
+Footnote -> FootnoteReference ColonSign Spaces MarkdownLine
+MarkdownLine -> Footnote
+
+HorizontalRule -> StarBoldItalicTag
+HorizontalRule -> UnderlineBoldItalicTag
+HorizontalRule -> underscores
+HorizontalRule -> dahes3
+HorizontalRule -> asterisks4
+MarkdownLine -> HorizontalRule
 
 Blockquote -> LeftArrow MarkdownLine
 MarkdownLine -> Blockquote
@@ -25,24 +37,31 @@ MarkdownLine -> Sentence
 
 PlainText -> SimpleText
 PlainText -> Spaces
-PlainText -> Backtick
-PlainText -> DoubleBackticks
 PlainText -> Link
 PlainText -> URLAddress
 PlainText -> EmailAddress
 PlainText -> Image
+PlainText -> FootnoteReference
 PlainText -> PlainText SimpleText
 PlainText -> PlainText Spaces
-PlainText -> PlainText Backtick
-PlainText -> PlainText DoubleBackticks
 PlainText -> PlainText Link
 PlainText -> PlainText URLAddress
 PlainText -> PlainText EmailAddress
 PlainText -> PlainText Image
+PlainText -> PlainText FootnoteReference
+
+FootnoteReference -> OpenSquareBracketWithCaret SimpleText CloseSquareBracket
 
 Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL CloseParentheses
 Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
 Image -> ExclamationMarkOpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
+
+
+
+
+
+
+
 
 
 
@@ -86,6 +105,18 @@ BeginSuperscriptText -> SuperscriptTag NO_SuperscriptText_Match_emphasis
 BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis
 SuperscriptText -> BeginSuperscriptText SuperscriptTag
 
+BeginDoubleBacktickText -> DoubleBacktickTag NO_DoubleBacktickText_Match_emphasis
+BeginDoubleBacktickText -> BeginDoubleBacktickText NO_DoubleBacktickText_Match_emphasis
+DoubleBacktickText -> BeginDoubleBacktickText DoubleBacktickTag
+
+BeginBacktickText -> BacktickTag NO_BacktickText_Match_emphasis
+BeginBacktickText -> BeginBacktickText NO_BacktickText_Match_emphasis
+BacktickText -> BeginBacktickText BacktickTag
+
+BeginFencedCodeBlockText -> FencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis
+BeginFencedCodeBlockText -> BeginFencedCodeBlockText NO_FencedCodeBlockText_Match_emphasis
+FencedCodeBlockText -> BeginFencedCodeBlockText FencedCodeBlockTag
+
 NO_StarBoldText_Match_emphasis -> PlainText
 NO_StarBoldText_Match_emphasis -> UnderlineBoldText
 NO_StarBoldText_Match_emphasis -> StarItalicText
@@ -96,6 +127,9 @@ NO_StarBoldText_Match_emphasis -> StrikethroughText
 NO_StarBoldText_Match_emphasis -> HighlightText
 NO_StarBoldText_Match_emphasis -> SubscriptText
 NO_StarBoldText_Match_emphasis -> SuperscriptText
+NO_StarBoldText_Match_emphasis -> DoubleBacktickText
+NO_StarBoldText_Match_emphasis -> BacktickText
+NO_StarBoldText_Match_emphasis -> FencedCodeBlockText
 
 NO_UnderlineBoldText_Match_emphasis -> PlainText
 NO_UnderlineBoldText_Match_emphasis -> StarBoldText
@@ -107,6 +141,9 @@ NO_UnderlineBoldText_Match_emphasis -> StrikethroughText
 NO_UnderlineBoldText_Match_emphasis -> HighlightText
 NO_UnderlineBoldText_Match_emphasis -> SubscriptText
 NO_UnderlineBoldText_Match_emphasis -> SuperscriptText
+NO_UnderlineBoldText_Match_emphasis -> DoubleBacktickText
+NO_UnderlineBoldText_Match_emphasis -> BacktickText
+NO_UnderlineBoldText_Match_emphasis -> FencedCodeBlockText
 
 NO_StarItalicText_Match_emphasis -> PlainText
 NO_StarItalicText_Match_emphasis -> StarBoldText
@@ -118,6 +155,9 @@ NO_StarItalicText_Match_emphasis -> StrikethroughText
 NO_StarItalicText_Match_emphasis -> HighlightText
 NO_StarItalicText_Match_emphasis -> SubscriptText
 NO_StarItalicText_Match_emphasis -> SuperscriptText
+NO_StarItalicText_Match_emphasis -> DoubleBacktickText
+NO_StarItalicText_Match_emphasis -> BacktickText
+NO_StarItalicText_Match_emphasis -> FencedCodeBlockText
 
 NO_UnderlineItalicText_Match_emphasis -> PlainText
 NO_UnderlineItalicText_Match_emphasis -> StarBoldText
@@ -129,6 +169,9 @@ NO_UnderlineItalicText_Match_emphasis -> StrikethroughText
 NO_UnderlineItalicText_Match_emphasis -> HighlightText
 NO_UnderlineItalicText_Match_emphasis -> SubscriptText
 NO_UnderlineItalicText_Match_emphasis -> SuperscriptText
+NO_UnderlineItalicText_Match_emphasis -> DoubleBacktickText
+NO_UnderlineItalicText_Match_emphasis -> BacktickText
+NO_UnderlineItalicText_Match_emphasis -> FencedCodeBlockText
 
 NO_StarBoldItalicText_Match_emphasis -> PlainText
 NO_StarBoldItalicText_Match_emphasis -> StarBoldText
@@ -140,6 +183,9 @@ NO_StarBoldItalicText_Match_emphasis -> StrikethroughText
 NO_StarBoldItalicText_Match_emphasis -> HighlightText
 NO_StarBoldItalicText_Match_emphasis -> SubscriptText
 NO_StarBoldItalicText_Match_emphasis -> SuperscriptText
+NO_StarBoldItalicText_Match_emphasis -> DoubleBacktickText
+NO_StarBoldItalicText_Match_emphasis -> BacktickText
+NO_StarBoldItalicText_Match_emphasis -> FencedCodeBlockText
 
 NO_UnderlineBoldItalicText_Match_emphasis -> PlainText
 NO_UnderlineBoldItalicText_Match_emphasis -> StarBoldText
@@ -151,6 +197,9 @@ NO_UnderlineBoldItalicText_Match_emphasis -> StrikethroughText
 NO_UnderlineBoldItalicText_Match_emphasis -> HighlightText
 NO_UnderlineBoldItalicText_Match_emphasis -> SubscriptText
 NO_UnderlineBoldItalicText_Match_emphasis -> SuperscriptText
+NO_UnderlineBoldItalicText_Match_emphasis -> DoubleBacktickText
+NO_UnderlineBoldItalicText_Match_emphasis -> BacktickText
+NO_UnderlineBoldItalicText_Match_emphasis -> FencedCodeBlockText
 
 NO_StrikethroughText_Match_emphasis -> PlainText
 NO_StrikethroughText_Match_emphasis -> StarBoldText
@@ -162,6 +211,9 @@ NO_StrikethroughText_Match_emphasis -> UnderlineBoldItalicText
 NO_StrikethroughText_Match_emphasis -> HighlightText
 NO_StrikethroughText_Match_emphasis -> SubscriptText
 NO_StrikethroughText_Match_emphasis -> SuperscriptText
+NO_StrikethroughText_Match_emphasis -> DoubleBacktickText
+NO_StrikethroughText_Match_emphasis -> BacktickText
+NO_StrikethroughText_Match_emphasis -> FencedCodeBlockText
 
 NO_HighlightText_Match_emphasis -> PlainText
 NO_HighlightText_Match_emphasis -> StarBoldText
@@ -173,6 +225,9 @@ NO_HighlightText_Match_emphasis -> UnderlineBoldItalicText
 NO_HighlightText_Match_emphasis -> StrikethroughText
 NO_HighlightText_Match_emphasis -> SubscriptText
 NO_HighlightText_Match_emphasis -> SuperscriptText
+NO_HighlightText_Match_emphasis -> DoubleBacktickText
+NO_HighlightText_Match_emphasis -> BacktickText
+NO_HighlightText_Match_emphasis -> FencedCodeBlockText
 
 NO_SubscriptText_Match_emphasis -> PlainText
 NO_SubscriptText_Match_emphasis -> StarBoldText
@@ -184,6 +239,9 @@ NO_SubscriptText_Match_emphasis -> UnderlineBoldItalicText
 NO_SubscriptText_Match_emphasis -> StrikethroughText
 NO_SubscriptText_Match_emphasis -> HighlightText
 NO_SubscriptText_Match_emphasis -> SuperscriptText
+NO_SubscriptText_Match_emphasis -> DoubleBacktickText
+NO_SubscriptText_Match_emphasis -> BacktickText
+NO_SubscriptText_Match_emphasis -> FencedCodeBlockText
 
 NO_SuperscriptText_Match_emphasis -> PlainText
 NO_SuperscriptText_Match_emphasis -> StarBoldText
@@ -195,6 +253,51 @@ NO_SuperscriptText_Match_emphasis -> UnderlineBoldItalicText
 NO_SuperscriptText_Match_emphasis -> StrikethroughText
 NO_SuperscriptText_Match_emphasis -> HighlightText
 NO_SuperscriptText_Match_emphasis -> SubscriptText
+NO_SuperscriptText_Match_emphasis -> DoubleBacktickText
+NO_SuperscriptText_Match_emphasis -> BacktickText
+NO_SuperscriptText_Match_emphasis -> FencedCodeBlockText
+
+NO_DoubleBacktickText_Match_emphasis -> PlainText
+NO_DoubleBacktickText_Match_emphasis -> StarBoldText
+NO_DoubleBacktickText_Match_emphasis -> UnderlineBoldText
+NO_DoubleBacktickText_Match_emphasis -> StarItalicText
+NO_DoubleBacktickText_Match_emphasis -> UnderlineItalicText
+NO_DoubleBacktickText_Match_emphasis -> StarBoldItalicText
+NO_DoubleBacktickText_Match_emphasis -> UnderlineBoldItalicText
+NO_DoubleBacktickText_Match_emphasis -> StrikethroughText
+NO_DoubleBacktickText_Match_emphasis -> HighlightText
+NO_DoubleBacktickText_Match_emphasis -> SubscriptText
+NO_DoubleBacktickText_Match_emphasis -> SuperscriptText
+NO_DoubleBacktickText_Match_emphasis -> BacktickText
+NO_DoubleBacktickText_Match_emphasis -> FencedCodeBlockText
+
+NO_BacktickText_Match_emphasis -> PlainText
+NO_BacktickText_Match_emphasis -> StarBoldText
+NO_BacktickText_Match_emphasis -> UnderlineBoldText
+NO_BacktickText_Match_emphasis -> StarItalicText
+NO_BacktickText_Match_emphasis -> UnderlineItalicText
+NO_BacktickText_Match_emphasis -> StarBoldItalicText
+NO_BacktickText_Match_emphasis -> UnderlineBoldItalicText
+NO_BacktickText_Match_emphasis -> StrikethroughText
+NO_BacktickText_Match_emphasis -> HighlightText
+NO_BacktickText_Match_emphasis -> SubscriptText
+NO_BacktickText_Match_emphasis -> SuperscriptText
+NO_BacktickText_Match_emphasis -> DoubleBacktickText
+NO_BacktickText_Match_emphasis -> FencedCodeBlockText
+
+NO_FencedCodeBlockText_Match_emphasis -> PlainText
+NO_FencedCodeBlockText_Match_emphasis -> StarBoldText
+NO_FencedCodeBlockText_Match_emphasis -> UnderlineBoldText
+NO_FencedCodeBlockText_Match_emphasis -> StarItalicText
+NO_FencedCodeBlockText_Match_emphasis -> UnderlineItalicText
+NO_FencedCodeBlockText_Match_emphasis -> StarBoldItalicText
+NO_FencedCodeBlockText_Match_emphasis -> UnderlineBoldItalicText
+NO_FencedCodeBlockText_Match_emphasis -> StrikethroughText
+NO_FencedCodeBlockText_Match_emphasis -> HighlightText
+NO_FencedCodeBlockText_Match_emphasis -> SubscriptText
+NO_FencedCodeBlockText_Match_emphasis -> SuperscriptText
+NO_FencedCodeBlockText_Match_emphasis -> DoubleBacktickText
+NO_FencedCodeBlockText_Match_emphasis -> BacktickText
 
 Match_emphasis -> PlainText
 Match_emphasis -> StarBoldText
@@ -207,3 +310,6 @@ Match_emphasis -> StrikethroughText
 Match_emphasis -> HighlightText
 Match_emphasis -> SubscriptText
 Match_emphasis -> SuperscriptText
+Match_emphasis -> DoubleBacktickText
+Match_emphasis -> BacktickText
+Match_emphasis -> FencedCodeBlockText

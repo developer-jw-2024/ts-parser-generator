@@ -12,17 +12,14 @@ StrikethroughTag
 HighlightTag
 SubscriptTag
 SuperscriptTag
+DoubleBacktickTag
+BacktickTag
+FencedCodeBlockTag
 `.split('\n').map(t=>t.trim()).filter(t=>t.length>0)
 
 var result = 
 `
-Sentence -> Match_emphasis
-Sentence -> Sentence Match_emphasis
 
-PlainText -> SimpleText
-PlainText -> Spaces
-PlainText -> PlainText SimpleText
-PlainText -> PlainText Spaces
 
 `
 var beginSymbols = tags.map(t=>'Begin'+t.substring(0, t.length-3)+'Text')

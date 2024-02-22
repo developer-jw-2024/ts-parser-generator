@@ -1,11 +1,11 @@
-import { toChars, orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree, RegularExpression } from '../src/LexicalAnalyzer/RegularExpression'
+import { orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree, RegularExpression, toRegularExpressionChars } from '../src/LexicalAnalyzer/RegularExpression'
 import { NFA, TransferChar } from '../src/LexicalAnalyzer/NFA'
 import { DFA } from '../src/LexicalAnalyzer/DFA'
 import { isSetEqual } from '../src/Utils/SetUtils'
 describe('DFA', ()  => {
     test('DFA', () => { 
         var value = 'a'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -18,7 +18,7 @@ describe('DFA', ()  => {
         expect(dfa.getNumberOfNodes()).toEqual(2)
 
         var value = '[^a]'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -30,8 +30,9 @@ describe('DFA', ()  => {
         ])
         expect(dfa.getNumberOfNodes()).toEqual(2)
 
+        
         var value = 'ab'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -45,7 +46,7 @@ describe('DFA', ()  => {
         expect(dfa.getNumberOfNodes()).toEqual(3)
 
         var value = '"a+"'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -67,7 +68,7 @@ describe('DFA', ()  => {
 
 
         var value = 'a|b'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -81,7 +82,7 @@ describe('DFA', ()  => {
         expect(dfa.getNumberOfNodes()).toEqual(3)
 
         var value = 'a?'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -98,7 +99,7 @@ describe('DFA', ()  => {
         expect(dfa.getNumberOfNodes()).toEqual(2)
 
         var value = 'a*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -111,7 +112,7 @@ describe('DFA', ()  => {
         ])
 
         var value = '[\\\\]*'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -124,7 +125,7 @@ describe('DFA', ()  => {
         ])
 
         var value = 'a+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -138,7 +139,7 @@ describe('DFA', ()  => {
         ])
 
         var value = 'a*b+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -155,7 +156,7 @@ describe('DFA', ()  => {
         ])
 
         var value = '(a|b)*c'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -176,7 +177,7 @@ describe('DFA', ()  => {
         ])
 
         var value = '#'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -188,7 +189,7 @@ describe('DFA', ()  => {
         ])
 
         var value = '##'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -201,7 +202,7 @@ describe('DFA', ()  => {
         ])
 
         var value = '" "+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -217,7 +218,7 @@ describe('DFA', ()  => {
 
 
         var value = '[^ #]+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -231,7 +232,7 @@ describe('DFA', ()  => {
         ])
 
         var value = '[ \t]+'
-        var chars = toChars(value)
+        var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
@@ -358,5 +359,35 @@ describe('DFA', ()  => {
         expect(regExp.test("****")).toBe(true)
         expect(regExp.test("*****")).toBe(true)
 
+        var regExp : RegularExpression = new RegularExpression('"``"[^\`]+"``"')
+        expect(regExp.test("``A``")).toBe(true)
+
+        var regExp : RegularExpression = new RegularExpression(`[\\^]*`)
+        expect(regExp.test("a")).toBe(false)
+        expect(regExp.test("^")).toBe(true)
+        expect(regExp.test("")).toBe(true)
+
+
+        var regExp : RegularExpression = new RegularExpression(`[^\\^]*`)
+        expect(regExp.test("a")).toBe(true)
+        expect(regExp.test("")).toBe(true)
+        expect(regExp.test("^")).toBe(false)
+
+        // var regExp : RegularExpression = new RegularExpression('[^*_\\-\\+\\>\\#\\`\\:\\/\\"\\(\\)\\[\\]\\!\\^ \\t\\n]+')
+        var regExp : RegularExpression = new RegularExpression('[^\\[\\^]+')
+        expect(regExp.test("a")).toBe(true)
+        expect(regExp.test("^")).toBe(false)
+        expect(regExp.test("[")).toBe(false)
+        expect(regExp.test("a^")).toBe(false)
+        expect(regExp.test("[a")).toBe(false)
+        expect(regExp.test("[^")).toBe(false)
+
+        var regExp : RegularExpression = new RegularExpression('"[^"')
+        expect(regExp.test("a")).toBe(false)
+        expect(regExp.test("^")).toBe(false)
+        expect(regExp.test("[")).toBe(false)
+        expect(regExp.test("a^")).toBe(false)
+        expect(regExp.test("[a")).toBe(false)
+        expect(regExp.test("[^")).toBe(true)
     })
 })
