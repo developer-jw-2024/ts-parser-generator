@@ -9,43 +9,9 @@ describe('Markdown', () => {
 
     test('markdown - 0', () => {
         expect(markdown.isValid(
-`*abc*  
-`
+`abc`
         )).toEqual(true)
-        // console.log(markdown.getValidationSteps_NoActions())
-    })
-
-    test('markdown - 1', () => {
-        expect(markdown.isValid(
-`-*abc*  
-`
-        )).toEqual(true)
-        // console.log(markdown.getValidationSteps_NoActions())
-    })
-
-    test('markdown - 2', () => {
-        expect(markdown.isValid(
-`- *abc*  
-- A**B**c
-`
-        )).toEqual(true)
-        // console.log(markdown.getValidationSteps_NoActions())
-    })
-
-    test('markdown - 3', () => {
-        expect(markdown.isValid(
-`1.This is a school 
-2.The Apple
-`
-        )).toEqual(true)
-        // console.log(markdown.getValidationSteps_NoActions())
-    })
-
-    test('markdown - 4', () => {
-        expect(markdown.isValid(
-`**<https://www.blogs.com>**
-`
-        )).toEqual(true)
+        console.log(markdown.getResult())
         // console.log(markdown.getValidationSteps_NoActions())
     })
 

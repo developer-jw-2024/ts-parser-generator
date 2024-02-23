@@ -5,71 +5,169 @@
         State0[[State0
 E1 -> ⏺ E _TERMINATED_
 E -> ⏺ E + T
+E -> ⏺ E - T
 E -> ⏺ T
 T -> ⏺ T * F
+T -> ⏺ T / F
 T -> ⏺ F
 F -> ⏺ ( E )
-F -> ⏺ id]]
+F -> ⏺ F spaces
+F -> ⏺ spaces F
+F -> ⏺ integer
+F -> ⏺ - integer]]
 State1[[State1
 E1 -> E ⏺ _TERMINATED_
-E -> E ⏺ + T]]
+E -> E ⏺ + T
+E -> E ⏺ - T]]
 State2[[State2
 E -> T ⏺
-T -> T ⏺ * F]]
+T -> T ⏺ * F
+T -> T ⏺ / F]]
 State3[[State3
-T -> F ⏺]]
+T -> F ⏺
+F -> F ⏺ spaces]]
 State4[[State4
 F -> ( ⏺ E )
 E -> ⏺ E + T
+E -> ⏺ E - T
 E -> ⏺ T
 T -> ⏺ T * F
+T -> ⏺ T / F
 T -> ⏺ F
 F -> ⏺ ( E )
-F -> ⏺ id]]
+F -> ⏺ F spaces
+F -> ⏺ spaces F
+F -> ⏺ integer
+F -> ⏺ - integer]]
 State5[[State5
-F -> id ⏺]]
+F -> spaces ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ F spaces
+F -> ⏺ spaces F
+F -> ⏺ integer
+F -> ⏺ - integer]]
 State6[[State6
+F -> integer ⏺]]
+State7[[State7
+F -> - ⏺ integer]]
+State8[[State8
 E -> E + ⏺ T
 T -> ⏺ T * F
+T -> ⏺ T / F
 T -> ⏺ F
 F -> ⏺ ( E )
-F -> ⏺ id]]
-State7[[State7
+F -> ⏺ F spaces
+F -> ⏺ spaces F
+F -> ⏺ integer
+F -> ⏺ - integer]]
+State9[[State9
+E -> E - ⏺ T
+T -> ⏺ T * F
+T -> ⏺ T / F
+T -> ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ F spaces
+F -> ⏺ spaces F
+F -> ⏺ integer
+F -> ⏺ - integer]]
+State10[[State10
 T -> T * ⏺ F
 F -> ⏺ ( E )
-F -> ⏺ id]]
-State8[[State8
-F -> ( E ⏺ )
-E -> E ⏺ + T]]
-State9[[State9
-E -> E + T ⏺
-T -> T ⏺ * F]]
-State10[[State10
-T -> T * F ⏺]]
+F -> ⏺ F spaces
+F -> ⏺ spaces F
+F -> ⏺ integer
+F -> ⏺ - integer]]
 State11[[State11
+T -> T / ⏺ F
+F -> ⏺ ( E )
+F -> ⏺ F spaces
+F -> ⏺ spaces F
+F -> ⏺ integer
+F -> ⏺ - integer]]
+State12[[State12
+F -> F spaces ⏺]]
+State13[[State13
+F -> ( E ⏺ )
+E -> E ⏺ + T
+E -> E ⏺ - T]]
+State14[[State14
+F -> spaces F ⏺
+F -> F ⏺ spaces]]
+State15[[State15
+F -> - integer ⏺]]
+State16[[State16
+E -> E + T ⏺
+T -> T ⏺ * F
+T -> T ⏺ / F]]
+State17[[State17
+E -> E - T ⏺
+T -> T ⏺ * F
+T -> T ⏺ / F]]
+State18[[State18
+T -> T * F ⏺
+F -> F ⏺ spaces]]
+State19[[State19
+T -> T / F ⏺
+F -> F ⏺ spaces]]
+State20[[State20
 F -> ( E ) ⏺]]
 State0-->|E|State1
 State0-->|T|State2
 State0-->|F|State3
 State0-->|(|State4
-State0-->|id|State5
-State1-->|+|State6
-State2-->|*|State7
+State0-->|spaces|State5
+State0-->|integer|State6
+State0-->|-|State7
+State1-->|+|State8
+State1-->|-|State9
+State2-->|*|State10
+State2-->|/|State11
+State3-->|spaces|State12
 State4-->|T|State2
 State4-->|F|State3
 State4-->|(|State4
-State4-->|id|State5
-State4-->|E|State8
-State6-->|F|State3
-State6-->|(|State4
-State6-->|id|State5
-State6-->|T|State9
-State7-->|(|State4
-State7-->|id|State5
-State7-->|F|State10
-State8-->|+|State6
-State8-->|)|State11
-State9-->|*|State7
+State4-->|spaces|State5
+State4-->|integer|State6
+State4-->|-|State7
+State4-->|E|State13
+State5-->|(|State4
+State5-->|spaces|State5
+State5-->|integer|State6
+State5-->|-|State7
+State5-->|F|State14
+State7-->|integer|State15
+State8-->|F|State3
+State8-->|(|State4
+State8-->|spaces|State5
+State8-->|integer|State6
+State8-->|-|State7
+State8-->|T|State16
+State9-->|F|State3
+State9-->|(|State4
+State9-->|spaces|State5
+State9-->|integer|State6
+State9-->|-|State7
+State9-->|T|State17
+State10-->|(|State4
+State10-->|spaces|State5
+State10-->|integer|State6
+State10-->|-|State7
+State10-->|F|State18
+State11-->|(|State4
+State11-->|spaces|State5
+State11-->|integer|State6
+State11-->|-|State7
+State11-->|F|State19
+State13-->|+|State8
+State13-->|-|State9
+State13-->|)|State20
+State14-->|spaces|State12
+State16-->|*|State10
+State16-->|/|State11
+State17-->|*|State10
+State17-->|/|State11
+State18-->|spaces|State12
+State19-->|spaces|State12
         </pre>
         <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
