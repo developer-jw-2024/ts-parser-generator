@@ -689,6 +689,38 @@ describe('Sentence', () => {
         
     })
     
+    test('Sentence - 33', () => {
+        expect(markdown.isValid(
+            `: This is good foot note.`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 34', () => {
+        expect(markdown.isValid(
+            `- [ ] This is good foot note.`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 35', () => {
+        expect(markdown.isValid(
+            `- [x] This is good foot note.`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+
+    test('Sentence - 36', () => {
+        expect(markdown.isValid(
+            `- [x] This :tent: is good.`
+        )).toEqual(true)
+        // console.log(markdown.getValidationSteps_NoActions())
+        
+    })
+    
 })//end
 
 

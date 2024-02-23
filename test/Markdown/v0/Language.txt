@@ -6,6 +6,13 @@ Markdown -> WholeMarkdownLine MarkdownLine
 WholeMarkdownLine -> MarkdownLine Enter
 WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
 
+TaskListItem -> CheckedBox Spaces MarkdownLine
+TaskListItem -> UncheckedBox Spaces MarkdownLine
+MarkdownLine -> TaskListItem
+
+DefinitionListItem -> ColonSign Spaces MarkdownLine
+MarkdownLine -> DefinitionListItem
+
 Footnote -> FootnoteReference ColonSign Spaces MarkdownLine
 MarkdownLine -> Footnote
 
@@ -41,6 +48,7 @@ PlainText -> Link
 PlainText -> URLAddress
 PlainText -> EmailAddress
 PlainText -> Image
+PlainText -> Emoji
 PlainText -> FootnoteReference
 PlainText -> PlainText SimpleText
 PlainText -> PlainText Spaces
@@ -48,6 +56,7 @@ PlainText -> PlainText Link
 PlainText -> PlainText URLAddress
 PlainText -> PlainText EmailAddress
 PlainText -> PlainText Image
+PlainText -> PlainText Emoji
 PlainText -> PlainText FootnoteReference
 
 FootnoteReference -> OpenSquareBracketWithCaret SimpleText CloseSquareBracket

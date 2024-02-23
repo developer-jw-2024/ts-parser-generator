@@ -1,6 +1,8 @@
 Enter \n
 Spaces [\t ]+
 SimpleText  [^*_\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n]+
+
+Emoji ":"[^\:]+":"
 URL [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
 URLAddress "<"[^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+">"
 EmailAddress "<"[^\!\<\>\[\]\(\) \n\t]+"@"[^\!\<\>\[\]\(\) \n\t]+">"
@@ -22,6 +24,9 @@ underscores "_"{4,}
 LeftArrow >+" "
 SharpSign #+" "
 ColonSign ":"
+DaheSign "-"
+CheckedBox "- [x]"
+UncheckedBox "- [ ]"
 
 StarBoldTag "**"
 UnderlineBoldTag "__"
