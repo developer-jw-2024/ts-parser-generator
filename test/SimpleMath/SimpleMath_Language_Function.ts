@@ -1,64 +1,64 @@
-import { AnalysisToken } from "../../src/SyntaxAnalysis/LR"
+import { AnalysisToken, GrammarProductionFunction, LanguageFunctionsEntity } from "../../src/SyntaxAnalysis/SyntaxAnalysis"
 
-export default {
+export class SimpleMath extends LanguageFunctionsEntity {
     
-    'E -> E + T':
-    function(args : Array<AnalysisToken>) {
+    @GrammarProductionFunction('E -> E + T')
+    plus(args : Array<AnalysisToken>) {
         return args[0].value + args[2].value
     }
-    ,
+    
 
-    'E -> E - T':
-    function(args : Array<AnalysisToken>) {
+    @GrammarProductionFunction('E -> E - T')
+    minus(args : Array<AnalysisToken>) {
         return args[0].value - args[2].value
     }
-    ,
-    'E -> T':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('E -> T')
+    toEquation(args : Array<AnalysisToken>) {
         return args[0].value
     }
-    ,
     
-    'T -> T * F':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('T -> T * F')
+    multi(args : Array<AnalysisToken>) {
         return args[0].value * args[2].value
     }
-    ,
-    'T -> T / F':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('T -> T / F')
+    div(args : Array<AnalysisToken>) {
         return args[0].value / args[2].value
     }
-    ,
     
-    'T -> F':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('T -> F')
+    toTerm(args : Array<AnalysisToken>) {
         return args[0].value
     }
-    ,
     
-    'F -> ( E )':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('F -> ( E )')
+    toFactor1(args : Array<AnalysisToken>) {
         return args[1].value
     }
-    ,
-    'F -> F spaces':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('F -> F spaces')
+    toFactor2(args : Array<AnalysisToken>) {
         return args[0].value
     }
-    ,
-    'F -> spaces F':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('F -> spaces F')
+    toFactor3(args : Array<AnalysisToken>) {
         return args[1].value
     }
-    ,
-    'F -> integer':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('F -> integer')
+    toFactor4(args : Array<AnalysisToken>) {
         return parseInt(args[0].value)
     }
-    ,
-    'F -> - integer':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('F -> - integer')
+    toFactor5(args : Array<AnalysisToken>) {
         return -parseInt(args[1].value)
     }
-
+    
 }

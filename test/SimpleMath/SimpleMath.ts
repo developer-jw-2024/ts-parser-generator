@@ -1,6 +1,6 @@
 import { FileUtils } from '../../src/Utils/FileUtil'
 import { LRSyntaxAnalysis, LRSyntaxAnalysisRunner } from "../../src/SyntaxAnalysis/LR"
-import languageFunctions from './SimpleMath_Language_Function'
+import { SimpleMath } from './SimpleMath_Language_Function'
 
 class TimeCounter {
     timeStamps : Array<Date> =[]
@@ -22,7 +22,7 @@ var tokenTypeDefinitionPath = './test/SimpleMath/SimpleMath_RegExp.txt'
 
 var timeCounter : TimeCounter = new TimeCounter()
 
-var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunctions)
+var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
 console.log(timeCounter.getTimePeriod())
 var equation = "  3 / (1 - (-1))  "
 var flag = simpleMath.isValid(equation)

@@ -1,9 +1,9 @@
 import { LRSyntaxAnalysisRunner } from '../../../src/SyntaxAnalysis/LR'
-import languageFunction from './Markdown_Language_Function'
+import { Markdown } from './Markdown_Language_Function'
 
 var languageDefinitionPath : string = `${__dirname}/Markdown_Language.txt`
 var tokenTypeDefinitionPath : string = `${__dirname}/Markdown_RegExp.txt`
-var markdown : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
+var markdown : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, Markdown)
 
 describe('markdown', () => {
         test('markdown - 0', () => {

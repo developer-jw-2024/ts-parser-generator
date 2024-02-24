@@ -1,4 +1,4 @@
-import { GrammarProduction, IndexGrammarProduction, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
+import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
 import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 import { FileUtils } from "../Utils/FileUtil";
@@ -85,59 +85,6 @@ export class LRAction {
 
 }
 
-export class AnalysisToken {
-    indexOfToken : number
-    token : Token
-    value : any 
-    children : Array<AnalysisToken> = []
-
-    constructor(indexOfToken : number, token : Token, value : any, children : Array<AnalysisToken>) {
-        this.indexOfToken = indexOfToken
-        this.token = token
-        this.value = value
-        this.children = children
-    }
-
-    toSimpleString() : string | null {
-        if (this.value==null) return ''
-        var result = ''
-        for (var i=0;i<this.value.length;i++) {
-            if (this.value[i]=='\n') {
-                result += ''
-            } else if (this.value[i]=='\t') {
-                result += ''
-            } else {
-                result += this.value[i]
-            }
-        }
-        return result
-    }
-}
-
-export class AnalysisStep {
-    stack : string
-    symbols : string
-    symbolTokens : Array<AnalysisToken>
-    inputs : string
-    action : string
-
-    constructor(stack : string,
-        symbols : string,
-        symbolTokens : Array<AnalysisToken>,
-        inputs : string,
-        action : string) {
-        this.stack = stack
-        this.symbols = symbols
-        this.symbolTokens = symbolTokens
-        this.inputs = inputs
-        this.action = action
-    }
-
-    toString() : string {
-        return `[ ${this.stack} ]     [ ${this.symbols} ]     [ ${this.inputs} ]     ${this.action}`
-    }
-}
-
 export class LRSyntaxAnalysis extends SyntaxAnalysis {
     states : Array<LRItemSet> = []
     acceptIndexGrammarProduction : IndexGrammarProduction | null = null
@@ -192,6 +139,13 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
 
     isValidWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string, debug : boolean = false) : boolean {
         
+        var clazz  = this.languageFunctionsEntityClass
+        var languageFunctionsEntityObject : LanguageFunctionsEntity | null
+        if (clazz) {
+            languageFunctionsEntityObject = new clazz()
+        }
+        
+
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
         var indexOfErrorToken = this.getIndexOfToken(Token.ERROR_TOKEN)
         var indexOfUnknownToken = this.getIndexOfToken(Token.UNKNOWN_TOKEN)
@@ -371,8 +325,9 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         stack.push(gotoAction.value)
                         symbols.push(symbol)
                         var result = null
-                        if (this.grammerProductionFunctions && this.grammerProductionFunctions[igp]) {
-                            result = this.grammerProductionFunctions[igp](parameters)
+                        if (this.grammerProductionFunctionNames && this.grammerProductionFunctionNames[igp]) {
+                            var gpStr = this.grammerProductionFunctionNames[igp]
+                            result = languageFunctionsEntityObject==null?null:(languageFunctionsEntityObject[gpStr](parameters))
                         }
                         if (debug) {
                             console.log(this.grammerProductions[igp].toSimpleString(), '===>', result, '\n')
@@ -696,12 +651,12 @@ export class LRSyntaxAnalysisRunner {
 
     lrSyntaxAnalysis : LRSyntaxAnalysis
 
-    constructor(languageDefinitionPath : string, tokenTypeDefinitionPath : string, languageFunction : Object) {
+    constructor(languageDefinitionPath : string, tokenTypeDefinitionPath : string, languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
         var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
         var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
         
         this.lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
-        this.lrSyntaxAnalysis.setLanguageDefinitionFunctions(languageFunction)
+        this.lrSyntaxAnalysis.setLanguageFunctionsEntityClass(languageFunctionsEntityClass)
         this.lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinition)                
     }
 

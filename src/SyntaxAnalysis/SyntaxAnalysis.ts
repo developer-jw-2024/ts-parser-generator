@@ -2,6 +2,87 @@ import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAna
 import { isListEqual } from "../Utils/ArrayListUtils"
 import { isSetEqual } from "../Utils/SetUtils"
 
+export class AnalysisToken {
+    indexOfToken : number
+    token : Token
+    value : any 
+    children : Array<AnalysisToken> = []
+
+    constructor(indexOfToken : number, token : Token, value : any, children : Array<AnalysisToken>) {
+        this.indexOfToken = indexOfToken
+        this.token = token
+        this.value = value
+        this.children = children
+    }
+
+    toSimpleString() : string | null {
+        if (this.value==null) return ''
+        var result = ''
+        for (var i=0;i<this.value.length;i++) {
+            if (this.value[i]=='\n') {
+                result += ''
+            } else if (this.value[i]=='\t') {
+                result += ''
+            } else {
+                result += this.value[i]
+            }
+        }
+        return result
+    }
+}
+
+export class AnalysisStep {
+    stack : string
+    symbols : string
+    symbolTokens : Array<AnalysisToken>
+    inputs : string
+    action : string
+
+    constructor(stack : string,
+        symbols : string,
+        symbolTokens : Array<AnalysisToken>,
+        inputs : string,
+        action : string) {
+        this.stack = stack
+        this.symbols = symbols
+        this.symbolTokens = symbolTokens
+        this.inputs = inputs
+        this.action = action
+    }
+
+    toString() : string {
+        return `[ ${this.stack} ]     [ ${this.symbols} ]     [ ${this.inputs} ]     ${this.action}`
+    }
+}
+
+
+export function GrammarProductionFunction(gp: string) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        const originalMethod = descriptor.value;
+        var clazz = target.constructor
+        clazz.prototype[gp] = originalMethod
+        if (clazz.grammarProductionStringList==null || clazz.grammarProductionStringList==undefined) {
+            clazz.grammarProductionStringList = new Array<string>
+        }
+        clazz.grammarProductionStringList.push(gp)
+    };
+}
+
+export class LanguageFunctionsEntity {
+    runFunction(gps : string, args : Array<AnalysisToken> = []) : any {
+        if (this[gps]) {
+            return this[gps](args)
+        } else {
+            throw new Error(`There is no this function for grammar production [${gps}]`)
+        }
+    }
+   
+    static getGrammarProductionStringList() : Array<string> | null {
+        var result : Array<string> = this['grammarProductionStringList']
+        return (result==null || result==undefined)?[]:result
+    }
+}
+
 export function nextGrammarSymbolByName(tokenName: string) : string {
     
     var i = tokenName.length-1
@@ -96,7 +177,8 @@ export class SyntaxAnalysis {
     grammerProductions : Array<GrammarProduction>
     indexGrammerProductions : Array<IndexGrammarProduction>
     indexGrammerProductionFlags : Array<boolean>
-    grammerProductionFunctions : Array<Function>
+    grammerProductionFunctionNames : Array<string>
+    languageFunctionsEntityClass : typeof LanguageFunctionsEntity
 
     first : Array<Array<number>> = new Array<Array<number>>()
     follow : Array<Array<number>> = new Array<Array<number>>()
@@ -178,17 +260,18 @@ export class SyntaxAnalysis {
         return this
     }
 
-    setLanguageDefinitionFunctions(languageDefinitionFunctions : Object) {
+    setLanguageFunctionsEntityClass(languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
         // console.log(languageDefinitionFunctions)
-        this.grammerProductionFunctions = []
-        var gpExpList = Object.keys(languageDefinitionFunctions)
+        this.languageFunctionsEntityClass = languageFunctionsEntityClass
+        this.grammerProductionFunctionNames = []
+        var gpExpList = languageFunctionsEntityClass['getGrammarProductionStringList']()
         gpExpList.forEach((gpString, index)=>{
-            var index = this.getTheNoInGrammarProductionList(gpString)
+            var indexOfgp : number = this.getTheNoInGrammarProductionList(gpString)
             // console.log(gpString, index)
             if (index==-1) {
                 throw new Error(`Can not find grammar production ${gpString}`)
             }
-            this.grammerProductionFunctions[index] = languageDefinitionFunctions[gpString]
+            this.grammerProductionFunctionNames[indexOfgp] = gpString
         })
 
         // this.grammerProductionFunctions.forEach((f, i)=>{

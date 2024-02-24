@@ -1,43 +1,29 @@
-function first(gp : string) {
-    // console.log("first(): factory evaluated");
-    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        // console.log(target, propertyKey, this)
-        const originalMethod = descriptor.value;
-        const className = target.constructor.name;
-        var clazz = target.constructor
-        clazz.prototype[gp] = originalMethod
-        console.log("first(): called");
-    };
-  }
-   
-  function second() {
-    // console.log("second(): factory evaluated");
-    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-      console.log("second(): called");
-    };
-  }
-   
-  class ExampleClass {
-
-    name : string = "abc"
-    
+import { GrammarProductionFunction, LanguageFunctionsEntity } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 
 
-    @first("a->b")
-    @second()
-    method() {
-        console.log('I am method', this)
+class ExampleClass extends LanguageFunctionsEntity {
+
+    name: string = "abc"
+
+    @GrammarProductionFunction("A->B")
+    method1() : any {
+        ExampleClass.count++
+        this.name = 'a->b'
+        return `${this.name} - (${ExampleClass.count})`
     }
-  }
 
-  var a = new ExampleClass()
-  a.method()
-  a['a->b']()
-//   for (var member in ExampleClass) { // For each member of the dictionary
-//     if (typeof ExampleClass[member] == "function") { // Is it a function?
-//       if (ExampleClass.hasOwnProperty(member)) { // Not inherited
-//         console.log(member)
-//       }
-//     }
-//   }
-  
+
+    @GrammarProductionFunction("C->D")
+    method2() : any {
+        ExampleClass.count++
+        this.name = 'c->d'
+        return `${this.name} - (${ExampleClass.count})`
+    }
+
+    static count : number = 0
+}
+
+// var a = new ExampleClass()
+// console.log(a['A->B']())
+// console.log(a.runFunction('A->B'))
+console.log(typeof ExampleClass)

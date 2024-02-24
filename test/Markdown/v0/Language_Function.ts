@@ -1,5 +1,5 @@
-import { AnalysisToken } from "../../../src/SyntaxAnalysis/LR"
+import { LanguageFunctionsEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 
-export default {
-
+export class Markdown extends LanguageFunctionsEntity {
+    
 }
