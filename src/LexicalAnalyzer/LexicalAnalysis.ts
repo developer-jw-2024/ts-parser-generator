@@ -3,6 +3,7 @@ import { RegularExpression, toContentChars, toRegularExpressionChars } from './R
 import { FiniteAutomatonPath, NFA } from './NFA'
 import { TransferChar } from './NFA'
 import { intersection } from '../Utils/SetUtils'
+import { isNulllOrUndefinedValue } from '../Utils/Utils'
 
 export class TokenType {
 
@@ -52,7 +53,16 @@ export class Token {
     }
 
     toString() : string | null {
-        return `<${this.type.name} , ${this.value.replace(new RegExp('\n', 'g'), '\\n').replace(new RegExp('\t', 'g'), '\\t')}>`
+        var value = ''
+        if (isNulllOrUndefinedValue(value)) {
+
+        } else if (typeof this.value=='string') {
+            value = this.value.replace(new RegExp('\n', 'g'), '\\n').replace(new RegExp('\t', 'g'), '\\t')
+        } else {
+            value = this.value
+        }
+        
+        return `<${this.type.name} , ${value}>`
         // return `<${this.type.name} , ${this.value}>  ${this.type.isTerminal?'X':''}`
     }
 

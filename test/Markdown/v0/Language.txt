@@ -6,6 +6,8 @@ Markdown -> WholeMarkdownLine MarkdownLine
 WholeMarkdownLine -> MarkdownLine Enter
 WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
 
+MarkdownLine -> <ERROR> 
+
 TableRow -> VerticalBar MarkdownLine VerticalBar
 TableRow -> TableRow MarkdownLine VerticalBar
 MarkdownLine -> TableRow

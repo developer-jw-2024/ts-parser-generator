@@ -9,7 +9,7 @@ describe('Markdown', () => {
 
     test('markdown - 0', () => {
         expect(markdown.isValid(
-`**abc def**`, true
+`|abc`, true
         )).toEqual(true)
         console.log(markdown.getResult())
         console.log(markdown.getResult().toHierarchy().join('\n'))
