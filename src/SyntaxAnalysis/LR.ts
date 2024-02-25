@@ -2,6 +2,7 @@ import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction,
 import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 import { FileUtils } from "../Utils/FileUtil";
+import { isNulllOrUndefinedValue } from "../Utils/Utils";
 
 export class LRItem {
     numOfGrammerProduction : number = -1
@@ -325,9 +326,20 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         stack.push(gotoAction.value)
                         symbols.push(symbol)
                         var result = null
-                        if (this.grammerProductionFunctionNames && this.grammerProductionFunctionNames[igp]) {
-                            var gpStr = this.grammerProductionFunctionNames[igp]
-                            result = languageFunctionsEntityObject==null?null:(languageFunctionsEntityObject[gpStr](parameters))
+                        var func : Function | null = null
+                        if (!isNulllOrUndefinedValue(languageFunctionsEntityObject) && 
+                            !isNulllOrUndefinedValue(this.grammerProductionFunctionNames) && 
+                            !isNulllOrUndefinedValue(this.grammerProductionFunctionNames[igp])) {
+                            var gpStr : string | null = this.grammerProductionFunctionNames[igp]
+                            if (!isNulllOrUndefinedValue(gpStr)) {
+                                func = languageFunctionsEntityObject[gpStr]
+                            }
+    
+                        }
+                        if (isNulllOrUndefinedValue(func)) {
+                            // result = parameters.map(p=>p.value).join('')
+                        } else {
+                            result = func(parameters)
                         }
                         if (debug) {
                             console.log(this.grammerProductions[igp].toSimpleString(), '===>', result, '\n')

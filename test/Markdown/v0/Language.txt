@@ -6,6 +6,20 @@ Markdown -> WholeMarkdownLine MarkdownLine
 WholeMarkdownLine -> MarkdownLine Enter
 WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
 
+TableRow -> VerticalBar MarkdownLine VerticalBar
+TableRow -> TableRow MarkdownLine VerticalBar
+MarkdownLine -> TableRow
+
+TableAlignmentRow -> VerticalBar dahes3 VerticalBar
+TableAlignmentRow -> VerticalBar ColumnLeftAlignment VerticalBar
+TableAlignmentRow -> VerticalBar ColumnRightAlignment VerticalBar
+TableAlignmentRow -> VerticalBar ColumnCenterAlignment VerticalBar
+TableAlignmentRow -> TableAlignmentRow dahes3 VerticalBar
+TableAlignmentRow -> TableAlignmentRow ColumnLeftAlignment VerticalBar
+TableAlignmentRow -> TableAlignmentRow ColumnRightAlignment VerticalBar
+TableAlignmentRow -> TableAlignmentRow ColumnCenterAlignment VerticalBar
+MarkdownLine -> TableAlignmentRow
+
 TaskListItem -> CheckedBox Spaces MarkdownLine
 TaskListItem -> UncheckedBox Spaces MarkdownLine
 MarkdownLine -> TaskListItem

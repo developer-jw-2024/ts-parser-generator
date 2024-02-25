@@ -10,6 +10,7 @@ DoubleQuotationMarkText \"[^\"\n]*\"
 UnorderedItemTag [\-\+]
 OrderedItemTag [0-9]\.
 
+VerticalBar "|"
 OpenParentheses "("
 CloseParentheses ")"
 OpenSquareBracket "["
@@ -20,6 +21,10 @@ OpenSquareBracketWithCaret "[^"
 asterisks4 "*"{4,}
 dahes3 "-"{3,}
 underscores "_"{4,}
+
+ColumnLeftAlignment :"-"{3,}
+ColumnRightAlignment "-"{3,}:
+ColumnCenterAlignment :"-"{3,}:
 
 LeftArrow >+" "
 SharpSign #+" "

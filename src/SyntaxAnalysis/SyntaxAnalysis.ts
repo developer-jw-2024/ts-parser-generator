@@ -56,15 +56,19 @@ export class AnalysisStep {
 }
 
 
-export function GrammarProductionFunction(gp: string) {
+export function GrammarProductionFunction(gpstring: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        const originalMethod = descriptor.value;
         var clazz = target.constructor
-        clazz.prototype[gp] = originalMethod
         if (clazz.grammarProductionStringList==null || clazz.grammarProductionStringList==undefined) {
             clazz.grammarProductionStringList = new Array<string>
         }
-        clazz.grammarProductionStringList.push(gp)
+
+        var gps = gpstring.split('\n').map(s=>s.trim()).filter(s=>s.length>0)
+        const originalMethod = descriptor.value;
+        gps.forEach(gp=>{
+            clazz.prototype[gp] = originalMethod
+            clazz.grammarProductionStringList.push(gp)    
+        })
     };
 }
 
