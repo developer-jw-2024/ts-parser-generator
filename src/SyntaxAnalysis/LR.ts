@@ -265,7 +265,6 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         // }
 
                         s = stack[stack.length-1]
-                        a = indexOfErrorToken
                         if (errorToken!=null) {
                             errorToken.value = lastSymbolToken.value + errorToken.value
                         } else {
@@ -273,6 +272,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         }
                         
                         inputToken = errorToken
+                        a = indexOfErrorToken
                         action  = this.actions[s][a]
         
                         if (debug) {
