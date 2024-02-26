@@ -1,12 +1,15 @@
 
 Markdown -> WholeMarkdownLine
 Markdown -> MarkdownLine
+Markdown -> <ERROR>
 Markdown -> WholeMarkdownLine MarkdownLine
 
 WholeMarkdownLine -> MarkdownLine Enter
 WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
 
-MarkdownLine -> <ERROR> 
+WholeMarkdownLine -> <ERROR> Enter
+WholeMarkdownLine -> WholeMarkdownLine <ERROR> Enter
+
 
 TableRow -> VerticalBar MarkdownLine VerticalBar
 TableRow -> TableRow MarkdownLine VerticalBar

@@ -12,7 +12,7 @@ describe('Markdown', () => {
 `|abc`, true
         )).toEqual(true)
         console.log(markdown.getResult())
-        console.log(markdown.getResult().toHierarchy().join('\n'))
+        // console.log(markdown.getResult().toHierarchy().join('\n'))
         // console.log(markdown.getValidationSteps_NoActions())
     })
 

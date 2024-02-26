@@ -1,6 +1,6 @@
 import { FileUtils } from '../../src/Utils/FileUtil'
 import { LRActionType, LRSyntaxAnalysis, LRSyntaxAnalysisRunner } from "../../src/SyntaxAnalysis/LR"
-import languageFunction from './Language_Function'
+import { NumberList } from './Language_Function'
  
 
 function convertActionList(lrSyntaxAnalysis : LRSyntaxAnalysis) : Array<string> {
@@ -41,7 +41,7 @@ function convertActionList(lrSyntaxAnalysis : LRSyntaxAnalysis) : Array<string> 
 var languageDefinitionPath = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath = `${__dirname}/RegExp.txt`
 
-var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
+var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, NumberList)
 
 // console.log(convertActionList(simpleMath.lrSyntaxAnalysis))
 var equation = FileUtils.readFromFileSystem(`${__dirname}/Input.txt`)

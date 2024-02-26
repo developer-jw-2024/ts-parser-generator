@@ -1,81 +1,81 @@
-import { AnalysisToken } from "../../src/SyntaxAnalysis/LR"
+import { AnalysisToken, GrammarProductionFunction, LanguageFunctionsEntity } from "../../src/SyntaxAnalysis/SyntaxAnalysis"
 import { FileUtils } from "../../src/Utils/FileUtil"
 
-export default {
-    'WriteToFile -> All':
-    function(args : Array<AnalysisToken>) {
+export class NumberList extends LanguageFunctionsEntity {
+    @GrammarProductionFunction('WriteToFile -> All')
+    function1(args : Array<AnalysisToken>) {
         // console.log(args[0].value)
         FileUtils.writeToFileSystem(`${__dirname}/Result.txt`, args[0].value.join('\n'))
         return args[0].value
     }
-    ,
-    'All -> Lines':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('All -> Lines')
+    function2(args : Array<AnalysisToken>) {
         return [args[0].value]
     }
-    ,
-    'All -> WholeList':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('All -> WholeList')
+    function3(args : Array<AnalysisToken>) {
         return [args[0].value]
     }
-    ,
-    'All -> Lines WholeList':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('All -> Lines WholeList')
+    function4(args : Array<AnalysisToken>) {
         return args[0].value.concat([args[1].value])
     }
-    ,
+    
 
-    'Lines -> WholeLine':
-    function(args : Array<AnalysisToken>) {
+    @GrammarProductionFunction('Lines -> WholeLine')
+    function5(args : Array<AnalysisToken>) {
         return [args[0].value]
     }
-    ,
-    'Lines -> Lines WholeLine':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('Lines -> Lines WholeLine')
+    function6(args : Array<AnalysisToken>) {
         return args[0].value.concat([args[1].value])
     }
-    ,
+    
 
-    'WholeList -> List':
-    function(args : Array<AnalysisToken>) {
+    @GrammarProductionFunction('WholeList -> List')
+    function7(args : Array<AnalysisToken>) {
         return args[0].value
     }
-    ,
-    'WholeList -> <ERROR>':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('WholeList -> <ERROR>')
+    function8(args : Array<AnalysisToken>) {
         return 'Error'
     }
-    ,
+    
 
-    'WholeLine -> WholeList Enter':
-    function(args : Array<AnalysisToken>) {
+    @GrammarProductionFunction('WholeLine -> WholeList Enter')
+    function9(args : Array<AnalysisToken>) {
         return args[0].value
     }
-    ,
-    'WholeLine -> Enter':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('WholeLine -> Enter')
+    function10(args : Array<AnalysisToken>) {
         return 'Error'
     }
-    ,
-    'List -> Integer':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('List -> Integer')
+    function11(args : Array<AnalysisToken>) {
         return parseInt(args[0].value)
     }
-    ,
-    'List -> Spaces':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('List -> Spaces')
+    function12(args : Array<AnalysisToken>) {
         return 0
     }
-    ,
-    'List -> List Integer':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('List -> List Integer')
+    function13(args : Array<AnalysisToken>) {
         return args[0].value + parseInt(args[1].value)
     }
-    ,
-    'List -> List Spaces':
-    function(args : Array<AnalysisToken>) {
+    
+    @GrammarProductionFunction('List -> List Spaces')
+    function14(args : Array<AnalysisToken>) {
         return args[0].value
     }
-    ,
+    
 
 }

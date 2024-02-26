@@ -119,6 +119,12 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     toTokensWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string) : Array<Token> {
         var inputTokens : Array<Token> = tokenTypeLexicalAnalysis.toTokens(inputString)
         inputTokens.push(Token.TERMINATED_TOKEN)
+        inputTokens = inputTokens.map(it=>{
+            if (it.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {
+                return new Token(TokenType.ERROR_TOKENTYPE, it.value)
+            }
+            return it
+        })
         return inputTokens
     }
 
@@ -205,8 +211,9 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
 
             
             //console.log(s, a, this.tokens[a].toString(), action, stack.length>0 && (action==null || action==undefined))
+            /*
             var errorToken : Token | null = null
-            if (inputToken.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {
+            if (inputToken.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {//change unknown token to error token
                 errorToken = new Token(TokenType.ERROR_TOKENTYPE, inputToken.value)
                 inputToken = errorToken
                 a = indexOfErrorToken
@@ -225,8 +232,9 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 // i++
             }
             
+            
             if (action==null || action==undefined) {
-                if (symbolTokens.at(-1).token.type.isEqual(TokenType.ERROR_TOKENTYPE)) {
+                if (symbolTokens.at(-1).token.type.isEqual(TokenType.ERROR_TOKENTYPE)) { 
                     while (stack.length>1 && (action==null || action==undefined)) {
                         var symbol = symbols.pop()
                         var lastSymbolToken : AnalysisToken = symbolTokens.pop()
@@ -235,7 +243,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     
                         stack.push(lastStack)
                         symbols.push(symbol)
-                        symbolTokens.push(new AnalysisToken(a, errorToken, inputToken.value, []))
+                        symbolTokens.push(new AnalysisToken(a, errorToken, errorToken.value, []))
                         i++
                         a = input[i]
                         inputToken = inputTokens[i]
@@ -293,20 +301,63 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 }
 
             }
+            */
             
             // if (debug) console.log(s, inputTokens[i], action)
             // if (debug) console.log(step.toString())
 
+            var isMergeErrorhandled : boolean = false
             if (action==null || action==undefined) {
-                throw new Error(`There is no action for state [${s}] with token ${inputToken}(${a})`)
+                if (symbolTokens.at(-1).token.type.isEqual(TokenType.ERROR_TOKENTYPE)) { 
+                    
+                    symbolTokens.at(-1).value += inputToken.value
+                    i++
+                    isMergeErrorhandled = true
+                } else {
+                    var errorToken : Token = new Token(TokenType.ERROR_TOKENTYPE, '')
+                    a = indexOfErrorToken
+                    
+                    action  = this.actions[s][a]
+                    while (isNulllOrUndefinedValue(action)) {
+                        if (debug) console.log('there is no action for ', s, a)
+                        symbols.pop()
+                        var lastSymbolToken : AnalysisToken = symbolTokens.pop()
+                        var lastStack = stack.pop()
+                        s = stack[stack.length-1]
+                        errorToken.value = lastSymbolToken.value + errorToken.value
+                        action  = this.actions[s][a]
+                        if (debug) {
+                            console.log('pop for error', lastSymbolToken.token.toString(), lastStack)
+                            console.log('current action', s, a, action, (isNulllOrUndefinedValue(action)?"":action.toString()))
+                            if (action) {
+                                console.log(this.showLRItemSet(this.states[4]))
+                            }    
+                        }
+                    }
+                    inputToken = errorToken
+                    
+                }
+                //throw new Error(`There is no action for state [${s}] with token ${inputToken}(${a})`)
+            } 
+
+            if (isNulllOrUndefinedValue(action)) {
+                if (!isMergeErrorhandled) {
+                    throw new Error(`There is no action for state [${s}] with token ${inputToken}(${a})`)
+                }
             } else {
                 var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
                 this.analysisSteps.push(step)
                 if (action.type==LRActionType.SHIFT) {
-                    stack.push(action.value)
-                    symbols.push(a)
-                    symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value, []))
-                    i++
+                    if (inputToken.type.isEqual(TokenType.TERMINATED_TOKENTYPE)) {
+                        console.log('error terminated:', s, a, action)
+                        throw new Error('error terminated')
+                    } else {
+                        // console.log(inputToken==inputTokens[i])
+                        stack.push(action.value)
+                        symbols.push(a)
+                        symbolTokens.push(new AnalysisToken(a, inputToken, inputToken.value, []))
+                        if (inputToken==inputTokens[i]) i++    
+                    }
                 } else if (action.type==LRActionType.REDUCE) {
                     var igp = action.value
                     var gp = this.indexGrammerProductions[igp]
@@ -460,6 +511,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     }
 
     calculateActions() {
+        var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
+        var indexOfErrorToken = this.getIndexOfToken(Token.ERROR_TOKEN)
+        var indexOfUnknownToken = this.getIndexOfToken(Token.UNKNOWN_TOKEN)
+        var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
+
         var numOfGrammerProduction : number = this.indexGrammerProductions.findIndex((gp, i)=>gp.symbol==this.indexOfStartSymbl)
         var lrItem = new LRItem(numOfGrammerProduction, 0)
         var lrItemSet = new LRItemSet([lrItem])
@@ -531,6 +587,16 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                     this.actions[source] = this.actions[source] || []
                     if (this.tokens[symbol].type.isTerminal) {
                         this.actions[source][symbol] = new LRAction(LRActionType.SHIFT, destination)
+                        if (symbol==indexOfTerminatedToken) {
+                            errors.push({
+                                state : source,
+                                follow : symbol,
+                                followToken : this.tokens[symbol],
+                                action : this.actions[source][symbol],
+                                lrItemSet : this.showLRItemSet(this.states[source]),
+                                errorMessage : `There should not be have shift for ${destination}-${symbol}(${this.tokens[symbol]})`
+                            })
+                        }
                     } else {
                         this.actions[source][symbol] = new LRAction(LRActionType.GOTO, destination)
                     }
