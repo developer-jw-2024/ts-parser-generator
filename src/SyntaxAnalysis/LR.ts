@@ -1,4 +1,4 @@
-import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
+import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SymbolEntity, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
 import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 import { FileUtils } from "../Utils/FileUtil";
@@ -324,10 +324,14 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         var lastSymbolToken : AnalysisToken = symbolTokens.pop()
                         var lastStack = stack.pop()
                         s = stack[stack.length-1]
-                        errorToken.value = lastSymbolToken.value + errorToken.value
+                        if (debug) {
+                            console.log('lastSymbolToken.value: ', lastSymbolToken.value, 'errorToken.value:', errorToken.value)
+                        }
+                        var lastValue = (lastSymbolToken.value instanceof SymbolEntity)?lastSymbolToken.value.getRawValue():lastSymbolToken.value
+                        errorToken.value = lastValue + errorToken.value
                         action  = this.actions[s][a]
                         if (debug) {
-                            console.log('pop for error', lastSymbolToken.token.toString(), lastStack)
+                            console.log('pop for error', lastSymbolToken.token.toString())
                             console.log('current action', s, a, action, (isNulllOrUndefinedValue(action)?"":action.toString()))
                             if (action) {
                                 console.log(this.showLRItemSet(this.states[4]))

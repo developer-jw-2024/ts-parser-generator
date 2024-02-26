@@ -55,6 +55,43 @@ export class AnalysisStep {
     }
 }
 
+export class SymbolEntity {
+    segments : Array<any>
+
+    constructor() {
+        this.segments = []
+    }
+
+    addSegment(segment : any) {
+        this.segments.push(segment)
+    }
+
+    toHierarchy(intent : string = '') {
+        var subIntent = `${intent}     `
+        var resultArray =  this.segments.map(segment=>{
+            if (segment instanceof SymbolEntity) {
+                return segment.toHierarchy(subIntent)
+            } else {
+                return [`${subIntent}${segment}`]
+            }
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+
+    getRawValue() {
+        var result =  this.segments.map(segment=>{
+            if (segment instanceof SymbolEntity) {
+                return segment.getRawValue()
+            } else {
+                return segment
+            }
+        }).join('')
+        return result
+    }
+}
+
+export class ErrorEntity extends SymbolEntity {}
 
 export function GrammarProductionFunction(gpstring: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -66,6 +103,9 @@ export function GrammarProductionFunction(gpstring: string) {
         var gps = gpstring.split('\n').map(s=>s.trim()).filter(s=>s.length>0)
         const originalMethod = descriptor.value;
         gps.forEach(gp=>{
+            if (clazz.prototype[gp]) {
+                throw new Error(`${gp} is already have function`)
+            }
             clazz.prototype[gp] = originalMethod
             clazz.grammarProductionStringList.push(gp)    
         })
@@ -278,9 +318,15 @@ export class SyntaxAnalysis {
             this.grammerProductionFunctionNames[indexOfgp] = gpString
         })
 
-        // this.grammerProductionFunctions.forEach((f, i)=>{
-        //     console.log(i, f)
-        // })
+        
+    }
+
+    showGrammarProductionWithoutFunction() {
+        this.grammerProductions.forEach((f, i)=>{
+            if (!!!this.grammerProductionFunctionNames[i]) {
+                console.log(i, this.grammerProductions[i].toSimpleString())
+            }
+        })
     }
 
     setTokenTypeDefinition(tokenTypeDefinitionContent) {

@@ -1,4 +1,4 @@
-import { AnalysisToken, GrammarProductionFunction, LanguageFunctionsEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
+import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     
@@ -11,6 +11,16 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     Markdown__MarkdownLine(argv : Array<AnalysisToken>) {
         var markdown : Markdown = new Markdown()
         markdown.addSegment(argv[0].value)
+        return markdown
+    }
+
+    @GrammarProductionFunction(`Markdown -> <ERROR>`)
+    Markdown__ERROR(argv : Array<AnalysisToken>) {
+        var errorEntity =  new ErrorEntity()
+        errorEntity.addSegment(argv[0].value)
+        
+        var markdown : Markdown = new Markdown()
+        markdown.addSegment(errorEntity)
         return markdown
     }
 
@@ -34,10 +44,49 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         markdown.addSegment(argv[1].value)
         return markdown
     }
+    
+    @GrammarProductionFunction(`WholeMarkdownLine -> <ERROR> Enter`)
+    WholeMarkdownLine___ERROR_Enter(argv : Array<AnalysisToken>) {
+        var errorEntity =  new ErrorEntity()
+        errorEntity.addSegment(argv[0].value)
+
+        var markdown : Markdown = new Markdown()
+        markdown.addSegment(errorEntity)
+        return markdown
+    }
+
+
+
+    @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine <ERROR> Enter`)
+    WholeMarkdownLine__WholeMarkdownLine_ERROR(argv : Array<AnalysisToken>) {
+        var errorEntity =  new ErrorEntity()
+        errorEntity.addSegment(argv[1].value)
+
+        var markdown : Markdown = argv[0].value
+        markdown.addSegment(errorEntity)
+        return markdown
+    }
+
+
+    @GrammarProductionFunction(`TableRow -> VerticalBar MarkdownLine VerticalBar`)
+    TableRow__VerticalBar_MarkdownLine_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableRow : TableRow = new TableRow()
+        tableRow.addSegment(argv[1].value)
+        return tableRow
+    }
+
+    @GrammarProductionFunction(`TableRow -> TableRow MarkdownLine VerticalBar`)
+    TableRow__TableRow_MarkdownLine_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableRow : TableRow = argv[0].value
+        tableRow.addSegment(argv[1].value)
+        return tableRow
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> TableRow`)
+    MarkdownLine__TableRow(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
     /*
-    TableRow -> VerticalBar MarkdownLine VerticalBar
-    TableRow -> TableRow MarkdownLine VerticalBar
-    MarkdownLine -> TableRow
 
     TableAlignmentRow -> VerticalBar dahes3 VerticalBar
     TableAlignmentRow -> VerticalBar ColumnLeftAlignment VerticalBar
@@ -440,30 +489,9 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     }
 }
 
-export class SymbolEntity {
-    segments : Array<any>
+export class WholeMarkdownLine extends SymbolEntity {}
 
-    constructor() {
-        this.segments = []
-    }
-
-    addSegment(segment : any) {
-        this.segments.push(segment)
-    }
-
-    toHierarchy(intent : string = '') {
-        var subIntent = `${intent}     `
-        var resultArray =  this.segments.map(segment=>{
-            if (segment instanceof SymbolEntity) {
-                return segment.toHierarchy(subIntent)
-            } else {
-                return [`${subIntent}${segment}`]
-            }
-        })
-        resultArray.unshift(`${intent}${this.constructor.name}`)
-        return [].concat.apply([], resultArray)
-    }
-}
+export class TableRow extends SymbolEntity {}
 
 export class PlainText extends SymbolEntity {
 }

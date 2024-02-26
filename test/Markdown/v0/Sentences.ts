@@ -5,8 +5,10 @@ var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
 var markdown: LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
 
-markdown.isValid(
-    `|abc`, true
-            )
+markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
 
+markdown.isValid(
+`|abc|`
+            )
+console.log(markdown.getResult())
 
