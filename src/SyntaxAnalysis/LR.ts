@@ -1,4 +1,4 @@
-import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SymbolEntity, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
+import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
 import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 import { FileUtils } from "../Utils/FileUtil";
@@ -210,99 +210,6 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
             }
 
             
-            //console.log(s, a, this.tokens[a].toString(), action, stack.length>0 && (action==null || action==undefined))
-            /*
-            var errorToken : Token | null = null
-            if (inputToken.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {//change unknown token to error token
-                errorToken = new Token(TokenType.ERROR_TOKENTYPE, inputToken.value)
-                inputToken = errorToken
-                a = indexOfErrorToken
-                action  = this.actions[s][a]
-
-                if (debug) {
-                    var symbolTokenString = this.convertAnalysisTokenListToString(symbolTokens)
-                    var inputTokenLeft = []
-                    for (var l=i;l<inputTokens.length;l++) {
-                        inputTokenLeft.push(inputTokens[l].toString()+`(${this.getIndexOfToken(inputTokens[l])})`)
-                    }
-                    // console.log(inputTokens)
-                    console.log(`1 ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokenLeft.join(' ')} ]   `, action?action.toString():action, '\n')
-                }
-
-                // i++
-            }
-            
-            
-            if (action==null || action==undefined) {
-                if (symbolTokens.at(-1).token.type.isEqual(TokenType.ERROR_TOKENTYPE)) { 
-                    while (stack.length>1 && (action==null || action==undefined)) {
-                        var symbol = symbols.pop()
-                        var lastSymbolToken : AnalysisToken = symbolTokens.pop()
-                        var lastStack = stack.pop()
-                        errorToken = new Token(TokenType.ERROR_TOKENTYPE, lastSymbolToken.value+inputToken.value)
-    
-                        stack.push(lastStack)
-                        symbols.push(symbol)
-                        symbolTokens.push(new AnalysisToken(a, errorToken, errorToken.value, []))
-                        i++
-                        a = input[i]
-                        inputToken = inputTokens[i]
-                        s = stack[stack.length-1]
-                        action = this.actions[s][a]  
-
-                        if (debug) {
-                            var symbolTokenString = this.convertAnalysisTokenListToString(symbolTokens)
-                            var inputTokenLeft = []
-                            for (var l=i;l<inputTokens.length;l++) {
-                                inputTokenLeft.push(inputTokens[l].toString()+`(${this.getIndexOfToken(inputTokens[l])})`)
-                            }
-                            // console.log(inputTokens)
-                            console.log(`forward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokenLeft.join(' ')} ]   `, action?action.toString():action, '\n')
-                        }
-
-                    }
-                } else {
-                    while (stack.length>1 && (action==null || action==undefined)) {
-                        if (debug) console.log(`There is no action for state [${s}] with token ${inputToken} (${a})`)
-                        symbols.pop()
-                        var lastSymbolToken : AnalysisToken = symbolTokens.pop()
-                        stack.pop()
-                        
-                        // if (debug) {
-                        //     console.log(errorToken, lastSymbolToken)
-                        // }
-
-                        s = stack[stack.length-1]
-                        if (errorToken!=null) {
-                            errorToken.value = lastSymbolToken.value + errorToken.value
-                        } else {
-                            errorToken = new Token(TokenType.ERROR_TOKENTYPE, lastSymbolToken.value)
-                        }
-                        
-                        inputToken = errorToken
-                        a = indexOfErrorToken
-                        action  = this.actions[s][a]
-        
-                        if (debug) {
-                            var symbolTokenString = this.convertAnalysisTokenListToString(symbolTokens)
-                            var inputTokenLeft = []
-                            for (var l=i;l<inputTokens.length;l++) {
-                                inputTokenLeft.push(inputTokens[l].toString()+`(${this.getIndexOfToken(inputTokens[l])})`)
-                            }
-                            // console.log(inputTokens)
-                            console.log(`backward ==>[ ${stack.join(' ')} ]   [ ${symbolTokenString} ]   [ ${inputTokenLeft.join(' ')} ]   `, action?action.toString():action, '\n')
-                        }
-
-                        if (debug) {
-                            // console.log(lastSymbolToken)
-                            console.log('Try', s, a, this.tokens[a].toString(), action)
-                        }
-                    }
-                }
-
-            }
-            */
-            
             // if (debug) console.log(s, inputTokens[i], action)
             // if (debug) console.log(step.toString())
 
@@ -324,14 +231,10 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                         var lastSymbolToken : AnalysisToken = symbolTokens.pop()
                         var lastStack = stack.pop()
                         s = stack[stack.length-1]
-                        if (debug) {
-                            console.log('lastSymbolToken.value: ', lastSymbolToken.value, 'errorToken.value:', errorToken.value)
-                        }
-                        var lastValue = (lastSymbolToken.value instanceof SymbolEntity)?lastSymbolToken.value.getRawValue():lastSymbolToken.value
-                        errorToken.value = lastValue + errorToken.value
+                        errorToken.value = lastSymbolToken.value + errorToken.value
                         action  = this.actions[s][a]
                         if (debug) {
-                            console.log('pop for error', lastSymbolToken.token.toString())
+                            console.log('pop for error', lastSymbolToken.token.toString(), lastStack)
                             console.log('current action', s, a, action, (isNulllOrUndefinedValue(action)?"":action.toString()))
                             if (action) {
                                 console.log(this.showLRItemSet(this.states[4]))
@@ -349,6 +252,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                     throw new Error(`There is no action for state [${s}] with token ${inputToken}(${a})`)
                 }
             } else {
+                // console.log('AnalysisStep:', inputTokens[i])
                 var step : AnalysisStep = this.createAnalysisStep(inputTokens, stack, symbols, symbolTokens, i, action)
                 this.analysisSteps.push(step)
                 if (action.type==LRActionType.SHIFT) {
@@ -439,6 +343,8 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         }
 
         
+
+        
         // console.log(`[ ${stack.join(' ')} ]   [ ${symbols.map(s=>this.tokens[s].toSimpleString()).join(' ')} ]   [ ${inputs.join(' ')} ]   ${this.toActionString(action)}`)
         var step = new AnalysisStep(
             stack.join(' '),
@@ -447,7 +353,9 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
                 if (this.tokens[s].isEqual(Token.TERMINATED_TOKEN)) return '<T>'
                 return this.tokens[s].value+`:${symbolTokens[si].toSimpleString()}`
             }).join(' '),
-            symbolTokens,
+            symbolTokens.map(st=>st.copy()),
+            i,
+            inputTokens,
             inputTokens.slice(i).map(s=>{
                 if (s.isEqual(Token.EMPTY_TOKEN)) return '<E>'
                 if (s.isEqual(Token.TERMINATED_TOKEN)) return '<T>'

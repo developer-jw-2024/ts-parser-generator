@@ -4,5 +4,5 @@
 / /
 ( \(
 ) \)
-integer [0-9]+
+integer (\-)?[0-9]+
 spaces [\t ]+

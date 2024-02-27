@@ -15,6 +15,10 @@ export class AnalysisToken {
         this.children = children
     }
 
+    copy() {
+        return new AnalysisToken(this.indexOfToken, this.token, this.value, this.children)
+    }
+
     toSimpleString() : string | null {
         if (this.value==null) return ''
         var result = ''
@@ -35,17 +39,23 @@ export class AnalysisStep {
     stack : string
     symbols : string
     symbolTokens : Array<AnalysisToken>
+    i : number //nonProcessIndex
+    inputTokens : Array<Token>
     inputs : string
     action : string
 
     constructor(stack : string,
         symbols : string,
         symbolTokens : Array<AnalysisToken>,
+        i : number, //nonProcessIndex
+        inputTokens : Array<Token>,
         inputs : string,
         action : string) {
         this.stack = stack
         this.symbols = symbols
         this.symbolTokens = symbolTokens
+        this.i = i
+        this.inputTokens = inputTokens
         this.inputs = inputs
         this.action = action
     }
