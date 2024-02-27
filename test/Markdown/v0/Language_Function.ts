@@ -86,21 +86,89 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     MarkdownLine__TableRow(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
+
+
+    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar dahes3 VerticalBar`)
+    TableAlignmentRow__VerticalBar_dahes3_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
+        tableAlignmentRow.addSegment(new TableNoAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar ColumnLeftAlignment VerticalBar`)
+    TableAlignmentRow__VerticalBar_ColumnLeftAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
+        tableAlignmentRow.addSegment(new TableLeftAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar ColumnRightAlignment VerticalBar`)
+    TableAlignmentRow__VerticalBar_ColumnRightAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
+        tableAlignmentRow.addSegment(new TableRightAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar ColumnCenterAlignment VerticalBar`)
+    TableAlignmentRow__VerticalBar_ColumnCenterAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
+        tableAlignmentRow.addSegment(new TableCenterAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow dahes3 VerticalBar`)
+    TableAlignmentRow__TableAlignmentRow_dahes3_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = argv[0].value
+        tableAlignmentRow.addSegment(new TableNoAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow ColumnLeftAlignment VerticalBar`)
+    TableAlignmentRow__TableAlignmentRow_ColumnLeftAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = argv[0].value
+        tableAlignmentRow.addSegment(new TableLeftAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow ColumnRightAlignment VerticalBar`)
+    TableAlignmentRow__TableAlignmentRow_ColumnRightAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = argv[0].value
+        tableAlignmentRow.addSegment(new TableRightAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow ColumnCenterAlignment VerticalBar`)
+    TableAlignmentRow__TableAlignmentRow_ColumnCenterAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+        var tableAlignmentRow : TableAlignmentRow = argv[0].value
+        tableAlignmentRow.addSegment(new TableCenterAlignment())
+        return tableAlignmentRow
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> TableAlignmentRow`)
+    MarkdownLine__TableAlignmentRow(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`TaskListItem -> CheckedBox Spaces MarkdownLine`)
+    TaskListItem__CheckedBox_Spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        var taskListItem : TaskListItem = new TaskListItem(true)
+        taskListItem.addSegment(argv[2].value)
+        return taskListItem
+    }
+
+    @GrammarProductionFunction(`TaskListItem -> UncheckedBox Spaces MarkdownLine`)
+    TaskListItem__UncheckedBox_Spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        var taskListItem : TaskListItem = new TaskListItem(false)
+        taskListItem.addSegment(argv[2].value)
+        return taskListItem
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> TaskListItem`)
+    MarkdownLine__TaskListItem(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
     /*
-
-    TableAlignmentRow -> VerticalBar dahes3 VerticalBar
-    TableAlignmentRow -> VerticalBar ColumnLeftAlignment VerticalBar
-    TableAlignmentRow -> VerticalBar ColumnRightAlignment VerticalBar
-    TableAlignmentRow -> VerticalBar ColumnCenterAlignment VerticalBar
-    TableAlignmentRow -> TableAlignmentRow dahes3 VerticalBar
-    TableAlignmentRow -> TableAlignmentRow ColumnLeftAlignment VerticalBar
-    TableAlignmentRow -> TableAlignmentRow ColumnRightAlignment VerticalBar
-    TableAlignmentRow -> TableAlignmentRow ColumnCenterAlignment VerticalBar
-    MarkdownLine -> TableAlignmentRow
-
-    TaskListItem -> CheckedBox Spaces MarkdownLine
-    TaskListItem -> UncheckedBox Spaces MarkdownLine
-    MarkdownLine -> TaskListItem
 
     DefinitionListItem -> ColonSign Spaces MarkdownLine
     MarkdownLine -> DefinitionListItem
@@ -492,17 +560,25 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 export class WholeMarkdownLine extends SymbolEntity {}
 
 export class TableRow extends SymbolEntity {}
-
-export class PlainText extends SymbolEntity {
+export class TableAlignmentRow extends SymbolEntity {}
+export class TableNoAlignment extends SymbolEntity {}
+export class TableLeftAlignment extends SymbolEntity {}
+export class TableRightAlignment extends SymbolEntity {}
+export class TableCenterAlignment extends SymbolEntity {}
+export class TaskListItem extends SymbolEntity {
+    checkFlag : boolean 
+    constructor(checkFlag : boolean) {
+        super()
+        this.checkFlag = checkFlag
+    }
 }
 
-export class Sentence extends SymbolEntity {
-}
+export class PlainText extends SymbolEntity {}
 
-export class FencedCodeBlockText extends SymbolEntity {
-}
+export class Sentence extends SymbolEntity {}
 
-export class Markdown extends SymbolEntity {
-}
+export class FencedCodeBlockText extends SymbolEntity {}
+
+export class Markdown extends SymbolEntity {}
 
 export class BoldText extends SymbolEntity {}
