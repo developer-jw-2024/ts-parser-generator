@@ -1,4 +1,4 @@
-import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
+import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     
@@ -168,10 +168,18 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    /*
+    @GrammarProductionFunction('DefinitionListItem -> ColonSign Spaces MarkdownLine')
+    DefinitionListItem__ColonSign_Spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        var definitionListItem : DefinitionListItem = new DefinitionListItem(argv[2].value)
+        return definitionListItem
+    }
 
-    DefinitionListItem -> ColonSign Spaces MarkdownLine
-    MarkdownLine -> DefinitionListItem
+    @GrammarProductionFunction(`MarkdownLine -> DefinitionListItem`)
+    MarkdownLine__DefinitionListItem(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    /*
 
     Footnote -> FootnoteReference ColonSign Spaces MarkdownLine
     MarkdownLine -> Footnote
@@ -211,6 +219,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         sentence.addSegment(argv[1].value)
         return sentence
     }
+
     @GrammarProductionFunction('MarkdownLine -> Sentence')
     MarkdownLine__Sentence(argv : Array<AnalysisToken>) {
         return argv[0].value
@@ -231,6 +240,8 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         plainText.addSegment(argv[0].value)
         return plainText
     }
+
+    
 
     @GrammarProductionFunction(`
         PlainText -> PlainText SimpleText
@@ -565,13 +576,9 @@ export class TableNoAlignment extends SymbolEntity {}
 export class TableLeftAlignment extends SymbolEntity {}
 export class TableRightAlignment extends SymbolEntity {}
 export class TableCenterAlignment extends SymbolEntity {}
-export class TaskListItem extends SymbolEntity {
-    checkFlag : boolean 
-    constructor(checkFlag : boolean) {
-        super()
-        this.checkFlag = checkFlag
-    }
-}
+export class TaskListItem extends ValueSymbolEntity {}
+
+export class DefinitionListItem extends ValueSymbolEntity {}
 
 export class PlainText extends SymbolEntity {}
 
@@ -582,3 +589,14 @@ export class FencedCodeBlockText extends SymbolEntity {}
 export class Markdown extends SymbolEntity {}
 
 export class BoldText extends SymbolEntity {}
+
+export class SimpleText extends ValueSymbolEntity {}
+
+export class Spaces extends ValueSymbolEntity {}
+
+export class FootnoteReference extends ValueSymbolEntity {}
+
+export class Link extends SymbolEntity {
+    /...
+}
+export class Image extends ValueSymbolEntity {}

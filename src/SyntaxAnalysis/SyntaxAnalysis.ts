@@ -100,7 +100,18 @@ export class SymbolEntity {
         return result
     }
 }
+export class ValueSymbolEntity extends SymbolEntity {
+    value : any
 
+    constructor(value : any) {
+        super()
+        this.value = value
+    }
+
+    getValue() {
+        return this.value
+    }
+}
 export class ErrorEntity extends SymbolEntity {}
 
 export function GrammarProductionFunction(gpstring: string) {
