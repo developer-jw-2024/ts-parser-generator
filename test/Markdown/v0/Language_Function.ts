@@ -399,28 +399,101 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
+    @GrammarProductionFunction(`BeginStarItalicText -> starItalicTag NO_StarItalicText_Match_emphasis`)
+    BeginStarItalicText__starItalicTag_NO_StarItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = new ItalicText()
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis`)
+    BeginStarItalicText__BeginStarItalicText_NO_StarItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = argv[0].value
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`StarItalicText -> BeginStarItalicText starItalicTag`)
+    StarItalicText__BeginStarItalicText_starItalicTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+
+    @GrammarProductionFunction(`BeginUnderlineItalicText -> underlineItalicTag NO_UnderlineItalicText_Match_emphasis`)
+    BeginUnderlineItalicText__underlineItalicTag_NO_UnderlineItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = new ItalicText()
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis`)
+    BeginUnderlineItalicText__BeginUnderlineItalicText_NO_UnderlineItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = argv[0].value
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`UnderlineItalicText -> BeginUnderlineItalicText underlineItalicTag`)
+    UnderlineItalicText__BeginUnderlineItalicText_underlineItalicTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`BeginStarBoldItalicText -> starBoldItalicTag NO_StarBoldItalicText_Match_emphasis`)
+    BeginStarBoldItalicText__starBoldItalicTag_NO_StarBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = new ItalicText()
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis`)
+    BeginStarBoldItalicText__BeginStarBoldItalicText_NO_StarBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = argv[0].value
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`StarBoldItalicText -> BeginStarBoldItalicText starBoldItalicTag`)
+    StarBoldItalicText__BeginStarBoldItalicText_starBoldItalicTag(argv : Array<AnalysisToken>) {
+        var boldText : BoldText = new BoldText()
+        boldText.addChild(argv[0].value)
+        return boldText
+    }
+
+    @GrammarProductionFunction(`BeginUnderlineBoldItalicText -> underlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis`)
+    BeginUnderlineBoldItalicText__underlineBoldItalicTag_NO_UnderlineBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = new ItalicText()
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis`)
+    BeginUnderlineBoldItalicText__BeginUnderlineBoldItalicText_NO_UnderlineBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var italicText : ItalicText = argv[0].value
+        italicText.addChild(argv[1].value)
+        return italicText
+    }
+    @GrammarProductionFunction(`UnderlineBoldItalicText -> BeginUnderlineBoldItalicText underlineBoldItalicTag`)
+    UnderlineBoldItalicText__BeginUnderlineBoldItalicText_underlineBoldItalicTag(argv : Array<AnalysisToken>) {
+        var boldText : BoldText = new BoldText()
+        boldText.addChild(argv[0].value)
+        return boldText
+    }
+
+    @GrammarProductionFunction(`BeginStrikethroughText -> strikethroughTag NO_StrikethroughText_Match_emphasis`)
+    BeginStrikethroughText__strikethroughTag_NO_StrikethroughText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var strikethroughText : StrikethroughText = new StrikethroughText()
+        strikethroughText.addChild(argv[1].value)
+        return strikethroughText
+    }
+    @GrammarProductionFunction(`BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis`)
+    BeginStrikethroughText__BeginStrikethroughText_NO_StrikethroughText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var strikethroughText : StrikethroughText = argv[0].value
+        strikethroughText.addChild(argv[1].value)
+        return strikethroughText
+    }
+    @GrammarProductionFunction(`StrikethroughText -> BeginStrikethroughText strikethroughTag`)
+    StrikethroughText__BeginStrikethroughText_strikethroughTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+
     /*
 
 
-BeginStarItalicText -> starItalicTag NO_StarItalicText_Match_emphasis
-BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis
-StarItalicText -> BeginStarItalicText starItalicTag
 
-BeginUnderlineItalicText -> underlineItalicTag NO_UnderlineItalicText_Match_emphasis
-BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis
-UnderlineItalicText -> BeginUnderlineItalicText underlineItalicTag
-
-BeginStarBoldItalicText -> starBoldItalicTag NO_StarBoldItalicText_Match_emphasis
-BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis
-StarBoldItalicText -> BeginStarBoldItalicText starBoldItalicTag
-
-BeginUnderlineBoldItalicText -> underlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis
-BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis
-UnderlineBoldItalicText -> BeginUnderlineBoldItalicText underlineBoldItalicTag
-
-BeginStrikethroughText -> strikethroughTag NO_StrikethroughText_Match_emphasis
-BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis
-StrikethroughText -> BeginStrikethroughText strikethroughTag
 
 BeginHighlightText -> highlightTag NO_HighlightText_Match_emphasis
 BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis
@@ -684,11 +757,17 @@ export class PlainText extends SymbolEntity {}
 
 export class Sentence extends SymbolEntity {}
 
-export class FencedCodeBlockText extends SymbolEntity {}
-
 export class Markdown extends SymbolEntity {}
 
 export class BoldText extends SymbolEntity {}
+export class ItalicText extends SymbolEntity {}
+export class StrikethroughText extends SymbolEntity {}
+export class HighlightText extends SymbolEntity {}
+export class SubscriptText extends SymbolEntity {}
+export class SuperscriptText extends SymbolEntity {}
+export class DoubleBacktickText extends SymbolEntity {}
+export class BacktickText extends SymbolEntity {}
+export class FencedCodeBlockText extends SymbolEntity{}
 
 export class SimpleText extends ValueSymbolEntity {}
 
