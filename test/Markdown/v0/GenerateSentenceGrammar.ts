@@ -2,19 +2,19 @@ import { FileUtils } from "../../../src/Utils/FileUtil"
 
 var tags = 
 `
-StarBoldTag 
-UnderlineBoldTag
-StarItalicTag 
-UnderlineItalicTag
-StarBoldItalicTag 
-UnderlineBoldItalicTag
-StrikethroughTag
-HighlightTag
-SubscriptTag
-SuperscriptTag
-DoubleBacktickTag
-BacktickTag
-FencedCodeBlockTag
+starBoldTag 
+underlineBoldTag
+starItalicTag 
+underlineItalicTag
+starBoldItalicTag 
+underlineBoldItalicTag
+strikethroughTag
+highlightTag
+subscriptTag
+superscriptTag
+doubleBacktickTag
+backtickTag
+fencedCodeBlockTag
 `.split('\n').map(t=>t.trim()).filter(t=>t.length>0)
 
 var result = 
@@ -22,9 +22,9 @@ var result =
 
 
 `
-var beginSymbols = tags.map(t=>'Begin'+t.substring(0, t.length-3)+'Text')
-var no_text = tags.map(t=>'NO_'+t.substring(0, t.length-3)+'Text_Match_emphasis')
-var typeSymbols = tags.map(t=>t.substring(0, t.length-3)+'Text')
+var beginSymbols = tags.map(t=>'Begin'+t.at(0).toUpperCase()+t.substring(1, t.length-3)+'Text')
+var no_text = tags.map(t=>'NO_'+t.at(0).toUpperCase()+t.substring(1, t.length-3)+'Text_Match_emphasis')
+var typeSymbols = tags.map(t=>t.at(0).toUpperCase()+t.substring(1, t.length-3)+'Text')
 var texts = tags.map((s,i)=>{
     return [
         `${beginSymbols[i]} -> ${tags[i]} ${no_text[i]}`,

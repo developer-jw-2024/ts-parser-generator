@@ -640,6 +640,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
 export class LRSyntaxAnalysisRunner {
 
     lrSyntaxAnalysis : LRSyntaxAnalysis
+    preProcessingFunc : ((string) => string)|null = null
 
     constructor(languageDefinitionPath : string, tokenTypeDefinitionPath : string, languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
         var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
@@ -655,8 +656,16 @@ export class LRSyntaxAnalysisRunner {
         return lastSymbolToken.value
     }
 
+    setPreprocessing(preProcessingFunc : (string) => string) {
+        this.preProcessingFunc = preProcessingFunc
+    }
+
     isValid(markdownContent : string, debug : boolean = false) : boolean {
-        var flag = this.lrSyntaxAnalysis.isValid(markdownContent, debug)
+        var preProcessingContent : string = markdownContent
+        if (!isNulllOrUndefinedValue(this.preProcessingFunc)) {
+            preProcessingContent = this.preProcessingFunc(markdownContent)
+        }
+        var flag = this.lrSyntaxAnalysis.isValid(preProcessingContent, debug)
         return flag
     }
 

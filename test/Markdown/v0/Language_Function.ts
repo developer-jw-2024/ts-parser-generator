@@ -1,177 +1,142 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
-    
-    @GrammarProductionFunction(`Markdown -> WholeMarkdownLine`)
+    @GrammarProductionFunction(
+        `
+        Markdown -> WholeMarkdownLine
+        `
+    )
     Markdown__WholeMarkdownLine(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`Markdown -> MarkdownLine`)
-    Markdown__MarkdownLine(argv : Array<AnalysisToken>) {
-        var markdown : Markdown = new Markdown()
-        markdown.addSegment(argv[0].value)
-        return markdown
+    @GrammarProductionFunction(`WholeMarkdownLine -> MarkdownLine enter`)
+    WholeMarkdownLine__MarkdownLine_enter(argv : Array<AnalysisToken>) {
+        var lines : WholeMarkdownLines = new WholeMarkdownLines()
+        lines.addChild(argv[0].value)
+        return lines
+    }
+    @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine MarkdownLine enter`)
+    WholeMarkdownLine__WholeMarkdownLine_MarkdownLine_enter(argv : Array<AnalysisToken>) {
+        var lines : WholeMarkdownLines = argv[0].value
+        lines.addChild(argv[1].value)
+        return lines
     }
 
-    @GrammarProductionFunction(`Markdown -> <ERROR>`)
-    Markdown__ERROR(argv : Array<AnalysisToken>) {
-        var errorEntity =  new ErrorEntity()
-        errorEntity.addSegment(argv[0].value)
-        
-        var markdown : Markdown = new Markdown()
-        markdown.addSegment(errorEntity)
-        return markdown
+    @GrammarProductionFunction(`WholeMarkdownLine -> <ERROR> enter`)
+    WholeMarkdownLine__ERROR_enter(argv : Array<AnalysisToken>) {
+        var lines : WholeMarkdownLines = new WholeMarkdownLines()
+        lines.addChild(new ErrorEntity(argv[0].value))
+        return lines
+    }
+    @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine <ERROR> enter`)
+    WholeMarkdownLine__WholeMarkdownLine_ERROR_enter(argv : Array<AnalysisToken>) {
+        var lines : WholeMarkdownLines = argv[0].value
+        lines.addChild(new ErrorEntity(argv[1].value))
+        return lines
     }
 
-    @GrammarProductionFunction(`Markdown -> WholeMarkdownLine MarkdownLine`)
-    AppendMarkdown__MarkdownLine(argv : Array<AnalysisToken>) {
-        var markdown : Markdown = argv[0].value
-        markdown.addSegment(argv[1].value)
-        return markdown
+    @GrammarProductionFunction(`WholeMarkdownLine -> enter`)
+    WholeMarkdownLine__enter(argv : Array<AnalysisToken>) {
+        var lines : WholeMarkdownLines = new WholeMarkdownLines()
+        lines.addChild(new BlankLine())
+        return lines
     }
-
-    @GrammarProductionFunction(`WholeMarkdownLine -> MarkdownLine Enter`)
-    WholeMarkdownLine__MarkdownLine_Enter(argv : Array<AnalysisToken>) {
-        var markdown : Markdown = new Markdown()
-        markdown.addSegment(argv[0].value)
-        return markdown
-    }
-
-    @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter`)
-    AppendWholeMarkdownLine__MarkdownLine_Enter(argv : Array<AnalysisToken>) {
-        var markdown : Markdown = argv[0].value
-        markdown.addSegment(argv[1].value)
-        return markdown
-    }
-    
-    @GrammarProductionFunction(`WholeMarkdownLine -> <ERROR> Enter`)
-    WholeMarkdownLine___ERROR_Enter(argv : Array<AnalysisToken>) {
-        var errorEntity =  new ErrorEntity()
-        errorEntity.addSegment(argv[0].value)
-
-        var markdown : Markdown = new Markdown()
-        markdown.addSegment(errorEntity)
-        return markdown
+    @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine enter`)
+    WholeMarkdownLine__WholeMarkdownLine_enter(argv : Array<AnalysisToken>) {
+        var lines : WholeMarkdownLines = argv[0].value
+        lines.addChild(new BlankLine())
+        return lines
     }
 
 
-
-    @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine <ERROR> Enter`)
-    WholeMarkdownLine__WholeMarkdownLine_ERROR(argv : Array<AnalysisToken>) {
-        var errorEntity =  new ErrorEntity()
-        errorEntity.addSegment(argv[1].value)
-
-        var markdown : Markdown = argv[0].value
-        markdown.addSegment(errorEntity)
-        return markdown
-    }
-
-
-    @GrammarProductionFunction(`TableRow -> VerticalBar MarkdownLine VerticalBar`)
-    TableRow__VerticalBar_MarkdownLine_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableRow -> verticalBar MarkdownLine verticalBar`)
+    TableRow__verticalBar_MarkdownLine_verticalBar(argv : Array<AnalysisToken>) {
         var tableRow : TableRow = new TableRow()
-        tableRow.addSegment(argv[1].value)
+        tableRow.addChild(argv[1].value)
         return tableRow
     }
-
-    @GrammarProductionFunction(`TableRow -> TableRow MarkdownLine VerticalBar`)
-    TableRow__TableRow_MarkdownLine_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableRow -> TableRow MarkdownLine verticalBar`)
+    TableRow__TableRow_MarkdownLine_verticalBar(argv : Array<AnalysisToken>) {
         var tableRow : TableRow = argv[0].value
-        tableRow.addSegment(argv[1].value)
+        tableRow.addChild(argv[1].value)
         return tableRow
     }
-
     @GrammarProductionFunction(`MarkdownLine -> TableRow`)
     MarkdownLine__TableRow(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 
 
-    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar dahes3 VerticalBar`)
-    TableAlignmentRow__VerticalBar_dahes3_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar dahes3 verticalBar`)
+    TableAlignmentRow__verticalBar_dahes3_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addSegment(new TableNoAlignment())
+        tableAlignmentRow.addChild(new TableNoAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
-    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar ColumnLeftAlignment VerticalBar`)
-    TableAlignmentRow__VerticalBar_ColumnLeftAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar columnLeftAlignment verticalBar`)
+    TableAlignmentRow__verticalBar_columnLeftAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addSegment(new TableLeftAlignment())
+        tableAlignmentRow.addChild(new TableLeftAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
-    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar ColumnRightAlignment VerticalBar`)
-    TableAlignmentRow__VerticalBar_ColumnRightAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar columnRightAlignment verticalBar`)
+    TableAlignmentRow__verticalBar_columnRightAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addSegment(new TableRightAlignment())
+        tableAlignmentRow.addChild(new TableRightAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
-    @GrammarProductionFunction(`TableAlignmentRow -> VerticalBar ColumnCenterAlignment VerticalBar`)
-    TableAlignmentRow__VerticalBar_ColumnCenterAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar columnCenterAlignment verticalBar`)
+    TableAlignmentRow__verticalBar_columnCenterAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addSegment(new TableCenterAlignment())
+        tableAlignmentRow.addChild(new TableCenterAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow dahes3 VerticalBar`)
-    TableAlignmentRow__TableAlignmentRow_dahes3_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow dahes3 verticalBar`)
+    TableAlignmentRow__TableAlignmentRow_dahes3_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addSegment(new TableNoAlignment())
+        tableAlignmentRow.addChild(new TableNoAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow ColumnLeftAlignment VerticalBar`)
-    TableAlignmentRow__TableAlignmentRow_ColumnLeftAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow columnLeftAlignment verticalBar`)
+    TableAlignmentRow__TableAlignmentRow_columnLeftAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addSegment(new TableLeftAlignment())
+        tableAlignmentRow.addChild(new TableLeftAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow ColumnRightAlignment VerticalBar`)
-    TableAlignmentRow__TableAlignmentRow_ColumnRightAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow columnRightAlignment verticalBar`)
+    TableAlignmentRow__TableAlignmentRow_columnRightAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addSegment(new TableRightAlignment())
+        tableAlignmentRow.addChild(new TableRightAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow ColumnCenterAlignment VerticalBar`)
-    TableAlignmentRow__TableAlignmentRow_ColumnCenterAlignment_VerticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow columnCenterAlignment verticalBar`)
+    TableAlignmentRow__TableAlignmentRow_columnCenterAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addSegment(new TableCenterAlignment())
+        tableAlignmentRow.addChild(new TableCenterAlignment(argv[1].value))
         return tableAlignmentRow
     }
-
     @GrammarProductionFunction(`MarkdownLine -> TableAlignmentRow`)
     MarkdownLine__TableAlignmentRow(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`TaskListItem -> CheckedBox Spaces MarkdownLine`)
-    TaskListItem__CheckedBox_Spaces_MarkdownLine(argv : Array<AnalysisToken>) {
-        var taskListItem : TaskListItem = new TaskListItem(true)
-        taskListItem.addSegment(argv[2].value)
-        return taskListItem
+    @GrammarProductionFunction(`TaskListItem -> checkedBox spaces MarkdownLine`)
+    TaskListItem__checkedBox_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new TaskListItem(true, argv[2].value)
     }
-
-    @GrammarProductionFunction(`TaskListItem -> UncheckedBox Spaces MarkdownLine`)
-    TaskListItem__UncheckedBox_Spaces_MarkdownLine(argv : Array<AnalysisToken>) {
-        var taskListItem : TaskListItem = new TaskListItem(false)
-        taskListItem.addSegment(argv[2].value)
-        return taskListItem
+    @GrammarProductionFunction(`TaskListItem -> uncheckedBox spaces MarkdownLine`)
+    TaskListItem__uncheckedBox_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new TaskListItem(false, argv[2].value)
     }
-
     @GrammarProductionFunction(`MarkdownLine -> TaskListItem`)
     MarkdownLine__TaskListItem(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 
-    @GrammarProductionFunction('DefinitionListItem -> ColonSign Spaces MarkdownLine')
-    DefinitionListItem__ColonSign_Spaces_MarkdownLine(argv : Array<AnalysisToken>) {
-        var definitionListItem : DefinitionListItem = new DefinitionListItem(argv[2].value)
-        return definitionListItem
+    @GrammarProductionFunction(`DefinitionListItem -> colonSign spaces MarkdownLine`)
+    DefinitionListItem__colonSign_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new DefinitionListItem(argv[2].value)
     }
 
     @GrammarProductionFunction(`MarkdownLine -> DefinitionListItem`)
@@ -179,193 +144,308 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    /*
-
-    Footnote -> FootnoteReference ColonSign Spaces MarkdownLine
-    MarkdownLine -> Footnote
-
-    HorizontalRule -> StarBoldItalicTag
-    HorizontalRule -> UnderlineBoldItalicTag
-    HorizontalRule -> underscores
-    HorizontalRule -> dahes3
-    HorizontalRule -> asterisks4
-    MarkdownLine -> HorizontalRule
-
-    Blockquote -> LeftArrow MarkdownLine
-    MarkdownLine -> Blockquote
-
-    Complement -> Spaces MarkdownLine
-    MarkdownLine -> Complement
-
-    Heading -> SharpSign MarkdownLine
-    MarkdownLine -> Heading
-
-    OrderedItem -> OrderedItemTag Sentence
-    MarkdownLine -> OrderedItem
-
-    UnorderedItem -> UnorderedItemTag Sentence
-    MarkdownLine -> UnorderedItem
-
-    */
-    @GrammarProductionFunction('Sentence -> Match_emphasis')
-    Sentence__Match_emphasis(argv : Array<AnalysisToken>) {
-        var sentence : Sentence = new Sentence()
-        sentence.addSegment(argv[0].value)
-        return sentence
+    @GrammarProductionFunction(`Footnote -> FootnoteReference colonSign spaces MarkdownLine`)
+    Footnote__FootnoteReference_colonSign_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        var footNote : Footnote = new Footnote(argv[0].value)
+        footNote.addChild(argv[3].value)
+        return footNote
     }
-    @GrammarProductionFunction('Sentence -> Sentence Match_emphasis')
-    AppendSentence__Match_emphasis(argv : Array<AnalysisToken>) {
-        var sentence : Sentence = argv[0].value
-        sentence.addSegment(argv[1].value)
-        return sentence
-    }
-
-    @GrammarProductionFunction('MarkdownLine -> Sentence')
-    MarkdownLine__Sentence(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`MarkdownLine -> Footnote`)
+    MarkdownLine__Footnote(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 
     @GrammarProductionFunction(`
-        PlainText -> SimpleText
-        PlainText -> Spaces
-        PlainText -> Link
-        PlainText -> URLAddress
-        PlainText -> EmailAddress
-        PlainText -> Image
-        PlainText -> Emoji
-        PlainText -> FootnoteReference
+        HorizontalRule -> StarBoldItalicTag
+        HorizontalRule -> UnderlineBoldItalicTag
+        HorizontalRule -> underscores
+        HorizontalRule -> dahes3
+        HorizontalRule -> asterisks4
     `)
-    PlainText__SimpleText(argv : Array<AnalysisToken>) {
-        var plainText = new PlainText()
-        plainText.addSegment(argv[0].value)
+    toHorizontalRule(argv : Array<AnalysisToken>) {
+        return new HorizontalRule(argv[0].value)
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> HorizontalRule`)
+    MarkdownLine__HorizontalRule(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+
+    @GrammarProductionFunction(`Blockquote -> leftArrow MarkdownLine`)
+    Blockquote__leftArrow_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new Blockquote(argv[1].value)
+    }
+    @GrammarProductionFunction(`MarkdownLine -> Blockquote`)
+    MarkdownLine__Blockquote(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`Complement -> spaces MarkdownLine`)
+    Complement__spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new Complement(argv[1].value)
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> Complement`)
+    MarkdownLine__Complement(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`Heading -> sharpSign MarkdownLine`)
+    Heading__sharpSign_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new Heading(argv[1].value)
+    }
+    @GrammarProductionFunction(`MarkdownLine -> Heading`)
+    MarkdownLine__Heading(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+
+    @GrammarProductionFunction(`OrderedItem -> orderedItemTag Sentence`)
+    OrderedItem__orderedItemTag_Sentence(argv : Array<AnalysisToken>) {
+        var orderedItem : OrderedItem = new OrderedItem(argv[1].value)
+        return orderedItem
+    }
+    @GrammarProductionFunction(`MarkdownLine -> OrderedItem`)
+    MarkdownLine__OrderedItem(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`UnorderedItem -> unorderedItemTag Sentence`)
+    UnorderedItem__unorderedItemTag_Sentence(argv : Array<AnalysisToken>) {
+        var unorderedItem : UnorderedItem = new UnorderedItem(argv[1].value)
+        return unorderedItem
+    }
+    @GrammarProductionFunction(`MarkdownLine -> UnorderedItem`)
+    MarkdownLine__UnorderedItem(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`Sentence -> Match_emphasis`)
+    Sentence__Match_emphasis(argv : Array<AnalysisToken>) {
+        var sentence : Sentence = new Sentence()
+        sentence.addChild(argv[0].value)
+        return sentence
+    }
+    @GrammarProductionFunction(`Sentence -> Sentence Match_emphasis`)
+    Sentence__Sentence_Match_emphasis(argv : Array<AnalysisToken>) {
+        var sentence : Sentence = argv[0].value
+        sentence.addChild(argv[1].value)
+        return sentence
+    }
+    @GrammarProductionFunction(`MarkdownLine -> Sentence`)
+    MarkdownLine__Sentence(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`PlainText -> simpleText`)
+    PlainText__simpleText(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(new SimpleText(argv[0].value))
         return plainText
     }
+    @GrammarProductionFunction(`PlainText -> spaces`)
+    PlainText__spaces(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(new Spaces(argv[0].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> Link`)
+    PlainText__Link(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(argv[0].value)
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> urlAddress`)
+    PlainText__urlAddress(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(new URLAddress(argv[0].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> emailAddress`)
+    PlainText__emailAddress(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(new EmailAddress(argv[0].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> Image`)
+    PlainText__Image(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(argv[0].value)
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> emoji`)
+    PlainText__emoji(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(new Emoji(argv[0].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> FootnoteReference`)
+    PlainText__FootnoteReference(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(argv[0].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> PlainText simpleText`)
+    PlainText__PlainText_simpleText(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(new SimpleText(argv[1].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> PlainText spaces`)
+    PlainText__PlainText_spaces(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(new Spaces(argv[1].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> PlainText Link`)
+    PlainText__PlainText_Link(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> PlainText urlAddress`)
+    PlainText__PlainText_urlAddress(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(new URLAddress(argv[1].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> PlainText emailAddress`)
+    PlainText__PlainText_emailAddress(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(new EmailAddress(argv[1].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> PlainText Image`)
+    PlainText__PlainText_Image(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> PlainText emoji`)
+    PlainText__PlainText_emoji(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(new Emoji(argv[1].value))
+        return plainText
+    }
+    @GrammarProductionFunction(`PlainText -> PlainText FootnoteReference`)
+    PlainText__PlainText_FootnoteReference(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`FootnoteReference -> openSquareBracketWithCaret simpleText closeSquareBracket`)
+    FootnoteReference__openSquareBracketWithCaret_simpleText_closeSquareBracket(argv : Array<AnalysisToken>) {
+        return new FootnoteReference(new SimpleText(argv[1].value))
+    }
+
+    @GrammarProductionFunction(`Link -> openSquareBracket Sentence closeSquareBracket openParentheses url closeParentheses`)
+    Link__openSquareBracket_Sentence_closeSquareBracket_openParentheses_url_closeParentheses(argv : Array<AnalysisToken>) {
+        return new Link(argv[1].value, argv[4].value)
+    }
+    @GrammarProductionFunction(`Link -> openSquareBracket Sentence closeSquareBracket openParentheses url spaces doubleQuotationMarkText closeParentheses`)
+    Link__openSquareBracket_Sentence_closeSquareBracket_openParentheses_url_spaces_doubleQuotationMarkText_closeParentheses(argv : Array<AnalysisToken>) {
+        return new Link(argv[1].value, argv[4].value, argv[6].value)
+    }
+    @GrammarProductionFunction(`Image -> exclamationMarkOpenSquareBracket Sentence closeSquareBracket openParentheses url spaces doubleQuotationMarkText closeParentheses`)
+    Image__exclamationMarkOpenSquareBracket_Sentence_closeSquareBracket_openParentheses_url_spaces_doubleQuotationMarkText_closeParentheses(argv : Array<AnalysisToken>) {
+        return new Image(argv[1].value, argv[4].value, argv[6].value)
+    }
+
+
+
+
+
+
+
+
+
+
 
     
-
-    @GrammarProductionFunction(`
-        PlainText -> PlainText SimpleText
-        PlainText -> PlainText Spaces
-        PlainText -> PlainText Link
-        PlainText -> PlainText URLAddress
-        PlainText -> PlainText EmailAddress
-        PlainText -> PlainText Image
-        PlainText -> PlainText Emoji
-        PlainText -> PlainText FootnoteReference
-    `)
-    AppendPlainText__SimpleText(argv : Array<AnalysisToken>) {
-        var plainText = argv[0].value
-        plainText.addSegment(argv[1].value)
-        return plainText
-    }
-    /*
-
-
-    FootnoteReference -> OpenSquareBracketWithCaret SimpleText CloseSquareBracket
-
-    Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL CloseParentheses
-    Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
-    Image -> ExclamationMarkOpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
-
-
-
-
-
-
-
-
-
-
-    */
-   
-    @GrammarProductionFunction(`BeginStarBoldText -> StarBoldTag NO_StarBoldText_Match_emphasis`)
-    BeginStarBoldText__StarBoldTag_NO_StarBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`BeginStarBoldText -> starBoldTag NO_StarBoldText_Match_emphasis`)
+    BeginStarBoldText__starBoldTag_NO_StarBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
         var boldText : BoldText = new BoldText()
-        boldText.addSegment(argv[1].value)
+        boldText.addChild(argv[1].value)
         return boldText
     }
     @GrammarProductionFunction(`BeginStarBoldText -> BeginStarBoldText NO_StarBoldText_Match_emphasis`)
     BeginStarBoldText__BeginStarBoldText_NO_StarBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
         var boldText : BoldText = argv[0].value
-        boldText.addSegment(argv[1].value)
+        boldText.addChild(argv[1].value)
         return boldText
     }
-    @GrammarProductionFunction(`StarBoldText -> BeginStarBoldText StarBoldTag`)
-    StarBoldText__BeginStarBoldText_StarBoldTag(argv : Array<AnalysisToken>) {
-        var boldText : BoldText = argv[0].value
+    @GrammarProductionFunction(`StarBoldText -> BeginStarBoldText starBoldTag`)
+    StarBoldText__BeginStarBoldText_starBoldTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`BeginUnderlineBoldText -> underlineBoldTag NO_UnderlineBoldText_Match_emphasis`)
+    BeginUnderlineBoldText__underlineBoldTag_NO_UnderlineBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var boldText : BoldText = new BoldText()
+        boldText.addChild(argv[1].value)
         return boldText
+    }
+    @GrammarProductionFunction(`BeginUnderlineBoldText -> BeginUnderlineBoldText NO_UnderlineBoldText_Match_emphasis`)
+    BeginUnderlineBoldText__BeginUnderlineBoldText_NO_UnderlineBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var boldText : BoldText = argv[0].value
+        boldText.addChild(argv[1].value)
+        return boldText
+    }
+    @GrammarProductionFunction(`UnderlineBoldText -> BeginUnderlineBoldText underlineBoldTag`)
+    UnderlineBoldText__BeginUnderlineBoldText_underlineBoldTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
     }
 
     /*
-    BeginUnderlineBoldText -> UnderlineBoldTag NO_UnderlineBoldText_Match_emphasis
-    BeginUnderlineBoldText -> BeginUnderlineBoldText NO_UnderlineBoldText_Match_emphasis
-    UnderlineBoldText -> BeginUnderlineBoldText UnderlineBoldTag
-
-    BeginStarItalicText -> StarItalicTag NO_StarItalicText_Match_emphasis
-    BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis
-    StarItalicText -> BeginStarItalicText StarItalicTag
-
-    BeginUnderlineItalicText -> UnderlineItalicTag NO_UnderlineItalicText_Match_emphasis
-    BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis
-    UnderlineItalicText -> BeginUnderlineItalicText UnderlineItalicTag
-
-    BeginStarBoldItalicText -> StarBoldItalicTag NO_StarBoldItalicText_Match_emphasis
-    BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis
-    StarBoldItalicText -> BeginStarBoldItalicText StarBoldItalicTag
-
-    BeginUnderlineBoldItalicText -> UnderlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis
-    BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis
-    UnderlineBoldItalicText -> BeginUnderlineBoldItalicText UnderlineBoldItalicTag
-
-    BeginStrikethroughText -> StrikethroughTag NO_StrikethroughText_Match_emphasis
-    BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis
-    StrikethroughText -> BeginStrikethroughText StrikethroughTag
-
-    BeginHighlightText -> HighlightTag NO_HighlightText_Match_emphasis
-    BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis
-    HighlightText -> BeginHighlightText HighlightTag
-
-    BeginSubscriptText -> SubscriptTag NO_SubscriptText_Match_emphasis
-    BeginSubscriptText -> BeginSubscriptText NO_SubscriptText_Match_emphasis
-    SubscriptText -> BeginSubscriptText SubscriptTag
-
-    BeginSuperscriptText -> SuperscriptTag NO_SuperscriptText_Match_emphasis
-    BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis
-    SuperscriptText -> BeginSuperscriptText SuperscriptTag
-
-    BeginDoubleBacktickText -> DoubleBacktickTag NO_DoubleBacktickText_Match_emphasis
-    BeginDoubleBacktickText -> BeginDoubleBacktickText NO_DoubleBacktickText_Match_emphasis
-    DoubleBacktickText -> BeginDoubleBacktickText DoubleBacktickTag
-
-    BeginBacktickText -> BacktickTag NO_BacktickText_Match_emphasis
-    BeginBacktickText -> BeginBacktickText NO_BacktickText_Match_emphasis
-    BacktickText -> BeginBacktickText BacktickTag
-    */
 
 
-    @GrammarProductionFunction(`BeginFencedCodeBlockText -> FencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis`)
-    BeginFencedCodeBlockText(argv : Array<AnalysisToken>) {
-        var fencedCodeBlockText : FencedCodeBlockText = new FencedCodeBlockText()
-        fencedCodeBlockText.addSegment(argv[1].value)
-        return fencedCodeBlockText
-    }
-    @GrammarProductionFunction(`BeginFencedCodeBlockText -> BeginFencedCodeBlockText NO_FencedCodeBlockText_Match_emphasis`)
-    AppendBeginFencedCodeBlockText(argv : Array<AnalysisToken>) {
-        var fencedCodeBlockText : FencedCodeBlockText = argv[0].value
-        fencedCodeBlockText.addSegment(argv[1].value)
-        return fencedCodeBlockText
-    }
-    @GrammarProductionFunction(`FencedCodeBlockText -> BeginFencedCodeBlockText FencedCodeBlockTag`)
-    FencedCodeBlockText(argv : Array<AnalysisToken>) {
-        var fencedCodeBlockText : FencedCodeBlockText = argv[0].value
-        fencedCodeBlockText.addSegment(argv[1].value)
-        return fencedCodeBlockText
-    }
+BeginStarItalicText -> starItalicTag NO_StarItalicText_Match_emphasis
+BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis
+StarItalicText -> BeginStarItalicText starItalicTag
 
+BeginUnderlineItalicText -> underlineItalicTag NO_UnderlineItalicText_Match_emphasis
+BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis
+UnderlineItalicText -> BeginUnderlineItalicText underlineItalicTag
 
+BeginStarBoldItalicText -> starBoldItalicTag NO_StarBoldItalicText_Match_emphasis
+BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis
+StarBoldItalicText -> BeginStarBoldItalicText starBoldItalicTag
 
-   
-    
+BeginUnderlineBoldItalicText -> underlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis
+BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis
+UnderlineBoldItalicText -> BeginUnderlineBoldItalicText underlineBoldItalicTag
+
+BeginStrikethroughText -> strikethroughTag NO_StrikethroughText_Match_emphasis
+BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis
+StrikethroughText -> BeginStrikethroughText strikethroughTag
+
+BeginHighlightText -> highlightTag NO_HighlightText_Match_emphasis
+BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis
+HighlightText -> BeginHighlightText highlightTag
+
+BeginSubscriptText -> subscriptTag NO_SubscriptText_Match_emphasis
+BeginSubscriptText -> BeginSubscriptText NO_SubscriptText_Match_emphasis
+SubscriptText -> BeginSubscriptText subscriptTag
+
+BeginSuperscriptText -> superscriptTag NO_SuperscriptText_Match_emphasis
+BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis
+SuperscriptText -> BeginSuperscriptText superscriptTag
+
+BeginDoubleBacktickText -> doubleBacktickTag NO_DoubleBacktickText_Match_emphasis
+BeginDoubleBacktickText -> BeginDoubleBacktickText NO_DoubleBacktickText_Match_emphasis
+DoubleBacktickText -> BeginDoubleBacktickText doubleBacktickTag
+
+BeginBacktickText -> backtickTag NO_BacktickText_Match_emphasis
+BeginBacktickText -> BeginBacktickText NO_BacktickText_Match_emphasis
+BacktickText -> BeginBacktickText backtickTag
+
+BeginFencedCodeBlockText -> fencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis
+BeginFencedCodeBlockText -> BeginFencedCodeBlockText NO_FencedCodeBlockText_Match_emphasis
+FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
+*/
     @GrammarProductionFunction(`
         NO_StarBoldText_Match_emphasis -> PlainText
         NO_StarBoldText_Match_emphasis -> UnderlineBoldText
@@ -548,6 +628,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_FencedCodeBlockText_Match_emphasis -> SuperscriptText
         NO_FencedCodeBlockText_Match_emphasis -> DoubleBacktickText
         NO_FencedCodeBlockText_Match_emphasis -> BacktickText
+
         Match_emphasis -> PlainText
         Match_emphasis -> StarBoldText
         Match_emphasis -> UnderlineBoldText
@@ -563,20 +644,39 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         Match_emphasis -> BacktickText
         Match_emphasis -> FencedCodeBlockText
     `)
-    Match_emphasis__PlainText(argv : Array<AnalysisToken>) {
+    passValueFunc(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 }
 
-export class WholeMarkdownLine extends SymbolEntity {}
+export class WholeMarkdownLines extends SymbolEntity {}
+
+export class BlankLine extends SymbolEntity {}
 
 export class TableRow extends SymbolEntity {}
 export class TableAlignmentRow extends SymbolEntity {}
-export class TableNoAlignment extends SymbolEntity {}
-export class TableLeftAlignment extends SymbolEntity {}
-export class TableRightAlignment extends SymbolEntity {}
-export class TableCenterAlignment extends SymbolEntity {}
-export class TaskListItem extends ValueSymbolEntity {}
+export class TableNoAlignment extends ValueSymbolEntity {}
+export class TableLeftAlignment extends ValueSymbolEntity {}
+export class TableRightAlignment extends ValueSymbolEntity {}
+export class TableCenterAlignment extends ValueSymbolEntity {}
+export class TaskListItem extends SymbolEntity {
+    checked : boolean
+    value : any
+
+    constructor(checked : boolean, value : any) {
+        super()
+        this.checked = checked
+        this.value = value
+    }
+
+    isChecked() {
+        return this.checked
+    }
+
+    getValue() {
+        return this.value
+    }
+}
 
 export class DefinitionListItem extends ValueSymbolEntity {}
 
@@ -594,9 +694,57 @@ export class SimpleText extends ValueSymbolEntity {}
 
 export class Spaces extends ValueSymbolEntity {}
 
+export class Footnote extends ValueSymbolEntity {}
+export class URLAddress extends ValueSymbolEntity {}
+export class EmailAddress extends ValueSymbolEntity {}
+export class Emoji extends ValueSymbolEntity {}
+
 export class FootnoteReference extends ValueSymbolEntity {}
+export class HorizontalRule extends ValueSymbolEntity {}
+export class Blockquote extends ValueSymbolEntity {}
+export class Complement extends ValueSymbolEntity {}
+export class Heading extends ValueSymbolEntity {}
+export class OrderedItem extends ValueSymbolEntity {}
+export class UnorderedItem extends ValueSymbolEntity {}
+
+export class Image extends SymbolEntity {
+    alt : any
+    url : any
+    title : any
+
+    constructor(alt : any, url : any, title : any=null) {
+        super()
+        this.alt = alt
+        this.url = url
+        this.title = title
+    }
+
+    getTitle() {
+        return this.title
+    }
+
+    getAlt() {
+        return this.alt
+    }
+}
 
 export class Link extends SymbolEntity {
-    /...
+    alt : any
+    url : any
+    title : any
+
+    constructor(alt : any, url : any, title : any=null) {
+        super()
+        this.alt = alt
+        this.url = url
+        this.title = title
+    }
+
+    getTitle() {
+        return this.title
+    }
+
+    getAlt() {
+        return this.alt
+    }
 }
-export class Image extends ValueSymbolEntity {}

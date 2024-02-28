@@ -1,50 +1,50 @@
-Enter \n
-Spaces [\t ]+
-SimpleText  [^*_\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
+enter \n
+spaces [\t ]+
+simpleText  [^*_\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
 
-Emoji ":"[^\:]+":"
-URL [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
-URLAddress "<"[^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+">"
-EmailAddress "<"[^\!\<\>\[\]\(\) \n\t]+"@"[^\!\<\>\[\]\(\) \n\t]+">"
-DoubleQuotationMarkText \"[^\"\n]*\"
-UnorderedItemTag [\-\+]
-OrderedItemTag [0-9]\.
+emoji ":"[^\:]+":"
+url [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
+urlAddress "<"[^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+">"
+emailAddress "<"[^\!\<\>\[\]\(\) \n\t]+"@"[^\!\<\>\[\]\(\) \n\t]+">"
+doubleQuotationMarkText \"[^\"\n]*\"
+unorderedItemTag [\-\+]
+orderedItemTag [0-9]\.
 
-VerticalBar "|"
-OpenParentheses "("
-CloseParentheses ")"
-OpenSquareBracket "["
-CloseSquareBracket "]"
-ExclamationMarkOpenSquareBracket "!["
-OpenSquareBracketWithCaret "[^"
+verticalBar "|"
+openParentheses "("
+closeParentheses ")"
+openSquareBracket "["
+closeSquareBracket "]"
+exclamationMarkOpenSquareBracket "!["
+openSquareBracketWithCaret "[^"
 
 asterisks4 "*"{4,}
 dahes3 "-"{3,}
 underscores "_"{4,}
 
-ColumnLeftAlignment :"-"{3,}
-ColumnRightAlignment "-"{3,}:
-ColumnCenterAlignment :"-"{3,}:
+columnLeftAlignment :"-"{3,}
+columnRightAlignment "-"{3,}:
+columnCenterAlignment :"-"{3,}:
 
-LeftArrow >+" "
-SharpSign #+" "
-ColonSign ":"
-DaheSign "-"
-CheckedBox "- [x]"
-UncheckedBox "- [ ]"
+leftArrow >+" "
+sharpSign #+" "
+colonSign ":"
+dashSign "-"
+checkedBox "- [x]"
+uncheckedBox "- [ ]"
 
-StarBoldTag "**"
-UnderlineBoldTag "__"
-StarItalicTag "*"
-UnderlineItalicTag "_"
-StarBoldItalicTag "***"
-UnderlineBoldItalicTag "___"
-StrikethroughTag "~~"
-HighlightTag "=="
-SubscriptTag "~"
-SuperscriptTag "^"
-DoubleBacktickTag "``"
-BacktickTag "`"
-FencedCodeBlockTag "```"
+starBoldTag "**"
+underlineBoldTag "__"
+starItalicTag "*"
+underlineItalicTag "_"
+starBoldItalicTag "***"
+underlineBoldItalicTag "___"
+strikethroughTag "~~"
+highlightTag "=="
+subscriptTag "~"
+superscriptTag "^"
+doubleBacktickTag "``"
+backtickTag "`"
+fencedCodeBlockTag "```"
 
 

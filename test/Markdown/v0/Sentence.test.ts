@@ -12,6 +12,11 @@ class MarkdownRunner extends LRSyntaxAnalysisRunner {
 }
 var markdown: MarkdownRunner = new MarkdownRunner(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
 
+markdown.setPreprocessing((v:string):string=>{
+    if (v.at(-1)!='\n') return v+'\n'
+    return v
+})
+
 describe('Sentence', () => {
 
     test('Sentence - 0', () => {

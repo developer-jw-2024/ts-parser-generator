@@ -66,19 +66,19 @@ export class AnalysisStep {
 }
 
 export class SymbolEntity {
-    segments : Array<any>
+    children : Array<any>
 
     constructor() {
-        this.segments = []
+        this.children = []
     }
 
-    addSegment(segment : any) {
-        this.segments.push(segment)
+    addChild(child : any) {
+        this.children.push(child)
     }
 
     toHierarchy(intent : string = '') {
         var subIntent = `${intent}     `
-        var resultArray =  this.segments.map(segment=>{
+        var resultArray =  this.children.map(segment=>{
             if (segment instanceof SymbolEntity) {
                 return segment.toHierarchy(subIntent)
             } else {
@@ -90,7 +90,7 @@ export class SymbolEntity {
     }
 
     getRawValue() {
-        var result =  this.segments.map(segment=>{
+        var result =  this.children.map(segment=>{
             if (segment instanceof SymbolEntity) {
                 return segment.getRawValue()
             } else {
@@ -112,7 +112,7 @@ export class ValueSymbolEntity extends SymbolEntity {
         return this.value
     }
 }
-export class ErrorEntity extends SymbolEntity {}
+export class ErrorEntity extends ValueSymbolEntity {}
 
 export function GrammarProductionFunction(gpstring: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {

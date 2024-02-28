@@ -1,57 +1,149 @@
 
+Markdown -> WholeMarkdownLine
+Markdown -> MarkdownLine
+Markdown -> <ERROR>
+Markdown -> WholeMarkdownLine MarkdownLine
+
+WholeMarkdownLine -> MarkdownLine Enter
+WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
+
+WholeMarkdownLine -> <ERROR> Enter
+WholeMarkdownLine -> WholeMarkdownLine <ERROR> Enter
 
 
-BeginStarBoldText -> starBoldTag NO_StarBoldText_Match_emphasis
+TableRow -> VerticalBar MarkdownLine VerticalBar
+TableRow -> TableRow MarkdownLine VerticalBar
+MarkdownLine -> TableRow
+
+TableAlignmentRow -> VerticalBar dahes3 VerticalBar
+TableAlignmentRow -> VerticalBar ColumnLeftAlignment VerticalBar
+TableAlignmentRow -> VerticalBar ColumnRightAlignment VerticalBar
+TableAlignmentRow -> VerticalBar ColumnCenterAlignment VerticalBar
+TableAlignmentRow -> TableAlignmentRow dahes3 VerticalBar
+TableAlignmentRow -> TableAlignmentRow ColumnLeftAlignment VerticalBar
+TableAlignmentRow -> TableAlignmentRow ColumnRightAlignment VerticalBar
+TableAlignmentRow -> TableAlignmentRow ColumnCenterAlignment VerticalBar
+MarkdownLine -> TableAlignmentRow
+
+TaskListItem -> CheckedBox Spaces MarkdownLine
+TaskListItem -> UncheckedBox Spaces MarkdownLine
+MarkdownLine -> TaskListItem
+
+DefinitionListItem -> ColonSign Spaces MarkdownLine
+MarkdownLine -> DefinitionListItem
+
+Footnote -> FootnoteReference ColonSign Spaces MarkdownLine
+MarkdownLine -> Footnote
+
+HorizontalRule -> StarBoldItalicTag
+HorizontalRule -> UnderlineBoldItalicTag
+HorizontalRule -> underscores
+HorizontalRule -> dahes3
+HorizontalRule -> asterisks4
+MarkdownLine -> HorizontalRule
+
+Blockquote -> LeftArrow MarkdownLine
+MarkdownLine -> Blockquote
+
+Complement -> Spaces MarkdownLine
+MarkdownLine -> Complement
+
+Heading -> SharpSign MarkdownLine
+MarkdownLine -> Heading
+
+OrderedItem -> OrderedItemTag Sentence
+MarkdownLine -> OrderedItem
+
+UnorderedItem -> UnorderedItemTag Sentence
+MarkdownLine -> UnorderedItem
+
+Sentence -> Match_emphasis
+Sentence -> Sentence Match_emphasis
+MarkdownLine -> Sentence
+
+PlainText -> SimpleText
+PlainText -> Spaces
+PlainText -> Link
+PlainText -> URLAddress
+PlainText -> EmailAddress
+PlainText -> Image
+PlainText -> Emoji
+PlainText -> FootnoteReference
+PlainText -> PlainText SimpleText
+PlainText -> PlainText Spaces
+PlainText -> PlainText Link
+PlainText -> PlainText URLAddress
+PlainText -> PlainText EmailAddress
+PlainText -> PlainText Image
+PlainText -> PlainText Emoji
+PlainText -> PlainText FootnoteReference
+
+FootnoteReference -> OpenSquareBracketWithCaret SimpleText CloseSquareBracket
+
+Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL CloseParentheses
+Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
+Image -> ExclamationMarkOpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
+
+
+
+
+
+
+
+
+
+
+BeginStarBoldText -> StarBoldTag NO_StarBoldText_Match_emphasis
 BeginStarBoldText -> BeginStarBoldText NO_StarBoldText_Match_emphasis
-StarBoldText -> BeginStarBoldText starBoldTag
+StarBoldText -> BeginStarBoldText StarBoldTag
 
-BeginUnderlineBoldText -> underlineBoldTag NO_UnderlineBoldText_Match_emphasis
+BeginUnderlineBoldText -> UnderlineBoldTag NO_UnderlineBoldText_Match_emphasis
 BeginUnderlineBoldText -> BeginUnderlineBoldText NO_UnderlineBoldText_Match_emphasis
-UnderlineBoldText -> BeginUnderlineBoldText underlineBoldTag
+UnderlineBoldText -> BeginUnderlineBoldText UnderlineBoldTag
 
-BeginStarItalicText -> starItalicTag NO_StarItalicText_Match_emphasis
+BeginStarItalicText -> StarItalicTag NO_StarItalicText_Match_emphasis
 BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis
-StarItalicText -> BeginStarItalicText starItalicTag
+StarItalicText -> BeginStarItalicText StarItalicTag
 
-BeginUnderlineItalicText -> underlineItalicTag NO_UnderlineItalicText_Match_emphasis
+BeginUnderlineItalicText -> UnderlineItalicTag NO_UnderlineItalicText_Match_emphasis
 BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis
-UnderlineItalicText -> BeginUnderlineItalicText underlineItalicTag
+UnderlineItalicText -> BeginUnderlineItalicText UnderlineItalicTag
 
-BeginStarBoldItalicText -> starBoldItalicTag NO_StarBoldItalicText_Match_emphasis
+BeginStarBoldItalicText -> StarBoldItalicTag NO_StarBoldItalicText_Match_emphasis
 BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis
-StarBoldItalicText -> BeginStarBoldItalicText starBoldItalicTag
+StarBoldItalicText -> BeginStarBoldItalicText StarBoldItalicTag
 
-BeginUnderlineBoldItalicText -> underlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis
+BeginUnderlineBoldItalicText -> UnderlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis
 BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis
-UnderlineBoldItalicText -> BeginUnderlineBoldItalicText underlineBoldItalicTag
+UnderlineBoldItalicText -> BeginUnderlineBoldItalicText UnderlineBoldItalicTag
 
-BeginStrikethroughText -> strikethroughTag NO_StrikethroughText_Match_emphasis
+BeginStrikethroughText -> StrikethroughTag NO_StrikethroughText_Match_emphasis
 BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis
-StrikethroughText -> BeginStrikethroughText strikethroughTag
+StrikethroughText -> BeginStrikethroughText StrikethroughTag
 
-BeginHighlightText -> highlightTag NO_HighlightText_Match_emphasis
+BeginHighlightText -> HighlightTag NO_HighlightText_Match_emphasis
 BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis
-HighlightText -> BeginHighlightText highlightTag
+HighlightText -> BeginHighlightText HighlightTag
 
-BeginSubscriptText -> subscriptTag NO_SubscriptText_Match_emphasis
+BeginSubscriptText -> SubscriptTag NO_SubscriptText_Match_emphasis
 BeginSubscriptText -> BeginSubscriptText NO_SubscriptText_Match_emphasis
-SubscriptText -> BeginSubscriptText subscriptTag
+SubscriptText -> BeginSubscriptText SubscriptTag
 
-BeginSuperscriptText -> superscriptTag NO_SuperscriptText_Match_emphasis
+BeginSuperscriptText -> SuperscriptTag NO_SuperscriptText_Match_emphasis
 BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis
-SuperscriptText -> BeginSuperscriptText superscriptTag
+SuperscriptText -> BeginSuperscriptText SuperscriptTag
 
-BeginDoubleBacktickText -> doubleBacktickTag NO_DoubleBacktickText_Match_emphasis
+BeginDoubleBacktickText -> DoubleBacktickTag NO_DoubleBacktickText_Match_emphasis
 BeginDoubleBacktickText -> BeginDoubleBacktickText NO_DoubleBacktickText_Match_emphasis
-DoubleBacktickText -> BeginDoubleBacktickText doubleBacktickTag
+DoubleBacktickText -> BeginDoubleBacktickText DoubleBacktickTag
 
-BeginBacktickText -> backtickTag NO_BacktickText_Match_emphasis
+BeginBacktickText -> BacktickTag NO_BacktickText_Match_emphasis
 BeginBacktickText -> BeginBacktickText NO_BacktickText_Match_emphasis
-BacktickText -> BeginBacktickText backtickTag
+BacktickText -> BeginBacktickText BacktickTag
 
-BeginFencedCodeBlockText -> fencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis
+BeginFencedCodeBlockText -> FencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis
 BeginFencedCodeBlockText -> BeginFencedCodeBlockText NO_FencedCodeBlockText_Match_emphasis
-FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
+FencedCodeBlockText -> BeginFencedCodeBlockText FencedCodeBlockTag
 
 NO_StarBoldText_Match_emphasis -> PlainText
 NO_StarBoldText_Match_emphasis -> UnderlineBoldText
