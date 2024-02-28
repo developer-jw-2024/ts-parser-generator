@@ -12,39 +12,39 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`WholeMarkdownLine -> MarkdownLine enter`)
     WholeMarkdownLine__MarkdownLine_enter(argv : Array<AnalysisToken>) {
-        var lines : WholeMarkdownLines = new WholeMarkdownLines()
+        var lines : Markdown = new Markdown()
         lines.addChild(argv[0].value)
         return lines
     }
     @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine MarkdownLine enter`)
     WholeMarkdownLine__WholeMarkdownLine_MarkdownLine_enter(argv : Array<AnalysisToken>) {
-        var lines : WholeMarkdownLines = argv[0].value
+        var lines : Markdown = argv[0].value
         lines.addChild(argv[1].value)
         return lines
     }
 
     @GrammarProductionFunction(`WholeMarkdownLine -> <ERROR> enter`)
     WholeMarkdownLine__ERROR_enter(argv : Array<AnalysisToken>) {
-        var lines : WholeMarkdownLines = new WholeMarkdownLines()
+        var lines : Markdown = new Markdown()
         lines.addChild(new ErrorEntity(argv[0].value))
         return lines
     }
     @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine <ERROR> enter`)
     WholeMarkdownLine__WholeMarkdownLine_ERROR_enter(argv : Array<AnalysisToken>) {
-        var lines : WholeMarkdownLines = argv[0].value
+        var lines : Markdown = argv[0].value
         lines.addChild(new ErrorEntity(argv[1].value))
         return lines
     }
 
     @GrammarProductionFunction(`WholeMarkdownLine -> enter`)
     WholeMarkdownLine__enter(argv : Array<AnalysisToken>) {
-        var lines : WholeMarkdownLines = new WholeMarkdownLines()
+        var lines : Markdown = new Markdown()
         lines.addChild(new BlankLine())
         return lines
     }
     @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine enter`)
     WholeMarkdownLine__WholeMarkdownLine_enter(argv : Array<AnalysisToken>) {
-        var lines : WholeMarkdownLines = argv[0].value
+        var lines : Markdown = argv[0].value
         lines.addChild(new BlankLine())
         return lines
     }
@@ -364,161 +364,257 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
 
 
-    
+
     @GrammarProductionFunction(`BeginStarBoldText -> starBoldTag NO_StarBoldText_Match_emphasis`)
     BeginStarBoldText__starBoldTag_NO_StarBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var boldText : BoldText = new BoldText()
-        boldText.addChild(argv[1].value)
-        return boldText
+        var starBoldText : BoldText = new BoldText()
+        starBoldText.addChild(argv[1].value)
+        return starBoldText
     }
+    
     @GrammarProductionFunction(`BeginStarBoldText -> BeginStarBoldText NO_StarBoldText_Match_emphasis`)
     BeginStarBoldText__BeginStarBoldText_NO_StarBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var boldText : BoldText = argv[0].value
-        boldText.addChild(argv[1].value)
-        return boldText
+        var starBoldText : BoldText = argv[0].value
+        starBoldText.addChild(argv[1].value)
+        return starBoldText
     }
+    
     @GrammarProductionFunction(`StarBoldText -> BeginStarBoldText starBoldTag`)
     StarBoldText__BeginStarBoldText_starBoldTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-
+    
     @GrammarProductionFunction(`BeginUnderlineBoldText -> underlineBoldTag NO_UnderlineBoldText_Match_emphasis`)
     BeginUnderlineBoldText__underlineBoldTag_NO_UnderlineBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var boldText : BoldText = new BoldText()
-        boldText.addChild(argv[1].value)
-        return boldText
+        var underlineBoldText : BoldText = new BoldText()
+        underlineBoldText.addChild(argv[1].value)
+        return underlineBoldText
     }
+    
     @GrammarProductionFunction(`BeginUnderlineBoldText -> BeginUnderlineBoldText NO_UnderlineBoldText_Match_emphasis`)
     BeginUnderlineBoldText__BeginUnderlineBoldText_NO_UnderlineBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var boldText : BoldText = argv[0].value
-        boldText.addChild(argv[1].value)
-        return boldText
+        var underlineBoldText : BoldText = argv[0].value
+        underlineBoldText.addChild(argv[1].value)
+        return underlineBoldText
     }
+    
     @GrammarProductionFunction(`UnderlineBoldText -> BeginUnderlineBoldText underlineBoldTag`)
     UnderlineBoldText__BeginUnderlineBoldText_underlineBoldTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-
+    
     @GrammarProductionFunction(`BeginStarItalicText -> starItalicTag NO_StarItalicText_Match_emphasis`)
     BeginStarItalicText__starItalicTag_NO_StarItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = new ItalicText()
-        italicText.addChild(argv[1].value)
-        return italicText
+        var starItalicText : ItalicText = new ItalicText()
+        starItalicText.addChild(argv[1].value)
+        return starItalicText
     }
+    
     @GrammarProductionFunction(`BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis`)
     BeginStarItalicText__BeginStarItalicText_NO_StarItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = argv[0].value
-        italicText.addChild(argv[1].value)
-        return italicText
+        var starItalicText : ItalicText = argv[0].value
+        starItalicText.addChild(argv[1].value)
+        return starItalicText
     }
+    
     @GrammarProductionFunction(`StarItalicText -> BeginStarItalicText starItalicTag`)
     StarItalicText__BeginStarItalicText_starItalicTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-
-
+    
     @GrammarProductionFunction(`BeginUnderlineItalicText -> underlineItalicTag NO_UnderlineItalicText_Match_emphasis`)
     BeginUnderlineItalicText__underlineItalicTag_NO_UnderlineItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = new ItalicText()
-        italicText.addChild(argv[1].value)
-        return italicText
+        var underlineItalicText : ItalicText = new ItalicText()
+        underlineItalicText.addChild(argv[1].value)
+        return underlineItalicText
     }
+    
     @GrammarProductionFunction(`BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis`)
     BeginUnderlineItalicText__BeginUnderlineItalicText_NO_UnderlineItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = argv[0].value
-        italicText.addChild(argv[1].value)
-        return italicText
+        var underlineItalicText : ItalicText = argv[0].value
+        underlineItalicText.addChild(argv[1].value)
+        return underlineItalicText
     }
+    
     @GrammarProductionFunction(`UnderlineItalicText -> BeginUnderlineItalicText underlineItalicTag`)
     UnderlineItalicText__BeginUnderlineItalicText_underlineItalicTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-
+    
     @GrammarProductionFunction(`BeginStarBoldItalicText -> starBoldItalicTag NO_StarBoldItalicText_Match_emphasis`)
     BeginStarBoldItalicText__starBoldItalicTag_NO_StarBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = new ItalicText()
-        italicText.addChild(argv[1].value)
-        return italicText
+        var starBoldItalicText : ItalicText = new ItalicText()
+        starBoldItalicText.addChild(argv[1].value)
+        return starBoldItalicText
     }
+    
     @GrammarProductionFunction(`BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis`)
     BeginStarBoldItalicText__BeginStarBoldItalicText_NO_StarBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = argv[0].value
-        italicText.addChild(argv[1].value)
-        return italicText
+        var starBoldItalicText : ItalicText = argv[0].value
+        starBoldItalicText.addChild(argv[1].value)
+        return starBoldItalicText
     }
+    
     @GrammarProductionFunction(`StarBoldItalicText -> BeginStarBoldItalicText starBoldItalicTag`)
     StarBoldItalicText__BeginStarBoldItalicText_starBoldItalicTag(argv : Array<AnalysisToken>) {
         var boldText : BoldText = new BoldText()
         boldText.addChild(argv[0].value)
         return boldText
     }
-
+    
     @GrammarProductionFunction(`BeginUnderlineBoldItalicText -> underlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis`)
     BeginUnderlineBoldItalicText__underlineBoldItalicTag_NO_UnderlineBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = new ItalicText()
-        italicText.addChild(argv[1].value)
-        return italicText
+        var underlineBoldItalicText : ItalicText = new ItalicText()
+        underlineBoldItalicText.addChild(argv[1].value)
+        return underlineBoldItalicText
     }
+    
     @GrammarProductionFunction(`BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis`)
     BeginUnderlineBoldItalicText__BeginUnderlineBoldItalicText_NO_UnderlineBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var italicText : ItalicText = argv[0].value
-        italicText.addChild(argv[1].value)
-        return italicText
+        var underlineBoldItalicText : ItalicText = argv[0].value
+        underlineBoldItalicText.addChild(argv[1].value)
+        return underlineBoldItalicText
     }
+    
     @GrammarProductionFunction(`UnderlineBoldItalicText -> BeginUnderlineBoldItalicText underlineBoldItalicTag`)
     UnderlineBoldItalicText__BeginUnderlineBoldItalicText_underlineBoldItalicTag(argv : Array<AnalysisToken>) {
         var boldText : BoldText = new BoldText()
         boldText.addChild(argv[0].value)
         return boldText
     }
-
+    
     @GrammarProductionFunction(`BeginStrikethroughText -> strikethroughTag NO_StrikethroughText_Match_emphasis`)
     BeginStrikethroughText__strikethroughTag_NO_StrikethroughText_Match_emphasis(argv : Array<AnalysisToken>) {
         var strikethroughText : StrikethroughText = new StrikethroughText()
         strikethroughText.addChild(argv[1].value)
         return strikethroughText
     }
+    
     @GrammarProductionFunction(`BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis`)
     BeginStrikethroughText__BeginStrikethroughText_NO_StrikethroughText_Match_emphasis(argv : Array<AnalysisToken>) {
         var strikethroughText : StrikethroughText = argv[0].value
         strikethroughText.addChild(argv[1].value)
         return strikethroughText
     }
+    
     @GrammarProductionFunction(`StrikethroughText -> BeginStrikethroughText strikethroughTag`)
     StrikethroughText__BeginStrikethroughText_strikethroughTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-
-
-    /*
-
-
-
-
-BeginHighlightText -> highlightTag NO_HighlightText_Match_emphasis
-BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis
-HighlightText -> BeginHighlightText highlightTag
-
-BeginSubscriptText -> subscriptTag NO_SubscriptText_Match_emphasis
-BeginSubscriptText -> BeginSubscriptText NO_SubscriptText_Match_emphasis
-SubscriptText -> BeginSubscriptText subscriptTag
-
-BeginSuperscriptText -> superscriptTag NO_SuperscriptText_Match_emphasis
-BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis
-SuperscriptText -> BeginSuperscriptText superscriptTag
-
-BeginDoubleBacktickText -> doubleBacktickTag NO_DoubleBacktickText_Match_emphasis
-BeginDoubleBacktickText -> BeginDoubleBacktickText NO_DoubleBacktickText_Match_emphasis
-DoubleBacktickText -> BeginDoubleBacktickText doubleBacktickTag
-
-BeginBacktickText -> backtickTag NO_BacktickText_Match_emphasis
-BeginBacktickText -> BeginBacktickText NO_BacktickText_Match_emphasis
-BacktickText -> BeginBacktickText backtickTag
-
-BeginFencedCodeBlockText -> fencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis
-BeginFencedCodeBlockText -> BeginFencedCodeBlockText NO_FencedCodeBlockText_Match_emphasis
-FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
-*/
+    
+    @GrammarProductionFunction(`BeginHighlightText -> highlightTag NO_HighlightText_Match_emphasis`)
+    BeginHighlightText__highlightTag_NO_HighlightText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var highlightText : HighlightText = new HighlightText()
+        highlightText.addChild(argv[1].value)
+        return highlightText
+    }
+    
+    @GrammarProductionFunction(`BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis`)
+    BeginHighlightText__BeginHighlightText_NO_HighlightText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var highlightText : HighlightText = argv[0].value
+        highlightText.addChild(argv[1].value)
+        return highlightText
+    }
+    
+    @GrammarProductionFunction(`HighlightText -> BeginHighlightText highlightTag`)
+    HighlightText__BeginHighlightText_highlightTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+    
+    @GrammarProductionFunction(`BeginSubscriptText -> subscriptTag NO_SubscriptText_Match_emphasis`)
+    BeginSubscriptText__subscriptTag_NO_SubscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var subscriptText : SubscriptText = new SubscriptText()
+        subscriptText.addChild(argv[1].value)
+        return subscriptText
+    }
+    
+    @GrammarProductionFunction(`BeginSubscriptText -> BeginSubscriptText NO_SubscriptText_Match_emphasis`)
+    BeginSubscriptText__BeginSubscriptText_NO_SubscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var subscriptText : SubscriptText = argv[0].value
+        subscriptText.addChild(argv[1].value)
+        return subscriptText
+    }
+    
+    @GrammarProductionFunction(`SubscriptText -> BeginSubscriptText subscriptTag`)
+    SubscriptText__BeginSubscriptText_subscriptTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+    
+    @GrammarProductionFunction(`BeginSuperscriptText -> superscriptTag NO_SuperscriptText_Match_emphasis`)
+    BeginSuperscriptText__superscriptTag_NO_SuperscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var superscriptText : SuperscriptText = new SuperscriptText()
+        superscriptText.addChild(argv[1].value)
+        return superscriptText
+    }
+    
+    @GrammarProductionFunction(`BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis`)
+    BeginSuperscriptText__BeginSuperscriptText_NO_SuperscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var superscriptText : SuperscriptText = argv[0].value
+        superscriptText.addChild(argv[1].value)
+        return superscriptText
+    }
+    
+    @GrammarProductionFunction(`SuperscriptText -> BeginSuperscriptText superscriptTag`)
+    SuperscriptText__BeginSuperscriptText_superscriptTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+    
+    @GrammarProductionFunction(`BeginDoubleBacktickText -> doubleBacktickTag NO_DoubleBacktickText_Match_emphasis`)
+    BeginDoubleBacktickText__doubleBacktickTag_NO_DoubleBacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var doubleBacktickText : DoubleBacktickText = new DoubleBacktickText()
+        doubleBacktickText.addChild(argv[1].value)
+        return doubleBacktickText
+    }
+    
+    @GrammarProductionFunction(`BeginDoubleBacktickText -> BeginDoubleBacktickText NO_DoubleBacktickText_Match_emphasis`)
+    BeginDoubleBacktickText__BeginDoubleBacktickText_NO_DoubleBacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var doubleBacktickText : DoubleBacktickText = argv[0].value
+        doubleBacktickText.addChild(argv[1].value)
+        return doubleBacktickText
+    }
+    
+    @GrammarProductionFunction(`DoubleBacktickText -> BeginDoubleBacktickText doubleBacktickTag`)
+    DoubleBacktickText__BeginDoubleBacktickText_doubleBacktickTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+    
+    @GrammarProductionFunction(`BeginBacktickText -> backtickTag NO_BacktickText_Match_emphasis`)
+    BeginBacktickText__backtickTag_NO_BacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var backtickText : BacktickText = new BacktickText()
+        backtickText.addChild(argv[1].value)
+        return backtickText
+    }
+    
+    @GrammarProductionFunction(`BeginBacktickText -> BeginBacktickText NO_BacktickText_Match_emphasis`)
+    BeginBacktickText__BeginBacktickText_NO_BacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var backtickText : BacktickText = argv[0].value
+        backtickText.addChild(argv[1].value)
+        return backtickText
+    }
+    
+    @GrammarProductionFunction(`BacktickText -> BeginBacktickText backtickTag`)
+    BacktickText__BeginBacktickText_backtickTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+    
+    @GrammarProductionFunction(`BeginFencedCodeBlockText -> fencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis`)
+    BeginFencedCodeBlockText__fencedCodeBlockTag_NO_FencedCodeBlockText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var fencedCodeBlockText : FencedCodeBlockText = new FencedCodeBlockText()
+        fencedCodeBlockText.addChild(argv[1].value)
+        return fencedCodeBlockText
+    }
+    
+    @GrammarProductionFunction(`BeginFencedCodeBlockText -> BeginFencedCodeBlockText NO_FencedCodeBlockText_Match_emphasis`)
+    BeginFencedCodeBlockText__BeginFencedCodeBlockText_NO_FencedCodeBlockText_Match_emphasis(argv : Array<AnalysisToken>) {
+        var fencedCodeBlockText : FencedCodeBlockText = argv[0].value
+        fencedCodeBlockText.addChild(argv[1].value)
+        return fencedCodeBlockText
+    }
+    
+    @GrammarProductionFunction(`FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag`)
+    FencedCodeBlockText__BeginFencedCodeBlockText_fencedCodeBlockTag(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
     @GrammarProductionFunction(`
         NO_StarBoldText_Match_emphasis -> PlainText
         NO_StarBoldText_Match_emphasis -> UnderlineBoldText
@@ -533,7 +629,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_StarBoldText_Match_emphasis -> DoubleBacktickText
         NO_StarBoldText_Match_emphasis -> BacktickText
         NO_StarBoldText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_UnderlineBoldText_Match_emphasis -> PlainText
         NO_UnderlineBoldText_Match_emphasis -> StarBoldText
         NO_UnderlineBoldText_Match_emphasis -> StarItalicText
@@ -547,7 +643,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_UnderlineBoldText_Match_emphasis -> DoubleBacktickText
         NO_UnderlineBoldText_Match_emphasis -> BacktickText
         NO_UnderlineBoldText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_StarItalicText_Match_emphasis -> PlainText
         NO_StarItalicText_Match_emphasis -> StarBoldText
         NO_StarItalicText_Match_emphasis -> UnderlineBoldText
@@ -561,7 +657,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_StarItalicText_Match_emphasis -> DoubleBacktickText
         NO_StarItalicText_Match_emphasis -> BacktickText
         NO_StarItalicText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_UnderlineItalicText_Match_emphasis -> PlainText
         NO_UnderlineItalicText_Match_emphasis -> StarBoldText
         NO_UnderlineItalicText_Match_emphasis -> UnderlineBoldText
@@ -575,7 +671,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_UnderlineItalicText_Match_emphasis -> DoubleBacktickText
         NO_UnderlineItalicText_Match_emphasis -> BacktickText
         NO_UnderlineItalicText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_StarBoldItalicText_Match_emphasis -> PlainText
         NO_StarBoldItalicText_Match_emphasis -> StarBoldText
         NO_StarBoldItalicText_Match_emphasis -> UnderlineBoldText
@@ -589,7 +685,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_StarBoldItalicText_Match_emphasis -> DoubleBacktickText
         NO_StarBoldItalicText_Match_emphasis -> BacktickText
         NO_StarBoldItalicText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_UnderlineBoldItalicText_Match_emphasis -> PlainText
         NO_UnderlineBoldItalicText_Match_emphasis -> StarBoldText
         NO_UnderlineBoldItalicText_Match_emphasis -> UnderlineBoldText
@@ -603,7 +699,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_UnderlineBoldItalicText_Match_emphasis -> DoubleBacktickText
         NO_UnderlineBoldItalicText_Match_emphasis -> BacktickText
         NO_UnderlineBoldItalicText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_StrikethroughText_Match_emphasis -> PlainText
         NO_StrikethroughText_Match_emphasis -> StarBoldText
         NO_StrikethroughText_Match_emphasis -> UnderlineBoldText
@@ -617,7 +713,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_StrikethroughText_Match_emphasis -> DoubleBacktickText
         NO_StrikethroughText_Match_emphasis -> BacktickText
         NO_StrikethroughText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_HighlightText_Match_emphasis -> PlainText
         NO_HighlightText_Match_emphasis -> StarBoldText
         NO_HighlightText_Match_emphasis -> UnderlineBoldText
@@ -631,7 +727,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_HighlightText_Match_emphasis -> DoubleBacktickText
         NO_HighlightText_Match_emphasis -> BacktickText
         NO_HighlightText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_SubscriptText_Match_emphasis -> PlainText
         NO_SubscriptText_Match_emphasis -> StarBoldText
         NO_SubscriptText_Match_emphasis -> UnderlineBoldText
@@ -645,7 +741,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_SubscriptText_Match_emphasis -> DoubleBacktickText
         NO_SubscriptText_Match_emphasis -> BacktickText
         NO_SubscriptText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_SuperscriptText_Match_emphasis -> PlainText
         NO_SuperscriptText_Match_emphasis -> StarBoldText
         NO_SuperscriptText_Match_emphasis -> UnderlineBoldText
@@ -659,7 +755,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_SuperscriptText_Match_emphasis -> DoubleBacktickText
         NO_SuperscriptText_Match_emphasis -> BacktickText
         NO_SuperscriptText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_DoubleBacktickText_Match_emphasis -> PlainText
         NO_DoubleBacktickText_Match_emphasis -> StarBoldText
         NO_DoubleBacktickText_Match_emphasis -> UnderlineBoldText
@@ -673,7 +769,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_DoubleBacktickText_Match_emphasis -> SuperscriptText
         NO_DoubleBacktickText_Match_emphasis -> BacktickText
         NO_DoubleBacktickText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_BacktickText_Match_emphasis -> PlainText
         NO_BacktickText_Match_emphasis -> StarBoldText
         NO_BacktickText_Match_emphasis -> UnderlineBoldText
@@ -687,7 +783,7 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_BacktickText_Match_emphasis -> SuperscriptText
         NO_BacktickText_Match_emphasis -> DoubleBacktickText
         NO_BacktickText_Match_emphasis -> FencedCodeBlockText
-
+        
         NO_FencedCodeBlockText_Match_emphasis -> PlainText
         NO_FencedCodeBlockText_Match_emphasis -> StarBoldText
         NO_FencedCodeBlockText_Match_emphasis -> UnderlineBoldText
@@ -701,7 +797,6 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
         NO_FencedCodeBlockText_Match_emphasis -> SuperscriptText
         NO_FencedCodeBlockText_Match_emphasis -> DoubleBacktickText
         NO_FencedCodeBlockText_Match_emphasis -> BacktickText
-
         Match_emphasis -> PlainText
         Match_emphasis -> StarBoldText
         Match_emphasis -> UnderlineBoldText
@@ -719,10 +814,11 @@ FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag
     `)
     passValueFunc(argv : Array<AnalysisToken>) {
         return argv[0].value
-    }
+    } 
 }
+export class Markdown extends SymbolEntity {}
 
-export class WholeMarkdownLines extends SymbolEntity {}
+// export class WholeMarkdownLines extends SymbolEntity {}
 
 export class BlankLine extends SymbolEntity {}
 
@@ -756,8 +852,6 @@ export class DefinitionListItem extends ValueSymbolEntity {}
 export class PlainText extends SymbolEntity {}
 
 export class Sentence extends SymbolEntity {}
-
-export class Markdown extends SymbolEntity {}
 
 export class BoldText extends SymbolEntity {}
 export class ItalicText extends SymbolEntity {}

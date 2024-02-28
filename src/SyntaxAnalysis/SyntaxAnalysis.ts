@@ -398,7 +398,9 @@ export class SyntaxAnalysis {
         return new IndexGrammarProduction(indexOfToken, indexArrayOfFactors)
     }
 
-    toGrammarProduction(list : Array<Token>, derivationToken : Token) : GrammarProduction {
+    toGrammarProduction(list : Array<Token>, derivationToken : Token) : GrammarProduction | null {
+        if (list.length==0) return null
+        if (list[0].value.startsWith('//')) return null
         if (!list[1].isEqual(derivationToken)) {
             // console.log(list)
             throw new Error('Grammer Production Error!')
@@ -409,7 +411,7 @@ export class SyntaxAnalysis {
     }
     
     toGrammarProductions(list : Array<Array<Token>>, derivationToken : Token) : Array<GrammarProduction> {
-        var result : Array<GrammarProduction> = list.map(tokenList=>this.toGrammarProduction(tokenList, derivationToken))
+        var result : Array<GrammarProduction> = list.map(tokenList=>this.toGrammarProduction(tokenList, derivationToken)).filter(gp=>gp!=null)
         return result
     }
     
