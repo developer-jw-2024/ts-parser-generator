@@ -12,11 +12,11 @@ markdown.setPreprocessing((v:string):string=>{
 
 var content = 
 `
-> abc
->> abc
+This is the first line.  
+And this is the second line.
 `
 
 
 markdown.isValid(content)
-console.log(markdown.getResult())
+// console.log(markdown.getResult())
 

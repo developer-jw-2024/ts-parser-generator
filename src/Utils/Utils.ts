@@ -18,6 +18,10 @@ export class TimeCounter {
     }
 }
 
+export function isTypeOf(value, type) : boolean {
+    return (value!=null && value.constructor==type)
+}
+
 export function getType(v) {
     if (Array.isArray(v)) return "array"
     return typeof v

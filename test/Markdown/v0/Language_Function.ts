@@ -1,4 +1,5 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
+import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(
@@ -7,46 +8,46 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         `
     )
     Markdown__WholeMarkdownLine(argv : Array<AnalysisToken>) {
-        var markdown : Markdown = argv[0].value
+        var markdown : MarkdownLines = argv[0].value
         markdown.merge()
         return markdown
     }
 
     @GrammarProductionFunction(`WholeMarkdownLine -> MarkdownLine enter`)
     WholeMarkdownLine__MarkdownLine_enter(argv : Array<AnalysisToken>) {
-        var lines : Markdown = new Markdown()
+        var lines : MarkdownLines = new MarkdownLines()
         lines.addChild(argv[0].value)
         return lines
     }
     @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine MarkdownLine enter`)
     WholeMarkdownLine__WholeMarkdownLine_MarkdownLine_enter(argv : Array<AnalysisToken>) {
-        var lines : Markdown = argv[0].value
+        var lines : MarkdownLines = argv[0].value
         lines.addChild(argv[1].value)
         return lines
     }
 
     @GrammarProductionFunction(`WholeMarkdownLine -> <ERROR> enter`)
     WholeMarkdownLine__ERROR_enter(argv : Array<AnalysisToken>) {
-        var lines : Markdown = new Markdown()
+        var lines : MarkdownLines = new MarkdownLines()
         lines.addChild(new ErrorEntity(argv[0].value))
         return lines
     }
     @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine <ERROR> enter`)
     WholeMarkdownLine__WholeMarkdownLine_ERROR_enter(argv : Array<AnalysisToken>) {
-        var lines : Markdown = argv[0].value
+        var lines : MarkdownLines = argv[0].value
         lines.addChild(new ErrorEntity(argv[1].value))
         return lines
     }
 
     @GrammarProductionFunction(`WholeMarkdownLine -> enter`)
     WholeMarkdownLine__enter(argv : Array<AnalysisToken>) {
-        var lines : Markdown = new Markdown()
+        var lines : MarkdownLines = new MarkdownLines()
         lines.addChild(new BlankLine())
         return lines
     }
     @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine enter`)
     WholeMarkdownLine__WholeMarkdownLine_enter(argv : Array<AnalysisToken>) {
-        var lines : Markdown = argv[0].value
+        var lines : MarkdownLines = argv[0].value
         lines.addChild(new BlankLine())
         return lines
     }
@@ -818,15 +819,38 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     } 
 }
-export class Markdown extends SymbolEntity {
+
+export class MarkdownLines extends SymbolEntity {
     merge() {
-        console.log(this.children)
+        var markdown : Markdown = new Markdown()
+        for (var i=0;i<this.children.length;i++) {
+            var child : SymbolEntity = this.children[i]
+            if (!child.addTo(markdown)) {
+                throw new Error(`${child.constructor.name} can not merge to ${markdown.constructor.name}`)
+            }
+        }
     }
 }
 
-// export class WholeMarkdownLines extends SymbolEntity {}
+export class Markdown extends SymbolEntity {
+    
+}
 
-export class BlankLine extends SymbolEntity {}
+export class Paragraph extends SymbolEntity {}
+
+export class BlankLine extends SymbolEntity {
+    addTo(parent : SymbolEntity) : boolean {
+        if (this.canBeParentSymbolEntity(parent)) {
+            parent.addChild(this)
+            return true
+        }
+        return false
+    }
+
+    canBeParentSymbolEntity(parent : SymbolEntity) : boolean {
+        return parent.constructor==Markdown
+    }
+}
 
 export class TableRow extends SymbolEntity {}
 export class TableAlignmentRow extends SymbolEntity {}
@@ -857,7 +881,23 @@ export class DefinitionListItem extends ValueSymbolEntity {}
 
 export class PlainText extends SymbolEntity {}
 
-export class Sentence extends SymbolEntity {}
+export class Sentence extends SymbolEntity {
+    addTo(parent : SymbolEntity) : boolean {
+        if (this.canBeParentSymbolEntity(parent)) {
+            parent.addChild(this)
+            return true
+        }
+        return false
+    }
+
+    canBeParentSymbolEntity(parent : SymbolEntity) : boolean {
+        return parent.constructor==Paragraph
+    }
+
+    getContainerClass() : any {
+        return Paragraph
+    }
+}
 
 export class BoldText extends SymbolEntity {}
 export class ItalicText extends SymbolEntity {}

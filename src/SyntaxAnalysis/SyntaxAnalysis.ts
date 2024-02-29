@@ -99,6 +99,18 @@ export class SymbolEntity {
         }).join('')
         return result
     }
+
+    addTo(parent : SymbolEntity) : boolean {
+        return false
+    }
+
+    canBeParentSymbolEntity(parent : SymbolEntity) : boolean {
+        return false
+    }
+
+    getContainerClass():any {
+        return null
+    }
 }
 export class ValueSymbolEntity extends SymbolEntity {
     value : any
