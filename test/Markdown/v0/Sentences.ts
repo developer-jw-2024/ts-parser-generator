@@ -8,13 +8,15 @@ markdown.setPreprocessing((v:string):string=>{
     if (v.at(-1)!='\n') return v+'\n'
     return v
 })
-markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
+// markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
 
 var content = 
 `
+> abc
+>> abc
 `
 
 
-markdown.isValid(content, true)
+markdown.isValid(content)
 console.log(markdown.getResult())
 

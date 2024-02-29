@@ -7,7 +7,9 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         `
     )
     Markdown__WholeMarkdownLine(argv : Array<AnalysisToken>) {
-        return argv[0].value
+        var markdown : Markdown = argv[0].value
+        markdown.merge()
+        return markdown
     }
 
     @GrammarProductionFunction(`WholeMarkdownLine -> MarkdownLine enter`)
@@ -174,7 +176,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`Blockquote -> leftArrow MarkdownLine`)
     Blockquote__leftArrow_MarkdownLine(argv : Array<AnalysisToken>) {
-        return new Blockquote(argv[1].value)
+        return new Blockquote(argv[0].value.trim().length, argv[1].value)
     }
     @GrammarProductionFunction(`MarkdownLine -> Blockquote`)
     MarkdownLine__Blockquote(argv : Array<AnalysisToken>) {
@@ -193,7 +195,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`Heading -> sharpSign MarkdownLine`)
     Heading__sharpSign_MarkdownLine(argv : Array<AnalysisToken>) {
-        return new Heading(argv[1].value)
+        return new Heading(argv[0].value.trim().length, argv[1].value)
     }
     @GrammarProductionFunction(`MarkdownLine -> Heading`)
     MarkdownLine__Heading(argv : Array<AnalysisToken>) {
@@ -816,7 +818,11 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     } 
 }
-export class Markdown extends SymbolEntity {}
+export class Markdown extends SymbolEntity {
+    merge() {
+        console.log(this.children)
+    }
+}
 
 // export class WholeMarkdownLines extends SymbolEntity {}
 
@@ -874,9 +880,23 @@ export class Emoji extends ValueSymbolEntity {}
 
 export class FootnoteReference extends ValueSymbolEntity {}
 export class HorizontalRule extends ValueSymbolEntity {}
-export class Blockquote extends ValueSymbolEntity {}
+export class Blockquote extends ValueSymbolEntity {
+    level : number
+
+    constructor(level : number, value : any) {
+        super(value)
+        this.level = level
+    }
+}
 export class Complement extends ValueSymbolEntity {}
-export class Heading extends ValueSymbolEntity {}
+export class Heading extends ValueSymbolEntity {
+    level : number
+
+    constructor(level : number, value : any) {
+        super(value)
+        this.level = level
+    }
+}
 export class OrderedItem extends ValueSymbolEntity {}
 export class UnorderedItem extends ValueSymbolEntity {}
 
