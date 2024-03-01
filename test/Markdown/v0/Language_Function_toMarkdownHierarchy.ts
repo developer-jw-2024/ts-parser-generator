@@ -1,6 +1,6 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
-import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCenterAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnorderedItem } from "./MarkdownLib";
+import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCenterAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnorderedItem } from "./MarkdownLib";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(
@@ -53,6 +53,11 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return lines
     }
 
+    @GrammarProductionFunction(`MarkdownLine -> <ERROR>`)
+    MarkdownLine__ERROR(argv : Array<AnalysisToken>) {
+        return new MarkdownError(argv[0].value)
+    }
+
 
     @GrammarProductionFunction(`TableRow -> verticalBar MarkdownLine verticalBar`)
     TableRow__verticalBar_MarkdownLine_verticalBar(argv : Array<AnalysisToken>) {
@@ -72,8 +77,8 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     }
 
 
-    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar dahes3 verticalBar`)
-    TableAlignmentRow__verticalBar_dahes3_verticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar dashes3WithSpaces verticalBar`)
+    TableAlignmentRow__verticalBar_dashes3_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
         tableAlignmentRow.addChild(new TableNoAlignment(argv[1].value))
         return tableAlignmentRow
@@ -96,8 +101,8 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         tableAlignmentRow.addChild(new TableCenterAlignment(argv[1].value))
         return tableAlignmentRow
     }
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow dahes3 verticalBar`)
-    TableAlignmentRow__TableAlignmentRow_dahes3_verticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow dashes3WithSpaces verticalBar`)
+    TableAlignmentRow__TableAlignmentRow_dashes3_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = argv[0].value
         tableAlignmentRow.addChild(new TableNoAlignment(argv[1].value))
         return tableAlignmentRow
@@ -159,11 +164,30 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
+    @GrammarProductionFunction(`EqualsRule -> equals3`)
+    EqualsRule__equals3(argv : Array<AnalysisToken>) {
+        return new EqualsRule(argv[0].value)
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> EqualsRule`)
+    MarkdownLine__EqualsRule(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
+    @GrammarProductionFunction(`DashesRule -> dashes3`)
+    DashesRule__dashes3(argv : Array<AnalysisToken>) {
+        return new DashesRule(argv[0].value)
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> DashesRule`)
+    MarkdownLine__DashesRule(argv : Array<AnalysisToken>) {
+        return argv[0].value
+    }
+
     @GrammarProductionFunction(`
         HorizontalRule -> StarBoldItalicTag
         HorizontalRule -> UnderlineBoldItalicTag
         HorizontalRule -> underscores
-        HorizontalRule -> dahes3
         HorizontalRule -> asterisks4
     `)
     toHorizontalRule(argv : Array<AnalysisToken>) {
@@ -610,25 +634,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     BacktickText__BeginBacktickText_backtickTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
-    @GrammarProductionFunction(`BeginFencedCodeBlockText -> fencedCodeBlockTag NO_FencedCodeBlockText_Match_emphasis`)
-    BeginFencedCodeBlockText__fencedCodeBlockTag_NO_FencedCodeBlockText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var fencedCodeBlockText : FencedCodeBlockText = new FencedCodeBlockText()
-        fencedCodeBlockText.addChild(argv[1].value)
-        return fencedCodeBlockText
-    }
-    
-    @GrammarProductionFunction(`BeginFencedCodeBlockText -> BeginFencedCodeBlockText NO_FencedCodeBlockText_Match_emphasis`)
-    BeginFencedCodeBlockText__BeginFencedCodeBlockText_NO_FencedCodeBlockText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var fencedCodeBlockText : FencedCodeBlockText = argv[0].value
-        fencedCodeBlockText.addChild(argv[1].value)
-        return fencedCodeBlockText
-    }
-    
-    @GrammarProductionFunction(`FencedCodeBlockText -> BeginFencedCodeBlockText fencedCodeBlockTag`)
-    FencedCodeBlockText__BeginFencedCodeBlockText_fencedCodeBlockTag(argv : Array<AnalysisToken>) {
-        return argv[0].value
-    }
     @GrammarProductionFunction(`
         NO_StarBoldText_Match_emphasis -> PlainText
         NO_StarBoldText_Match_emphasis -> UnderlineBoldText
@@ -642,7 +647,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_StarBoldText_Match_emphasis -> SuperscriptText
         NO_StarBoldText_Match_emphasis -> DoubleBacktickText
         NO_StarBoldText_Match_emphasis -> BacktickText
-        NO_StarBoldText_Match_emphasis -> FencedCodeBlockText
         
         NO_UnderlineBoldText_Match_emphasis -> PlainText
         NO_UnderlineBoldText_Match_emphasis -> StarBoldText
@@ -656,7 +660,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_UnderlineBoldText_Match_emphasis -> SuperscriptText
         NO_UnderlineBoldText_Match_emphasis -> DoubleBacktickText
         NO_UnderlineBoldText_Match_emphasis -> BacktickText
-        NO_UnderlineBoldText_Match_emphasis -> FencedCodeBlockText
         
         NO_StarItalicText_Match_emphasis -> PlainText
         NO_StarItalicText_Match_emphasis -> StarBoldText
@@ -670,7 +673,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_StarItalicText_Match_emphasis -> SuperscriptText
         NO_StarItalicText_Match_emphasis -> DoubleBacktickText
         NO_StarItalicText_Match_emphasis -> BacktickText
-        NO_StarItalicText_Match_emphasis -> FencedCodeBlockText
         
         NO_UnderlineItalicText_Match_emphasis -> PlainText
         NO_UnderlineItalicText_Match_emphasis -> StarBoldText
@@ -684,7 +686,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_UnderlineItalicText_Match_emphasis -> SuperscriptText
         NO_UnderlineItalicText_Match_emphasis -> DoubleBacktickText
         NO_UnderlineItalicText_Match_emphasis -> BacktickText
-        NO_UnderlineItalicText_Match_emphasis -> FencedCodeBlockText
         
         NO_StarBoldItalicText_Match_emphasis -> PlainText
         NO_StarBoldItalicText_Match_emphasis -> StarBoldText
@@ -698,7 +699,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_StarBoldItalicText_Match_emphasis -> SuperscriptText
         NO_StarBoldItalicText_Match_emphasis -> DoubleBacktickText
         NO_StarBoldItalicText_Match_emphasis -> BacktickText
-        NO_StarBoldItalicText_Match_emphasis -> FencedCodeBlockText
         
         NO_UnderlineBoldItalicText_Match_emphasis -> PlainText
         NO_UnderlineBoldItalicText_Match_emphasis -> StarBoldText
@@ -712,7 +712,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_UnderlineBoldItalicText_Match_emphasis -> SuperscriptText
         NO_UnderlineBoldItalicText_Match_emphasis -> DoubleBacktickText
         NO_UnderlineBoldItalicText_Match_emphasis -> BacktickText
-        NO_UnderlineBoldItalicText_Match_emphasis -> FencedCodeBlockText
         
         NO_StrikethroughText_Match_emphasis -> PlainText
         NO_StrikethroughText_Match_emphasis -> StarBoldText
@@ -726,7 +725,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_StrikethroughText_Match_emphasis -> SuperscriptText
         NO_StrikethroughText_Match_emphasis -> DoubleBacktickText
         NO_StrikethroughText_Match_emphasis -> BacktickText
-        NO_StrikethroughText_Match_emphasis -> FencedCodeBlockText
         
         NO_HighlightText_Match_emphasis -> PlainText
         NO_HighlightText_Match_emphasis -> StarBoldText
@@ -740,7 +738,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_HighlightText_Match_emphasis -> SuperscriptText
         NO_HighlightText_Match_emphasis -> DoubleBacktickText
         NO_HighlightText_Match_emphasis -> BacktickText
-        NO_HighlightText_Match_emphasis -> FencedCodeBlockText
         
         NO_SubscriptText_Match_emphasis -> PlainText
         NO_SubscriptText_Match_emphasis -> StarBoldText
@@ -754,7 +751,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_SubscriptText_Match_emphasis -> SuperscriptText
         NO_SubscriptText_Match_emphasis -> DoubleBacktickText
         NO_SubscriptText_Match_emphasis -> BacktickText
-        NO_SubscriptText_Match_emphasis -> FencedCodeBlockText
         
         NO_SuperscriptText_Match_emphasis -> PlainText
         NO_SuperscriptText_Match_emphasis -> StarBoldText
@@ -768,7 +764,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_SuperscriptText_Match_emphasis -> SubscriptText
         NO_SuperscriptText_Match_emphasis -> DoubleBacktickText
         NO_SuperscriptText_Match_emphasis -> BacktickText
-        NO_SuperscriptText_Match_emphasis -> FencedCodeBlockText
         
         NO_DoubleBacktickText_Match_emphasis -> PlainText
         NO_DoubleBacktickText_Match_emphasis -> StarBoldText
@@ -782,7 +777,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_DoubleBacktickText_Match_emphasis -> SubscriptText
         NO_DoubleBacktickText_Match_emphasis -> SuperscriptText
         NO_DoubleBacktickText_Match_emphasis -> BacktickText
-        NO_DoubleBacktickText_Match_emphasis -> FencedCodeBlockText
         
         NO_BacktickText_Match_emphasis -> PlainText
         NO_BacktickText_Match_emphasis -> StarBoldText
@@ -796,21 +790,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         NO_BacktickText_Match_emphasis -> SubscriptText
         NO_BacktickText_Match_emphasis -> SuperscriptText
         NO_BacktickText_Match_emphasis -> DoubleBacktickText
-        NO_BacktickText_Match_emphasis -> FencedCodeBlockText
-        
-        NO_FencedCodeBlockText_Match_emphasis -> PlainText
-        NO_FencedCodeBlockText_Match_emphasis -> StarBoldText
-        NO_FencedCodeBlockText_Match_emphasis -> UnderlineBoldText
-        NO_FencedCodeBlockText_Match_emphasis -> StarItalicText
-        NO_FencedCodeBlockText_Match_emphasis -> UnderlineItalicText
-        NO_FencedCodeBlockText_Match_emphasis -> StarBoldItalicText
-        NO_FencedCodeBlockText_Match_emphasis -> UnderlineBoldItalicText
-        NO_FencedCodeBlockText_Match_emphasis -> StrikethroughText
-        NO_FencedCodeBlockText_Match_emphasis -> HighlightText
-        NO_FencedCodeBlockText_Match_emphasis -> SubscriptText
-        NO_FencedCodeBlockText_Match_emphasis -> SuperscriptText
-        NO_FencedCodeBlockText_Match_emphasis -> DoubleBacktickText
-        NO_FencedCodeBlockText_Match_emphasis -> BacktickText
         Match_emphasis -> PlainText
         Match_emphasis -> StarBoldText
         Match_emphasis -> UnderlineBoldText
@@ -824,7 +803,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         Match_emphasis -> SuperscriptText
         Match_emphasis -> DoubleBacktickText
         Match_emphasis -> BacktickText
-        Match_emphasis -> FencedCodeBlockText
     `)
     passValueFunc(argv : Array<AnalysisToken>) {
         return argv[0].value

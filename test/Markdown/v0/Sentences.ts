@@ -1,5 +1,6 @@
 import { LRSyntaxAnalysisRunner } from '../../../src/SyntaxAnalysis/LR'
 import { MarkdownLanguageFunctionsEntity } from './Language_Function'
+// import { MarkdownLanguageFunctionsEntity } from './Language_Function_toMarkdownHierarchy'
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
@@ -11,11 +12,12 @@ markdown.setPreprocessing((v:string):string=>{
 // markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
 
 var content = 
-`1. abc
-    >dfd`
+`\`\`\`
+hello
+\`\`\``
 
 
-markdown.isValid(content)
+markdown.isValid(content, true)
 console.log(markdown.getResult())
-// console.log(markdown.getResult().toMarkdownHierarchy().join('\n'))
+console.log(markdown.getResult().toMarkdownHierarchy().join('\n'))
 

@@ -1,7 +1,7 @@
 enter \n
 intent "    "+
 spaces [\t ]+
-simpleText  [^*_\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
+simpleText  [^*_=\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
 
 emoji ":"[^\:]+":"
 url [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
@@ -20,12 +20,14 @@ exclamationMarkOpenSquareBracket "!["
 openSquareBracketWithCaret "[^"
 
 asterisks4 "*"{4,}
-dahes3 "-"{3,}
+dashes3 "-"{3,}
+equals3 "="{3,}
 underscores "_"{4,}
 
-columnLeftAlignment :"-"{3,}
-columnRightAlignment "-"{3,}:
-columnCenterAlignment :"-"{3,}:
+dashes3WithSpaces [\t ]*"-"{3,}[\t ]*
+columnLeftAlignment [\t ]*:"-"{3,}[\t ]*
+columnRightAlignment [\t ]*"-"{3,}:[\t ]*
+columnCenterAlignment [\t ]*:"-"{3,}:[\t ]*
 
 leftArrow >+" "
 sharpSign #+" "
@@ -46,6 +48,6 @@ subscriptTag "~"
 superscriptTag "^"
 doubleBacktickTag "``"
 backtickTag "`"
-fencedCodeBlockTag "```"
+fencedCodeBlockTag ("```"\n"```")|("```"\n[^\`]+"```")
 
 

@@ -391,8 +391,23 @@ This is that.`
         OrderedItem`)
     })
 
-    /*
+    
     test('markdown - 25', () => {
+        expect(markdown.isValid(
+`1. Fruite
+    >Red
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Markdown
+                MarkdownError`)
+    })
+
+    test('markdown - 26', () => {
         expect(markdown.isValid(
 `1. Fruite
     1. Apple
@@ -409,10 +424,241 @@ This is that.`
             Markdown
                 OrderedList
                     OrderedItem
+                        Markdown
+                            MarkdownError
                     OrderedItem
         OrderedItem`)
     })
-    */
+    
+    test('markdown - 27', () => {
+        expect(markdown.isValid(
+`- Fruite
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem`)
+    })
+
+    test('markdown - 28', () => {
+        expect(markdown.isValid(
+`- Fruite
+- Animal
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem
+        UnorderedItem`)
+    })
+
+
+    test('markdown - 29', () => {
+        expect(markdown.isValid(
+`- Fruite
+    - Apple
+    - Banana
+- Animal
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem
+            Markdown
+                UnorderedList
+                    UnorderedItem
+                    UnorderedItem
+        UnorderedItem`)
+    })
+
+    test('markdown - 30', () => {
+        expect(markdown.isValid(
+"type `nano`."
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+    test('markdown - 30', () => {
+        expect(markdown.isValid(
+"``Use `code` in your Markdown file.``"
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+
+    test('markdown - 31', () => {
+        expect(markdown.isValid(
+"---"
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    HorizontalRule`)
+    })
+
+    test('markdown - 32', () => {
+        expect(markdown.isValid(
+`This is heading 2
+----------`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Heading`)
+    })
+
+    test('markdown - 33', () => {
+        expect(markdown.isValid(
+`This is heading 2
+
+----------`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+    BlankLine
+    HorizontalRule`)
+    })
+
+    test('markdown - 34', () => {
+        expect(markdown.isValid(
+`===========`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown`)
+    })
+
+
+    test('markdown - 35', () => {
+        expect(markdown.isValid(
+`This is the first level heading
+===========`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Heading`)
+    })
+
+    test('markdown - 36', () => {
+        expect(markdown.isValid(
+`This is the first level heading
+
+===========`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+    BlankLine`)
+    })
+
+    test('markdown - 37', () => {
+        expect(markdown.isValid(
+`| Syntax      | Description |`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow`)
+    })
+
+    test('markdown - 38', () => {
+        expect(markdown.isValid(
+`| Header      | Title       |
+| Paragraph   | Text        |`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+        TableRow`)
+    })
+
+
+    test('markdown - 39', () => {
+        expect(markdown.isValid(
+`| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+        TableRow`)
+    })
+
+    test('markdown - 40', () => {
+        expect(markdown.isValid(
+`| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+        TableRow`)
+    })
+
+    test('markdown - 41', () => {
+        expect(markdown.isValid(
+`| Syntax      | Description |
+| Header      | Title       |
+| Paragraph   | Text        |`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+        TableRow
+        TableRow`)
+    })
+
+
+    test('markdown - 42', () => {
+        expect(markdown.isValid(
+`\`\`\`
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+\`\`\``
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+        TableRow
+        TableRow`)
+    })
 })
 
 

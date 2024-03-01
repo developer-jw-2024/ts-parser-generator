@@ -70,6 +70,14 @@ export class Markdown extends MarkdownElement {
             this.addBlockquoteLine(element as BlockquoteLine)
         } else if (element.getClass()==Complement) {
             this.addComplement(element as Complement)
+        } else if (element.getClass()==DashesRule) {
+            this.addDashesRule(element as DashesRule)
+        } else if (element.getClass()==EqualsRule) {
+            this.addEqualsRule(element as EqualsRule)
+        } else if (element.getClass()==TableRow) {
+            this.addTableRow(element as TableRow)
+        } else if (element.getClass()==TableAlignmentRow) {
+            this.addTableAlignmentRow(element as TableAlignmentRow)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -134,9 +142,77 @@ export class Markdown extends MarkdownElement {
             throw new Error(`Can no append complement to this markdown`)
         } else if (lastElement.getClass()==OrderedList) {
             (lastElement as OrderedList).addElement(element)
+        } else if (lastElement.getClass()==UnorderedList) {
+            (lastElement as UnorderedList).addElement(element)
         } else {
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name} with last element ${lastElement.getClass().name}`)
         }
+    }
+
+    addDashesRule(element : DashesRule) {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        if (isTypeOf(lastElement, Paragraph)) {
+            var paragraph : Paragraph = lastElement as Paragraph
+            var sentence : Sentence | null = null
+            if (paragraph.getMarkdownElements().length==1) {
+                sentence = paragraph.getMarkdownElements().pop()
+            } 
+            if (paragraph.getMarkdownElements().length==0) {
+                this.getMarkdownElements().pop()
+            }
+            if (isNulllOrUndefinedValue(sentence)) {
+                this.getMarkdownElements().push(new HorizontalRule(element.getValue()))
+            } else {
+                this.getMarkdownElements().push(new Heading(2, sentence))
+            }
+
+        } else {
+            this.getMarkdownElements().push(new HorizontalRule(element.getValue()))
+        }
+    }
+
+    addEqualsRule(element : EqualsRule) {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        if (isTypeOf(lastElement, Paragraph)) {
+            var paragraph : Paragraph = lastElement as Paragraph
+            var sentence : Sentence | null = null
+            if (paragraph.getMarkdownElements().length==1) {
+                sentence = paragraph.getMarkdownElements().pop()
+            } 
+            if (paragraph.getMarkdownElements().length==0) {
+                this.getMarkdownElements().pop()
+            }
+            if (isNulllOrUndefinedValue(sentence)) {
+            } else {
+                this.getMarkdownElements().push(new Heading(1, sentence))
+            }
+        }
+    }
+
+    addTableRow(element : TableRow) {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        
+        var table : Table | null = null
+        if (isTypeOf(lastElement, Table)) {
+            table = lastElement as Table
+        } else {
+            table = new Table()
+            this.getMarkdownElements().push(table)
+        }
+        table.addElement(element)
+    }
+
+    addTableAlignmentRow(element : TableAlignmentRow) {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        
+        var table : Table | null = null
+        if (isTypeOf(lastElement, Table)) {
+            table = lastElement as Table
+        } else {
+            table = new Table()
+            this.getMarkdownElements().push(table)
+        }
+        table.addElement(element)
     }
 }
 
@@ -222,6 +298,9 @@ export class Emoji extends MarkdownValueElement {}
 
 export class FootnoteReference extends MarkdownValueElement {}
 export class HorizontalRule extends MarkdownValueElement {}
+export class DashesRule extends MarkdownValueElement {}
+export class EqualsRule extends MarkdownValueElement {}
+
 export class Blockquote extends MarkdownElement {
 
     constructor() {
@@ -278,11 +357,7 @@ export class OrderedList extends MarkdownElement {
     }
 }
 export class OrderedItem extends MarkdownValueElement {
-    constructor(value : MarkdownElement) {
-        super(value)
-        // var complementMarkdown : Markdown = new Markdown()
-        // this.getMarkdownElements().push(complementMarkdown)
-    }
+    
 
     addElement(element : MarkdownElement) {
         if (element.getClass()==Complement) {
@@ -315,6 +390,8 @@ export class UnorderedList extends MarkdownElement {
     addElement(element : MarkdownElement) {
         if (element.getClass()==UnorderedItem) {
             this.addUnorderedItem(element as OrderedItem)
+        } else if (element.getClass()==Complement) {
+            this.addComplement(element as Complement)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -326,9 +403,85 @@ export class UnorderedList extends MarkdownElement {
 
     }
 
+    addComplement(element : Complement) {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        if (isNulllOrUndefinedValue(lastElement)) {
+            throw new Error(`Can no append complement to this markdown`)
+        } else if (lastElement.getClass()==UnorderedItem) {
+            (lastElement as UnorderedItem).addElement(element)
+        } else {
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
+    }
 
 }
-export class UnorderedItem extends MarkdownValueElement {}
+export class UnorderedItem extends MarkdownValueElement {
+    addElement(element : MarkdownElement) {
+        if (element.getClass()==Complement) {
+            var lastElement : MarkdownElement = this.getLastMarkdownElement()
+            var complementMarkdown : Markdown | null = null
+            if (isNulllOrUndefinedValue(lastElement)) {
+                complementMarkdown = new Markdown()
+                this.getMarkdownElements().push(complementMarkdown)
+            } else if (lastElement.getClass()==Markdown) {
+                complementMarkdown = lastElement as Markdown
+            }
+            if (complementMarkdown!=null) {
+                complementMarkdown.addElement((element as Complement).getValue())
+            } else {
+                throw new Error(`Can not find a Markdown to append ${element.getClass().name} in ${this.getClass().name}`)
+            }
+        } else{
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
+
+    }
+
+    getComplementMarkdown() : Markdown {
+        return this.getLastMarkdownElement() as Markdown
+    }
+}
+
+export class Table extends MarkdownElement {
+    headerRow : TableRow | null = null
+    tableAlignmentRow : TableAlignmentRow | null = null
+
+    setHeaderRow(headerRow : TableRow) {
+        this.headerRow = headerRow
+    }
+
+    getHeaderRow() : TableRow | null {
+        return this.headerRow
+    }
+
+    setTableAlignmentRow(tableAlignmentRow : TableAlignmentRow) {
+        this.tableAlignmentRow = tableAlignmentRow
+    }
+
+    getTableAlignmentRow() : TableAlignmentRow | null{
+        return this.tableAlignmentRow
+    }
+
+    addElement(element : MarkdownElement) {
+        if (element.getClass()==TableRow) {
+            this.getMarkdownElements().push(element)
+        } else if (element.getClass()==TableAlignmentRow) {
+            this.addTableAlignmentRow(element as TableAlignmentRow)
+        } else{
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
+    }
+
+    addTableAlignmentRow(element : TableAlignmentRow) {
+        if (this.getMarkdownElements().length==0) {
+            this.setTableAlignmentRow(element)
+        } else if (this.getMarkdownElements().length==1) {
+            var headerRow : TableRow = this.getMarkdownElements().pop()
+            this.setHeaderRow(headerRow)
+            this.setTableAlignmentRow(element)
+        }
+    }
+}
 
 export class Image extends MarkdownElement {
     alt : any

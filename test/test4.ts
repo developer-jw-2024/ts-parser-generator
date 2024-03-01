@@ -1,5 +1,5 @@
-function abc() {
-    console.log(arguments.callee.name)
-}
+var a = [1,2,3]
+var b = a.pop()
 
-abc()
+console.log(a)
+console.log(b)

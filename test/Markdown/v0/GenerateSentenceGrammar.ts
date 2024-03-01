@@ -14,7 +14,6 @@ subscriptTag
 superscriptTag
 doubleBacktickTag
 backtickTag
-fencedCodeBlockTag
 `.split('\n').map(t=>t.trim()).filter(t=>t.length>0)
 
 var result = 
