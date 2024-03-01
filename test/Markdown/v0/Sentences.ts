@@ -11,12 +11,11 @@ markdown.setPreprocessing((v:string):string=>{
 // markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
 
 var content = 
-`
-This is the first line.  
-And this is the second line.
-`
+`1. abc
+    >dfd`
 
 
 markdown.isValid(content)
-// console.log(markdown.getResult())
+console.log(markdown.getResult())
+// console.log(markdown.getResult().toMarkdownHierarchy().join('\n'))
 

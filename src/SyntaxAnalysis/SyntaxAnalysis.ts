@@ -79,7 +79,7 @@ export class SymbolEntity {
     toHierarchy(intent : string = '') {
         var subIntent = `${intent}     `
         var resultArray =  this.children.map(segment=>{
-            if (segment instanceof SymbolEntity) {
+            if (segment.toHierarchy) {
                 return segment.toHierarchy(subIntent)
             } else {
                 return [`${subIntent}${segment}`]
@@ -100,17 +100,10 @@ export class SymbolEntity {
         return result
     }
 
-    addTo(parent : SymbolEntity) : boolean {
-        return false
+    getClass() : any {
+        return (this as object).constructor
     }
-
-    canBeParentSymbolEntity(parent : SymbolEntity) : boolean {
-        return false
-    }
-
-    getContainerClass():any {
-        return null
-    }
+    
 }
 export class ValueSymbolEntity extends SymbolEntity {
     value : any

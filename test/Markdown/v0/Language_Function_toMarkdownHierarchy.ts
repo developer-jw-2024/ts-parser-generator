@@ -9,9 +9,9 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         `
     )
     Markdown__WholeMarkdownLine(argv : Array<AnalysisToken>) {
-        // var markdown : MarkdownLines = argv[0].value
-        // return markdown.merge()
-        return argv[0].value
+        var markdown : MarkdownLines = argv[0].value
+        return markdown.merge()
+        // return argv[0].value
     }
 
     @GrammarProductionFunction(`WholeMarkdownLine -> MarkdownLine enter`)
@@ -53,12 +53,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return lines
     }
 
-    @GrammarProductionFunction(`MarkdownLine -> <ERROR>`)
-    MarkdownLine__ERROR(argv : Array<AnalysisToken>) {
-        return new MarkdownError(argv[0].value)
-    }
 
-    
     @GrammarProductionFunction(`TableRow -> verticalBar MarkdownLine verticalBar`)
     TableRow__verticalBar_MarkdownLine_verticalBar(argv : Array<AnalysisToken>) {
         var tableRow : TableRow = new TableRow()

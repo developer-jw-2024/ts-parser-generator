@@ -1,4 +1,5 @@
 enter \n
+intent "    "+
 spaces [\t ]+
 simpleText  [^*_\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
 
@@ -7,8 +8,8 @@ url [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
 urlAddress "<"[^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+">"
 emailAddress "<"[^\!\<\>\[\]\(\) \n\t]+"@"[^\!\<\>\[\]\(\) \n\t]+">"
 doubleQuotationMarkText \"[^\"\n]*\"
-unorderedItemTag [\-\+]
-orderedItemTag [0-9]\.
+unorderedItemTag [\-\+]" "
+orderedItemTag [0-9]+\." "
 
 verticalBar "|"
 openParentheses "("

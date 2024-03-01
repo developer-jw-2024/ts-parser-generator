@@ -10,6 +10,7 @@ WholeMarkdownLine -> WholeMarkdownLine <ERROR> enter
 WholeMarkdownLine -> enter
 WholeMarkdownLine -> WholeMarkdownLine enter
 
+MarkdownLine -> <ERROR>
 
 TableRow -> verticalBar MarkdownLine verticalBar
 TableRow -> TableRow MarkdownLine verticalBar
@@ -42,10 +43,10 @@ HorizontalRule -> dahes3
 HorizontalRule -> asterisks4
 MarkdownLine -> HorizontalRule
 
-Blockquote -> leftArrow MarkdownLine
-MarkdownLine -> Blockquote
+BlockquoteLine -> leftArrow MarkdownLine
+MarkdownLine -> BlockquoteLine
 
-Complement -> spaces MarkdownLine
+Complement -> intent MarkdownLine
 MarkdownLine -> Complement
 
 Heading -> sharpSign MarkdownLine
