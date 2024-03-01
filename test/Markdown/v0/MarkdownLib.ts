@@ -78,6 +78,8 @@ export class Markdown extends MarkdownElement {
             this.addTableRow(element as TableRow)
         } else if (element.getClass()==TableAlignmentRow) {
             this.addTableAlignmentRow(element as TableAlignmentRow)
+        } else if (element.getClass()==FencedCodeBlockText) {
+            this.addFencedCodeBlockText(element as FencedCodeBlockText)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -214,6 +216,10 @@ export class Markdown extends MarkdownElement {
         }
         table.addElement(element)
     }
+
+    addFencedCodeBlockText(element : FencedCodeBlockText) {
+        this.getMarkdownElements().push(element)
+    }
 }
 
 export class MarkdownError extends MarkdownElement {
@@ -285,7 +291,7 @@ export class SubscriptText extends MarkdownElement {}
 export class SuperscriptText extends MarkdownElement {}
 export class DoubleBacktickText extends MarkdownElement {}
 export class BacktickText extends MarkdownElement {}
-export class FencedCodeBlockText extends MarkdownElement{}
+export class FencedCodeBlockText extends MarkdownValueElement{}
 
 export class SimpleText extends MarkdownValueElement {}
 

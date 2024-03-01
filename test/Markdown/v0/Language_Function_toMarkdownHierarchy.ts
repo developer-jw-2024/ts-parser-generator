@@ -58,6 +58,10 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return new MarkdownError(argv[0].value)
     }
 
+    @GrammarProductionFunction(`MarkdownLine -> fencedCodeBlockTag`)
+    MarkdownLine__fencedCodeBlockTag(argv : Array<AnalysisToken>) {
+        return new FencedCodeBlockText(argv[0].value)
+    }
 
     @GrammarProductionFunction(`TableRow -> verticalBar MarkdownLine verticalBar`)
     TableRow__verticalBar_MarkdownLine_verticalBar(argv : Array<AnalysisToken>) {

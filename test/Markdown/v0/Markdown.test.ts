@@ -654,10 +654,67 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Table
-        TableRow
-        TableRow
-        TableRow`)
+    FencedCodeBlockText`)
+    })
+
+    test('markdown - 43', () => {
+        expect(markdown.isValid(
+`> \`\`\`
+> {
+>   "firstName": "John",
+>   "lastName": "Smith",
+>   "age": 25
+> }
+> \`\`\``
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            FencedCodeBlockText`)
+    })
+
+    test('markdown - 44', () => {
+        expect(markdown.isValid(
+`1. coding
+    > \`\`\`
+    > {
+    >   "firstName": "John",
+    >   "lastName": "Smith",
+    >   "age": 25
+    > }
+    > \`\`\``
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Markdown
+                Blockquote
+                    Markdown
+                        FencedCodeBlockText`)
+    })
+
+    test('markdown - 45', () => {
+        expect(markdown.isValid(
+`1. coding
+    \`\`\`
+    {
+        "firstName": "John",
+        "lastName": "Smith",
+        "age": 25
+    }
+    \`\`\``
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Markdown
+                FencedCodeBlockText`)
     })
 })
 
