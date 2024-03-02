@@ -12,9 +12,9 @@ markdown.setPreprocessing((v:string):string=>{
 // markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
 
 var content = 
-`\`\`\`
-hello
-\`\`\``
+`Second
+: This
+: That`
 
 
 markdown.isValid(content, true)

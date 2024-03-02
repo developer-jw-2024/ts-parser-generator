@@ -80,6 +80,8 @@ export class Markdown extends MarkdownElement {
             this.addTableAlignmentRow(element as TableAlignmentRow)
         } else if (element.getClass()==FencedCodeBlockText) {
             this.addFencedCodeBlockText(element as FencedCodeBlockText)
+        } else if (element.getClass()==DefinitionListItem) {
+            this.addDefinitionListItem(element as DefinitionListItem)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -219,6 +221,43 @@ export class Markdown extends MarkdownElement {
 
     addFencedCodeBlockText(element : FencedCodeBlockText) {
         this.getMarkdownElements().push(element)
+    }
+
+    addDefinitionListItem(element : DefinitionListItem) {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        var descriptionList : DescriptionList | null = null
+
+        if (isTypeOf(lastElement, Paragraph)) {
+            var paragraph : Paragraph = lastElement as Paragraph
+            var sentence : Sentence | null = null
+            if (paragraph.getMarkdownElements().length==1) {
+                sentence = paragraph.getMarkdownElements().pop()
+            } 
+            if (paragraph.getMarkdownElements().length==0) {
+                this.getMarkdownElements().pop()
+            }
+            if (isTypeOf(this.getLastMarkdownElement(), DescriptionList)) {
+                descriptionList = this.getLastMarkdownElement() as DescriptionList
+            } else {
+                descriptionList  = new DescriptionList()
+                this.getMarkdownElements().push(descriptionList)    
+            }
+
+            var definitionListItemGroup  = new DefinitionListItemGroup()
+            descriptionList.addElement(definitionListItemGroup)
+
+            if (isNulllOrUndefinedValue(sentence)) {
+            } else {
+                definitionListItemGroup.setNameOfGroup(sentence)
+            }
+        } else if (isTypeOf(lastElement, DescriptionList)) {
+            descriptionList = lastElement as DescriptionList
+        }
+        if (isNulllOrUndefinedValue(descriptionList)) {
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name} with last element ${lastElement.getClass().name}`)
+        } else {
+            descriptionList.addElement(element)
+        }
     }
 }
 
@@ -445,6 +484,40 @@ export class UnorderedItem extends MarkdownValueElement {
 
     getComplementMarkdown() : Markdown {
         return this.getLastMarkdownElement() as Markdown
+    }
+}
+
+export class DescriptionList extends MarkdownElement {
+    addElement(element : MarkdownElement) {
+        if (element.getClass()==DefinitionListItemGroup) {
+            this.getMarkdownElements().push(element)
+        } else if (element.getClass()==DefinitionListItem) {
+            (this.getLastMarkdownElement() as DefinitionListItemGroup).addElement(element)
+        } else{
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
+    }
+
+}
+
+export class DefinitionListItemGroup extends MarkdownElement {
+    nameOfGroup : MarkdownElement | null = null
+    elements : Array<MarkdownElement> | null = null
+
+    setNameOfGroup(nameOfGroup : MarkdownElement) {
+        this.nameOfGroup = nameOfGroup
+    }
+
+    getNameOfGroup() {
+        return this.nameOfGroup
+    }
+
+    addElement(element : MarkdownElement) {
+        if (element.getClass()==DefinitionListItem) {
+            this.getMarkdownElements().push(element)
+        } else{
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
     }
 }
 

@@ -716,6 +716,75 @@ This is that.`
             Markdown
                 FencedCodeBlockText`)
     })
+
+    test('markdown - 46', () => {
+        expect(markdown.isValid(
+`First Term
+: This is the definition of the first term.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DescriptionList
+        DefinitionListItemGroup
+            DefinitionListItem`)
+    })
+
+    test('markdown - 47', () => {
+        expect(markdown.isValid(
+`Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DescriptionList
+        DefinitionListItemGroup
+            DefinitionListItem
+            DefinitionListItem`)
+    })
+
+    test('markdown - 48', () => {
+        expect(markdown.isValid(
+`First Term
+: This is the definition of the first term.
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DescriptionList
+        DefinitionListItemGroup
+            DefinitionListItem
+        DefinitionListItemGroup
+            DefinitionListItem
+            DefinitionListItem`)
+    })
+
+    test('markdown - 49', () => {
+        expect(markdown.isValid(
+`First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DescriptionList
+        DefinitionListItemGroup
+            DefinitionListItem
+    BlankLine
+    DescriptionList
+        DefinitionListItemGroup
+            DefinitionListItem
+            DefinitionListItem`)
+    })
 })
 
 
