@@ -82,6 +82,8 @@ export class Markdown extends MarkdownElement {
             this.addFencedCodeBlockText(element as FencedCodeBlockText)
         } else if (element.getClass()==DefinitionListItem) {
             this.addDefinitionListItem(element as DefinitionListItem)
+        } else if (element.getClass()==TaskListItem) {
+            this.addTaskListItem(element as TaskListItem)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -252,12 +254,30 @@ export class Markdown extends MarkdownElement {
             }
         } else if (isTypeOf(lastElement, DescriptionList)) {
             descriptionList = lastElement as DescriptionList
+        } else {
+            descriptionList  = new DescriptionList()
+            this.getMarkdownElements().push(descriptionList)    
+            var definitionListItemGroup  = new DefinitionListItemGroup()
+            descriptionList.addElement(definitionListItemGroup)
         }
         if (isNulllOrUndefinedValue(descriptionList)) {
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name} with last element ${lastElement.getClass().name}`)
         } else {
             descriptionList.addElement(element)
         }
+    }
+
+    addTaskListItem(element : TaskListItem) {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        
+        var taskList : TaskList | null = null
+        if (isTypeOf(lastElement, TaskList)) {
+            taskList = lastElement as TaskList
+        } else {
+            taskList = new TaskList()
+            this.getMarkdownElements().push(taskList)
+        }
+        taskList.addElement(element)
     }
 }
 
@@ -312,6 +332,19 @@ export class TaskListItem extends MarkdownElement {
     getValue() {
         return this.value
     }
+}
+
+export class TaskList extends MarkdownElement {
+    
+    addElement(element : MarkdownElement) {
+        if (element.getClass()==TaskListItem) {
+            this.getMarkdownElements().push(element)
+        } else{
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
+    }
+
+    
 }
 
 export class DefinitionListItem extends MarkdownValueElement {}

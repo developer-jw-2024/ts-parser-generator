@@ -785,6 +785,102 @@ Second Term
             DefinitionListItem
             DefinitionListItem`)
     })
+
+    test('markdown - 50', () => {
+        expect(markdown.isValid(
+`- [x] Write the press release`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    TaskList
+        TaskListItem`)
+    })
+
+    test('markdown - 51', () => {
+        expect(markdown.isValid(
+`- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    TaskList
+        TaskListItem
+        TaskListItem
+        TaskListItem`)
+    })
+
+    test('markdown - 52', () => {
+        expect(markdown.isValid(
+`- [x] Write the press release
+- [Y] Contact the media
+- [ ] Update the website
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    TaskList
+        TaskListItem
+    MarkdownError
+    TaskList
+        TaskListItem`)
+    })
+
+    test('markdown - 53', () => {
+        expect(markdown.isValid(
+`> First Term
+: This is the definition of the first term.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Paragraph
+                Sentence
+    DescriptionList
+        DefinitionListItemGroup
+            DefinitionListItem`)
+    })
+
+    test('markdown - 54', () => {
+        expect(markdown.isValid(
+`> First Term
+> : This is the definition of the first term.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            DescriptionList
+                DefinitionListItemGroup
+                    DefinitionListItem`)
+    })
+
+    test('markdown - 55', () => {
+        expect(markdown.isValid(
+`1. coding
+> \`\`\`
+> {
+>   "firstName": "John",
+>   "lastName": "Smith",
+>   "age": 25
+> }
+> \`\`\``
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+    Blockquote
+        Markdown
+            FencedCodeBlockText`)
+    })
 })
 
 
