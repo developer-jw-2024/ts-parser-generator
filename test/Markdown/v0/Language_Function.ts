@@ -228,6 +228,16 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return complement
     }
 
+    @GrammarProductionFunction(`Complement -> intent`)
+    Complement__intent(argv : Array<AnalysisToken>) {
+        var len = argv[0].value.length/4
+        var complement : Complement = new Complement(new BlankLine())
+        for (var i=0;i<len-1;i++) {
+            complement = new Complement(complement)
+        }
+        return complement
+    }
+
     @GrammarProductionFunction(`MarkdownLine -> Complement`)
     MarkdownLine__Complement(argv : Array<AnalysisToken>) {
         return argv[0].value

@@ -906,7 +906,52 @@ Second Term
             Paragraph
                 Sentence`)
     })
-/*
+
+    test('markdown - 58', () => {
+        expect(markdown.isValid(
+`1. hello
+    Apple`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Markdown
+                Paragraph
+                    Sentence`)
+    })
+
+    test('markdown - 59', () => {
+        expect(markdown.isValid(
+`1. hello
+    `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Markdown
+                BlankLine`)
+    })
+
+    test('markdown - 60', () => {
+        expect(markdown.isValid(
+`1. hello
+    
+    `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Markdown
+                BlankLine
+                BlankLine`)
+    })
+
     test('markdown - 58', () => {
         expect(markdown.isValid(
 `[^Variable]: This is good foot note.
@@ -921,9 +966,13 @@ Second Term
     Footnote
         Markdown
             Paragraph
+                Sentence
+                Sentence
+            BlankLine
+            Paragraph
                 Sentence`)
     })
-*/
+
 })
 
 

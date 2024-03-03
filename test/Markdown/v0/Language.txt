@@ -54,6 +54,7 @@ BlockquoteLine -> leftArrow MarkdownLine
 MarkdownLine -> BlockquoteLine
 
 Complement -> intent MarkdownLine
+Complement -> intent
 MarkdownLine -> Complement
 
 Heading -> sharpSign MarkdownLine
