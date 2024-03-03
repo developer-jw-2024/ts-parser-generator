@@ -1,5 +1,5 @@
 import { LRSyntaxAnalysisRunner } from '../../../src/SyntaxAnalysis/LR'
-import { MarkdownLanguageFunctionsEntity } from './Language_Function_toMarkdownHierarchy'
+import { MarkdownLanguageFunctionsEntity } from './Language_Function'
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
@@ -881,6 +881,49 @@ Second Term
         Markdown
             FencedCodeBlockText`)
     })
+
+    
+    test('markdown - 56', () => {
+        expect(markdown.isValid(
+`[^Variable]: This is good foot note.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Footnote`)
+    })
+
+    test('markdown - 57', () => {
+        expect(markdown.isValid(
+`[^Variable]: This is good foot note.
+    Indent paragraphs to include them in the footnote.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Footnote
+        Markdown
+            Paragraph
+                Sentence`)
+    })
+/*
+    test('markdown - 58', () => {
+        expect(markdown.isValid(
+`[^Variable]: This is good foot note.
+    Indent paragraphs to include them in the footnote.
+    \`{ my code }\`
+    
+    Add as many paragraphs as you like.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Footnote
+        Markdown
+            Paragraph
+                Sentence`)
+    })
+*/
 })
 
 

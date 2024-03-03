@@ -84,6 +84,8 @@ export class Markdown extends MarkdownElement {
             this.addDefinitionListItem(element as DefinitionListItem)
         } else if (element.getClass()==TaskListItem) {
             this.addTaskListItem(element as TaskListItem)
+        } else if (element.getClass()==Footnote) {
+            this.addFootnote(element as Footnote)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -150,6 +152,8 @@ export class Markdown extends MarkdownElement {
             (lastElement as OrderedList).addElement(element)
         } else if (lastElement.getClass()==UnorderedList) {
             (lastElement as UnorderedList).addElement(element)
+        } else if (lastElement.getClass()==Footnote) {
+            (lastElement as Footnote).addElement(element)
         } else {
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name} with last element ${lastElement.getClass().name}`)
         }
@@ -279,6 +283,11 @@ export class Markdown extends MarkdownElement {
         }
         taskList.addElement(element)
     }
+
+    addFootnote(element : Footnote) {
+        this.getMarkdownElements().push(element)
+    }
+
 }
 
 export class MarkdownError extends MarkdownElement {
@@ -303,6 +312,7 @@ export class Paragraph extends MarkdownElement {
     addSentence(element : Sentence) {
         this.getMarkdownElements().push(element)
     }
+
 }
 
 export class BlankLine extends MarkdownElement {
@@ -369,7 +379,37 @@ export class SimpleText extends MarkdownValueElement {}
 
 export class Spaces extends MarkdownValueElement {}
 
-export class Footnote extends MarkdownValueElement {}
+export class Footnote extends MarkdownValueElement {
+
+    addComplement(element : Complement) {
+        this.getMarkdownElements().push(element)
+    }
+
+    addElement(element : MarkdownElement) {
+        if (element.getClass()==Complement) {
+            var lastElement : MarkdownElement = this.getLastMarkdownElement()
+            var complementMarkdown : Markdown | null = null
+            if (isNulllOrUndefinedValue(lastElement)) {
+                complementMarkdown = new Markdown()
+                this.getMarkdownElements().push(complementMarkdown)
+            } else if (lastElement.getClass()==Markdown) {
+                complementMarkdown = lastElement as Markdown
+            }
+            if (complementMarkdown!=null) {
+                complementMarkdown.addElement((element as Complement).getValue())
+            } else {
+                throw new Error(`Can not find a Markdown to append ${element.getClass().name} in ${this.getClass().name}`)
+            }
+        } else{
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
+
+    }
+
+    getComplementMarkdown() : Markdown {
+        return this.getLastMarkdownElement() as Markdown
+    }
+}
 export class URLAddress extends MarkdownValueElement {}
 export class EmailAddress extends MarkdownValueElement {}
 export class Emoji extends MarkdownValueElement {}
