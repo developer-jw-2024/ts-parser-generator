@@ -213,6 +213,17 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         }
         return result
     }
+
+    @GrammarProductionFunction(`BlockquoteLine -> leftArrow`)
+    Blockquote__leftArrow(argv : Array<AnalysisToken>) {
+        var len = argv[0].value.trim().length
+        var result : BlockquoteLine = new BlockquoteLine(new BlankLine())
+        for (var i=0;i<len-1;i++) {
+            result = new BlockquoteLine(result)
+        }
+        return result
+    }
+
     @GrammarProductionFunction(`MarkdownLine -> BlockquoteLine`)
     MarkdownLine__Blockquote(argv : Array<AnalysisToken>) {
         return argv[0].value

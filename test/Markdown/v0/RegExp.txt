@@ -29,7 +29,7 @@ columnLeftAlignment [\t ]*:"-"{3,}[\t ]*
 columnRightAlignment [\t ]*"-"{3,}:[\t ]*
 columnCenterAlignment [\t ]*:"-"{3,}:[\t ]*
 
-leftArrow >+" "
+leftArrow >+(" ")?
 sharpSign #+" "
 colonSign ":"
 dashSign "-"

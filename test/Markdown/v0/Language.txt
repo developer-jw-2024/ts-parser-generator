@@ -51,6 +51,7 @@ HorizontalRule -> asterisks4
 MarkdownLine -> HorizontalRule
 
 BlockquoteLine -> leftArrow MarkdownLine
+BlockquoteLine -> leftArrow
 MarkdownLine -> BlockquoteLine
 
 Complement -> intent MarkdownLine

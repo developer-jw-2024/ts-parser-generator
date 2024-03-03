@@ -404,7 +404,10 @@ This is that.`
     OrderedList
         OrderedItem
             Markdown
-                MarkdownError`)
+                Blockquote
+                    Markdown
+                        Paragraph
+                            Sentence`)
     })
 
     test('markdown - 26', () => {
@@ -425,7 +428,10 @@ This is that.`
                 OrderedList
                     OrderedItem
                         Markdown
-                            MarkdownError
+                            Blockquote
+                                Markdown
+                                    Paragraph
+                                        Sentence
                     OrderedItem
         OrderedItem`)
     })
@@ -952,7 +958,7 @@ Second Term
                 BlankLine`)
     })
 
-    test('markdown - 58', () => {
+    test('markdown - 61', () => {
         expect(markdown.isValid(
 `[^Variable]: This is good foot note.
     Indent paragraphs to include them in the footnote.
@@ -971,6 +977,54 @@ Second Term
             BlankLine
             Paragraph
                 Sentence`)
+    })
+
+    test('markdown - 62', () => {
+        expect(markdown.isValid(
+`[^Variable]: This is good foot note.
+    > Indent paragraphs to include them in the footnote.
+    > \`{ my code }\`
+    
+    > Add as many paragraphs as you like.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Footnote
+        Markdown
+            Blockquote
+                Markdown
+                    Paragraph
+                        Sentence
+                        Sentence
+            BlankLine
+            Blockquote
+                Markdown
+                    Paragraph
+                        Sentence`)
+    })
+
+    test('markdown - 63', () => {
+        expect(markdown.isValid(
+`[^Variable]: This is good foot note.
+    > Indent paragraphs to include them in the footnote.
+    > \`{ my code }\`
+    >
+    > Add as many paragraphs as you like.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Footnote
+        Markdown
+            Blockquote
+                Markdown
+                    Paragraph
+                        Sentence
+                        Sentence
+                    BlankLine
+                    Paragraph
+                        Sentence`)
     })
 
 })

@@ -12,8 +12,7 @@ markdown.setPreprocessing((v:string):string=>{
 // markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
 
 var content = 
-`1. hello
-    `
+`> `
 
 
 markdown.isValid(content, true)
