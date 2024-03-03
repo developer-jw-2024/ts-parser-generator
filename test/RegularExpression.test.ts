@@ -311,6 +311,18 @@ describe('RegularExpression', ()  => {
             {left : 6, right : 6},
             {left : 7, right : 7},
         ])
+        expect(initCharBlocks(toRegularExpressionChars('[a"bc"]cde'))).toEqual([
+            {left : 0, right : 6}, 
+            {left : 1, right : 1},
+            {left : 2, right : 5},
+            {left : 3, right : 3},
+            {left : 4, right : 4},
+            {left : 2, right : 5},
+            {left : 0, right : 6},
+            {left : 7, right : 7},
+            {left : 8, right : 8},
+            {left : 9, right : 9},
+        ])
         expect(initCharBlocks(toRegularExpressionChars('abc|cde'))).toEqual([
             {left : 0, right : 0}, 
             {left : 1, right : 1},

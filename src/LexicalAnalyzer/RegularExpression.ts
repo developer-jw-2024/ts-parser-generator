@@ -386,11 +386,18 @@ function fromStringFromCharRange(startChar : string, endChar : string) : Array<s
 }
 
 //[]
-export function buildOrRegularExpressionTree(
+export function buildOrRegularExpressionTreeInSquareBracket(
     chars : Array<string>, 
     charBlocks ? : Array<{ left: number, right: number }>, 
     startIndex? : number, endIndex? : number) : RegularExpressionTree | null {
-    
+
+    for (var l=startIndex+1;l<=endIndex-1;l++)  {
+        console.log(chars[l], charBlocks[l])
+    }
+    var andGroups = andGroupsWithIndex(chars, charBlocks, startIndex+1, endIndex-1)
+
+    console.log(andGroups)
+    erro
     var actualChars : Array<string> = []
     for (var i=startIndex+1;i<=endIndex-1;i++) {
         if (i+1<endIndex && chars[i+1]==RegularExpressionSymbol.Hyphen) {
@@ -522,7 +529,7 @@ export function buildRegularExpressionTree(chars : Array<string>, charBlocks ? :
                 tree = buildNotRegularExpressionTree(chars, charBlocks, group.left, group.right)
             } else if (chars[group.left]==RegularExpressionSymbol.OpenSquareBracket && 
                 chars[group.right]==RegularExpressionSymbol.CloseSquareBracket) { //[])
-                tree = buildOrRegularExpressionTree(chars, charBlocks, group.left, group.right)
+                tree = buildOrRegularExpressionTreeInSquareBracket(chars, charBlocks, group.left, group.right)
             } else if (chars[group.left]==RegularExpressionSymbol.DoubleQuotes && 
                 chars[group.right]==RegularExpressionSymbol.DoubleQuotes) { //""
 
