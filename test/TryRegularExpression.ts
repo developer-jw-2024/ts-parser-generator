@@ -1,6 +1,6 @@
 import { orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree, RegularExpression, toRegularExpressionChars } from '../src/LexicalAnalyzer/RegularExpression'
 
-var value = '[a-c"bc"]'
+var value = '[ea-c"bc"]'
 var chars = toRegularExpressionChars(value)
 var charblocks = initCharBlocks(chars)
 var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
