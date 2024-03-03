@@ -124,6 +124,10 @@ export function toRegularExpressionChars(content: string): string[] {
             }
         }
 
+        if (!handleFlag && content[i]==RegularExpressionSymbol.OpenAngleBracket) {
+            // var segment = content[i]
+        }
+
         if (!handleFlag) {
             chars.push(content[i])
             handleFlag = true

@@ -6,6 +6,7 @@ describe('RegularExpression', ()  => {
 
     test('toChars', () => { 
         expect(toRegularExpressionChars('\\')).toEqual([]);
+        // expect(toRegularExpressionChars('<>')).toEqual(["<>"]);
         expect(toRegularExpressionChars('')).toEqual([]);
         expect(toRegularExpressionChars('\\"*')).toEqual(["\\\"", "*"]);
         expect(toRegularExpressionChars('"[^"')).toEqual(['"', '[', '^', '"']);
@@ -23,6 +24,7 @@ describe('RegularExpression', ()  => {
         expect(toRegularExpressionChars('[ab]')).toEqual(['[', 'a', 'b', ']'])
         expect(toRegularExpressionChars('[\\^a]')).toEqual(['[', '\\^', 'a', ']'])
         expect(toRegularExpressionChars('[^\\^]')).toEqual(['[^', '\\^', ']'])
+        expect(toRegularExpressionChars('[a"bc"]')).toEqual(['[', 'a', '"', 'b', 'c', '"', ']'])
         expect(toRegularExpressionChars('[abc]cde')).toEqual(['[', 'a', 'b', 'c', ']', 'c', 'd', 'e'])
         expect(toRegularExpressionChars('[^abc]cde')).toEqual(['[^', 'a', 'b', 'c', ']', 'c', 'd', 'e'])
         expect(toRegularExpressionChars('[^a-zc]cde')).toEqual(['[^', 'a', '-', 'z' ,'c', ']', 'c', 'd', 'e']) 
@@ -55,6 +57,9 @@ describe('RegularExpression', ()  => {
         expect(getEndTermIndex(toRegularExpressionChars('"ab"c'), 0)).toEqual(3);
         expect(getEndTermIndex(toRegularExpressionChars('"a[b"c'), 0)).toEqual(-1);
         expect(getEndTermIndex(toRegularExpressionChars('[abc]cde'), 0)).toEqual(4);
+        expect(getEndTermIndex(toRegularExpressionChars('[a"bc"]'), 0)).toEqual(6);
+        expect(getEndTermIndex(toRegularExpressionChars('[a"bc"]'), 1)).toEqual(1);
+        expect(getEndTermIndex(toRegularExpressionChars('[a"bc"]'), 2)).toEqual(5);
         expect(getEndTermIndex(toRegularExpressionChars('[^abc]cde'), 0)).toEqual(4);
     });
 

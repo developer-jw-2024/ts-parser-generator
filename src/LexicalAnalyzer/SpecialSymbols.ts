@@ -18,6 +18,8 @@ export class RegularExpressionSymbol {
     static OpenRoundBracket = '('
     static CloseRoundBracket = ')'
     static VerticalBar = '|'
+    static OpenAngleBracket = '<'
+    static CloseAngleBracket = '>'
 
     static AllSymbols = [
         RegularExpressionSymbol.BackSlash,

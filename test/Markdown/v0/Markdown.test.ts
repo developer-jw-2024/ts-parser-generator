@@ -23,6 +23,59 @@ describe('Markdown', () => {
         Sentence`)
     })
 
+    test('markdown - 0-0', () => {
+        expect(markdown.isValid(
+`he*l_l*_o`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    MarkdownError`)
+    })
+
+    test('markdown - 0-1', () => {
+        expect(markdown.isValid(
+`I go to school.
+he*l_l*_o`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+    MarkdownError`)
+    })
+
+    test('markdown - 0-2', () => {
+        expect(markdown.isValid(
+`I go to school.
+You go home`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+        Sentence`)
+    })
+
+    test('markdown - 0-3', () => {
+        expect(markdown.isValid(
+`I go to school.
+
+You go home`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+    BlankLine
+    Paragraph
+        Sentence`)
+    })
+
+
     test('markdown - 1', () => {
         expect(markdown.isValid(
 `This is abc`
