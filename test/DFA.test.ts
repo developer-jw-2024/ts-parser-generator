@@ -4,6 +4,20 @@ import { DFA } from '../src/LexicalAnalyzer/DFA'
 import { isSetEqual } from '../src/Utils/SetUtils'
 describe('DFA', ()  => {
     test('DFA', () => { 
+
+        var value = '<>'
+        var chars = toRegularExpressionChars(value)
+        var tree = buildRegularExpressionTree(chars)
+        var nfa = new NFA()
+        nfa.initWithRegularExpressionTree(tree)
+        var dfa = nfa.toDFA()
+        expect(dfa.startIndex).toEqual(0)
+        expect(dfa.terminatedIndexList).toEqual([0])
+        expect(nfa.finiteAutomatonPaths).toEqual([
+            {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}}
+        ])
+        expect(dfa.getNumberOfNodes()).toEqual(1)
+
         var value = 'a'
         var chars = toRegularExpressionChars(value)
         var tree = buildRegularExpressionTree(chars)
@@ -255,6 +269,23 @@ describe('DFA', ()  => {
     })
 
     test('RegularExpression', ()=>{
+        var regExp : RegularExpression = new RegularExpression('<>')
+        expect(regExp.test("")).toBe(true)
+        expect(regExp.test("a")).toBe(false)
+        expect(regExp.test("a+")).toBe(false)
+        expect(regExp.test("aa")).toBe(false)
+
+        var regExp : RegularExpression = new RegularExpression('a|<>')
+        expect(regExp.test("")).toBe(true)
+        expect(regExp.test("a")).toBe(true)
+        expect(regExp.test("a+")).toBe(false)
+        expect(regExp.test("aa")).toBe(false)
+
+        var regExp : RegularExpression = new RegularExpression('a')
+        expect(regExp.test("a")).toBe(true)
+        expect(regExp.test("a+")).toBe(false)
+        expect(regExp.test("aa")).toBe(false)
+
         var regExp : RegularExpression = new RegularExpression('"a+"')
         expect(regExp.test("a")).toBe(false)
         expect(regExp.test("a+")).toBe(true)
