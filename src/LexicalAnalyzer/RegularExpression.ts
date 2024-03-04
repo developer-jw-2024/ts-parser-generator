@@ -2,6 +2,7 @@ import { parse } from 'path'
 import { RegularExpressionSymbol, RegularExpressionCharType } from './SpecialSymbols'
 import { DFA } from './DFA'
 import { NFA } from './NFA'
+import { isNulllOrUndefinedValue } from '../Utils/Utils'
 
 const PareChars: Array<{ left: string, right: string }> = [
     { left: RegularExpressionSymbol.OpenCaretSquareBracket, right: RegularExpressionSymbol.CloseSquareBracket },
@@ -391,13 +392,59 @@ export function buildOrRegularExpressionTreeInSquareBracket(
     charBlocks ? : Array<{ left: number, right: number }>, 
     startIndex? : number, endIndex? : number) : RegularExpressionTree | null {
 
-    for (var l=startIndex+1;l<=endIndex-1;l++)  {
-        console.log(chars[l], charBlocks[l])
-    }
+    // for (var l=startIndex+1;l<=endIndex-1;l++)  {
+    //     console.log(chars[l], charBlocks[l])
+    // }
     var andGroups = andGroupsWithIndex(chars, charBlocks, startIndex+1, endIndex-1)
+    
+    var orSubTrees : Array<RegularExpressionTree> = []
+        
+    for (var gi=0;gi<andGroups.length;gi++) {
+        
+        var group : { left: number, right: number } = andGroups[gi]
+        if (chars[group.left]==RegularExpressionSymbol.DoubleQuotes && 
+            chars[group.right]==RegularExpressionSymbol.DoubleQuotes) { //""
+    
+            var subtrees : Array<RegularExpressionTree> = []
+            for (var i=group.left+1; i<=group.right-1;i++) {
+                var subtree = new RegularExpressionTree(RegularExpressionTreeOperation.CHAR, chars, [chars[i]], charBlocks, i, i, [])    
+                subtrees.push(subtree)
+            }
+            var tree : RegularExpressionTree = new RegularExpressionTree(RegularExpressionTreeOperation.AND, chars, [], charBlocks, group.left, group.right, subtrees)    
+            orSubTrees.push(tree)
+        } else if (group.left==group.right) { //a
+            var tree : RegularExpressionTree | null = null
+            if (chars[group.left]==RegularExpressionSymbol.Dot) {
+                tree = new RegularExpressionTree(RegularExpressionTreeOperation.ANYCHAR, chars, [], charBlocks, group.left, group.right, subtrees)
+            } else {
+                if (RegularExpressionSymbol.isRegularExpressionSymbol(chars[group.left])) {
+                    throw new Error(`Syntax Error: ${chars[group.left]}`)
+                }
+                tree = new RegularExpressionTree(RegularExpressionTreeOperation.CHAR, chars, [chars[group.left]], charBlocks, group.left, group.right, subtrees)
+            }
+            if (isNulllOrUndefinedValue(tree)) {
+                throw new Error(`Syntax Error: ${chars[group.left]}`)
+            } else {
+                orSubTrees.push(tree)
+            }
+        } else if (group.left+2==group.right && chars[group.left+1]==RegularExpressionSymbol.Hyphen) { //a-b
+            var subChars = fromStringFromCharRange(chars[group.left], chars[group.right])
+            // console.log('subChars = ', subChars)
+            for (var ci=0;ci<subChars.length;ci++) {
+                var subtree : RegularExpressionTree = new RegularExpressionTree(RegularExpressionTreeOperation.CHAR, [], [subChars[ci]], charBlocks, 0, 0, [])
+                orSubTrees.push(subtree)
+            }
 
-    console.log(andGroups)
-    erro
+        } else {
+            throw new Error(`Syntax Error: ${chars[group.left]}`)
+        }
+        
+    }
+
+    var treeWithSquareBracket = new RegularExpressionTree(RegularExpressionTreeOperation.OR, chars, [], charBlocks, startIndex, endIndex, orSubTrees)
+    return treeWithSquareBracket
+    
+/*
     var actualChars : Array<string> = []
     for (var i=startIndex+1;i<=endIndex-1;i++) {
         if (i+1<endIndex && chars[i+1]==RegularExpressionSymbol.Hyphen) {
@@ -415,7 +462,7 @@ export function buildOrRegularExpressionTreeInSquareBracket(
     }
     var tree = new RegularExpressionTree(RegularExpressionTreeOperation.OR, chars, [], charBlocks, startIndex, endIndex, subtrees)
     return  tree
-
+*/
 }
 
 //[^]
