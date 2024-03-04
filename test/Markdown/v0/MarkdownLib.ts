@@ -366,7 +366,14 @@ export class Sentence extends MarkdownElement {
 }
 
 export class BoldText extends MarkdownElement {}
+export class StarBoldText extends BoldText {}
+export class UnderlineBoldText extends BoldText {}
 export class ItalicText extends MarkdownElement {}
+export class StarItalicText extends ItalicText {}
+export class UnderlineItalicText extends ItalicText {}
+export class BoldItalicText extends MarkdownElement {}
+export class StarBoldItalicText extends BoldItalicText {}
+export class UnderlineBoldItalicText extends BoldItalicText {}
 export class StrikethroughText extends MarkdownElement {}
 export class HighlightText extends MarkdownElement {}
 export class SubscriptText extends MarkdownElement {}

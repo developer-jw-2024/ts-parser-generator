@@ -1,6 +1,6 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
-import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCenterAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnorderedItem } from "./MarkdownLib";
+import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCenterAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(
@@ -9,8 +9,9 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         `
     )
     Markdown__WholeMarkdownLine(argv : Array<AnalysisToken>) {
-        var markdown : MarkdownLines = argv[0].value
-        return markdown.merge()
+        var markdownLines : MarkdownLines = argv[0].value
+        var markdown : Markdown = markdownLines.merge()
+        return markdown
         // return argv[0].value
     }
 
@@ -430,231 +431,227 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`BeginStarBoldText -> starBoldTag NO_StarBoldText_Match_emphasis`)
     BeginStarBoldText__starBoldTag_NO_StarBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var starBoldText : BoldText = new BoldText()
+        var starBoldText : StarBoldText = new StarBoldText()
         starBoldText.addChild(argv[1].value)
         return starBoldText
     }
-    
+
     @GrammarProductionFunction(`BeginStarBoldText -> BeginStarBoldText NO_StarBoldText_Match_emphasis`)
     BeginStarBoldText__BeginStarBoldText_NO_StarBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var starBoldText : BoldText = argv[0].value
+        var starBoldText : StarBoldText = argv[0].value
         starBoldText.addChild(argv[1].value)
         return starBoldText
     }
-    
+
     @GrammarProductionFunction(`StarBoldText -> BeginStarBoldText starBoldTag`)
     StarBoldText__BeginStarBoldText_starBoldTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginUnderlineBoldText -> underlineBoldTag NO_UnderlineBoldText_Match_emphasis`)
     BeginUnderlineBoldText__underlineBoldTag_NO_UnderlineBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var underlineBoldText : BoldText = new BoldText()
+        var underlineBoldText : UnderlineBoldText = new UnderlineBoldText()
         underlineBoldText.addChild(argv[1].value)
         return underlineBoldText
     }
-    
+
     @GrammarProductionFunction(`BeginUnderlineBoldText -> BeginUnderlineBoldText NO_UnderlineBoldText_Match_emphasis`)
     BeginUnderlineBoldText__BeginUnderlineBoldText_NO_UnderlineBoldText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var underlineBoldText : BoldText = argv[0].value
+        var underlineBoldText : UnderlineBoldText = argv[0].value
         underlineBoldText.addChild(argv[1].value)
         return underlineBoldText
     }
-    
+
     @GrammarProductionFunction(`UnderlineBoldText -> BeginUnderlineBoldText underlineBoldTag`)
     UnderlineBoldText__BeginUnderlineBoldText_underlineBoldTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginStarItalicText -> starItalicTag NO_StarItalicText_Match_emphasis`)
     BeginStarItalicText__starItalicTag_NO_StarItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var starItalicText : ItalicText = new ItalicText()
+        var starItalicText : StarItalicText = new StarItalicText()
         starItalicText.addChild(argv[1].value)
         return starItalicText
     }
-    
+
     @GrammarProductionFunction(`BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis`)
     BeginStarItalicText__BeginStarItalicText_NO_StarItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var starItalicText : ItalicText = argv[0].value
+        var starItalicText : StarItalicText = argv[0].value
         starItalicText.addChild(argv[1].value)
         return starItalicText
     }
-    
+
     @GrammarProductionFunction(`StarItalicText -> BeginStarItalicText starItalicTag`)
     StarItalicText__BeginStarItalicText_starItalicTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginUnderlineItalicText -> underlineItalicTag NO_UnderlineItalicText_Match_emphasis`)
     BeginUnderlineItalicText__underlineItalicTag_NO_UnderlineItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var underlineItalicText : ItalicText = new ItalicText()
+        var underlineItalicText : UnderlineItalicText = new UnderlineItalicText()
         underlineItalicText.addChild(argv[1].value)
         return underlineItalicText
     }
-    
+
     @GrammarProductionFunction(`BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis`)
     BeginUnderlineItalicText__BeginUnderlineItalicText_NO_UnderlineItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var underlineItalicText : ItalicText = argv[0].value
+        var underlineItalicText : UnderlineItalicText = argv[0].value
         underlineItalicText.addChild(argv[1].value)
         return underlineItalicText
     }
-    
+
     @GrammarProductionFunction(`UnderlineItalicText -> BeginUnderlineItalicText underlineItalicTag`)
     UnderlineItalicText__BeginUnderlineItalicText_underlineItalicTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginStarBoldItalicText -> starBoldItalicTag NO_StarBoldItalicText_Match_emphasis`)
     BeginStarBoldItalicText__starBoldItalicTag_NO_StarBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var starBoldItalicText : ItalicText = new ItalicText()
+        var starBoldItalicText : StarBoldItalicText = new StarBoldItalicText()
         starBoldItalicText.addChild(argv[1].value)
         return starBoldItalicText
     }
-    
+
     @GrammarProductionFunction(`BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis`)
     BeginStarBoldItalicText__BeginStarBoldItalicText_NO_StarBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var starBoldItalicText : ItalicText = argv[0].value
+        var starBoldItalicText : StarBoldItalicText = argv[0].value
         starBoldItalicText.addChild(argv[1].value)
         return starBoldItalicText
     }
-    
+
     @GrammarProductionFunction(`StarBoldItalicText -> BeginStarBoldItalicText starBoldItalicTag`)
     StarBoldItalicText__BeginStarBoldItalicText_starBoldItalicTag(argv : Array<AnalysisToken>) {
-        var boldText : BoldText = new BoldText()
-        boldText.addChild(argv[0].value)
-        return boldText
+        return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginUnderlineBoldItalicText -> underlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis`)
     BeginUnderlineBoldItalicText__underlineBoldItalicTag_NO_UnderlineBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var underlineBoldItalicText : ItalicText = new ItalicText()
+        var underlineBoldItalicText : UnderlineBoldItalicText = new UnderlineBoldItalicText()
         underlineBoldItalicText.addChild(argv[1].value)
         return underlineBoldItalicText
     }
-    
+
     @GrammarProductionFunction(`BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis`)
     BeginUnderlineBoldItalicText__BeginUnderlineBoldItalicText_NO_UnderlineBoldItalicText_Match_emphasis(argv : Array<AnalysisToken>) {
-        var underlineBoldItalicText : ItalicText = argv[0].value
+        var underlineBoldItalicText : UnderlineBoldItalicText = argv[0].value
         underlineBoldItalicText.addChild(argv[1].value)
         return underlineBoldItalicText
     }
-    
+
     @GrammarProductionFunction(`UnderlineBoldItalicText -> BeginUnderlineBoldItalicText underlineBoldItalicTag`)
     UnderlineBoldItalicText__BeginUnderlineBoldItalicText_underlineBoldItalicTag(argv : Array<AnalysisToken>) {
-        var boldText : BoldText = new BoldText()
-        boldText.addChild(argv[0].value)
-        return boldText
+        return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginStrikethroughText -> strikethroughTag NO_StrikethroughText_Match_emphasis`)
     BeginStrikethroughText__strikethroughTag_NO_StrikethroughText_Match_emphasis(argv : Array<AnalysisToken>) {
         var strikethroughText : StrikethroughText = new StrikethroughText()
         strikethroughText.addChild(argv[1].value)
         return strikethroughText
     }
-    
+
     @GrammarProductionFunction(`BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis`)
     BeginStrikethroughText__BeginStrikethroughText_NO_StrikethroughText_Match_emphasis(argv : Array<AnalysisToken>) {
         var strikethroughText : StrikethroughText = argv[0].value
         strikethroughText.addChild(argv[1].value)
         return strikethroughText
     }
-    
+
     @GrammarProductionFunction(`StrikethroughText -> BeginStrikethroughText strikethroughTag`)
     StrikethroughText__BeginStrikethroughText_strikethroughTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginHighlightText -> highlightTag NO_HighlightText_Match_emphasis`)
     BeginHighlightText__highlightTag_NO_HighlightText_Match_emphasis(argv : Array<AnalysisToken>) {
         var highlightText : HighlightText = new HighlightText()
         highlightText.addChild(argv[1].value)
         return highlightText
     }
-    
+
     @GrammarProductionFunction(`BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis`)
     BeginHighlightText__BeginHighlightText_NO_HighlightText_Match_emphasis(argv : Array<AnalysisToken>) {
         var highlightText : HighlightText = argv[0].value
         highlightText.addChild(argv[1].value)
         return highlightText
     }
-    
+
     @GrammarProductionFunction(`HighlightText -> BeginHighlightText highlightTag`)
     HighlightText__BeginHighlightText_highlightTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginSubscriptText -> subscriptTag NO_SubscriptText_Match_emphasis`)
     BeginSubscriptText__subscriptTag_NO_SubscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
         var subscriptText : SubscriptText = new SubscriptText()
         subscriptText.addChild(argv[1].value)
         return subscriptText
     }
-    
+
     @GrammarProductionFunction(`BeginSubscriptText -> BeginSubscriptText NO_SubscriptText_Match_emphasis`)
     BeginSubscriptText__BeginSubscriptText_NO_SubscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
         var subscriptText : SubscriptText = argv[0].value
         subscriptText.addChild(argv[1].value)
         return subscriptText
     }
-    
+
     @GrammarProductionFunction(`SubscriptText -> BeginSubscriptText subscriptTag`)
     SubscriptText__BeginSubscriptText_subscriptTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginSuperscriptText -> superscriptTag NO_SuperscriptText_Match_emphasis`)
     BeginSuperscriptText__superscriptTag_NO_SuperscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
         var superscriptText : SuperscriptText = new SuperscriptText()
         superscriptText.addChild(argv[1].value)
         return superscriptText
     }
-    
+
     @GrammarProductionFunction(`BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis`)
     BeginSuperscriptText__BeginSuperscriptText_NO_SuperscriptText_Match_emphasis(argv : Array<AnalysisToken>) {
         var superscriptText : SuperscriptText = argv[0].value
         superscriptText.addChild(argv[1].value)
         return superscriptText
     }
-    
+
     @GrammarProductionFunction(`SuperscriptText -> BeginSuperscriptText superscriptTag`)
     SuperscriptText__BeginSuperscriptText_superscriptTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginDoubleBacktickText -> doubleBacktickTag NO_DoubleBacktickText_Match_emphasis`)
     BeginDoubleBacktickText__doubleBacktickTag_NO_DoubleBacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
         var doubleBacktickText : DoubleBacktickText = new DoubleBacktickText()
         doubleBacktickText.addChild(argv[1].value)
         return doubleBacktickText
     }
-    
+
     @GrammarProductionFunction(`BeginDoubleBacktickText -> BeginDoubleBacktickText NO_DoubleBacktickText_Match_emphasis`)
     BeginDoubleBacktickText__BeginDoubleBacktickText_NO_DoubleBacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
         var doubleBacktickText : DoubleBacktickText = argv[0].value
         doubleBacktickText.addChild(argv[1].value)
         return doubleBacktickText
     }
-    
+
     @GrammarProductionFunction(`DoubleBacktickText -> BeginDoubleBacktickText doubleBacktickTag`)
     DoubleBacktickText__BeginDoubleBacktickText_doubleBacktickTag(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
-    
+
     @GrammarProductionFunction(`BeginBacktickText -> backtickTag NO_BacktickText_Match_emphasis`)
     BeginBacktickText__backtickTag_NO_BacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
         var backtickText : BacktickText = new BacktickText()
         backtickText.addChild(argv[1].value)
         return backtickText
     }
-    
+
     @GrammarProductionFunction(`BeginBacktickText -> BeginBacktickText NO_BacktickText_Match_emphasis`)
     BeginBacktickText__BeginBacktickText_NO_BacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
         var backtickText : BacktickText = argv[0].value
         backtickText.addChild(argv[1].value)
         return backtickText
     }
-    
+
     @GrammarProductionFunction(`BacktickText -> BeginBacktickText backtickTag`)
     BacktickText__BeginBacktickText_backtickTag(argv : Array<AnalysisToken>) {
         return argv[0].value
