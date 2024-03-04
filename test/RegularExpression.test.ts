@@ -6,7 +6,8 @@ describe('RegularExpression', ()  => {
 
     test('toChars', () => { 
         expect(toRegularExpressionChars('\\')).toEqual([]);
-        // expect(toRegularExpressionChars('<>')).toEqual(["<>"]);
+        expect(toRegularExpressionChars('<>')).toEqual(["<>"]);
+        expect(toRegularExpressionChars('\\<\\>')).toEqual(["\\<", "\\>"]);
         expect(toRegularExpressionChars('')).toEqual([]);
         expect(toRegularExpressionChars('\\"*')).toEqual(["\\\"", "*"]);
         expect(toRegularExpressionChars('"[^"')).toEqual(['"', '[', '^', '"']);
@@ -40,6 +41,8 @@ describe('RegularExpression', ()  => {
         expect(getEndTermIndex(toRegularExpressionChars('a'), 0)).toEqual(0);
         expect(getEndTermIndex(toRegularExpressionChars(' '), 0)).toEqual(0);
         expect(getEndTermIndex(toRegularExpressionChars('abc'), 0)).toEqual(0);
+        expect(getEndTermIndex(toRegularExpressionChars('<>'), 0)).toEqual(0);
+        expect(getEndTermIndex(toRegularExpressionChars('<>'), 1)).toEqual(-1);
         expect(getEndTermIndex(toRegularExpressionChars('abc'), 1)).toEqual(1);
         expect(getEndTermIndex(toRegularExpressionChars('abc'), 2)).toEqual(2);
         expect(getEndTermIndex(toRegularExpressionChars('abc'), 3)).toEqual(-1);
@@ -120,6 +123,7 @@ describe('RegularExpression', ()  => {
         expect(orGroup(toRegularExpressionChars('a'))).toEqual([['a']]);
         expect(orGroup(toRegularExpressionChars('.'))).toEqual([['.']]);
         expect(orGroup(toRegularExpressionChars(' '))).toEqual([[' ']]);
+        expect(orGroup(toRegularExpressionChars('<>'))).toEqual([['<>']]);
         expect(orGroup(toRegularExpressionChars('a '))).toEqual([['a', ' ']]);
         expect(orGroup(toRegularExpressionChars(' a'))).toEqual([[' ', 'a']]);
         expect(orGroup(toRegularExpressionChars('" "a'))).toEqual([['"', ' ', '"', 'a']]);
@@ -167,6 +171,7 @@ describe('RegularExpression', ()  => {
         expect(andGroup(toRegularExpressionChars('\\'))).toEqual([]);
         expect(andGroup(toRegularExpressionChars(''))).toEqual([]);
         expect(andGroup(toRegularExpressionChars('a'))).toEqual([['a']]);
+        expect(andGroup(toRegularExpressionChars('<>'))).toEqual([['<>']]);
         expect(andGroup(toRegularExpressionChars('[a]'))).toEqual([['[','a', ']']]);
         expect(andGroup(toRegularExpressionChars('[\\^]'))).toEqual([['[','\\^', ']']]);
         expect(andGroup(toRegularExpressionChars('ab*'))).toEqual([['a'], ['b', '*']]);
@@ -258,6 +263,7 @@ describe('RegularExpression', ()  => {
         expect(initCharBlocks(toRegularExpressionChars('+'))).toEqual([{left : 0, right : 0}]);
         expect(initCharBlocks(toRegularExpressionChars('?'))).toEqual([{left : 0, right : 0}]);
         expect(initCharBlocks(toRegularExpressionChars('|'))).toEqual([{left : 0, right : 0}]);
+        expect(initCharBlocks(toRegularExpressionChars('<>'))).toEqual([{left : 0, right : 0}]);
 
         expect(initCharBlocks(toRegularExpressionChars('a'))).toEqual([{left : 0, right : 0}]);
         expect(initCharBlocks(toRegularExpressionChars('ab'))).toEqual([{
@@ -1497,6 +1503,11 @@ describe('RegularExpression', ()  => {
         expect(tree.subtrees[7].actualChars).toEqual(['7'])
 
 
+        var value = '<>'
+        var chars = toRegularExpressionChars(value)
+        var charblocks = initCharBlocks(chars)
+        var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
+        expect(tree.operation).toEqual(RegularExpressionTreeOperation.EMPTY)
     })
 });
 

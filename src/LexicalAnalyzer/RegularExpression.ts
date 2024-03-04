@@ -126,8 +126,25 @@ export function toRegularExpressionChars(content: string): string[] {
         }
 
         if (!handleFlag && content[i]==RegularExpressionSymbol.OpenAngleBracket) {
-            // var segment = content[i]
+            if (!handleFlag && i + 1 < content.length && content[i+1]==RegularExpressionSymbol.CloseAngleBracket) {
+                chars.push(content[i] + content[i + 1])
+                handleFlag = true
+                i++
+            }
         }
+        // if (!handleFlag && content[i]==RegularExpressionSymbol.OpenAngleBracket) {
+        //     var j=i+1
+        //     while (j<content.length && content[j]!=RegularExpressionSymbol.CloseAngleBracket) j++
+        //     if (j<content.length && content[j]==RegularExpressionSymbol.CloseAngleBracket) {
+        //         var segment : string = ""
+        //         for (var k=i;k<=j;k++) segment += content[k]
+        //         chars.push(segment)
+        //         i = j
+        //         handleFlag = true
+        //     } else {
+        //         throw new Error(`toRegularExpressionChars occur error at ${i}`)
+        //     }
+        // }
 
         if (!handleFlag) {
             chars.push(content[i])
@@ -320,6 +337,7 @@ export enum RegularExpressionTreeOperation {
     QUESTION,
     CHAR,
     ANYCHAR,
+    EMPTY,
     UNKNOWN
 }
 
@@ -587,7 +605,9 @@ export function buildRegularExpressionTree(chars : Array<string>, charBlocks ? :
                 }
                 tree = new RegularExpressionTree(RegularExpressionTreeOperation.AND, chars, [], charBlocks, group.left, group.right, subtrees)    
             } else if (group.left==group.right) { //a
-                if (chars[group.left]==RegularExpressionSymbol.Dot) {
+                if (chars[group.left]==RegularExpressionSymbol.OpenAngleBracket+RegularExpressionSymbol.CloseAngleBracket) {
+                    tree = new RegularExpressionTree(RegularExpressionTreeOperation.EMPTY, chars, [], charBlocks, group.left, group.right, subtrees)
+                } else if (chars[group.left]==RegularExpressionSymbol.Dot) {
                     tree = new RegularExpressionTree(RegularExpressionTreeOperation.ANYCHAR, chars, [], charBlocks, group.left, group.right, subtrees)
                 } else {
                     if (RegularExpressionSymbol.isRegularExpressionSymbol(chars[group.left])) {

@@ -87,6 +87,8 @@ export class NFA {
             this.setNegativePath(startIndex, endIndex, tree.actualChars)
         } else if (tree.operation==RegularExpressionTreeOperation.ANYCHAR) {
             this.setAnyCharPath(startIndex, endIndex)
+        } else if (tree.operation==RegularExpressionTreeOperation.EMPTY) {
+            this.setEmptyPath(startIndex, endIndex)
         } else {
             throw new Error('can not build regular expression tree')
         }
