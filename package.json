@@ -2,7 +2,10 @@
   "name": "ts-parser-generator",
   "version": "0.0.6",
   "main": "index.ts",
-  "repository": "https://github.com/developer-jw-2024/ts-parser-generator.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/developer-jw-2024/ts-parser-generator.git"
+  },
   "author": "developer.jacky.wong <developer.jacky.wong@gmail.com>",
   "license": "MIT",
   "scripts": {

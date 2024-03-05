@@ -307,6 +307,8 @@ describe('DFA', ()  => {
         expect(regExp.test("2")).toBe(true)
         expect(regExp.test("3")).toBe(true)
         expect(regExp.test("0")).toBe(true)
+        expect(regExp.test("00")).toBe(false)
+        expect(regExp.test("01")).toBe(false)
         expect(regExp.test("10")).toBe(true)
 
         var regExp : RegularExpression = new RegularExpression('[\\\\]*')
