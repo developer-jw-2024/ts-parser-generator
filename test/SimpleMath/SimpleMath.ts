@@ -1,5 +1,5 @@
 import { FileUtils } from '../../src/Utils/FileUtil'
-import { LRSyntaxAnalysis, LRSyntaxAnalysisRunner } from "../../src/SyntaxAnalysis/LR"
+import { LRSyntaxAnalyzer, LRSyntaxAnalyzerRunner } from "../../src/SyntaxAnalysis/LR"
 import { SimpleMath } from './SimpleMath_Language_Function'
 import { TimeCounter } from '../../src/Utils/Utils'
 import { AnalysisStep } from '../../src/SyntaxAnalysis/SyntaxAnalysis'
@@ -11,12 +11,12 @@ var tokenTypeDefinitionPath = './test/SimpleMath/SimpleMath_RegExp.txt'
 
 var timeCounter : TimeCounter = new TimeCounter()
 
-var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
+var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
 console.log(timeCounter.getTimePeriod())
 var equation = "  5     +    2   -   2 *    3  "
 var flag = simpleMath.isValid(equation)
 
-var steps = simpleMath.lrSyntaxAnalysis.analysisSteps.map(analysisStep =>{
+var steps = simpleMath.lrSyntaxAnalyzer.analysisSteps.map(analysisStep =>{
     var handled = analysisStep.symbolTokens.filter(st=>st.token.type.name!='<TERMINATED>')
     .filter(st=>st.token.type.name!='spaces')
     .map(t=>{

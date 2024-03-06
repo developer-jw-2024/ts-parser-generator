@@ -86,7 +86,7 @@ export class LRAction {
 
 }
 
-export class LRSyntaxAnalysis extends SyntaxAnalyzer {
+export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
     states : Array<LRItemSet> = []
     acceptIndexGrammarProduction : IndexGrammarProduction | null = null
     acceptState : LRItemSet | null = null
@@ -95,12 +95,12 @@ export class LRSyntaxAnalysis extends SyntaxAnalyzer {
 
     // inputTokens
 
-    initWithLanguageDefinition(languageDefinition : string) : LRSyntaxAnalysis {
+    initWithLanguageDefinition(languageDefinition : string) : LRSyntaxAnalyzer {
         var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
         return this.initWithTokens(tokens)
     }
 
-    initWithTokens(tokens: Token[]): LRSyntaxAnalysis {
+    initWithTokens(tokens: Token[]): LRSyntaxAnalyzer {
         if (tokens.length>0) {
             super.initWithTokens(tokens, true)
             this.argument()
@@ -638,22 +638,22 @@ export class LRSyntaxAnalysis extends SyntaxAnalyzer {
 
 }
 
-export class LRSyntaxAnalysisRunner {
+export class LRSyntaxAnalyzerRunner {
 
-    lrSyntaxAnalysis : LRSyntaxAnalysis
+    lrSyntaxAnalyzer : LRSyntaxAnalyzer
     preProcessingFunc : ((string) => string)|null = null
 
     constructor(languageDefinitionPath : string, tokenTypeDefinitionPath : string, languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
         var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
         var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
         
-        this.lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
-        this.lrSyntaxAnalysis.setLanguageFunctionsEntityClass(languageFunctionsEntityClass)
-        this.lrSyntaxAnalysis.setTokenTypeDefinition(tokenTypeDefinition)                
+        this.lrSyntaxAnalyzer = new LRSyntaxAnalyzer().initWithLanguageDefinition(languageDefinition)
+        this.lrSyntaxAnalyzer.setLanguageFunctionsEntityClass(languageFunctionsEntityClass)
+        this.lrSyntaxAnalyzer.setTokenTypeDefinition(tokenTypeDefinition)                
     }
 
     getResult() : any {
-        var lastSymbolToken : AnalysisToken = this.lrSyntaxAnalysis.analysisSteps.at(-1).symbolTokens.at(-1)
+        var lastSymbolToken : AnalysisToken = this.lrSyntaxAnalyzer.analysisSteps.at(-1).symbolTokens.at(-1)
         return lastSymbolToken.value
     }
 
@@ -666,19 +666,19 @@ export class LRSyntaxAnalysisRunner {
         if (!isNulllOrUndefinedValue(this.preProcessingFunc)) {
             preProcessingContent = this.preProcessingFunc(markdownContent)
         }
-        var flag = this.lrSyntaxAnalysis.isValid(preProcessingContent, debug)
+        var flag = this.lrSyntaxAnalyzer.isValid(preProcessingContent, debug)
         return flag
     }
 
     getLastValidationStep() : AnalysisStep {
-        return this.lrSyntaxAnalysis.analysisSteps[this.lrSyntaxAnalysis.analysisSteps.length-1]
+        return this.lrSyntaxAnalyzer.analysisSteps[this.lrSyntaxAnalyzer.analysisSteps.length-1]
     }
 
     getValidationSteps() : string {
-        return this.lrSyntaxAnalysis.getValidationSteps()
+        return this.lrSyntaxAnalyzer.getValidationSteps()
     }
 
     getValidationSteps_NoActions() : string {
-        return this.lrSyntaxAnalysis.getValidationSteps_NoActions()
+        return this.lrSyntaxAnalyzer.getValidationSteps_NoActions()
     }
 }

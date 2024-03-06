@@ -1,5 +1,5 @@
 import { FileUtils } from '../../src/Utils/FileUtil'
-import { LRSyntaxAnalysis, LRSyntaxAnalysisRunner } from "../../src/SyntaxAnalysis/LR"
+import { LRSyntaxAnalyzer, LRSyntaxAnalyzerRunner } from "../../src/SyntaxAnalysis/LR"
 import { SimpleMath } from './SimpleMath_Language_Function'
 
 class TimeCounter {
@@ -22,7 +22,7 @@ var tokenTypeDefinitionPath = './test/SimpleMath/SimpleMath_RegExp.txt'
 
 var timeCounter : TimeCounter = new TimeCounter()
 
-var simpleMath : LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
+var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
 console.log(timeCounter.getTimePeriod())
 var equations : Array<string> = [
     " 6 * 2 + 1",

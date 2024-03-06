@@ -1,12 +1,12 @@
-import { LRSyntaxAnalysisRunner } from '../../../src/SyntaxAnalysis/LR'
-import languageFunction from './Language_Function'
+import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
+import { MarkdownLanguageFunctionsEntity }  from './Language_Function'
 import { TestCaseUtils } from './TestCaseUtils'
 import { FileUtils } from '../../../src/Utils/FileUtil'
 
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
-var markdown: LRSyntaxAnalysisRunner = new LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, languageFunction)
+var markdown: LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
 
 var testCasesContent = FileUtils.readFromFileSystem(`${__dirname}/TestCases`)
 var testCases = TestCaseUtils.getTestCases(testCasesContent)

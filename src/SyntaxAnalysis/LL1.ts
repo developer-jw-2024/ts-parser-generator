@@ -2,16 +2,16 @@ import { SyntaxAnalyzer } from "./SyntaxAnalysis";
 import { LexicalAnalyzer, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 
-export class LL1SyntaxAnalysis extends SyntaxAnalyzer {
+export class LL1SyntaxAnalyzer extends SyntaxAnalyzer {
 
     predictiveParsingTable : Array<Array<Array<number>>> = []
     
-    initWithLanguageDefinition(languageDefinition : string) : LL1SyntaxAnalysis {
+    initWithLanguageDefinition(languageDefinition : string) : LL1SyntaxAnalyzer {
         var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
         return this.initWithTokens(tokens)
     }
 
-    initWithTokens(tokens : Array<Token>) : LL1SyntaxAnalysis {
+    initWithTokens(tokens : Array<Token>) : LL1SyntaxAnalyzer {
         super.initWithTokens(tokens)
         this.eliminateLeftRecursion()
         this.leftFactoring()
