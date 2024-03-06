@@ -179,9 +179,9 @@ import { SimpleMath } from './SimpleMath_Language_Function'
 var languageDefinitionPath = './SimpleMath_Language.txt'
 var tokenTypeDefinitionPath = './SimpleMath_RegExp.txt'
 
-var simpleMath : lr.LRSyntaxAnalysisRunner = new lr.LRSyntaxAnalysisRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
+var simpleMath : lr.LRSyntaxAnalyzerRunner = new lr.LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
 
-var equation = '6 + 2 * 3'
+var equation = '5 a 3'
 var flag : boolean = simpleMath.isValid(equation)
 if (flag) {
     console.log(`${equation} = ${simpleMath.getResult()}`)
