@@ -89,7 +89,7 @@ export class Token {
 }
 
 
-export class LexicalAnalysis {
+export class LexicalAnalyzer {
     tokenTypes : Array<TokenType>
     startIndex : number
     nfa : NFA
@@ -186,7 +186,7 @@ export class LexicalAnalysis {
         return null
     }
 
-    toTokens(input : string) {
+    tokenize(input : string) {
         var tokens : Array<Token> = []
         var chars : Array<string> = toContentChars(input)
         // var chars : Array<string> = toChars(input)

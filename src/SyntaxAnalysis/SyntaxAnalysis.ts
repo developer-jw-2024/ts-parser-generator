@@ -1,4 +1,4 @@
-import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis"
+import { LexicalAnalyzer, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis"
 import { isListEqual } from "../Utils/ArrayListUtils"
 import { isSetEqual } from "../Utils/SetUtils"
 
@@ -232,14 +232,14 @@ export class IndexGrammarProduction {
 }
 
 
-export class SyntaxAnalysis {
+export class SyntaxAnalyzer {
     
     static DERIVATION = new TokenType('DERIVATION', '\\->', true)
     static ENTER = new TokenType('ENTER', '\n', true)
     static SPACES = new TokenType('SPACES', '[ \t]+', true)
     static GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",false)
     static TerminatedGrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",true)
-    static DERIVATION_TOKEN = new Token(SyntaxAnalysis.DERIVATION, '->')
+    static DERIVATION_TOKEN = new Token(SyntaxAnalyzer.DERIVATION, '->')
 
     startSymbol : Token | null = null
     indexOfStartSymbl : number | null = null
@@ -255,27 +255,27 @@ export class SyntaxAnalysis {
     
     firstOfGrammaProduction : Array<Array<number>> = new Array<Array<number>>()
 
-    lexicalAnalysis : LexicalAnalysis = new LexicalAnalysis([
+    lexicalAnalyzer : LexicalAnalyzer = new LexicalAnalyzer([
         TokenType.ERROR_TOKENTYPE,
         TokenType.EMPTY_TOKENTYPE,
-        SyntaxAnalysis.DERIVATION,
-        SyntaxAnalysis.ENTER,
-        SyntaxAnalysis.SPACES,
-        SyntaxAnalysis.GrammarSymbol
+        SyntaxAnalyzer.DERIVATION,
+        SyntaxAnalyzer.ENTER,
+        SyntaxAnalyzer.SPACES,
+        SyntaxAnalyzer.GrammarSymbol
     ])
 
-    tokenTypeLexicalAnalysis : LexicalAnalysis | null = null
+    tokenTypeLexicalAnalyzer : LexicalAnalyzer | null = null
     // constructor(tokens : Array<Token>) {
     //     this.initWithTokens(tokens)
     // }
-    initWithLanguageDefinition(languageDefinition : string) : SyntaxAnalysis {
-        var tokens = this.lexicalAnalysis.toTokens(languageDefinition)
+    initWithLanguageDefinition(languageDefinition : string) : SyntaxAnalyzer {
+        var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
         this.initWithTokens(tokens)
         return this
     }
 
-    initWithTokens(tokens : Array<Token>, withErrorTokenFlag : boolean = false) : SyntaxAnalysis {
-        var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
+    initWithTokens(tokens : Array<Token>, withErrorTokenFlag : boolean = false) : SyntaxAnalyzer {
+        var list : Array<Token> = tokens.filter(t=>!t.type.isEqual(SyntaxAnalyzer.SPACES))
         this.tokens = [
             Token.TERMINATED_TOKEN, 
             Token.EMPTY_TOKEN,
@@ -289,14 +289,14 @@ export class SyntaxAnalysis {
         
 
         for (var i=0;i<list.length;i++) {
-            if (!list[i].type.isEqual(SyntaxAnalysis.DERIVATION) && 
-                !list[i].type.isEqual(SyntaxAnalysis.ENTER) && this.tokens.findIndex(t=>t.isEqual(list[i]))==-1) {
+            if (!list[i].type.isEqual(SyntaxAnalyzer.DERIVATION) && 
+                !list[i].type.isEqual(SyntaxAnalyzer.ENTER) && this.tokens.findIndex(t=>t.isEqual(list[i]))==-1) {
                 this.tokens.push(list[i])
             }
         }
 
-        var tokenGroups = SyntaxAnalysis.split(list, new Token(SyntaxAnalysis.ENTER, '\n'))
-        this.grammerProductions = this.toGrammarProductions(tokenGroups, SyntaxAnalysis.DERIVATION_TOKEN)
+        var tokenGroups = SyntaxAnalyzer.split(list, new Token(SyntaxAnalyzer.ENTER, '\n'))
+        this.grammerProductions = this.toGrammarProductions(tokenGroups, SyntaxAnalyzer.DERIVATION_TOKEN)
 
         // this.grammerProductions.forEach(gp=>{
         //     console.log(gp.toString())
@@ -320,10 +320,10 @@ export class SyntaxAnalysis {
             var factors = this.indexGrammerProductions[i].factors
             for (var j=0;j<factors.length;j++) {
                 var indexOfToken = factors[j]
-                if (this.tokens[indexOfToken].type.isEqual(SyntaxAnalysis.GrammarSymbol) &&
+                if (this.tokens[indexOfToken].type.isEqual(SyntaxAnalyzer.GrammarSymbol) &&
                  nonTerminalSymbols.indexOf(factors[j])==-1
                 ) {
-                    this.tokens[indexOfToken].type = SyntaxAnalysis.TerminatedGrammarSymbol
+                    this.tokens[indexOfToken].type = SyntaxAnalyzer.TerminatedGrammarSymbol
                 }
             }
         }
@@ -364,7 +364,7 @@ export class SyntaxAnalysis {
             reg = reg.trim()
             return new TokenType(name, reg, true)
         })
-        this.tokenTypeLexicalAnalysis = new LexicalAnalysis(tokenTypes)
+        this.tokenTypeLexicalAnalyzer = new LexicalAnalyzer(tokenTypes)
     }
 
     getTheNoInGrammarProductionList(grammarProductionStringExpression : string) : number {
@@ -373,8 +373,8 @@ export class SyntaxAnalysis {
     }
 
     convertToIndexGrammarProduction(grammarProductionStringExpression : string) : IndexGrammarProduction {
-        var gpTokens = this.lexicalAnalysis.toTokens(grammarProductionStringExpression).filter(t=>!t.type.isEqual(SyntaxAnalysis.SPACES))
-        var gp = this.toGrammarProduction(gpTokens, SyntaxAnalysis.DERIVATION_TOKEN)
+        var gpTokens = this.lexicalAnalyzer.tokenize(grammarProductionStringExpression).filter(t=>!t.type.isEqual(SyntaxAnalyzer.SPACES))
+        var gp = this.toGrammarProduction(gpTokens, SyntaxAnalyzer.DERIVATION_TOKEN)
         var igp = this.toIndexGrammarProduction(gp)
         return igp
     }

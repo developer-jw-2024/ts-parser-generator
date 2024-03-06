@@ -1,13 +1,13 @@
-import { SyntaxAnalysis } from "./SyntaxAnalysis";
-import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
+import { SyntaxAnalyzer } from "./SyntaxAnalysis";
+import { LexicalAnalyzer, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 
-export class LL1SyntaxAnalysis extends SyntaxAnalysis {
+export class LL1SyntaxAnalysis extends SyntaxAnalyzer {
 
     predictiveParsingTable : Array<Array<Array<number>>> = []
     
     initWithLanguageDefinition(languageDefinition : string) : LL1SyntaxAnalysis {
-        var tokens = this.lexicalAnalysis.toTokens(languageDefinition)
+        var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
         return this.initWithTokens(tokens)
     }
 
@@ -119,11 +119,11 @@ export class LL1SyntaxAnalysis extends SyntaxAnalysis {
 
     }
 
-    isValid(lexicalAnalysis : LexicalAnalysis, inputString : string) {
+    isValid(lexicalAnalyzer : LexicalAnalyzer, inputString : string) {
         var indexOfEmptyToken = this.getIndexOfToken(Token.EMPTY_TOKEN)
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
-        var inputTokens : Array<Token> = lexicalAnalysis.toTokens(inputString)
+        var inputTokens : Array<Token> = lexicalAnalyzer.tokenize(inputString)
         inputTokens.push(Token.TERMINATED_TOKEN)
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [indexOfTerminatedToken, this.getIndexOfToken(this.startSymbol)]

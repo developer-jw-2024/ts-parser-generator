@@ -1,10 +1,9 @@
-import { LexicalAnalysis, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
-import { RegularExpression } from "../index"
+import { LexicalAnalyzer, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
 import { orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree } from '../src/LexicalAnalyzer/RegularExpression'
 import { FiniteAutomatonPath, NFA, TransferChar } from '../src/LexicalAnalyzer/NFA'
 import { isSetEqual, minus } from '../src/Utils/SetUtils'
 import { FileUtils } from '../src/Utils/FileUtil'
-import { SyntaxAnalysis } from "../src/SyntaxAnalysis/SyntaxAnalysis"
+import { SyntaxAnalyzer } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 import { LL1SyntaxAnalysis } from "../src/SyntaxAnalysis/LL1"
 
 
@@ -16,17 +15,17 @@ describe('LL', () => {
         var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
         var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(true)
         
@@ -140,22 +139,22 @@ describe('LL', () => {
         var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
         var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             PLUS,
             STAR,
             ID,
             OPENBRACKET,
             CLOSEBRACKET,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(true)
         
@@ -268,27 +267,27 @@ describe('LL', () => {
         var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
         var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
 
-        var ll1LexicalAnalysis = new LexicalAnalysis([
+        var ll1LexicalAnalyzer = new LexicalAnalyzer([
             PLUS,
             STAR,
             ID,
             OPENBRACKET,
             CLOSEBRACKET,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
-        var tokens = ll1LexicalAnalysis.toTokens(value)
+        var tokens = ll1LexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(true)
 
         
-        var languageLexicalAnalysis = new LexicalAnalysis([
+        var languageLexicalAnalyzer = new LexicalAnalyzer([
             PLUS,
             STAR,
             ID,
@@ -297,24 +296,24 @@ describe('LL', () => {
         ])
         
         
-        ll1.isValid(languageLexicalAnalysis, "id+id*id")
+        ll1.isValid(languageLexicalAnalyzer, "id+id*id")
         
 
     })
 
     test('LL1SyntaxAnalysis.isValid-1', () => {
 
-        var ll1LexicalAnalysis = new LexicalAnalysis([
+        var ll1LexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = FileUtils.readFromFileSystem('./test/LL1_Test1.txt')
-        var tokens = ll1LexicalAnalysis.toTokens(value)
+        var tokens = ll1LexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(true)
 
@@ -325,7 +324,7 @@ describe('LL', () => {
         var OPENBRACKET = new TokenType('(', '\\(', true)
         var CLOSEBRACKET = new TokenType(')', '\\)', true)
 
-        var languageLexicalAnalysis = new LexicalAnalysis([
+        var languageLexicalAnalyzer = new LexicalAnalyzer([
             PLUS,
             STAR,
             ID,
@@ -334,7 +333,7 @@ describe('LL', () => {
         ])
         
         
-        ll1.isValid(languageLexicalAnalysis, "1+2*3")
+        ll1.isValid(languageLexicalAnalyzer, "1+2*3")
         
 
     })
@@ -346,18 +345,18 @@ describe('LL', () => {
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = FileUtils.readFromFileSystem('./test/NOT_LL1_Test.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
@@ -467,18 +466,18 @@ describe('LL', () => {
         // var a_ = new TokenType('a', 'a', true)
         // var b_ = new TokenType('b', 'b', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             // i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = FileUtils.readFromFileSystem('./test/NOT_LL1_Test.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
@@ -588,20 +587,20 @@ describe('LL', () => {
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = `
         S -> a S
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
@@ -665,19 +664,19 @@ describe('LL', () => {
 
     test('LL1SyntaxAnalysis 3-1', () => {
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = `
         S -> a S
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
@@ -747,20 +746,20 @@ describe('LL', () => {
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = `
         S -> S a
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         try {
             var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         } catch(error) {
@@ -770,19 +769,19 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalysis 4-1', () => {
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
         var value = `
         S -> S a
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         try {
             var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         } catch(error) {
@@ -798,13 +797,13 @@ describe('LL', () => {
         var a_ = new TokenType('a', 'a', true)
         var b_ = new TokenType('b', 'b', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
@@ -812,7 +811,7 @@ describe('LL', () => {
         S -> a A
         A -> b S
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
@@ -883,12 +882,12 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalysis 5-1', () => {
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
@@ -896,7 +895,7 @@ describe('LL', () => {
         S -> a A
         A -> b S
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(false)
         
@@ -971,13 +970,13 @@ describe('LL', () => {
         var ob_ = new TokenType('(', '\\(', true)
         var cb_ = new TokenType(')', '\\)', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             ob_, cb_,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
@@ -985,7 +984,7 @@ describe('LL', () => {
         S -> ( S ) S
         S -> <EMPTY>
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(true)
         
@@ -1054,12 +1053,12 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalysis 6-1', () => {
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
 
@@ -1067,7 +1066,7 @@ describe('LL', () => {
         S -> ( S ) S
         S -> <EMPTY>
         `
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var ll1 = new LL1SyntaxAnalysis().initWithTokens(tokens)
         expect(ll1.isLL1()).toEqual(true)
         

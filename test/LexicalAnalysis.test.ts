@@ -1,4 +1,4 @@
-import { LexicalAnalysis, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
+import { LexicalAnalyzer, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
 import { FileUtils } from "../src/Utils/FileUtil"
 import { isSetEqual } from '../src/Utils/SetUtils'
 
@@ -9,7 +9,7 @@ describe('LexicalAnalysis', ()  => {
         var GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+", false)
         var SPACES = new TokenType('SPACES', '[ \t]+', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             DERIVATION,
             SPACES,
             GrammarSymbol,
@@ -43,7 +43,7 @@ describe('LexicalAnalysis', ()  => {
             {"source": 11, "destination": 11, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": [' ', '\n', '\t'], "isAnyCharPath" : false}},
         ])
 
-        expect(lexicalAnalysis.nfa.finiteAutomatonPaths).toEqual([
+        expect(lexicalAnalyzer.nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 1, "destination": 2, transferChar:{"transferValue": "-", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 2, "destination": 3, transferChar:{"transferValue": ">", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
@@ -67,7 +67,7 @@ describe('LexicalAnalysis', ()  => {
 
         ])
 
-        var tokens = lexicalAnalysis.toTokens("A' -> A")
+        var tokens = lexicalAnalyzer.tokenize("A' -> A")
         expect(tokens).toEqual([
             new Token(GrammarSymbol, "A'"),
             new Token(SPACES, " "),
@@ -76,21 +76,21 @@ describe('LexicalAnalysis', ()  => {
             new Token(GrammarSymbol, 'A'),
         ])
         
-        // console.log(lexicalAnalysis.dfa.dfaStates)
-        // console.log(lexicalAnalysis.terminatdNodes)
-        // console.log(lexicalAnalysis.dfa.finiteAutomatonPaths)
+        // console.log(lexicalAnalyzer.dfa.dfaStates)
+        // console.log(lexicalAnalyzer.terminatdNodes)
+        // console.log(lexicalAnalyzer.dfa.finiteAutomatonPaths)
     })
     
 
 
     test('LexicalAnalysis', () => { 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             new TokenType('A', 'a', true),
             new TokenType('ABB', 'abb', true),
             new TokenType('AAAABBB', 'a*b+', true),
         ])
-        expect(lexicalAnalysis.startIndex).toEqual(0)
-        var tokenTypes = lexicalAnalysis.tokenTypes
+        expect(lexicalAnalyzer.startIndex).toEqual(0)
+        var tokenTypes = lexicalAnalyzer.tokenTypes
 
         var dfa = tokenTypes[0].regularExpression.dfa
         expect(dfa.startIndex).toEqual(1)
@@ -120,7 +120,7 @@ describe('LexicalAnalysis', ()  => {
             {"source": 10, "destination": 10, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
-        var nfa = lexicalAnalysis.nfa
+        var nfa = lexicalAnalyzer.nfa
         expect(nfa.startIndex).toEqual(0)
         expect(nfa.terminatedIndexList).toEqual([2,6,9,10])
         expect(nfa.finiteAutomatonPaths).toEqual([
@@ -141,7 +141,7 @@ describe('LexicalAnalysis', ()  => {
             {"source": 10, "destination": 10, transferChar:{"transferValue": "b", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
 
-        var dfa = lexicalAnalysis.dfa
+        var dfa = lexicalAnalyzer.dfa
         expect(dfa.startIndex).toEqual(0)
         expect(dfa.terminatedIndexList).toEqual([1,2,3,5,6])
         expect(dfa.finiteAutomatonPaths).toEqual([
@@ -159,52 +159,52 @@ describe('LexicalAnalysis', ()  => {
 
     })
 
-    test('LexicalAnalysis.toTokens', () => { 
+    test('lexicalAnalyzer.tokenize', () => { 
         var ABB = new TokenType('ABB', 'abb', true)
         var AAAABBB = new TokenType('AAAABBB', 'a*b+', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([ABB, AAAABBB])
-        var tokens = lexicalAnalysis.toTokens("aabcacabb")
+        var lexicalAnalyzer = new LexicalAnalyzer([ABB, AAAABBB])
+        var tokens = lexicalAnalyzer.tokenize("aabcacabb")
         expect(tokens).toEqual([
             new Token(AAAABBB, "aab"),
             new Token(TokenType.UNKNOWN_TOKENTYPE, "cac"),
             new Token(ABB, "abb"),
         ])
         
-        var tokens = lexicalAnalysis.toTokens("aabcacaabb")
+        var tokens = lexicalAnalyzer.tokenize("aabcacaabb")
         expect(tokens).toEqual([
             new Token(AAAABBB, "aab"),
             new Token(TokenType.UNKNOWN_TOKENTYPE, "cac"),
             new Token(AAAABBB, "aabb"),
         ])
 
-        var tokens = lexicalAnalysis.toTokens("aabcaaabb")
+        var tokens = lexicalAnalyzer.tokenize("aabcaaabb")
         expect(tokens).toEqual([
             new Token(AAAABBB, "aab"),
             new Token(TokenType.UNKNOWN_TOKENTYPE, "c"),
             new Token(AAAABBB, "aaabb"),
         ])
 
-        var tokens = lexicalAnalysis.toTokens("aabcaaa")
+        var tokens = lexicalAnalyzer.tokenize("aabcaaa")
         expect(tokens).toEqual([
             new Token(AAAABBB, "aab"),
             new Token(TokenType.UNKNOWN_TOKENTYPE, "caaa"),
         ])
     })
 
-    test('LexicalAnalysis.toTokens', () => { 
+    test('lexicalAnalyzer.tokenize', () => { 
         var H1 = new TokenType('H1', '#', true)
         var H2 = new TokenType('H2', '##', true)
         var SPACES = new TokenType('SPACES', '" "+', true)
         var PLAINTEXT = new TokenType('PLAINTEXT', '[^# ]+', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             H1,
             H2,
             SPACES,
             PLAINTEXT
         ])
-        var tokenTypes = lexicalAnalysis.tokenTypes
+        var tokenTypes = lexicalAnalyzer.tokenTypes
         var dfa = tokenTypes[0].regularExpression.dfa
         expect(dfa.startIndex).toEqual(1)
         expect(dfa.terminatedIndexList).toEqual([2])
@@ -238,7 +238,7 @@ describe('LexicalAnalysis', ()  => {
             {"source": 11, "destination": 11, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
         ])
 
-        var nfa = lexicalAnalysis.nfa
+        var nfa = lexicalAnalyzer.nfa
         expect(nfa.startIndex).toEqual(0)
         expect(nfa.terminatedIndexList).toEqual([2, 5, 7, 8, 10, 11])
         expect(nfa.finiteAutomatonPaths).toEqual([
@@ -260,7 +260,7 @@ describe('LexicalAnalysis', ()  => {
             {"source": 11, "destination": 11, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
         ])
 
-        var dfa = lexicalAnalysis.dfa
+        var dfa = lexicalAnalyzer.dfa
         expect(dfa.startIndex).toEqual(0)
         expect(dfa.terminatedIndexList).toEqual([1,2,3,4,5,6])
         expect(dfa.finiteAutomatonPaths).toEqual([
@@ -274,7 +274,7 @@ describe('LexicalAnalysis', ()  => {
             {"source": 6, "destination": 6, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['#', ' '], "isAnyCharPath" : false}},
         ])
 
-        var tokens = lexicalAnalysis.toTokens("# I am (boy).\n")
+        var tokens = lexicalAnalyzer.tokenize("# I am (boy).\n")
         expect(tokens).toEqual([
             new Token(H1, "#"),
             new Token(SPACES, " "),
@@ -287,19 +287,19 @@ describe('LexicalAnalysis', ()  => {
         // console.log(tokens)
     })
 
-    test('LexicalAnalysis.toTokens 2', () => { 
+    test('lexicalAnalyzer.tokenize 2', () => { 
         var H1 = new TokenType('H1', '#', true)
         var H2 = new TokenType('H2', '##', true)
         var SPACES = new TokenType('SPACES', '" "+', true)
         var PLAINTEXT = new TokenType('PLAINTEXT', '[^#\\( ]+', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             H1,
             H2,
             SPACES,
             PLAINTEXT
         ])
-        var tokens = lexicalAnalysis.toTokens("# I am (boy).\n")
+        var tokens = lexicalAnalyzer.tokenize("# I am (boy).\n")
         expect(tokens).toEqual([
             new Token(H1, "#"),
             new Token(SPACES, " "),
@@ -312,15 +312,15 @@ describe('LexicalAnalysis', ()  => {
         ])
     })
 
-    test('LexicalAnalysis.toTokens 3', () => { 
+    test('lexicalAnalyzer.tokenize 3', () => { 
         var H1 = new TokenType('H1', '#', true)
         var H2 = new TokenType('H2', '##', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             H1,
             H2,
         ])
-        var tokens = lexicalAnalysis.toTokens("I am (boy).\n")
+        var tokens = lexicalAnalyzer.tokenize("I am (boy).\n")
         expect(tokens).toEqual([
             new Token(TokenType.UNKNOWN_TOKENTYPE, 'I am (boy).\n'),
         ])
@@ -340,14 +340,14 @@ describe('LexicalAnalysis', ()  => {
         var SPACES = new TokenType('SPACES', '[ \t]+', true)
         var DERIVATION = new TokenType('DERIVATION', '\\->', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             GrammarSymbol,
             Enter,
             SPACES,
             DERIVATION
         ])
         
-        var tokens = lexicalAnalysis.toTokens("A -> A d")
+        var tokens = lexicalAnalyzer.tokenize("A -> A d")
         expect(tokens).toEqual([
             new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
             new Token(SPACES, " "),
@@ -366,14 +366,14 @@ describe('LexicalAnalysis', ()  => {
         var SPACES = new TokenType('SPACES', '[ \t]+', true)
         var DERIVATION = new TokenType('DERIVATION', '\\->', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             GrammarSymbol,
             Enter,
             SPACES,
             DERIVATION
         ])
         
-        var tokens = lexicalAnalysis.toTokens("A -> A d")
+        var tokens = lexicalAnalyzer.tokenize("A -> A d")
         expect(tokens).toEqual([
             new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
             new Token(SPACES, " "),
@@ -392,14 +392,14 @@ describe('LexicalAnalysis', ()  => {
         var SPACES = new TokenType('SPACES', '[ \t]+', true)
         var DERIVATION = new TokenType('DERIVATION', '\\->', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             GrammarSymbol,
             Enter,
             SPACES,
             DERIVATION
         ])
         
-        var tokens = lexicalAnalysis.toTokens("A -> A d")
+        var tokens = lexicalAnalyzer.tokenize("A -> A d")
         expect(tokens).toEqual([
             new Token(GrammarSymbol, 'A'),
             new Token(SPACES, " "),
@@ -419,7 +419,7 @@ describe('LexicalAnalysis', ()  => {
         var DERIVATION = new TokenType('DERIVATION', '\\->', true)
         var EMPTY = new TokenType('EMPTY', '<EMPTY>', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             GrammarSymbol,
             Enter,
             SPACES,
@@ -427,7 +427,7 @@ describe('LexicalAnalysis', ()  => {
             EMPTY
         ])
         
-        var tokens = lexicalAnalysis.toTokens("A' -> <EMPTY>")
+        var tokens = lexicalAnalyzer.tokenize("A' -> <EMPTY>")
         expect(tokens).toEqual([
             new Token(GrammarSymbol, "A'"),
             new Token(SPACES, " "),

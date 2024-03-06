@@ -1,5 +1,5 @@
-import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SyntaxAnalysis, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
-import { LexicalAnalysis, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
+import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SyntaxAnalyzer, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
+import { LexicalAnalyzer, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
 import { FileUtils } from "../Utils/FileUtil";
 import { isNulllOrUndefinedValue } from "../Utils/Utils";
@@ -86,7 +86,7 @@ export class LRAction {
 
 }
 
-export class LRSyntaxAnalysis extends SyntaxAnalysis {
+export class LRSyntaxAnalysis extends SyntaxAnalyzer {
     states : Array<LRItemSet> = []
     acceptIndexGrammarProduction : IndexGrammarProduction | null = null
     acceptState : LRItemSet | null = null
@@ -96,7 +96,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     // inputTokens
 
     initWithLanguageDefinition(languageDefinition : string) : LRSyntaxAnalysis {
-        var tokens = this.lexicalAnalysis.toTokens(languageDefinition)
+        var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
         return this.initWithTokens(tokens)
     }
 
@@ -113,11 +113,11 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     }
 
     toTokens(inputString : string) : Array<Token> {
-        return this.toTokensWithTokenTypeLexicalAnalysis(this.tokenTypeLexicalAnalysis, inputString)
+        return this.toTokensWithTokenTypeLexicalAnalyzer(this.tokenTypeLexicalAnalyzer, inputString)
     }
 
-    toTokensWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string) : Array<Token> {
-        var inputTokens : Array<Token> = tokenTypeLexicalAnalysis.toTokens(inputString)
+    toTokensWithTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer : LexicalAnalyzer, inputString : string) : Array<Token> {
+        var inputTokens : Array<Token> = tokenTypeLexicalAnalyzer.tokenize(inputString)
         inputTokens.push(Token.TERMINATED_TOKEN)
         inputTokens = inputTokens.map(it=>{
             if (it.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {
@@ -144,7 +144,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         return symbolTokenString
     }
 
-    isValidWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis : LexicalAnalysis, inputString : string, debug : boolean = false) : boolean {
+    isValidWithTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer : LexicalAnalyzer, inputString : string, debug : boolean = false) : boolean {
         
         var clazz  = this.languageFunctionsEntityClass
         var languageFunctionsEntityObject : LanguageFunctionsEntity | null
@@ -158,7 +158,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
         var indexOfUnknownToken = this.getIndexOfToken(Token.UNKNOWN_TOKEN)
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
-        var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalysis(tokenTypeLexicalAnalysis, inputString)
+        var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer, inputString)
         // console.log('---------------')
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
@@ -325,7 +325,7 @@ export class LRSyntaxAnalysis extends SyntaxAnalysis {
     }
 
     isValid(inputString : string, debug : boolean = false) : boolean {
-        return this.isValidWithTokenTypeLexicalAnalysis(this.tokenTypeLexicalAnalysis, inputString, debug)
+        return this.isValidWithTokenTypeLexicalAnalyzer(this.tokenTypeLexicalAnalyzer, inputString, debug)
     }
 
     createAnalysisStep(

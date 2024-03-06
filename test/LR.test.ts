@@ -1,10 +1,10 @@
-import { LexicalAnalysis, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
-import { RegularExpression } from "../index"
+import { LexicalAnalyzer, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
+
 import { orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree } from '../src/LexicalAnalyzer/RegularExpression'
 import { FiniteAutomatonPath, NFA, TransferChar } from '../src/LexicalAnalyzer/NFA'
 import { isSetEqual, minus } from '../src/Utils/SetUtils'
 import { FileUtils } from '../src/Utils/FileUtil'
-import { SyntaxAnalysis } from "../src/SyntaxAnalysis/SyntaxAnalysis"
+import { SyntaxAnalyzer } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 import { LL1SyntaxAnalysis } from "../src/SyntaxAnalysis/LL1"
 import { LRAction, LRActionType, LRSyntaxAnalysis } from "../src/SyntaxAnalysis/LR"
 
@@ -54,18 +54,18 @@ describe('Lr', () => {
         var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
         var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             PLUS, STAR, ID, 
             OPENBRACKET, CLOSEBRACKET,
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
         expect(lrSyntaxAnalysis.states.length).toEqual(12)
         // console.log(lrSyntaxAnalysis.tokens.filter(t=>!(t.type.isTerminal)).map((t,i)=>`${i}-${t.toSimpleString()}`).join('   '))
@@ -127,16 +127,16 @@ describe('Lr', () => {
     })
 
     test('LR 2', () => {
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
         expect(lrSyntaxAnalysis.states.length).toEqual(12)
         // console.log(lrSyntaxAnalysis.tokens.filter(t=>!(t.type.isTerminal)).map((t,i)=>`${i}-${t.toSimpleString()}`).join('   '))
@@ -199,7 +199,7 @@ describe('Lr', () => {
 
     test('LR 3', () => {
         var languageDefinition = FileUtils.readFromFileSystem('./test/LR_Test.txt')
-        // var tokens = lexicalAnalysis.toTokens(value)
+        // var tokens = lexicalAnalysis.tokenize(value)
         var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithLanguageDefinition(languageDefinition)
         expect(lrSyntaxAnalysis.states.length).toEqual(12)
         // console.log(lrSyntaxAnalysis.tokens.filter(t=>!(t.type.isTerminal)).map((t,i)=>`${i}-${t.toSimpleString()}`).join('   '))
@@ -262,16 +262,16 @@ describe('Lr', () => {
 
     test('LR isValid', () => {
 
-        var lexicalAnalysis = new LexicalAnalysis([
+        var lexicalAnalyzer = new LexicalAnalyzer([
             TokenType.EMPTY_TOKENTYPE,
-            SyntaxAnalysis.DERIVATION,
-            SyntaxAnalysis.ENTER,
-            SyntaxAnalysis.SPACES,
-            SyntaxAnalysis.GrammarSymbol
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
         ])
 
         var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
-        var tokens = lexicalAnalysis.toTokens(value)
+        var tokens = lexicalAnalyzer.tokenize(value)
         var lrSyntaxAnalysis = new LRSyntaxAnalysis().initWithTokens(tokens)
 
         var PLUS = new TokenType('+', '\\+', true)
@@ -280,7 +280,7 @@ describe('Lr', () => {
         var OPENBRACKET = new TokenType('(', '\\(', true)
         var CLOSEBRACKET = new TokenType(')', '\\)', true)
 
-        var languageLexicalAnalysis = new LexicalAnalysis([
+        var languageLexicalAnalyzer = new LexicalAnalyzer([
             PLUS,
             STAR,
             ID,
@@ -288,7 +288,7 @@ describe('Lr', () => {
             CLOSEBRACKET
         ])
 
-        expect(lrSyntaxAnalysis.isValidWithTokenTypeLexicalAnalysis(languageLexicalAnalysis, "3+4*6")).toEqual(true)
+        expect(lrSyntaxAnalysis.isValidWithTokenTypeLexicalAnalyzer(languageLexicalAnalyzer, "3+4*6")).toEqual(true)
         // var columnLens : Array<number> = lrSyntaxAnalysis.analysisSteps.map(s=>{
         //     return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
         // }).reduce((pre, value)=>{
