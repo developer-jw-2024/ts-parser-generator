@@ -1,0 +1,15 @@
+E -> <ERROR>
+E -> E + T
+E -> E - T
+E -> T
+T -> T * F
+T -> T / F
+T -> F
+
+
+
+F -> ( E )
+F -> F spaces
+F -> spaces F
+F -> integer
+F -> - integer

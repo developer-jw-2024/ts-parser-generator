@@ -12,6 +12,16 @@ markdown.setPreprocessing((v:string):string=>{
 
 describe('Markdown', () => {
 
+    test('markdown - 0-(-1)', () => {
+        expect(markdown.isValid(
+``
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    BlankLine`)
+    })
+
     test('markdown - 0', () => {
         expect(markdown.isValid(
 `hello`
@@ -22,6 +32,7 @@ describe('Markdown', () => {
     Paragraph
         Sentence`)
     })
+
 
     test('markdown - 0-0', () => {
         expect(markdown.isValid(
@@ -153,7 +164,8 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Heading`)
+    Heading
+        Sentence`)
     })
 
     test('markdown - 8', () => {
@@ -165,7 +177,8 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
-        OrderedItem`)
+        OrderedItem
+            Sentence`)
     })
 
     test('markdown - 9', () => {
@@ -179,7 +192,9 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
-        OrderedItem`)
+            Sentence
+        OrderedItem
+            Sentence`)
     })
 
     test('markdown - 10', () => {
@@ -194,8 +209,11 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
         OrderedItem
-        OrderedItem`)
+            Sentence
+        OrderedItem
+            Sentence`)
     })
 
 
@@ -208,7 +226,8 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
-        UnorderedItem`)
+        UnorderedItem
+            Sentence`)
     })
 
     test('markdown - 12', () => {
@@ -222,7 +241,9 @@ This is that.`
 `Markdown
     UnorderedList
         UnorderedItem
-        UnorderedItem`)
+            Sentence
+        UnorderedItem
+            Sentence`)
     })
 
     test('markdown - 13', () => {
@@ -237,8 +258,11 @@ This is that.`
 `Markdown
     UnorderedList
         UnorderedItem
+            Sentence
         UnorderedItem
-        UnorderedItem`)
+            Sentence
+        UnorderedItem
+            Sentence`)
     })
 
 
@@ -246,6 +270,44 @@ This is that.`
         expect(markdown.isValid(
 `> This is a sentence
 `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Paragraph
+                Sentence`)
+    })
+
+    test('markdown - 14-1', () => {
+        expect(markdown.isValid(
+`>`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            BlankLine`)
+    })
+
+    test('markdown - 14-2', () => {
+        expect(markdown.isValid(
+`> `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Paragraph
+                Sentence`)
+    })
+
+    test('markdown - 14-3', () => {
+        expect(markdown.isValid(
+`> H`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
@@ -289,6 +351,20 @@ This is that.`
                         Sentence`)
     })
 
+    test('markdown - 16-1', () => {
+        expect(markdown.isValid(
+`>>`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Blockquote
+                Markdown
+                    BlankLine`)
+    })
+
     test('markdown - 17', () => {
         expect(markdown.isValid(
 `>> This is a sentence
@@ -320,6 +396,7 @@ This is that.`
     Blockquote
         Markdown
             Heading
+                Sentence
             Blockquote
                 Markdown
                     Paragraph
@@ -340,6 +417,7 @@ This is that.`
     Blockquote
         Markdown
             Heading
+                Sentence
             Blockquote
                 Markdown
                     Paragraph
@@ -359,6 +437,7 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 Paragraph
                     Sentence`)
@@ -376,6 +455,7 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 Paragraph
                     Sentence
@@ -395,11 +475,13 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 Paragraph
                     Sentence
                     Sentence
-        OrderedItem`)
+        OrderedItem
+            Sentence`)
     })
 
     test('markdown - 23', () => {
@@ -415,13 +497,15 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 Blockquote
                     Markdown
                         Paragraph
                             Sentence
                             Sentence
-        OrderedItem`)
+        OrderedItem
+            Sentence`)
     })
 
     test('markdown - 24', () => {
@@ -437,11 +521,15 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 OrderedList
                     OrderedItem
+                        Sentence
                     OrderedItem
-        OrderedItem`)
+                        Sentence
+        OrderedItem
+            Sentence`)
     })
 
     
@@ -456,6 +544,7 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 Blockquote
                     Markdown
@@ -477,21 +566,38 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 OrderedList
                     OrderedItem
+                        Sentence
                         Markdown
                             Blockquote
                                 Markdown
                                     Paragraph
                                         Sentence
                     OrderedItem
-        OrderedItem`)
+                        Sentence
+        OrderedItem
+            Sentence`)
     })
     
     test('markdown - 27', () => {
         expect(markdown.isValid(
 `- Fruite
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem
+            Sentence`)
+    })
+
+    test('markdown - 27-1', () => {
+        expect(markdown.isValid(
+`- 
 `
         )).toEqual(true)
 
@@ -512,7 +618,9 @@ This is that.`
 `Markdown
     UnorderedList
         UnorderedItem
-        UnorderedItem`)
+            Sentence
+        UnorderedItem
+            Sentence`)
     })
 
 
@@ -529,11 +637,15 @@ This is that.`
 `Markdown
     UnorderedList
         UnorderedItem
+            Sentence
             Markdown
                 UnorderedList
                     UnorderedItem
+                        Sentence
                     UnorderedItem
-        UnorderedItem`)
+                        Sentence
+        UnorderedItem
+            Sentence`)
     })
 
     test('markdown - 30', () => {
@@ -566,7 +678,8 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    HorizontalRule`)
+    HorizontalRule
+        ---`)
     })
 
     test('markdown - 32', () => {
@@ -577,7 +690,8 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Heading`)
+    Heading
+        Sentence`)
     })
 
     test('markdown - 33', () => {
@@ -592,7 +706,8 @@ This is that.`
     Paragraph
         Sentence
     BlankLine
-    HorizontalRule`)
+    HorizontalRule
+        ----------`)
     })
 
     test('markdown - 34', () => {
@@ -613,7 +728,8 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Heading`)
+    Heading
+        Sentence`)
     })
 
     test('markdown - 36', () => {
@@ -715,6 +831,7 @@ This is that.`
 `Markdown
     FencedCodeBlockText`)
     })
+    
 
     test('markdown - 43', () => {
         expect(markdown.isValid(
@@ -750,6 +867,7 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 Blockquote
                     Markdown
@@ -772,6 +890,7 @@ This is that.`
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 FencedCodeBlockText`)
     })
@@ -786,7 +905,9 @@ This is that.`
 `Markdown
     DescriptionList
         DefinitionListItemGroup
-            DefinitionListItem`)
+            Sentence
+            DefinitionListItem
+                Sentence`)
     })
 
     test('markdown - 47', () => {
@@ -800,8 +921,11 @@ This is that.`
 `Markdown
     DescriptionList
         DefinitionListItemGroup
+            Sentence
             DefinitionListItem
-            DefinitionListItem`)
+                Sentence
+            DefinitionListItem
+                Sentence`)
     })
 
     test('markdown - 48', () => {
@@ -817,10 +941,15 @@ Second Term
 `Markdown
     DescriptionList
         DefinitionListItemGroup
+            Sentence
             DefinitionListItem
+                Sentence
         DefinitionListItemGroup
+            Sentence
             DefinitionListItem
-            DefinitionListItem`)
+                Sentence
+            DefinitionListItem
+                Sentence`)
     })
 
     test('markdown - 49', () => {
@@ -837,12 +966,17 @@ Second Term
 `Markdown
     DescriptionList
         DefinitionListItemGroup
+            Sentence
             DefinitionListItem
+                Sentence
     BlankLine
     DescriptionList
         DefinitionListItemGroup
+            Sentence
             DefinitionListItem
-            DefinitionListItem`)
+                Sentence
+            DefinitionListItem
+                Sentence`)
     })
 
     test('markdown - 50', () => {
@@ -853,7 +987,8 @@ Second Term
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     TaskList
-        TaskListItem`)
+        TaskListItem
+            Sentence`)
     })
 
     test('markdown - 51', () => {
@@ -867,8 +1002,11 @@ Second Term
 `Markdown
     TaskList
         TaskListItem
+            Sentence
         TaskListItem
-        TaskListItem`)
+            Sentence
+        TaskListItem
+            Sentence`)
     })
 
     test('markdown - 52', () => {
@@ -883,9 +1021,11 @@ Second Term
 `Markdown
     TaskList
         TaskListItem
+            Sentence
     MarkdownError
     TaskList
-        TaskListItem`)
+        TaskListItem
+            Sentence`)
     })
 
     test('markdown - 53', () => {
@@ -902,7 +1042,8 @@ Second Term
                 Sentence
     DescriptionList
         DefinitionListItemGroup
-            DefinitionListItem`)
+            DefinitionListItem
+                Sentence`)
     })
 
     test('markdown - 54', () => {
@@ -917,7 +1058,9 @@ Second Term
         Markdown
             DescriptionList
                 DefinitionListItemGroup
-                    DefinitionListItem`)
+                    Sentence
+                    DefinitionListItem
+                        Sentence`)
     })
 
     test('markdown - 55', () => {
@@ -936,6 +1079,7 @@ Second Term
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
     Blockquote
         Markdown
             FencedCodeBlockText`)
@@ -949,7 +1093,10 @@ Second Term
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Footnote`)
+    Footnote
+        FootnoteReference
+            SimpleText
+        Sentence`)
     })
 
     test('markdown - 57', () => {
@@ -961,6 +1108,9 @@ Second Term
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
+        FootnoteReference
+            SimpleText
+        Sentence
         Markdown
             Paragraph
                 Sentence`)
@@ -976,6 +1126,7 @@ Second Term
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 Paragraph
                     Sentence`)
@@ -991,6 +1142,7 @@ Second Term
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 BlankLine`)
     })
@@ -1006,6 +1158,7 @@ Second Term
 `Markdown
     OrderedList
         OrderedItem
+            Sentence
             Markdown
                 BlankLine
                 BlankLine`)
@@ -1023,6 +1176,9 @@ Second Term
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
+        FootnoteReference
+            SimpleText
+        Sentence
         Markdown
             Paragraph
                 Sentence
@@ -1044,6 +1200,9 @@ Second Term
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
+        FootnoteReference
+            SimpleText
+        Sentence
         Markdown
             Blockquote
                 Markdown
@@ -1069,6 +1228,9 @@ Second Term
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
+        FootnoteReference
+            SimpleText
+        Sentence
         Markdown
             Blockquote
                 Markdown
@@ -1076,6 +1238,180 @@ Second Term
                         Sentence
                         Sentence
                     BlankLine
+                    Paragraph
+                        Sentence`)
+    })
+
+    test('markdown - inputing-0', () => {
+        expect(markdown.isValid(
+``
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    BlankLine`)
+    })
+
+    test('markdown - inputing-1', () => {
+        expect(markdown.isValid(
+`||`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+    test('markdown - inputing-2', () => {
+        expect(markdown.isValid(
+`#`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    MarkdownError`)
+    })
+
+    test('markdown - inputing-3', () => {
+        expect(markdown.isValid(
+`#||`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    MarkdownError`)
+    })
+
+    test('markdown - inputing-4', () => {
+        expect(markdown.isValid(
+`# ||`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Heading
+        Sentence`)
+    })
+
+    test('markdown - inputing-5', () => {
+        expect(markdown.isValid(
+`#|| `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Heading`)
+    })
+
+    test('markdown - inputing-6', () => {
+        expect(markdown.isValid(
+`||# `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Heading`)
+    })
+
+    test('markdown - inputing-7', () => {
+        expect(markdown.isValid(
+`#||# `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Heading`)
+    })
+
+    test('markdown - inputing-8', () => {
+        expect(markdown.isValid(
+`>`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            BlankLine`)
+    })
+
+    test('markdown - inputing-9', () => {
+        expect(markdown.isValid(
+`>||`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Paragraph
+                Sentence`)
+    })
+
+    test('markdown - inputing-10', () => {
+        expect(markdown.isValid(
+`>|| `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Paragraph
+                Sentence`)
+    })
+
+    test('markdown - inputing-11', () => {
+        expect(markdown.isValid(
+`> ||`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Paragraph
+                Sentence`)
+    })
+
+    test('markdown - inputing-12', () => {
+        expect(markdown.isValid(
+`||>`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            BlankLine`)
+    })
+
+    test('markdown - inputing-13', () => {
+        expect(markdown.isValid(
+`>||>`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Blockquote
+                Markdown
+                    BlankLine`)
+    })
+
+    test('markdown - inputing-14', () => {
+        expect(markdown.isValid(
+`>> `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            Blockquote
+                Markdown
                     Paragraph
                         Sentence`)
     })

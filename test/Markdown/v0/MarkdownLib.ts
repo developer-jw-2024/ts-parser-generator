@@ -37,6 +37,19 @@ export class MarkdownValueElement extends MarkdownElement {
     getValue() {
         return this.value
     }
+
+    toMarkdownHierarchy(intent : string = '') {
+        var subIntent = `${intent}    `
+        var resultArray =  [this.getValue()].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
 }
 
 
@@ -319,6 +332,8 @@ export class BlankLine extends MarkdownElement {
     
 }
 
+
+
 export class TableRow extends MarkdownElement {}
 export class TableAlignmentRow extends MarkdownElement {}
 export class TableNoAlignment extends MarkdownValueElement {}
@@ -341,6 +356,19 @@ export class TaskListItem extends MarkdownElement {
 
     getValue() {
         return this.value
+    }
+
+    toMarkdownHierarchy(intent : string = '') {
+        var subIntent = `${intent}    `
+        var resultArray =  [this.value].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
     }
 }
 
@@ -380,13 +408,42 @@ export class SubscriptText extends MarkdownElement {}
 export class SuperscriptText extends MarkdownElement {}
 export class DoubleBacktickText extends MarkdownElement {}
 export class BacktickText extends MarkdownElement {}
-export class FencedCodeBlockText extends MarkdownValueElement{}
+export class FencedCodeBlockText extends MarkdownValueElement{
+    toMarkdownHierarchy(intent : string = '') {
+        var subIntent = `${intent}    `
+        var resultArray =  this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+}
 
-export class SimpleText extends MarkdownValueElement {}
+export class SimpleText extends MarkdownValueElement {
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+}
 
 export class Spaces extends MarkdownValueElement {}
+export class Cursor extends MarkdownElement {}
+export class Footnote extends MarkdownElement {
 
-export class Footnote extends MarkdownValueElement {
+    footnoteReference : MarkdownElement | null = null
+    detail : MarkdownElement | null = null
+
+    constructor(footnoteReference : MarkdownElement, detail : MarkdownElement) {
+        super()
+        this.footnoteReference = footnoteReference
+        this.detail = detail
+    }
 
     addComplement(element : Complement) {
         this.getMarkdownElements().push(element)
@@ -415,6 +472,19 @@ export class Footnote extends MarkdownValueElement {
 
     getComplementMarkdown() : Markdown {
         return this.getLastMarkdownElement() as Markdown
+    }
+
+    toMarkdownHierarchy(intent : string = '') {
+        var subIntent = `${intent}    `
+        var resultArray =  [this.footnoteReference, this.detail].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
     }
 }
 export class URLAddress extends MarkdownValueElement {}
@@ -582,7 +652,7 @@ export class DescriptionList extends MarkdownElement {
 
 export class DefinitionListItemGroup extends MarkdownElement {
     nameOfGroup : MarkdownElement | null = null
-    elements : Array<MarkdownElement> | null = null
+    // elements : Array<MarkdownElement> | null = null
 
     setNameOfGroup(nameOfGroup : MarkdownElement) {
         this.nameOfGroup = nameOfGroup
@@ -598,6 +668,19 @@ export class DefinitionListItemGroup extends MarkdownElement {
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
+    }
+
+    toMarkdownHierarchy(intent : string = '') {
+        var subIntent = `${intent}    `
+        var resultArray =  [this.nameOfGroup].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
     }
 }
 

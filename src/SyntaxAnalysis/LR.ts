@@ -520,7 +520,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
             source++
         }
         
-        //this.saveAsMermaidHtml(road)
+        this.saveAsMermaidHtml(road)
 
         if (errors) {
             for (var i=0;i<errors.length;i++) {

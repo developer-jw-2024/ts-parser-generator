@@ -9,10 +9,10 @@ markdown.setPreprocessing((v:string):string=>{
     if (v.at(-1)!='\n') return v+'\n'
     return v
 })
-// markdown.lrSyntaxAnalysis.showGrammarProductionWithoutFunction()
+markdown.lrSyntaxAnalyzer.showGrammarProductionWithoutFunction()
 
 var content = 
-`> `
+`#⏺ `
 
 
 markdown.isValid(content, true)

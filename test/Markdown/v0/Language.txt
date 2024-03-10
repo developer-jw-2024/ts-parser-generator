@@ -28,14 +28,14 @@ TableAlignmentRow -> TableAlignmentRow columnRightAlignment verticalBar
 TableAlignmentRow -> TableAlignmentRow columnCenterAlignment verticalBar
 MarkdownLine -> TableAlignmentRow
 
-TaskListItem -> checkedBox spaces MarkdownLine
-TaskListItem -> uncheckedBox spaces MarkdownLine
+TaskListItem -> checkedBox singleSpace MarkdownLine
+TaskListItem -> uncheckedBox singleSpace MarkdownLine
 MarkdownLine -> TaskListItem
 
-DefinitionListItem -> colonSign spaces MarkdownLine
+DefinitionListItem -> colonSign singleSpace MarkdownLine
 MarkdownLine -> DefinitionListItem
 
-Footnote -> FootnoteReference colonSign spaces MarkdownLine
+Footnote -> FootnoteReference colonSign singleSpace MarkdownLine
 MarkdownLine -> Footnote
 
 EqualsRule -> equals3
@@ -51,19 +51,33 @@ HorizontalRule -> asterisks4
 MarkdownLine -> HorizontalRule
 
 BlockquoteLine -> leftArrow MarkdownLine
+BlockquoteLine -> leftArrow singleSpace MarkdownLine
 BlockquoteLine -> leftArrow
+//BlockquoteLine -> leftArrow cursor
+BlockquoteLine -> cursor leftArrow
+//BlockquoteLine -> leftArrow cursor leftArrow
 MarkdownLine -> BlockquoteLine
 
 Complement -> intent MarkdownLine
 Complement -> intent
 MarkdownLine -> Complement
 
-Heading -> sharpSign MarkdownLine
+Heading -> sharpSign singleSpace
+Heading -> sharpSign cursor singleSpace
+Heading -> cursor sharpSign singleSpace
+Heading -> sharpSign cursor sharpSign singleSpace
+
+Heading -> sharpSign singleSpace MarkdownLine
+Heading -> sharpSign cursor singleSpace MarkdownLine
+Heading -> cursor sharpSign singleSpace MarkdownLine
+Heading -> sharpSign cursor sharpSign singleSpace MarkdownLine
 MarkdownLine -> Heading
 
+OrderedItem -> orderedItemTag
 OrderedItem -> orderedItemTag Sentence
 MarkdownLine -> OrderedItem
 
+UnorderedItem -> unorderedItemTag
 UnorderedItem -> unorderedItemTag Sentence
 MarkdownLine -> UnorderedItem
 
@@ -79,6 +93,8 @@ PlainText -> emailAddress
 PlainText -> Image
 PlainText -> emoji
 PlainText -> FootnoteReference
+PlainText -> cursor
+PlainText -> singleSpace
 PlainText -> PlainText simpleText
 PlainText -> PlainText spaces
 PlainText -> PlainText Link
@@ -87,6 +103,8 @@ PlainText -> PlainText emailAddress
 PlainText -> PlainText Image
 PlainText -> PlainText emoji
 PlainText -> PlainText FootnoteReference
+PlainText -> PlainText cursor
+PlainText -> PlainText singleSpace
 
 FootnoteReference -> openSquareBracketWithCaret simpleText closeSquareBracket
 
