@@ -22,8 +22,8 @@ TableRowWithCell -> TableRowWithCell Sentence
 TableRowWithCell -> TableRowWithCell intent
 
 TableRow -> TableRowWithCell verticalBar
-TableRow -> TableRow verticalBar
 
+//TableRow -> TableRow verticalBar
 //TableRow -> TableRow intent verticalBar
 //TableRow -> TableRow verticalBar
 
@@ -60,23 +60,32 @@ HorizontalRule -> underscores
 HorizontalRule -> asterisks4
 MarkdownLine -> HorizontalRule
 
-BlockquoteLine -> leftArrow MarkdownLine
-BlockquoteLine -> leftArrow
+BlockquoteLine -> blockquoteBiggerSign MarkdownLine
+BlockquoteLine -> blockquoteBiggerSign
+BlockquoteLine -> blockquoteBiggerSignWithCursor MarkdownLine
+BlockquoteLine -> blockquoteBiggerSignWithCursor
 MarkdownLine -> BlockquoteLine
 
 Complement -> intent MarkdownLine
 Complement -> intent
 MarkdownLine -> Complement
 
-Heading -> sharpSign MarkdownLine
+Heading -> headingSharpSign MarkdownLine
+Heading -> headingSharpSign
+Heading -> headingSharpSignWithCursor MarkdownLine
+Heading -> headingSharpSignWithCursor
 MarkdownLine -> Heading
 
 OrderedItem -> orderedItemTag Sentence
 OrderedItem -> orderedItemTag
+OrderedItem -> orderedItemTagWithCursor Sentence
+OrderedItem -> orderedItemTagWithCursor
 MarkdownLine -> OrderedItem
 
 UnorderedItem -> unorderedItemTag Sentence
 UnorderedItem -> unorderedItemTag
+UnorderedItem -> unorderedItemTagWithCursor Sentence
+UnorderedItem -> unorderedItemTagWithCursor
 MarkdownLine -> UnorderedItem
 
 Sentence -> Match_emphasis
@@ -91,6 +100,11 @@ PlainText -> emailAddress
 PlainText -> Image
 PlainText -> emoji
 PlainText -> FootnoteReference
+PlainText -> cursor
+PlainText -> sharpSign
+PlainText -> leftArrow
+PlainText -> dashSign
+PlainText -> plusSign
 PlainText -> PlainText simpleText
 PlainText -> PlainText spaces
 PlainText -> PlainText Link
@@ -100,6 +114,11 @@ PlainText -> PlainText Image
 PlainText -> PlainText emoji
 PlainText -> PlainText FootnoteReference
 PlainText -> PlainText intent
+PlainText -> PlainText cursor
+PlainText -> PlainText sharpSign
+PlainText -> PlainText leftArrow
+PlainText -> PlainText dashSign
+PlainText -> PlainText plusSign
 
 FootnoteReference -> openSquareBracketWithCaret simpleText closeSquareBracket
 

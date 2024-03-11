@@ -1,6 +1,6 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
-import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
+import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, Cursor, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(
@@ -116,12 +116,12 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     //     tableRow.addChild(argv[1].value)
     //     return tableRow
     // }
-    @GrammarProductionFunction(`TableRow -> TableRow verticalBar`)
-    TableRow_TableRow_verticalBar(argv : Array<AnalysisToken>) {
-        var tableRow : TableRow = argv[0].value
-        tableRow.addChild("")
-        return tableRow
-    }
+    // @GrammarProductionFunction(`TableRow -> TableRow verticalBar`)
+    // TableRow_TableRow_verticalBar(argv : Array<AnalysisToken>) {
+    //     var tableRow : TableRow = argv[0].value
+    //     tableRow.addChild("")
+    //     return tableRow
+    // }
     @GrammarProductionFunction(`MarkdownLine -> TableRow`)
     MarkdownLine__TableRow(argv : Array<AnalysisToken>) {
         return argv[0].value
@@ -236,8 +236,8 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     }
 
 
-    @GrammarProductionFunction(`BlockquoteLine -> leftArrow MarkdownLine`)
-    Blockquote__leftArrow_MarkdownLine(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`BlockquoteLine -> blockquoteBiggerSign MarkdownLine`)
+    Blockquote__blockquoteBiggerSign_MarkdownLine(argv : Array<AnalysisToken>) {
         var len = argv[0].value.trim().length
         var result : BlockquoteLine = new BlockquoteLine(argv[1].value)
         for (var i=0;i<len-1;i++) {
@@ -246,8 +246,28 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return result
     }
 
-    @GrammarProductionFunction(`BlockquoteLine -> leftArrow`)
-    Blockquote__leftArrow(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`BlockquoteLine -> blockquoteBiggerSign`)
+    Blockquote__blockquoteBiggerSign(argv : Array<AnalysisToken>) {
+        var len = argv[0].value.trim().length
+        var result : BlockquoteLine = new BlockquoteLine(new BlankLine())
+        for (var i=0;i<len-1;i++) {
+            result = new BlockquoteLine(result)
+        }
+        return result
+    }
+
+    @GrammarProductionFunction(`BlockquoteLine -> blockquoteBiggerSignWithCursor MarkdownLine`)
+    Blockquote__blockquoteBiggerSignWithCursor_MarkdownLine(argv : Array<AnalysisToken>) {
+        var len = argv[0].value.trim().length
+        var result : BlockquoteLine = new BlockquoteLine(argv[1].value)
+        for (var i=0;i<len-1;i++) {
+            result = new BlockquoteLine(result)
+        }
+        return result
+    }
+
+    @GrammarProductionFunction(`BlockquoteLine -> blockquoteBiggerSignWithCursor`)
+    Blockquote__blockquoteBiggerSignWithCursor(argv : Array<AnalysisToken>) {
         var len = argv[0].value.trim().length
         var result : BlockquoteLine = new BlockquoteLine(new BlankLine())
         for (var i=0;i<len-1;i++) {
@@ -286,10 +306,26 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`Heading -> sharpSign MarkdownLine`)
-    Heading__sharpSign_MarkdownLine(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`Heading -> headingSharpSign MarkdownLine`)
+    Heading__headingSharpSign_MarkdownLine(argv : Array<AnalysisToken>) {
         return new Heading(argv[0].value.trim().length, argv[1].value)
     }
+
+    @GrammarProductionFunction(`Heading -> headingSharpSign`)
+    Heading__headingSharpSign(argv : Array<AnalysisToken>) {
+        return new Heading(argv[0].value.trim().length,  null)
+    }
+
+    @GrammarProductionFunction(`Heading -> headingSharpSignWithCursor MarkdownLine`)
+    Heading__headingSharpSignWithCursor_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new Heading(argv[0].value.trim().length-1, argv[1].value)
+    }
+
+    @GrammarProductionFunction(`Heading -> headingSharpSignWithCursor`)
+    Heading__headingSharpSignWithCursor(argv : Array<AnalysisToken>) {
+        return new Heading(argv[0].value.trim().length-1, null)
+    }
+
     @GrammarProductionFunction(`MarkdownLine -> Heading`)
     MarkdownLine__Heading(argv : Array<AnalysisToken>) {
         return argv[0].value
@@ -303,6 +339,16 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     }
     @GrammarProductionFunction(`OrderedItem -> orderedItemTag`)
     OrderedItem__orderedItemTag(argv : Array<AnalysisToken>) {
+        var orderedItem : OrderedItem = new OrderedItem(null)
+        return orderedItem
+    }
+    @GrammarProductionFunction(`OrderedItem -> orderedItemTagWithCursor Sentence`)
+    OrderedItem__orderedItemTagWithCursor_Sentence(argv : Array<AnalysisToken>) {
+        var orderedItem : OrderedItem = new OrderedItem(argv[1].value)
+        return orderedItem
+    }
+    @GrammarProductionFunction(`OrderedItem -> orderedItemTagWithCursor`)
+    OrderedItem__orderedItemTagWithCursor(argv : Array<AnalysisToken>) {
         var orderedItem : OrderedItem = new OrderedItem(null)
         return orderedItem
     }
@@ -321,6 +367,18 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         var unorderedItem : UnorderedItem = new UnorderedItem(null)
         return unorderedItem
     }
+
+    @GrammarProductionFunction(`UnorderedItem -> unorderedItemTagWithCursor Sentence`)
+    UnorderedItem__unorderedItemTagWithCursor_Sentence(argv : Array<AnalysisToken>) {
+        var unorderedItem : UnorderedItem = new UnorderedItem(argv[1].value)
+        return unorderedItem
+    }
+    @GrammarProductionFunction(`UnorderedItem -> unorderedItemTagWithCursor`)
+    UnorderedItem__unorderedItemTagWithCursor(argv : Array<AnalysisToken>) {
+        var unorderedItem : UnorderedItem = new UnorderedItem(null)
+        return unorderedItem
+    }
+
     @GrammarProductionFunction(`MarkdownLine -> UnorderedItem`)
     MarkdownLine__UnorderedItem(argv : Array<AnalysisToken>) {
         return argv[0].value
@@ -392,6 +450,41 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return plainText
     }
 
+    @GrammarProductionFunction(`PlainText -> cursor`)
+    PlainText__cursor(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(new Cursor())
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> sharpSign`)
+    PlainText__sharpSign(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(argv[0].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> leftArrow`)
+    PlainText__leftArrow(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(argv[0].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> dashSign`)
+    PlainText__dashSign(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(argv[0].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> plusSign`)
+    PlainText__plusSign(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(argv[0].value)
+        return plainText
+    }
+
     @GrammarProductionFunction(`PlainText -> PlainText simpleText`)
     PlainText__PlainText_simpleText(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
@@ -443,6 +536,41 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`PlainText -> PlainText intent`)
     PlainText__PlainText_intent(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> PlainText cursor`)
+    PlainText__PlainText_cursor(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(new Cursor())
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> PlainText sharpSign`)
+    PlainText__PlainText_sharpSign(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> PlainText leftArrow`)
+    PlainText__PlainText_leftArrow(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> PlainText dashSign`)
+    PlainText__PlainText_dashSign(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+    
+    @GrammarProductionFunction(`PlainText -> PlainText plusSign`)
+    PlainText__PlainText_plusSign(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
         plainText.addChild(argv[1].value)
         return plainText

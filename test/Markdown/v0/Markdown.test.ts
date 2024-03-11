@@ -287,7 +287,8 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    MarkdownError`)
+    Paragraph
+        Sentence`)
     })
 
     test('markdown - 14-2', () => {
@@ -355,7 +356,8 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    MarkdownError`)
+    Paragraph
+        Sentence`)
     })
 
     test('markdown - 16-2', () => {
@@ -1271,11 +1273,10 @@ Second Term
 `Markdown
     BlankLine`)
     })
-/*
+
     test('markdown - inputing-1', () => {
         expect(markdown.isValid(
-`
-||`
+`▮`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
@@ -1291,22 +1292,26 @@ Second Term
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    MarkdownError`)
+    Paragraph
+        Sentence`)
     })
+
 
     test('markdown - inputing-3', () => {
         expect(markdown.isValid(
-`#||`
+`#▮`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    MarkdownError`)
+    Paragraph
+        Sentence`)
     })
+
 
     test('markdown - inputing-4', () => {
         expect(markdown.isValid(
-`# ||`
+`# ▮`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
@@ -1317,27 +1322,29 @@ Second Term
 
     test('markdown - inputing-5', () => {
         expect(markdown.isValid(
-`#|| `
+`#▮ `
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading`)
     })
+
 
     test('markdown - inputing-6', () => {
         expect(markdown.isValid(
-`||# `
+`▮# `
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading`)
     })
+
 
     test('markdown - inputing-7', () => {
         expect(markdown.isValid(
-`#||# `
+`#▮# `
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
@@ -1345,98 +1352,247 @@ Second Term
     Heading`)
     })
 
+
     test('markdown - inputing-8', () => {
         expect(markdown.isValid(
-`>`
+`-`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            BlankLine`)
+    Paragraph
+        Sentence`)
     })
+
 
     test('markdown - inputing-9', () => {
         expect(markdown.isValid(
-`>||`
+`- `
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            Paragraph
-                Sentence`)
+    UnorderedList
+        UnorderedItem`)
     })
+
 
     test('markdown - inputing-10', () => {
         expect(markdown.isValid(
-`>|| `
+`+`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            Paragraph
-                Sentence`)
+    Paragraph
+        Sentence`)
     })
 
     test('markdown - inputing-11', () => {
         expect(markdown.isValid(
-`> ||`
+`+ `
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            Paragraph
-                Sentence`)
+    UnorderedList
+        UnorderedItem`)
     })
 
     test('markdown - inputing-12', () => {
         expect(markdown.isValid(
-`||>`
+`-▮`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            BlankLine`)
+    Paragraph
+        Sentence`)
     })
+
 
     test('markdown - inputing-13', () => {
         expect(markdown.isValid(
-`>||>`
+`- ▮`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            Blockquote
-                Markdown
-                    BlankLine`)
+    UnorderedList
+        UnorderedItem
+            Sentence`)
     })
+
 
     test('markdown - inputing-14', () => {
         expect(markdown.isValid(
-`>> `
+`+▮`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            Blockquote
-                Markdown
-                    Paragraph
-                        Sentence`)
+    Paragraph
+        Sentence`)
     })
-*/
+
+
+    test('markdown - inputing-15', () => {
+        expect(markdown.isValid(
+`+ ▮`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem
+            Sentence`)
+    })
+
+    test('markdown - inputing-16', () => {
+        expect(markdown.isValid(
+`+▮ `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem`)
+    })
+
+    test('markdown - inputing-17', () => {
+        expect(markdown.isValid(
+`1`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+    test('markdown - inputing-18', () => {
+        expect(markdown.isValid(
+`1.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+    test('markdown - inputing-19', () => {
+        expect(markdown.isValid(
+`1. `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem`)
+    })
+
+    test('markdown - inputing-20', () => {
+        expect(markdown.isValid(
+`1▮`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+    test('markdown - inputing-21', () => {
+        expect(markdown.isValid(
+`1.▮`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+    test('markdown - inputing-22', () => {
+        expect(markdown.isValid(
+`1. `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem`)
+    })
+
+    test('markdown - inputing-23', () => {
+        expect(markdown.isValid(
+`1. a`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Sentence`)
+    })
+
+    test('markdown - inputing-24', () => {
+        expect(markdown.isValid(
+`1. ▮`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Sentence`)
+    })
+
+    test('markdown - inputing-25', () => {
+        expect(markdown.isValid(
+`1.▮ `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem`)
+    })
+
+    test('markdown - inputing-26', () => {
+        expect(markdown.isValid(
+`1▮. `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem`)
+    })
+
+    test('markdown - inputing-27', () => {
+        expect(markdown.isValid(
+`▮1. `
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem`)
+    })
+
+    test('markdown - inputing-28', () => {
+        expect(markdown.isValid(
+`▮1.`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
 })
 
 

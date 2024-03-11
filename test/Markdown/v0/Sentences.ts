@@ -12,7 +12,7 @@ markdown.setPreprocessing((v:string):string=>{
 markdown.lrSyntaxAnalyzer.showGrammarProductionWithoutFunction()
 
 var content = 
-`|    |`
+`+ `
 
 
 markdown.isValid(content, true)
