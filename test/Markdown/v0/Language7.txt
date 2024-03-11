@@ -15,18 +15,10 @@ MarkdownLine -> <ERROR>
 MarkdownLine -> fencedCodeBlockTag
 
 TableRow -> verticalBar
-TableRowWithCell -> TableRow Sentence
-TableRowWithCell -> TableRow intent
-
-TableRowWithCell -> TableRowWithCell Sentence
-TableRowWithCell -> TableRowWithCell intent
-
-TableRow -> TableRowWithCell verticalBar
+TableRow -> TableRow Sentence verticalBar
 TableRow -> TableRow verticalBar
-
 //TableRow -> TableRow intent verticalBar
 //TableRow -> TableRow verticalBar
-
 MarkdownLine -> TableRow
 
 TableColumnAlignment -> dashes3WithSpaces

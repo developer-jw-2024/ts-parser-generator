@@ -777,6 +777,19 @@ This is that.`
         TableRow`)
     })
 
+    test('markdown - 38-1', () => {
+        expect(markdown.isValid(
+`|    Header      | Title       |
+| Paragraph   | Text        |`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+        TableRow`)
+    })
+
 
     test('markdown - 39', () => {
         expect(markdown.isValid(

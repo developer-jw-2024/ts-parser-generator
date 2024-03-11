@@ -1,4 +1,6 @@
 MarkdownLine -> <ERROR>
+MarkdownLine -> Sentence
+
 MarkdownLine -> fencedCodeBlockTag
 MarkdownLine -> TaskListItem
 MarkdownLine -> DefinitionListItem
@@ -11,4 +13,3 @@ MarkdownLine -> Complement
 MarkdownLine -> Heading
 MarkdownLine -> OrderedItem
 MarkdownLine -> UnorderedItem
-MarkdownLine -> Sentence

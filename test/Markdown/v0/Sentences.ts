@@ -12,10 +12,10 @@ markdown.setPreprocessing((v:string):string=>{
 markdown.lrSyntaxAnalyzer.showGrammarProductionWithoutFunction()
 
 var content = 
-`>`
+`|    |`
 
 
-markdown.isValid(content)
+markdown.isValid(content, true)
 console.log(markdown.getResult())
 console.log(markdown.getResult().toMarkdownHierarchy().join('\n'))
 

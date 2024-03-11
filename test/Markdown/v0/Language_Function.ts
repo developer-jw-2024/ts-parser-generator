@@ -1,6 +1,6 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
-import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
+import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(
@@ -64,16 +64,62 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return new FencedCodeBlockText(argv[0].value)
     }
 
-    @GrammarProductionFunction(`TableRow -> verticalBar MarkdownLine verticalBar`)
-    TableRow__verticalBar_MarkdownLine_verticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableRow -> verticalBar`)
+    TableRow__verticalBar(argv : Array<AnalysisToken>) {
         var tableRow : TableRow = new TableRow()
-        tableRow.addChild(argv[1].value)
         return tableRow
     }
-    @GrammarProductionFunction(`TableRow -> TableRow MarkdownLine verticalBar`)
-    TableRow__TableRow_MarkdownLine_verticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableRowWithCell -> TableRow Sentence`)
+    TableRowWithCell__TableRow_Sentence(argv : Array<AnalysisToken>) {
         var tableRow : TableRow = argv[0].value
-        tableRow.addChild(argv[1].value)
+        var tableCell : TableCell = new TableCell(tableRow)
+        tableCell.addChild(argv[1].value)
+        tableRow.addChild(tableCell)
+        return tableCell
+    }
+    @GrammarProductionFunction(`TableRowWithCell -> TableRow intent`)
+    TableRowWithCell__TableRow_intent(argv : Array<AnalysisToken>) {
+        var tableRow : TableRow = argv[0].value
+        var tableCell : TableCell = new TableCell(tableRow)
+        tableCell.addChild(argv[1].value)
+        tableRow.addChild(tableCell)
+        return tableCell
+    }
+
+    @GrammarProductionFunction(`TableRowWithCell -> TableRowWithCell Sentence`)
+    TableRowWithCell__TableRowWithCell_Sentence(argv : Array<AnalysisToken>) {
+        var tableCell : TableCell = argv[0].value as TableCell
+
+        tableCell.addChild(argv[1].value)
+        return tableCell
+    }
+
+    @GrammarProductionFunction(`TableRowWithCell -> TableRowWithCell intent`)
+    TableRowWithCell__TableRowWithCell_intent(argv : Array<AnalysisToken>) {
+        var tableCell : TableCell = argv[0].value as TableCell
+
+        tableCell.addChild(argv[1].value)
+        return tableCell
+    }
+
+    @GrammarProductionFunction(`TableRow -> TableRowWithCell verticalBar`)
+    TableRow__TableRowWithCell_verticalBar(argv : Array<AnalysisToken>) {
+        var tableCell : TableCell = argv[0].value as TableCell
+        
+        var tableRow : TableRow = tableCell.getTableRow()
+        return tableRow
+    }
+
+    // @GrammarProductionFunction(`TableRow -> TableRow intent verticalBar`)
+    // TableRow__TableRow_intent_verticalBar(argv : Array<AnalysisToken>) {
+    //     var tableRow : TableRow = argv[0].value
+    //     tableRow.addChild(argv[1].value)
+    //     return tableRow
+    // }
+    @GrammarProductionFunction(`TableRow -> TableRow verticalBar`)
+    TableRow_TableRow_verticalBar(argv : Array<AnalysisToken>) {
+        var tableRow : TableRow = argv[0].value
+        tableRow.addChild("")
         return tableRow
     }
     @GrammarProductionFunction(`MarkdownLine -> TableRow`)
@@ -390,6 +436,13 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     }
     @GrammarProductionFunction(`PlainText -> PlainText FootnoteReference`)
     PlainText__PlainText_FootnoteReference(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        plainText.addChild(argv[1].value)
+        return plainText
+    }
+
+    @GrammarProductionFunction(`PlainText -> PlainText intent`)
+    PlainText__PlainText_intent(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
         plainText.addChild(argv[1].value)
         return plainText

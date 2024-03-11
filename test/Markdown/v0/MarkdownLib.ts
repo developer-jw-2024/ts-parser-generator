@@ -335,6 +335,18 @@ export class BlankLine extends MarkdownElement {
 
 
 export class TableRow extends MarkdownElement {}
+export class TableCell extends MarkdownElement {
+    tableRow : TableRow | null = null
+
+    constructor(tableRow : TableRow) {
+        super()
+        this.tableRow = tableRow
+    }
+
+    getTableRow() : TableRow | null{
+        return this.tableRow
+    }
+}
 export class TableAlignmentRow extends MarkdownElement {}
 export class TableColumnAlignment extends MarkdownValueElement{}
 export class TableNoAlignment extends MarkdownValueElement {}
