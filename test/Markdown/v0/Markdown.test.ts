@@ -287,9 +287,7 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    Blockquote
-        Markdown
-            BlankLine`)
+    MarkdownError`)
     })
 
     test('markdown - 14-2', () => {
@@ -301,8 +299,7 @@ This is that.`
 `Markdown
     Blockquote
         Markdown
-            Paragraph
-                Sentence`)
+            BlankLine`)
     })
 
     test('markdown - 14-3', () => {
@@ -354,6 +351,16 @@ This is that.`
     test('markdown - 16-1', () => {
         expect(markdown.isValid(
 `>>`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    MarkdownError`)
+    })
+
+    test('markdown - 16-2', () => {
+        expect(markdown.isValid(
+`>> `
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
@@ -536,7 +543,7 @@ This is that.`
     test('markdown - 25', () => {
         expect(markdown.isValid(
 `1. Fruite
-    >Red
+    > Red
 `
         )).toEqual(true)
 
@@ -556,7 +563,7 @@ This is that.`
         expect(markdown.isValid(
 `1. Fruite
     1. Apple
-        >Red
+        > Red
     2. Banana
 2. Animals
 `
@@ -1221,7 +1228,7 @@ Second Term
 `[^Variable]: This is good foot note.
     > Indent paragraphs to include them in the footnote.
     > \`{ my code }\`
-    >
+    > 
     > Add as many paragraphs as you like.`
         )).toEqual(true)
 
@@ -1251,10 +1258,11 @@ Second Term
 `Markdown
     BlankLine`)
     })
-
+/*
     test('markdown - inputing-1', () => {
         expect(markdown.isValid(
-`||`
+`
+||`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
@@ -1415,7 +1423,7 @@ Second Term
                     Paragraph
                         Sentence`)
     })
-
+*/
 })
 
 

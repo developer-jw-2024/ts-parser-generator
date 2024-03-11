@@ -27,9 +27,9 @@ export class MarkdownElement extends SymbolEntity {
     }
  }
 export class MarkdownValueElement extends MarkdownElement {
-    value : MarkdownElement
+    value : MarkdownElement | null = null
 
-    constructor(value : MarkdownElement) {
+    constructor(value : MarkdownElement | null) {
         super()
         this.value = value
     }
@@ -336,6 +336,7 @@ export class BlankLine extends MarkdownElement {
 
 export class TableRow extends MarkdownElement {}
 export class TableAlignmentRow extends MarkdownElement {}
+export class TableColumnAlignment extends MarkdownValueElement{}
 export class TableNoAlignment extends MarkdownValueElement {}
 export class TableLeftAlignment extends MarkdownValueElement {}
 export class TableRightAlignment extends MarkdownValueElement {}

@@ -1,9 +1,7 @@
 enter \n
-singleSpace " "
 intent "    "+
-
 spaces [\t ]+
-simpleText  [^*_=\-\+\<\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
+simpleText  [^*_=\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
 
 emoji ":"[^\:\n]+":"
 url [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
@@ -13,7 +11,6 @@ doubleQuotationMarkText \"[^\"\n]*\"
 unorderedItemTag [\-\+]" "
 orderedItemTag [0-9]+\." "
 
-cursor "||"
 verticalBar "|"
 openParentheses "("
 closeParentheses ")"
@@ -32,8 +29,8 @@ columnLeftAlignment [\t ]*:"-"{3,}[\t ]*
 columnRightAlignment [\t ]*"-"{3,}:[\t ]*
 columnCenterAlignment [\t ]*:"-"{3,}:[\t ]*
 
-leftArrow >+
-sharpSign #+
+leftArrow >+" "
+sharpSign #+" "
 colonSign ":"
 dashSign "-"
 checkedBox "- [x]"

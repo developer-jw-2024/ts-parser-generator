@@ -1,1 +1,14 @@
-Link \[[^\[\]\n]*\]\([^ \n]+([ \t]+\"[^\"\n]+\")?\)
+MarkdownLine -> <ERROR>
+MarkdownLine -> fencedCodeBlockTag
+MarkdownLine -> TaskListItem
+MarkdownLine -> DefinitionListItem
+MarkdownLine -> Footnote
+MarkdownLine -> EqualsRule
+MarkdownLine -> DashesRule
+MarkdownLine -> HorizontalRule
+MarkdownLine -> BlockquoteLine
+MarkdownLine -> Complement
+MarkdownLine -> Heading
+MarkdownLine -> OrderedItem
+MarkdownLine -> UnorderedItem
+MarkdownLine -> Sentence

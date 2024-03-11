@@ -1,6 +1,6 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
-import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, Cursor, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCenterAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
+import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(
@@ -82,64 +82,50 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     }
 
 
-    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar dashes3WithSpaces verticalBar`)
-    TableAlignmentRow__verticalBar_dashes3_verticalBar(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`TableColumnAlignment -> dashes3WithSpaces`)
+    TableColumnAlignment__dashes3WithSpaces(argv : Array<AnalysisToken>) {
+        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableNoAlignment(argv[0].value))
+        return tableColumnAlignment
+    }
+
+    @GrammarProductionFunction(`TableColumnAlignment -> columnLeftAlignment`)
+    TableColumnAlignment__columnLeftAlignment(argv : Array<AnalysisToken>) {
+        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableLeftAlignment(argv[0].value))
+        return tableColumnAlignment
+    }
+    @GrammarProductionFunction(`TableColumnAlignment -> columnRightAlignment`)
+    TableColumnAlignment__columnRightAlignment(argv : Array<AnalysisToken>) {
+        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableRightAlignment(argv[0].value))
+        return tableColumnAlignment
+    }
+    @GrammarProductionFunction(`TableColumnAlignment -> columnCenterAlignment`)
+    TableColumnAlignment__columnCenterAlignment(argv : Array<AnalysisToken>) {
+        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableCenterAlignment(argv[0].value))
+        return tableColumnAlignment
+    }
+    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar TableColumnAlignment verticalBar`)
+    TableAlignmentRow__verticalBar_TableColumnAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addChild(new TableNoAlignment(argv[1].value))
+        tableAlignmentRow.addChild(argv[1].value)
         return tableAlignmentRow
     }
-    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar columnLeftAlignment verticalBar`)
-    TableAlignmentRow__verticalBar_columnLeftAlignment_verticalBar(argv : Array<AnalysisToken>) {
-        var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addChild(new TableLeftAlignment(argv[1].value))
-        return tableAlignmentRow
-    }
-    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar columnRightAlignment verticalBar`)
-    TableAlignmentRow__verticalBar_columnRightAlignment_verticalBar(argv : Array<AnalysisToken>) {
-        var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addChild(new TableRightAlignment(argv[1].value))
-        return tableAlignmentRow
-    }
-    @GrammarProductionFunction(`TableAlignmentRow -> verticalBar columnCenterAlignment verticalBar`)
-    TableAlignmentRow__verticalBar_columnCenterAlignment_verticalBar(argv : Array<AnalysisToken>) {
-        var tableAlignmentRow : TableAlignmentRow = new TableAlignmentRow()
-        tableAlignmentRow.addChild(new TableCenterAlignment(argv[1].value))
-        return tableAlignmentRow
-    }
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow dashes3WithSpaces verticalBar`)
-    TableAlignmentRow__TableAlignmentRow_dashes3_verticalBar(argv : Array<AnalysisToken>) {
-        var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addChild(new TableNoAlignment(argv[1].value))
-        return tableAlignmentRow
-    }
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow columnLeftAlignment verticalBar`)
+    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow TableColumnAlignment verticalBar`)
     TableAlignmentRow__TableAlignmentRow_columnLeftAlignment_verticalBar(argv : Array<AnalysisToken>) {
         var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addChild(new TableLeftAlignment(argv[1].value))
+        tableAlignmentRow.addChild(argv[1].value)
         return tableAlignmentRow
     }
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow columnRightAlignment verticalBar`)
-    TableAlignmentRow__TableAlignmentRow_columnRightAlignment_verticalBar(argv : Array<AnalysisToken>) {
-        var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addChild(new TableRightAlignment(argv[1].value))
-        return tableAlignmentRow
-    }
-    @GrammarProductionFunction(`TableAlignmentRow -> TableAlignmentRow columnCenterAlignment verticalBar`)
-    TableAlignmentRow__TableAlignmentRow_columnCenterAlignment_verticalBar(argv : Array<AnalysisToken>) {
-        var tableAlignmentRow : TableAlignmentRow = argv[0].value
-        tableAlignmentRow.addChild(new TableCenterAlignment(argv[1].value))
-        return tableAlignmentRow
-    }
+
     @GrammarProductionFunction(`MarkdownLine -> TableAlignmentRow`)
     MarkdownLine__TableAlignmentRow(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`TaskListItem -> checkedBox singleSpace MarkdownLine`)
+    @GrammarProductionFunction(`TaskListItem -> checkedBox spaces MarkdownLine`)
     TaskListItem__checkedBox_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
         return new TaskListItem(true, argv[2].value)
     }
-    @GrammarProductionFunction(`TaskListItem -> uncheckedBox singleSpace MarkdownLine`)
+    @GrammarProductionFunction(`TaskListItem -> uncheckedBox spaces MarkdownLine`)
     TaskListItem__uncheckedBox_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
         return new TaskListItem(false, argv[2].value)
     }
@@ -148,7 +134,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`DefinitionListItem -> colonSign singleSpace MarkdownLine`)
+    @GrammarProductionFunction(`DefinitionListItem -> colonSign spaces MarkdownLine`)
     DefinitionListItem__colonSign_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
         return new DefinitionListItem(argv[2].value)
     }
@@ -158,7 +144,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`Footnote -> FootnoteReference colonSign singleSpace MarkdownLine`)
+    @GrammarProductionFunction(`Footnote -> FootnoteReference colonSign spaces MarkdownLine`)
     Footnote__FootnoteReference_colonSign_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
         var footNote : Footnote = new Footnote(argv[0].value, argv[3].value)
         return footNote
@@ -214,16 +200,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return result
     }
 
-    @GrammarProductionFunction(`BlockquoteLine -> leftArrow singleSpace MarkdownLine`)
-    Blockquote__leftArrow_singleSpace_MarkdownLine(argv : Array<AnalysisToken>) {
-        var len = argv[0].value.trim().length
-        var result : BlockquoteLine = new BlockquoteLine(argv[2].value)
-        for (var i=0;i<len-1;i++) {
-            result = new BlockquoteLine(result)
-        }
-        return result
-    }
-
     @GrammarProductionFunction(`BlockquoteLine -> leftArrow`)
     Blockquote__leftArrow(argv : Array<AnalysisToken>) {
         var len = argv[0].value.trim().length
@@ -234,19 +210,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return result
     }
 
-    @GrammarProductionFunction(`BlockquoteLine -> cursor leftArrow`)
-    Blockquote__cursor_leftArrow(argv : Array<AnalysisToken>) {
-        var len = argv[1].value.trim().length
-        var result : BlockquoteLine = new BlockquoteLine(new BlankLine())
-        for (var i=0;i<len-1;i++) {
-            result = new BlockquoteLine(result)
-        }
-        return result
-    }
-
-    
-
-    
     @GrammarProductionFunction(`MarkdownLine -> BlockquoteLine`)
     MarkdownLine__Blockquote(argv : Array<AnalysisToken>) {
         return argv[0].value
@@ -277,57 +240,24 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`Heading -> sharpSign singleSpace`)
-    Heading__sharpSign_singleSpace(argv : Array<AnalysisToken>) {
-        return new Heading(argv[0].value.trim().length, "")
-    }
-    @GrammarProductionFunction(`Heading -> sharpSign cursor singleSpace`)
-    Heading__sharpSign_cursor_singleSpace(argv : Array<AnalysisToken>) {
-        return new Heading(argv[0].value.trim().length, "")
-    }
-    @GrammarProductionFunction(`Heading -> cursor sharpSign singleSpace`)
-    Heading__cursor_sharpSign_singleSpace(argv : Array<AnalysisToken>) {
-        return new Heading(argv[1].value.trim().length, "")
-    }
-    @GrammarProductionFunction(`Heading -> sharpSign cursor sharpSign singleSpace`)
-    Heading__sharpSign_cursor_sharpSign_singleSpace(argv : Array<AnalysisToken>) {
-        return new Heading(argv[0].value.trim().length+argv[2].value.trim().length, "")
-    }
-
-    @GrammarProductionFunction(`Heading -> sharpSign singleSpace MarkdownLine`)
+    @GrammarProductionFunction(`Heading -> sharpSign MarkdownLine`)
     Heading__sharpSign_MarkdownLine(argv : Array<AnalysisToken>) {
-        return new Heading(argv[0].value.trim().length, argv[2].value)
+        return new Heading(argv[0].value.trim().length, argv[1].value)
     }
-
-    @GrammarProductionFunction(`Heading -> sharpSign cursor singleSpace MarkdownLine`)
-    Heading__sharpSign_cursor_singleSpace_MarkdownLine(argv : Array<AnalysisToken>) {
-        return new Heading(argv[0].value.trim().length, argv[3].value)
-    }
-
-    @GrammarProductionFunction(`Heading -> cursor sharpSign singleSpace MarkdownLine`)
-    Heading__cursor_sharpSign_singleSpace_MarkdownLine(argv : Array<AnalysisToken>) {
-        return new Heading(argv[1].value.trim().length, argv[3].value)
-    }
-
-    @GrammarProductionFunction(`Heading -> sharpSign cursor sharpSign singleSpace MarkdownLine`)
-    Heading__sharpSign_cursor_sharpSign_singleSpace_MarkdownLine(argv : Array<AnalysisToken>) {
-        return new Heading(argv[0].value.trim().length+argv[2].value.trim().length, argv[4].value)
-    }
-
     @GrammarProductionFunction(`MarkdownLine -> Heading`)
     MarkdownLine__Heading(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 
 
-    @GrammarProductionFunction(`OrderedItem -> orderedItemTag`)
-    OrderedItem__orderedItemTag(argv : Array<AnalysisToken>) {
-        var orderedItem : OrderedItem = new OrderedItem(null)
-        return orderedItem
-    }
     @GrammarProductionFunction(`OrderedItem -> orderedItemTag Sentence`)
     OrderedItem__orderedItemTag_Sentence(argv : Array<AnalysisToken>) {
         var orderedItem : OrderedItem = new OrderedItem(argv[1].value)
+        return orderedItem
+    }
+    @GrammarProductionFunction(`OrderedItem -> orderedItemTag`)
+    OrderedItem__orderedItemTag(argv : Array<AnalysisToken>) {
+        var orderedItem : OrderedItem = new OrderedItem(null)
         return orderedItem
     }
     @GrammarProductionFunction(`MarkdownLine -> OrderedItem`)
@@ -335,15 +265,14 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`UnorderedItem -> unorderedItemTag`)
-    UnorderedItem__unorderedItemTag(argv : Array<AnalysisToken>) {
-        var unorderedItem : UnorderedItem = new UnorderedItem(null)
-        return unorderedItem
-    }
-
     @GrammarProductionFunction(`UnorderedItem -> unorderedItemTag Sentence`)
     UnorderedItem__unorderedItemTag_Sentence(argv : Array<AnalysisToken>) {
         var unorderedItem : UnorderedItem = new UnorderedItem(argv[1].value)
+        return unorderedItem
+    }
+    @GrammarProductionFunction(`UnorderedItem -> unorderedItemTag`)
+    UnorderedItem__unorderedItemTag(argv : Array<AnalysisToken>) {
+        var unorderedItem : UnorderedItem = new UnorderedItem(null)
         return unorderedItem
     }
     @GrammarProductionFunction(`MarkdownLine -> UnorderedItem`)
@@ -417,18 +346,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return plainText
     }
 
-    @GrammarProductionFunction(`PlainText -> cursor`)
-    PlainText__cursor(argv : Array<AnalysisToken>) {
-        var plainText : PlainText = new PlainText()
-        plainText.addChild(new Cursor())
-        return plainText
-    }
-    @GrammarProductionFunction(`PlainText -> singleSpace`)
-    PlainText__singleSpace(argv : Array<AnalysisToken>) {
-        var plainText : PlainText = new PlainText()
-        plainText.addChild(argv[0].value)
-        return plainText
-    }
     @GrammarProductionFunction(`PlainText -> PlainText simpleText`)
     PlainText__PlainText_simpleText(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
@@ -473,18 +390,6 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     }
     @GrammarProductionFunction(`PlainText -> PlainText FootnoteReference`)
     PlainText__PlainText_FootnoteReference(argv : Array<AnalysisToken>) {
-        var plainText : PlainText = argv[0].value
-        plainText.addChild(argv[1].value)
-        return plainText
-    }
-    @GrammarProductionFunction(`PlainText -> PlainText cursor`)
-    PlainText__PlainText_cursor(argv : Array<AnalysisToken>) {
-        var plainText : PlainText = argv[0].value
-        plainText.addChild(new Cursor())
-        return plainText
-    }
-    @GrammarProductionFunction(`PlainText -> PlainText singleSpace`)
-    PlainText__PlainText_singleSpace(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
         plainText.addChild(argv[1].value)
         return plainText
