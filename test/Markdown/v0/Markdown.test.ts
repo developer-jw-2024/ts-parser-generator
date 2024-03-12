@@ -1593,6 +1593,28 @@ Second Term
         Sentence`)
     })
 
+    test('markdown - inputing-29', () => {
+        expect(markdown.isValid(
+`▮`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
+    test('markdown - inputing-30', () => {
+        expect(markdown.isValid(
+`\\*`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence`)
+    })
+
 })
 
 
