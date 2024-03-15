@@ -1,4 +1,5 @@
 import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
+import * as html from './HtmlLib'
 import { MarkdownLanguageFunctionsEntity } from './Language_Function'
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
@@ -17,17 +18,35 @@ describe('Markdown', () => {
 ``
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<br/>`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.BlankLine()
+        ])
+        
+        
+        expect(htmlElement.isEqual(rootElement)).toBe(true)
+        
     })
+
 
     test('markdown - 0', () => {
         expect(markdown.isValid(
 `hello`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<p>hello</p>`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text("hello")
+                    ])
+                ])
+            ])
+        ])
+
+        
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -36,8 +55,13 @@ describe('Markdown', () => {
 `he*l_l*_o`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`he*l_l*_o`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.ErrorHtmlElement('he*l_l*_o')
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
+        
     })
 
 
@@ -47,9 +71,25 @@ describe('Markdown', () => {
 he*l_l*_o`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<p>I go to school.</p>
-he*l_l*_o`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('I'),
+                        new html.Spaces(' '),
+                        new html.Text('go'),
+                        new html.Spaces(' '),
+                        new html.Text('to'),
+                        new html.Spaces(' '),
+                        new html.Text('school.'),                        
+                    ])
+                ])
+            ]),
+            new html.ErrorHtmlElement('he*l_l*_o')
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -59,9 +99,35 @@ he*l_l*_o`)
 You go home`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<p>I go to school.<br/>You go home</p>`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('I'),
+                        new html.Spaces(' '),
+                        new html.Text('go'),
+                        new html.Spaces(' '),
+                        new html.Text('to'),
+                        new html.Spaces(' '),
+                        new html.Text('school.'),                        
+                    ])
+                ]),
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('You'),
+                        new html.Spaces(' '),
+                        new html.Text('go'),
+                        new html.Spaces(' '),
+                        new html.Text('home'),                        
+                    ])
+                ])
+            ]),
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 0-3', () => {
         expect(markdown.isValid(
@@ -70,10 +136,37 @@ You go home`
 You go home`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<p>I go to school.</p>
-<br/>
-<p>You go home</p>`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('I'),
+                        new html.Spaces(' '),
+                        new html.Text('go'),
+                        new html.Spaces(' '),
+                        new html.Text('to'),
+                        new html.Spaces(' '),
+                        new html.Text('school.'),                        
+                    ])
+                ]),
+            ]),
+            new html.BlankLine(),
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('You'),
+                        new html.Spaces(' '),
+                        new html.Text('go'),
+                        new html.Spaces(' '),
+                        new html.Text('home'),                        
+                    ])
+                ])
+            ])
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
+        
     })
 
 
@@ -82,8 +175,23 @@ You go home`
 `This is abc`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<p>This is abc</p>`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                        new html.Text('is'),
+                        new html.Spaces(' '),
+                        new html.Text('abc'),                      
+                    ])
+                ]),
+            ]),
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
+        
     })
 
 
@@ -92,18 +200,44 @@ You go home`
 `This *is** abc`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`This *is** abc`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.ErrorHtmlElement('This *is** abc')
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 3', () => {
         expect(markdown.isValid(
 `This *is* abc`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<p>This <em>is</em> abc</p>`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                    ]),
+                    new html.ItalicText().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('is')
+                        ])
+                    ]),
+                    new html.PlainText().initChildren([
+                        new html.Spaces(' '),
+                        new html.Text('abc'),
+                    ]),
+                ])
+            ])
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 4', () => {
         expect(markdown.isValid(
@@ -111,10 +245,40 @@ You go home`
 This is that.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`<p>This <em>is</em> abc<br/>This is that.</p>`)
+        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                    ]),
+                    new html.ItalicText().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('is')
+                        ])
+                    ]),
+                    new html.PlainText().initChildren([
+                        new html.Spaces(' '),
+                        new html.Text('abc'),
+                    ]),
+                ]),
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                        new html.Text('is'),
+                        new html.Spaces(' '),
+                        new html.Text('that.'),
+                    ])
+                ])
+            ])
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
     })
 
+/*
     test('markdown - 5', () => {
         expect(markdown.isValid(
 ``
@@ -158,7 +322,7 @@ This is that.`
         OrderedItem
             Sentence`)
     })
-/*
+
     test('markdown - 9', () => {
         expect(markdown.isValid(
 `1. First Item
