@@ -12,7 +12,7 @@ markdown.setPreprocessing((v:string):string=>{
 markdown.lrSyntaxAnalyzer.showGrammarProductionWithoutFunction()
 
 var content = 
-`+ `
+`he*l_`
 
 
 markdown.isValid(content, true)

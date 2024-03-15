@@ -15,6 +15,16 @@ export class AnalysisToken {
         this.children = children
     }
 
+    getRawData() : string {
+        if (this.token.type.isTerminal) {
+            return this.token.value
+        } else {
+            return this.children.map(child=>{
+                return child.getRawData()
+            }).join('')
+        }
+    }
+
     copy() {
         return new AnalysisToken(this.indexOfToken, this.token, this.value, this.children)
     }

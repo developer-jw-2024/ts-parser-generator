@@ -17,9 +17,8 @@ describe('Markdown', () => {
 ``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    BlankLine`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<br/>`)
     })
 
     test('markdown - 0', () => {
@@ -27,12 +26,8 @@ describe('Markdown', () => {
 `hello`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<p>hello</p>`)
     })
 
 
@@ -41,9 +36,8 @@ describe('Markdown', () => {
 `he*l_l*_o`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    MarkdownError`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`he*l_l*_o`)
     })
 
 
@@ -53,19 +47,9 @@ describe('Markdown', () => {
 he*l_l*_o`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText
-    MarkdownError`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<p>I go to school.</p>
+he*l_l*_o`)
     })
 
 
@@ -75,25 +59,8 @@ he*l_l*_o`
 You go home`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<p>I go to school.<br/>You go home</p>`)
     })
 
     test('markdown - 0-3', () => {
@@ -103,27 +70,10 @@ You go home`
 You go home`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText
-    BlankLine
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<p>I go to school.</p>
+<br/>
+<p>You go home</p>`)
     })
 
 
@@ -132,16 +82,8 @@ You go home`
 `This is abc`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<p>This is abc</p>`)
     })
 
 
@@ -150,30 +92,17 @@ You go home`
 `This *is** abc`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    MarkdownError`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`This *is** abc`)
     })
-
 
     test('markdown - 3', () => {
         expect(markdown.isValid(
 `This *is* abc`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-            StarItalicText
-                PlainText
-                    SimpleText
-            PlainText
-                Spaces
-                SimpleText`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<p>This <em>is</em> abc</p>`)
     })
 
     test('markdown - 4', () => {
@@ -182,26 +111,8 @@ You go home`
 This is that.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Paragraph
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-            StarItalicText
-                PlainText
-                    SimpleText
-            PlainText
-                Spaces
-                SimpleText
-        Sentence
-            PlainText
-                SimpleText
-                Spaces
-                SimpleText
-                Spaces
-                SimpleText`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<p>This <em>is</em> abc<br/>This is that.</p>`)
     })
 
     test('markdown - 5', () => {
@@ -209,9 +120,8 @@ This is that.`
 ``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    BlankLine`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<br/>`)
     })
 
 
@@ -221,9 +131,8 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    BlankLine`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<br/>`)
     })
 
 
@@ -233,14 +142,9 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
-`Markdown
-    Heading
-        Sentence
-            PlainText
-                SimpleText`)
+        expect(markdown.getResult().toHtml()).toEqual(
+`<h2>hello</h2>`)
     })
-
 
     test('markdown - 8', () => {
         expect(markdown.isValid(
@@ -248,15 +152,11 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
-            Sentence
-                PlainText
-                    SimpleText
-                    Spaces
-                    SimpleText`)
+            Sentence`)
     })
 /*
     test('markdown - 9', () => {
@@ -266,7 +166,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -283,7 +183,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -301,7 +201,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -315,7 +215,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -332,7 +232,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -350,7 +250,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -363,7 +263,7 @@ This is that.`
 `>`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -374,7 +274,7 @@ This is that.`
 `> `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -386,7 +286,7 @@ This is that.`
 `> H`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -401,7 +301,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -417,7 +317,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -432,7 +332,7 @@ This is that.`
 `>>`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -443,7 +343,7 @@ This is that.`
 `>> `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -459,7 +359,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -478,7 +378,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -499,7 +399,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -520,7 +420,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -538,7 +438,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -558,7 +458,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -580,7 +480,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -604,7 +504,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -627,7 +527,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -649,7 +549,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -675,7 +575,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -688,7 +588,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
@@ -701,7 +601,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -720,7 +620,7 @@ This is that.`
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -740,7 +640,7 @@ This is that.`
 "type `nano`."
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -751,7 +651,7 @@ This is that.`
 "``Use `code` in your Markdown file.``"
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -763,7 +663,7 @@ This is that.`
 "---"
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     HorizontalRule
         ---`)
@@ -775,7 +675,7 @@ This is that.`
 ----------`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Heading
         Sentence`)
@@ -788,7 +688,7 @@ This is that.`
 ----------`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence
@@ -802,7 +702,7 @@ This is that.`
 `===========`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown`)
     })
 
@@ -813,7 +713,7 @@ This is that.`
 ===========`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Heading
         Sentence`)
@@ -826,7 +726,7 @@ This is that.`
 ===========`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence
@@ -838,7 +738,7 @@ This is that.`
 `| Syntax      | Description |`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Table
         TableRow`)
@@ -850,7 +750,7 @@ This is that.`
 | Paragraph   | Text        |`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Table
         TableRow
@@ -863,7 +763,7 @@ This is that.`
 | Paragraph   | Text        |`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Table
         TableRow
@@ -879,7 +779,7 @@ This is that.`
 | Paragraph   | Text        |`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Table
         TableRow
@@ -893,7 +793,7 @@ This is that.`
 | Paragraph   | Text        |`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Table
         TableRow
@@ -907,7 +807,7 @@ This is that.`
 | Paragraph   | Text        |`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Table
         TableRow
@@ -927,7 +827,7 @@ This is that.`
 \`\`\``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     FencedCodeBlockText`)
     })
@@ -944,7 +844,7 @@ This is that.`
 > \`\`\``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -963,7 +863,7 @@ This is that.`
     > \`\`\``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -986,7 +886,7 @@ This is that.`
     \`\`\``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1001,7 +901,7 @@ This is that.`
 : This is the definition of the first term.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1017,7 +917,7 @@ This is that.`
 : This is another definition of the second term.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1037,7 +937,7 @@ Second Term
 : This is another definition of the second term.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1062,7 +962,7 @@ Second Term
 : This is another definition of the second term.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1084,7 +984,7 @@ Second Term
 `- [x] Write the press release`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -1098,7 +998,7 @@ Second Term
 - [ ] Contact the media`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -1117,7 +1017,7 @@ Second Term
 `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -1134,7 +1034,7 @@ Second Term
 : This is the definition of the first term.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1152,7 +1052,7 @@ Second Term
 > : This is the definition of the first term.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1175,7 +1075,7 @@ Second Term
 > \`\`\``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1191,7 +1091,7 @@ Second Term
 `[^Variable]: This is good foot note.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1205,7 +1105,7 @@ Second Term
     Indent paragraphs to include them in the footnote.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1222,7 +1122,7 @@ Second Term
     Apple`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1238,7 +1138,7 @@ Second Term
     `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1254,7 +1154,7 @@ Second Term
     `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1273,7 +1173,7 @@ Second Term
     Add as many paragraphs as you like.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1297,7 +1197,7 @@ Second Term
     > Add as many paragraphs as you like.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1325,7 +1225,7 @@ Second Term
     > Add as many paragraphs as you like.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1347,7 +1247,7 @@ Second Term
 ``
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     BlankLine`)
     })
@@ -1357,7 +1257,7 @@ Second Term
 `▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1368,7 +1268,7 @@ Second Term
 `#`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1380,7 +1280,7 @@ Second Term
 `#▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1392,7 +1292,7 @@ Second Term
 `# ▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Heading
         Sentence`)
@@ -1403,7 +1303,7 @@ Second Term
 `#▮ `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Heading`)
     })
@@ -1414,7 +1314,7 @@ Second Term
 `▮# `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Heading`)
     })
@@ -1425,7 +1325,7 @@ Second Term
 `#▮# `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Heading`)
     })
@@ -1436,7 +1336,7 @@ Second Term
 `-`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1448,7 +1348,7 @@ Second Term
 `- `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
@@ -1460,7 +1360,7 @@ Second Term
 `+`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1471,7 +1371,7 @@ Second Term
 `+ `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
@@ -1482,7 +1382,7 @@ Second Term
 `-▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1494,7 +1394,7 @@ Second Term
 `- ▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -1507,7 +1407,7 @@ Second Term
 `+▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1519,7 +1419,7 @@ Second Term
 `+ ▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -1531,7 +1431,7 @@ Second Term
 `+▮ `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
@@ -1542,7 +1442,7 @@ Second Term
 `1`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1553,7 +1453,7 @@ Second Term
 `1.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1564,7 +1464,7 @@ Second Term
 `1. `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
@@ -1575,7 +1475,7 @@ Second Term
 `1▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1586,7 +1486,7 @@ Second Term
 `1.▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1597,7 +1497,7 @@ Second Term
 `1. `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
@@ -1608,7 +1508,7 @@ Second Term
 `1. a`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1620,7 +1520,7 @@ Second Term
 `1. ▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1632,7 +1532,7 @@ Second Term
 `1.▮ `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
@@ -1643,7 +1543,7 @@ Second Term
 `1▮. `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
@@ -1654,7 +1554,7 @@ Second Term
 `▮1. `
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
@@ -1665,7 +1565,7 @@ Second Term
 `▮1.`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1676,7 +1576,7 @@ Second Term
 `▮`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1687,7 +1587,7 @@ Second Term
 `\\*`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1701,7 +1601,7 @@ Second Term
 | Paragraph   | Text        |`
         )).toEqual(true)
 
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        expect(markdown.getResult().toHtml()).toEqual(
 `Markdown
     Table
         TableRow

@@ -231,7 +231,9 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
                         var lastSymbolToken : AnalysisToken = symbolTokens.pop()
                         var lastStack = stack.pop()
                         s = stack[stack.length-1]
-                        errorToken.value = lastSymbolToken.value + errorToken.value
+                        // console.log('===>', lastSymbolToken, "|", typeof(errorToken.value), "]")
+                        var lastSymbolTokenValue : string = lastSymbolToken.getRawData()
+                        errorToken.value = lastSymbolTokenValue + errorToken.value
                         action  = this.actions[s][a]
                         if (debug) {
                             console.log('pop for error', lastSymbolToken.token.toString(), lastStack)

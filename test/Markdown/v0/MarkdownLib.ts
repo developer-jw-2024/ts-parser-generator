@@ -1,6 +1,10 @@
 import { ErrorEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis"
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils"
 
+function createIntent(n : number) : string {
+    return new Array(n*4).fill(' ').join('')
+}
+
 export class MarkdownElement extends SymbolEntity {
     markdownElements : Array<MarkdownElement> = []
 
@@ -25,11 +29,26 @@ export class MarkdownElement extends SymbolEntity {
         resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
+
+    toChildrenMarkdownElementsHtml(numOfIntent : number, joinChar : string = '\n') : string {
+        var intent : string = createIntent(numOfIntent)
+        var html : string =  this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toHtml) {
+                return markdownElement.toHtml(numOfIntent)
+            } else {
+                return `${intent}${markdownElement}`
+            }
+        }).join(joinChar)
+        return html
+    }
+    toHtml(numOfIntent : number = 0) : string {
+        return this.toChildrenMarkdownElementsHtml(numOfIntent)
+    }
  }
 export class MarkdownValueElement extends MarkdownElement {
-    value : MarkdownElement | null = null
+    value : any = null
 
-    constructor(value : MarkdownElement | null) {
+    constructor(value : any) {
         super()
         this.value = value
     }
@@ -50,6 +69,18 @@ export class MarkdownValueElement extends MarkdownElement {
         resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
+
+    toHtml(numOfIntent : number = 0): string {
+        var intent : string = createIntent(numOfIntent)
+        if (isTypeOf(this.value, String)) {
+            return intent + this.value
+        } else if (this.value.toHtml) {
+            return intent + this.value.toHtml()
+        } else if (this.value!=null) {
+            throw new Error(`The value ${this.value} in ${this.getClass()} have not handled!`)
+        } 
+        return ""
+    }
 }
 
 
@@ -66,6 +97,8 @@ export class MarkdownLines extends MarkdownElement {
 
 
 export class Markdown extends MarkdownElement {
+
+    
     addElement(element : MarkdownElement) {
         if (element.getClass()==Sentence) {
             this.addSentence(element as Sentence)
@@ -115,6 +148,7 @@ export class Markdown extends MarkdownElement {
             this.getMarkdownElements().push(paragraph)
         }
         paragraph.addElement(element)
+        
     }
 
     addOrderedItem(element : OrderedItem) {
@@ -310,7 +344,9 @@ export class MarkdownError extends MarkdownElement {
         this.value = value
     }
 
-    
+    toHtml(numOfIntent : number = 0): string {
+        return this.value
+    }
 }
 
 export class Paragraph extends MarkdownElement {
@@ -326,10 +362,17 @@ export class Paragraph extends MarkdownElement {
         this.getMarkdownElements().push(element)
     }
 
+    toHtml(numOfIntent : number = 0): string {
+        var intent : string = createIntent(numOfIntent)
+        var childrenHtml : string = this.toChildrenMarkdownElementsHtml(0, '<br/>')
+        return `${intent}<p>${childrenHtml}</p>`
+    }
 }
 
 export class BlankLine extends MarkdownElement {
-    
+    toHtml(numOfIntent : number = 0): string {
+        return "<br/>"
+    }
 }
 
 
@@ -400,16 +443,43 @@ export class TaskList extends MarkdownElement {
 
 export class DefinitionListItem extends MarkdownValueElement {}
 
-export class PlainText extends MarkdownElement {}
+export class PlainText extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(numOfIntent : number = 0) : string {
+        
+        return this.toChildrenMarkdownElementsHtml(0, '')
+    }
+}
 
 export class Sentence extends MarkdownElement {
-    
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+
+    toHtml() : string {
+        return this.toChildrenMarkdownElementsHtml(0, '')
+    }
 }
 
 export class BoldText extends MarkdownElement {}
 export class StarBoldText extends BoldText {}
 export class UnderlineBoldText extends BoldText {}
-export class ItalicText extends MarkdownElement {}
+export class ItalicText extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+    toHtml(numOfIntent : number = 0): string {
+        var childrenHtml : string = this.toChildrenMarkdownElementsHtml(0, '')
+        return `<em>${childrenHtml}</em>`
+    }
+}
 export class StarItalicText extends ItalicText {}
 export class UnderlineItalicText extends ItalicText {}
 export class BoldItalicText extends MarkdownElement {}
@@ -443,9 +513,17 @@ export class SimpleText extends MarkdownValueElement {
         resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
+
 }
 
-export class Spaces extends MarkdownValueElement {}
+export class Spaces extends MarkdownValueElement {
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+}
 export class Cursor extends MarkdownElement {}
 export class Footnote extends MarkdownElement {
 
@@ -535,6 +613,14 @@ export class Heading extends MarkdownValueElement {
         super(value)
         this.level = level
     }
+
+    toHtml(numOfIntent : number = 0): string {
+        var intent : string = createIntent(numOfIntent)
+        var html : string = super.toHtml()
+        var tag : string = `h${this.level}`
+        return [intent, `<${tag}>`, html, `</${tag}>`].join('')
+        
+    }
 }
 
 export class OrderedList extends MarkdownElement {
@@ -563,6 +649,13 @@ export class OrderedList extends MarkdownElement {
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
     }
+
+    toHtml(numOfIntent : number = 0): string {
+        var intent : string = createIntent(numOfIntent)
+        // console.log(this.getClass(),  numOfIntent, `[${intent}]`)
+        var html : string = this.toChildrenMarkdownElementsHtml(numOfIntent+1)
+        return ['<ol>', html, '</ol>'].map(l=>intent+l).join('\n')
+    }
 }
 export class OrderedItem extends MarkdownValueElement {
     
@@ -590,6 +683,13 @@ export class OrderedItem extends MarkdownValueElement {
 
     getComplementMarkdown() : Markdown {
         return this.getLastMarkdownElement() as Markdown
+    }
+
+    toHtml(numOfIntent : number = 0): string {
+        var intent : string = createIntent(numOfIntent)
+        //console.log(this.getClass(),  numOfIntent, `[${intent}]`)
+        var html : string = super.toHtml(0)
+        return ['<li>', html, '</li>'].map(l=>intent+l).join('')
     }
 }
 
