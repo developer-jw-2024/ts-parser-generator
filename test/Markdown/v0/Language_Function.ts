@@ -460,28 +460,28 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(`PlainText -> sharpSign`)
     PlainText__sharpSign(argv : Array<AnalysisToken>) {
         var plainText : PlainText = new PlainText()
-        plainText.addChild(argv[0].value)
+        plainText.addChild(new SimpleText(argv[0].value))
         return plainText
     }
 
     @GrammarProductionFunction(`PlainText -> leftArrow`)
     PlainText__leftArrow(argv : Array<AnalysisToken>) {
         var plainText : PlainText = new PlainText()
-        plainText.addChild(argv[0].value)
+        plainText.addChild(new SimpleText(argv[0].value))
         return plainText
     }
 
     @GrammarProductionFunction(`PlainText -> dashSign`)
     PlainText__dashSign(argv : Array<AnalysisToken>) {
         var plainText : PlainText = new PlainText()
-        plainText.addChild(argv[0].value)
+        plainText.addChild(new SimpleText(argv[0].value))
         return plainText
     }
 
     @GrammarProductionFunction(`PlainText -> plusSign`)
     PlainText__plusSign(argv : Array<AnalysisToken>) {
         var plainText : PlainText = new PlainText()
-        plainText.addChild(argv[0].value)
+        plainText.addChild(new SimpleText(argv[0].value))
         return plainText
     }
 
@@ -537,7 +537,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(`PlainText -> PlainText intent`)
     PlainText__PlainText_intent(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
-        plainText.addChild(argv[1].value)
+        plainText.addChild(new Spaces(argv[1].value))
         return plainText
     }
 
@@ -551,28 +551,28 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(`PlainText -> PlainText sharpSign`)
     PlainText__PlainText_sharpSign(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
-        plainText.addChild(argv[1].value)
+        plainText.addChild(new SimpleText(argv[1].value))
         return plainText
     }
 
     @GrammarProductionFunction(`PlainText -> PlainText leftArrow`)
     PlainText__PlainText_leftArrow(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
-        plainText.addChild(argv[1].value)
+        plainText.addChild(new SimpleText(argv[1].value))
         return plainText
     }
 
     @GrammarProductionFunction(`PlainText -> PlainText dashSign`)
     PlainText__PlainText_dashSign(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
-        plainText.addChild(argv[1].value)
+        plainText.addChild(new SimpleText(argv[1].value))
         return plainText
     }
     
     @GrammarProductionFunction(`PlainText -> PlainText plusSign`)
     PlainText__PlainText_plusSign(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
-        plainText.addChild(argv[1].value)
+        plainText.addChild(new SimpleText(argv[1].value))
         return plainText
     }
 

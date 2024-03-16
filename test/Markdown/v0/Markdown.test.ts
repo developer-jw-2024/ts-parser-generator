@@ -258,7 +258,7 @@ This is that.`
                     Spaces
                     SimpleText`)
     })
-/*
+
     test('markdown - 9', () => {
         expect(markdown.isValid(
 `1. First Item
@@ -271,9 +271,18 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
+
 
     test('markdown - 10', () => {
         expect(markdown.isValid(
@@ -288,10 +297,22 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
 
 
@@ -305,8 +326,13 @@ This is that.`
 `Markdown
     UnorderedList
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
+
 
     test('markdown - 12', () => {
         expect(markdown.isValid(
@@ -320,9 +346,18 @@ This is that.`
     UnorderedList
         UnorderedItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
+
 
     test('markdown - 13', () => {
         expect(markdown.isValid(
@@ -337,10 +372,22 @@ This is that.`
     UnorderedList
         UnorderedItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
         UnorderedItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
 
 
@@ -355,8 +402,17 @@ This is that.`
     Blockquote
         Markdown
             Paragraph
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
+
 
     test('markdown - 14-1', () => {
         expect(markdown.isValid(
@@ -366,8 +422,11 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
+
 
     test('markdown - 14-2', () => {
         expect(markdown.isValid(
@@ -380,7 +439,7 @@ This is that.`
         Markdown
             BlankLine`)
     })
-
+/*
     test('markdown - 14-3', () => {
         expect(markdown.isValid(
 `> H`

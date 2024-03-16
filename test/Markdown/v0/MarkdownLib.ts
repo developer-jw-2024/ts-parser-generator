@@ -469,7 +469,7 @@ export class Sentence extends MarkdownElement {
 
 
     toHtml(): html.HtmlElement {
-        var e : html.HtmlGroupElement = new html.HtmlGroupElement()
+        var e : html.Sentence = new html.Sentence()
         e.setChildren(this.toChildrenMarkdownElementsHtml())
         return e
     }
@@ -617,7 +617,11 @@ export class Blockquote extends MarkdownElement {
         return this.getLastMarkdownElement() as Markdown
     }
 
-
+    toHtml(): html.HtmlElement {
+        var e : html.Blockquote = new html.Blockquote()
+        e.addChild(this.getMarkdown().toHtml())
+        return e
+    }
 }
 
 export class BlockquoteLine extends MarkdownValueElement {}
@@ -633,8 +637,7 @@ export class Heading extends MarkdownValueElement {
     }
 
     toHtml(): html.HtmlElement {
-        var e : html.Heading = new html.Heading()
-        e.addChild(super.toHtml())
+        var e : html.Heading = new html.Heading(this.level, this.toValueHtml())
         return e
     }
 
@@ -740,6 +743,12 @@ export class UnorderedList extends MarkdownElement {
         }
     }
 
+    toHtml(): html.HtmlElement {
+        var e : html.UnorderedList = new html.UnorderedList()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+
 }
 export class UnorderedItem extends MarkdownValueElement {
     addElement(element : MarkdownElement) {
@@ -765,6 +774,12 @@ export class UnorderedItem extends MarkdownValueElement {
 
     getComplementMarkdown() : Markdown {
         return this.getLastMarkdownElement() as Markdown
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.UnorderedItem = new html.UnorderedItem(this.toValueHtml())
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
     }
 }
 

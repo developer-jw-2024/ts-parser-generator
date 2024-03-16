@@ -1,6 +1,5 @@
 import { getClass, isTypeOf } from "../../../src/Utils/Utils"
 
-type HtmlElementInitFunction = (object: HtmlElement) => void;
 
 export class HtmlElement {
     children : Array<HtmlElement> = []
@@ -48,6 +47,7 @@ export class HtmlElement {
 }
 
 export class HtmlRoot extends HtmlElement {}
+export class Blockquote extends HtmlElement {}
 export class HtmlGroupElement extends HtmlElement {}
 export class HtmlStringElement extends HtmlElement {
     value : string
@@ -113,10 +113,50 @@ export class Sentence extends HtmlElement {}
 export class PlainText extends HtmlElement {}
 export class BlankLine extends HtmlElement {}
 export class ItalicText extends HtmlElement {}
-export class Heading extends HtmlElement {}
+export class Heading extends HtmlElement {
+    level : number
+    content : HtmlElement
+
+    constructor(level : number, content : HtmlElement) {
+        super()
+        this.level = level
+        this.content = content
+    }
+
+
+}
 export class OrderedList extends HtmlElement {}
 
 export class OrderedItem extends HtmlElement {
+    item : HtmlElement
+    complement : HtmlElement 
+
+    constructor(item : HtmlElement) {
+        super() 
+        this.item = item
+    }
+
+    setComplement(complement : HtmlElement) {
+        this.complement = complement
+    }
+
+    getComplement() : HtmlElement | null {
+        return this.complement
+    }
+
+    setItem(item : HtmlElement) {
+        this.item = item
+    }
+
+    getItem() : HtmlElement {
+        return this.item
+    }
+
+}
+
+export class UnorderedList extends HtmlElement {}
+
+export class UnorderedItem extends HtmlElement {
     item : HtmlElement
     complement : HtmlElement 
 
