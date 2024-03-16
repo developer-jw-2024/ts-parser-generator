@@ -66,9 +66,11 @@ export class MarkdownValueElement extends MarkdownElement {
     toValueHtml() : html.HtmlElement {
         if (isTypeOf(this.value, String)) {
             return new html.Text(this.value)
-        } else if (this.value.toHtml) {
+        } else if (this.value!=null && this.value.toHtml) {
             return this.value.toHtml()
-        } 
+        } else if (this.value==null) {
+            return null
+        }
         throw new Error(`The value ${this.value} in ${this.getClass()} have not handled!`)
     }
 
@@ -379,7 +381,18 @@ export class BlankLine extends MarkdownElement {
 
 
 
-export class TableRow extends MarkdownElement {}
+export class TableRow extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.TableRow = new html.TableRow()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+}
 export class TableCell extends MarkdownElement {
     tableRow : TableRow | null = null
 
@@ -391,13 +404,87 @@ export class TableCell extends MarkdownElement {
     getTableRow() : TableRow | null{
         return this.tableRow
     }
+
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.TableCell = new html.TableCell()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
 }
-export class TableAlignmentRow extends MarkdownElement {}
-export class TableColumnAlignment extends MarkdownValueElement{}
-export class TableNoAlignment extends MarkdownValueElement {}
-export class TableLeftAlignment extends MarkdownValueElement {}
-export class TableRightAlignment extends MarkdownValueElement {}
-export class TableCenterAlignment extends MarkdownValueElement {}
+export class TableAlignmentRow extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.TableAlignmentRow = new html.TableAlignmentRow()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+}
+export class TableColumnAlignment extends MarkdownValueElement{
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+}
+export class TableNoAlignment extends TableColumnAlignment {
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+    
+    toHtml(): html.HtmlElement {
+        return new html.TableNoAlignment(this.value)
+    }
+}
+export class TableLeftAlignment extends TableColumnAlignment {
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        return new html.TableLeftAlignment(this.value)
+    }
+
+}
+export class TableRightAlignment extends TableColumnAlignment {
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        return new html.TableRightAlignment(this.value)
+    }
+}
+export class TableCenterAlignment extends TableColumnAlignment {
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        return new html.TableCenterAlignment(this.value)
+    }
+}
 export class TaskListItem extends MarkdownElement {
     checked : boolean
     value : any
@@ -456,8 +543,6 @@ export class PlainText extends MarkdownElement {
         e.setChildren(this.toChildrenMarkdownElementsHtml())
         return e
     }
-
-    
 }
 
 export class Sentence extends MarkdownElement {
@@ -500,8 +585,30 @@ export class StrikethroughText extends MarkdownElement {}
 export class HighlightText extends MarkdownElement {}
 export class SubscriptText extends MarkdownElement {}
 export class SuperscriptText extends MarkdownElement {}
-export class DoubleBacktickText extends MarkdownElement {}
-export class BacktickText extends MarkdownElement {}
+export class DoubleBacktickText extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.DoubleBacktickText = new html.DoubleBacktickText()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+}
+export class BacktickText extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.BacktickText = new html.BacktickText()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+}
 export class FencedCodeBlockText extends MarkdownValueElement{
     toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
@@ -601,7 +708,18 @@ export class EmailAddress extends MarkdownValueElement {}
 export class Emoji extends MarkdownValueElement {}
 
 export class FootnoteReference extends MarkdownValueElement {}
-export class HorizontalRule extends MarkdownValueElement {}
+export class HorizontalRule extends MarkdownValueElement {
+    toMarkdownHierarchy(intent : string = '') {
+        // var subIntent = `${intent}    `
+        var resultArray =  []
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        return new html.HorizontalRule(this.value)
+    }
+}
 export class DashesRule extends MarkdownValueElement {}
 export class EqualsRule extends MarkdownValueElement {}
 
@@ -708,8 +826,15 @@ export class OrderedItem extends MarkdownValueElement {
     }
 
     toHtml(): html.HtmlElement {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        var complementMarkdown : Markdown | null = null
+        if (!isNulllOrUndefinedValue(lastElement)) {
+            complementMarkdown = lastElement as Markdown
+        }
         var e : html.OrderedItem = new html.OrderedItem(this.toValueHtml())
-        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        if (complementMarkdown!=null) {
+            e.setComplement(complementMarkdown.toHtml())
+        }
         return e
     }
 }
@@ -777,8 +902,15 @@ export class UnorderedItem extends MarkdownValueElement {
     }
 
     toHtml(): html.HtmlElement {
+        var lastElement : MarkdownElement = this.getLastMarkdownElement()
+        var complementMarkdown : Markdown | null = null
+        if (!isNulllOrUndefinedValue(lastElement)) {
+            complementMarkdown = lastElement as Markdown
+        }
         var e : html.UnorderedItem = new html.UnorderedItem(this.toValueHtml())
-        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        if (complementMarkdown!=null) {
+            e.setComplement(complementMarkdown.toHtml())
+        }
         return e
     }
 }
@@ -868,6 +1000,27 @@ export class Table extends MarkdownElement {
             this.setHeaderRow(headerRow)
             this.setTableAlignmentRow(element)
         }
+    }
+
+    toMarkdownHierarchy(intent : string = '') {
+        var subIntent = `${intent}    `
+        var resultArray =  [this.getHeaderRow(), this.getTableAlignmentRow()].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`)
+        return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        var headerRowHtml : html.HtmlElement | null = this.getHeaderRow()==null?null:this.getHeaderRow().toHtml()
+        var tableAlignmentRowHtml : html.HtmlElement | null = this.getTableAlignmentRow()==null?null:this.getTableAlignmentRow().toHtml()
+        var e : html.Table = new html.Table(headerRowHtml, tableAlignmentRowHtml)
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
     }
 }
 

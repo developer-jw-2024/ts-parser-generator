@@ -439,7 +439,7 @@ This is that.`
         Markdown
             BlankLine`)
     })
-/*
+
     test('markdown - 14-3', () => {
         expect(markdown.isValid(
 `> H`
@@ -450,8 +450,11 @@ This is that.`
     Blockquote
         Markdown
             Paragraph
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText`)
     })
+
 
     test('markdown - 15', () => {
         expect(markdown.isValid(
@@ -466,7 +469,25 @@ This is that.`
         Markdown
             Paragraph
                 Sentence
-                Sentence`)
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
 
 
@@ -483,7 +504,15 @@ This is that.`
             Blockquote
                 Markdown
                     Paragraph
-                        Sentence`)
+                        Sentence
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText`)
     })
 
     test('markdown - 16-1', () => {
@@ -494,7 +523,9 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
 
     test('markdown - 16-2', () => {
@@ -526,7 +557,21 @@ This is that.`
                 Markdown
                     Paragraph
                         Sentence
-                        Sentence`)
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                        Sentence
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText`)
     })
 
     test('markdown - 18', () => {
@@ -543,11 +588,27 @@ This is that.`
         Markdown
             Heading
                 Sentence
+                    PlainText
+                        SimpleText
             Blockquote
                 Markdown
                     Paragraph
                         Sentence
-                        Sentence`)
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                        Sentence
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText`)
     })
 
     test('markdown - 19', () => {
@@ -564,12 +625,28 @@ This is that.`
         Markdown
             Heading
                 Sentence
+                    PlainText
+                        SimpleText
             Blockquote
                 Markdown
                     Paragraph
                         Sentence
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
             Paragraph
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
 
     test('markdown - 20', () => {
@@ -584,9 +661,13 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 Paragraph
-                    Sentence`)
+                    Sentence
+                        PlainText
+                            SimpleText`)
     })
 
     test('markdown - 21', () => {
@@ -602,10 +683,16 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 Paragraph
                     Sentence
-                    Sentence`)
+                        PlainText
+                            SimpleText
+                    Sentence
+                        PlainText
+                            SimpleText`)
     })
 
     test('markdown - 22', () => {
@@ -622,12 +709,20 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 Paragraph
                     Sentence
+                        PlainText
+                            SimpleText
                     Sentence
+                        PlainText
+                            SimpleText
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
     })
 
     test('markdown - 23', () => {
@@ -644,15 +739,24 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 Blockquote
                     Markdown
                         Paragraph
                             Sentence
+                                PlainText
+                                    SimpleText
                             Sentence
+                                PlainText
+                                    SimpleText
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
     })
+
 
     test('markdown - 24', () => {
         expect(markdown.isValid(
@@ -668,17 +772,25 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 OrderedList
                     OrderedItem
                         Sentence
+                            PlainText
+                                SimpleText
                     OrderedItem
                         Sentence
+                            PlainText
+                                SimpleText
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
     })
 
-    
+
     test('markdown - 25', () => {
         expect(markdown.isValid(
 `1. Fruite
@@ -691,18 +803,22 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 Blockquote
                     Markdown
                         Paragraph
-                            Sentence`)
+                            Sentence
+                                PlainText
+                                    SimpleText`)
     })
 
     test('markdown - 26', () => {
         expect(markdown.isValid(
 `1. Fruite
     1. Apple
-        > Red
+        > Red is my
     2. Banana
 2. Animals
 `
@@ -713,21 +829,79 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 OrderedList
                     OrderedItem
                         Sentence
+                            PlainText
+                                SimpleText
                         Markdown
                             Blockquote
                                 Markdown
                                     Paragraph
                                         Sentence
+                                            PlainText
+                                                SimpleText
+                                                Spaces
+                                                SimpleText
+                                                Spaces
+                                                SimpleText
                     OrderedItem
                         Sentence
+                            PlainText
+                                SimpleText
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
     })
-    
+
+    test('markdown - 26-1', () => {
+        expect(markdown.isValid(
+`1. Fruite
+    1. Apple
+    > Red is my
+    2. Banana
+2. Animals
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    OrderedList
+        OrderedItem
+            Sentence
+                PlainText
+                    SimpleText
+            Markdown
+                OrderedList
+                    OrderedItem
+                        Sentence
+                            PlainText
+                                SimpleText
+                Blockquote
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                OrderedList
+                    OrderedItem
+                        Sentence
+                            PlainText
+                                SimpleText
+        OrderedItem
+            Sentence
+                PlainText
+                    SimpleText`)
+    })
+
     test('markdown - 27', () => {
         expect(markdown.isValid(
 `- Fruite
@@ -738,7 +912,9 @@ This is that.`
 `Markdown
     UnorderedList
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
     })
 
     test('markdown - 27-1', () => {
@@ -765,8 +941,12 @@ This is that.`
     UnorderedList
         UnorderedItem
             Sentence
+                PlainText
+                    SimpleText
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
     })
 
 
@@ -784,14 +964,130 @@ This is that.`
     UnorderedList
         UnorderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 UnorderedList
                     UnorderedItem
                         Sentence
+                            PlainText
+                                SimpleText
                     UnorderedItem
                         Sentence
+                            PlainText
+                                SimpleText
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
+    })
+
+    test('markdown - 29-1', () => {
+        expect(markdown.isValid(
+`- Fruite
+    Apple is good
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem
+            Sentence
+                PlainText
+                    SimpleText
+            Markdown
+                Paragraph
+                    Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText`)
+    })
+
+    test('markdown - 29-2', () => {
+        expect(markdown.isValid(
+`- Fruite
+    > Apple is good
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    UnorderedList
+        UnorderedItem
+            Sentence
+                PlainText
+                    SimpleText
+            Markdown
+                Blockquote
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText`)
+    })
+
+    test('markdown - 29-3', () => {
+        expect(markdown.isValid(
+`> - Fruite
+>    Apple is good
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            UnorderedList
+                UnorderedItem
+                    Sentence
+                        PlainText
+                            SimpleText
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText`)
+    })
+
+    test('markdown - 29-4', () => {
+        expect(markdown.isValid(
+`> - Fruite
+>    > Apple is good
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            UnorderedList
+                UnorderedItem
+                    Sentence
+                        PlainText
+                            SimpleText
+                    Markdown
+                        Blockquote
+                            Markdown
+                                Paragraph
+                                    Sentence
+                                        PlainText
+                                            SimpleText
+                                            Spaces
+                                            SimpleText
+                                            Spaces
+                                            SimpleText`)
     })
 
     test('markdown - 30', () => {
@@ -802,8 +1098,17 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+            BacktickText
+                PlainText
+                    SimpleText
+            PlainText
+                SimpleText`)
     })
+
 
     test('markdown - 30', () => {
         expect(markdown.isValid(
@@ -813,7 +1118,23 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            DoubleBacktickText
+                PlainText
+                    SimpleText
+                    Spaces
+                BacktickText
+                    PlainText
+                        SimpleText
+                PlainText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
 
 
@@ -824,8 +1145,7 @@ This is that.`
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    HorizontalRule
-        ---`)
+    HorizontalRule`)
     })
 
     test('markdown - 32', () => {
@@ -837,7 +1157,15 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText`)
     })
 
     test('markdown - 33', () => {
@@ -851,9 +1179,16 @@ This is that.`
 `Markdown
     Paragraph
         Sentence
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
     BlankLine
-    HorizontalRule
-        ----------`)
+    HorizontalRule`)
     })
 
     test('markdown - 34', () => {
@@ -875,7 +1210,19 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText`)
     })
 
     test('markdown - 36', () => {
@@ -889,6 +1236,18 @@ This is that.`
 `Markdown
     Paragraph
         Sentence
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
     BlankLine`)
     })
 
@@ -900,7 +1259,19 @@ This is that.`
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
-        TableRow`)
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
     })
 
     test('markdown - 38', () => {
@@ -913,7 +1284,31 @@ This is that.`
 `Markdown
     Table
         TableRow
-        TableRow`)
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
     })
 
     test('markdown - 38-1', () => {
@@ -926,39 +1321,227 @@ This is that.`
 `Markdown
     Table
         TableRow
-        TableRow`)
+            TableCell
+                Spaces
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
     })
 
 
     test('markdown - 39', () => {
         expect(markdown.isValid(
-`| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |`
+`| Syntax      | Description | Num | Checked |
+| ----------- | :----------- | :-----------: | -----------: |
+| Header      | Title       | 3 | true |
+| Paragraph   | Text        | 8 | false |`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow
-        TableRow`)
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+        TableAlignmentRow
+            TableNoAlignment
+            TableLeftAlignment
+            TableCenterAlignment
+            TableRightAlignment
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
     })
 
     test('markdown - 40', () => {
         expect(markdown.isValid(
-`| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |`
+`| ----------- | :----------- | :-----------: | -----------: |
+| Header      | Title       | 3 | true |
+| Paragraph   | Text        | 8 | false |`
         )).toEqual(true)
 
         expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
+        TableAlignmentRow
+            TableNoAlignment
+            TableLeftAlignment
+            TableCenterAlignment
+            TableRightAlignment
         TableRow
-        TableRow`)
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
     })
 
+    test('markdown - 40-1', () => {
+        expect(markdown.isValid(
+`> - First Item
+> - Second Item
+> - Third Item
+`
+        )).toEqual(true)
+
+        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Blockquote
+        Markdown
+            UnorderedList
+                UnorderedItem
+                    Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText
+                UnorderedItem
+                    Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText
+                UnorderedItem
+                    Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText`)
+    })
+/*
     test('markdown - 41', () => {
         expect(markdown.isValid(
 `| Syntax      | Description |

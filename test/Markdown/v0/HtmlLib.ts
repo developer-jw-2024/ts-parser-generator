@@ -106,6 +106,10 @@ export class NullHtmlElement extends HtmlElement {}
 export var NullHtmlInstance : NullHtmlElement = new NullHtmlElement()
 
 export class Text extends HtmlStringElement {}
+export class HorizontalRule extends HtmlStringElement {}
+export class BacktickText extends HtmlElement {}
+export class DoubleBacktickText extends HtmlElement {}
+
 export class Spaces extends HtmlStringElement {}
 
 export class Paragraph extends HtmlElement {}
@@ -160,7 +164,7 @@ export class UnorderedItem extends HtmlElement {
     item : HtmlElement
     complement : HtmlElement 
 
-    constructor(item : HtmlElement) {
+    constructor(item : HtmlElement = null) {
         super() 
         this.item = item
     }
@@ -182,3 +186,38 @@ export class UnorderedItem extends HtmlElement {
     }
 
 }
+
+export class Table extends HtmlElement {
+    headerRow : HtmlElement | null = null
+    tableAlignmentRow : HtmlElement  | null = null
+
+    constructor(headerRow : HtmlElement | null = null, tableAlignmentRow : HtmlElement | null = null ) {
+        super() 
+        this.headerRow = headerRow
+        this.tableAlignmentRow = tableAlignmentRow
+    }
+
+    setHeaderRow(headerRow : HtmlElement) {
+        this.headerRow = headerRow
+    }
+    getHeaderRow() : HtmlElement {
+        return this.headerRow
+    }
+    setTableAlignmentRow(tableAlignmentRow : HtmlElement) {
+        this.tableAlignmentRow = tableAlignmentRow
+    }
+    getTableAlignmentRow() : HtmlElement {
+        return this.tableAlignmentRow
+    }
+}
+
+export class TableRow extends HtmlElement {
+}
+export class TableCell extends HtmlElement {
+}
+
+export class TableAlignmentRow extends HtmlElement {}
+export class TableNoAlignment extends HtmlStringElement {}
+export class TableLeftAlignment extends HtmlStringElement {}
+export class TableRightAlignment extends HtmlStringElement {}
+export class TableCenterAlignment extends HtmlStringElement {}

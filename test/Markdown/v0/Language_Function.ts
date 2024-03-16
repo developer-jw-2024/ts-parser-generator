@@ -81,7 +81,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     TableRowWithCell__TableRow_intent(argv : Array<AnalysisToken>) {
         var tableRow : TableRow = argv[0].value
         var tableCell : TableCell = new TableCell(tableRow)
-        tableCell.addChild(argv[1].value)
+        tableCell.addChild(new Spaces(argv[1].value))
         tableRow.addChild(tableCell)
         return tableCell
     }
@@ -98,7 +98,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     TableRowWithCell__TableRowWithCell_intent(argv : Array<AnalysisToken>) {
         var tableCell : TableCell = argv[0].value as TableCell
 
-        tableCell.addChild(argv[1].value)
+        tableCell.addChild(new Spaces(argv[1].value))
         return tableCell
     }
 
@@ -130,24 +130,32 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`TableColumnAlignment -> dashes3WithSpaces`)
     TableColumnAlignment__dashes3WithSpaces(argv : Array<AnalysisToken>) {
-        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableNoAlignment(argv[0].value))
+        var tableColumnAlignment : TableNoAlignment = new TableNoAlignment(argv[0].value)
         return tableColumnAlignment
+        // var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableNoAlignment(argv[0].value))
+        // return tableColumnAlignment
     }
 
     @GrammarProductionFunction(`TableColumnAlignment -> columnLeftAlignment`)
     TableColumnAlignment__columnLeftAlignment(argv : Array<AnalysisToken>) {
-        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableLeftAlignment(argv[0].value))
+        var tableColumnAlignment : TableLeftAlignment = new TableLeftAlignment(argv[0].value)
         return tableColumnAlignment
+        // var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableLeftAlignment(argv[0].value))
+        // return tableColumnAlignment
     }
     @GrammarProductionFunction(`TableColumnAlignment -> columnRightAlignment`)
     TableColumnAlignment__columnRightAlignment(argv : Array<AnalysisToken>) {
-        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableRightAlignment(argv[0].value))
+        var tableColumnAlignment : TableRightAlignment = new TableRightAlignment(argv[0].value)
         return tableColumnAlignment
+        // var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableRightAlignment(argv[0].value))
+        // return tableColumnAlignment
     }
     @GrammarProductionFunction(`TableColumnAlignment -> columnCenterAlignment`)
     TableColumnAlignment__columnCenterAlignment(argv : Array<AnalysisToken>) {
-        var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableCenterAlignment(argv[0].value))
+        var tableColumnAlignment : TableCenterAlignment = new TableCenterAlignment(argv[0].value)
         return tableColumnAlignment
+        // var tableColumnAlignment : TableColumnAlignment = new TableColumnAlignment(new TableCenterAlignment(argv[0].value))
+        // return tableColumnAlignment
     }
     @GrammarProductionFunction(`TableAlignmentRow -> verticalBar TableColumnAlignment verticalBar`)
     TableAlignmentRow__verticalBar_TableColumnAlignment_verticalBar(argv : Array<AnalysisToken>) {
