@@ -94,13 +94,6 @@ export class MarkdownLines extends MarkdownElement {
             markdown.addElement(child)
         }
 
-        console.log(markdown.blockquotes)
-        // var last : MarkdownElement | null =  markdown.getLastMarkdownElement()
-
-        // if (last!=null && isTypeOf(last, Blockquote)) {
-        //     var blockquote : Blockquote = last as Blockquote
-        //     blockquote.merge()
-        // }
         return markdown
     }
 }
@@ -160,15 +153,15 @@ export class Markdown extends MarkdownElement {
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
 
-        var last : MarkdownElement | null =  this.getLastMarkdownElement()
+        // var last : MarkdownElement | null =  this.getLastMarkdownElement()
         // var lastSecond : MarkdownElement | null = this.getLastSecondMarkdownElement()
 
-        if (last!=null 
-            && isTypeOf(last, Blockquote)) {
-            var blockquote : Blockquote = last as Blockquote
-            console.log('blockquote', blockquote.timer)
-            this.addBlockquote(blockquote)
-        }
+        // if (last!=null 
+        //     && isTypeOf(last, Blockquote)) {
+        //     var blockquote : Blockquote = last as Blockquote
+        //     console.log('blockquote', blockquote.timer)
+        //     this.addBlockquote(blockquote)
+        // }
 
     }
 
@@ -224,7 +217,7 @@ export class Markdown extends MarkdownElement {
             this.getMarkdownElements().push(blockquote)
         }
         // blockquote.getMarkdown().addElement(element.value)
-        console.log('-->', element.value)
+        // console.log('-->', element.value)
         blockquote.appendStringLine(element.value)
     }
 
@@ -764,14 +757,14 @@ export class DashesRule extends MarkdownValueElement {}
 export class EqualsRule extends MarkdownValueElement {}
 
 export class Blockquote extends MarkdownElement {
-    timer : number = 0
+    isMergedFlag : boolean = false
     contentLines : Array<string> = []
 
     constructor() {
         super()
         // var markdown : Markdown = new Markdown()
         // this.getMarkdownElements().push(markdown)
-        this.timer = new Date().getTime()
+        this.isMergedFlag = false
         this.contentLines = []
     }
 
@@ -810,7 +803,11 @@ export class Blockquote extends MarkdownElement {
         var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
         var blockquoteMarkdown : Markdown =  markdownSyntaxAnalyzer.toMarkddown(content)
         this.getMarkdownElements().push(blockquoteMarkdown)
-
+        this.isMergedFlag = true
+    }
+    
+    isMerged(): boolean {
+        return this.isMergedFlag
     }
 
     toHtml(): html.HtmlElement {
