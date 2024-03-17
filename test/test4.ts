@@ -1,1 +1,2 @@
-console.log(new Array(1*4).fill(' '))
+var a = "123 456"
+console.log(a[0])

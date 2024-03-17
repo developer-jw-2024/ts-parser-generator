@@ -1,0 +1,218 @@
+
+Markdown -> WholeMarkdownLine
+Markdown -> MarkdownLine
+Markdown -> WholeMarkdownLine MarkdownLine
+
+WholeMarkdownLine -> MarkdownLine Enter
+WholeMarkdownLine -> WholeMarkdownLine MarkdownLine Enter
+
+HorizontalRule -> StarBoldItalicTag
+HorizontalRule -> UnderlineBoldItalicTag
+HorizontalRule -> underscores
+HorizontalRule -> dahes3
+HorizontalRule -> asterisks4
+MarkdownLine -> HorizontalRule
+
+Blockquote -> LeftArrow MarkdownLine
+MarkdownLine -> Blockquote
+
+Complement -> Spaces MarkdownLine
+MarkdownLine -> Complement
+
+Heading -> SharpSign MarkdownLine
+MarkdownLine -> Heading
+
+OrderedItem -> OrderedItemTag Sentence
+MarkdownLine -> OrderedItem
+
+UnorderedItem -> UnorderedItemTag Sentence
+MarkdownLine -> UnorderedItem
+
+Sentence -> Match_emphasis
+Sentence -> Sentence Match_emphasis
+MarkdownLine -> Sentence
+
+PlainText -> SimpleText
+PlainText -> Spaces
+PlainText -> Backtick
+PlainText -> DoubleBackticks
+PlainText -> Link
+PlainText -> URLAddress
+PlainText -> EmailAddress
+PlainText -> Image
+PlainText -> PlainText SimpleText
+PlainText -> PlainText Spaces
+PlainText -> PlainText Backtick
+PlainText -> PlainText DoubleBackticks
+PlainText -> PlainText Link
+PlainText -> PlainText URLAddress
+PlainText -> PlainText EmailAddress
+PlainText -> PlainText Image
+
+Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL CloseParentheses
+Link -> OpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
+Image -> ExclamationMarkOpenSquareBracket Sentence CloseSquareBracket OpenParentheses URL Spaces DoubleQuotationMarkText CloseParentheses
+
+
+
+BeginStarBoldText -> StarBoldTag NO_StarBoldText_Match_emphasis
+BeginStarBoldText -> BeginStarBoldText NO_StarBoldText_Match_emphasis
+StarBoldText -> BeginStarBoldText StarBoldTag
+
+BeginUnderlineBoldText -> UnderlineBoldTag NO_UnderlineBoldText_Match_emphasis
+BeginUnderlineBoldText -> BeginUnderlineBoldText NO_UnderlineBoldText_Match_emphasis
+UnderlineBoldText -> BeginUnderlineBoldText UnderlineBoldTag
+
+BeginStarItalicText -> StarItalicTag NO_StarItalicText_Match_emphasis
+BeginStarItalicText -> BeginStarItalicText NO_StarItalicText_Match_emphasis
+StarItalicText -> BeginStarItalicText StarItalicTag
+
+BeginUnderlineItalicText -> UnderlineItalicTag NO_UnderlineItalicText_Match_emphasis
+BeginUnderlineItalicText -> BeginUnderlineItalicText NO_UnderlineItalicText_Match_emphasis
+UnderlineItalicText -> BeginUnderlineItalicText UnderlineItalicTag
+
+BeginStarBoldItalicText -> StarBoldItalicTag NO_StarBoldItalicText_Match_emphasis
+BeginStarBoldItalicText -> BeginStarBoldItalicText NO_StarBoldItalicText_Match_emphasis
+StarBoldItalicText -> BeginStarBoldItalicText StarBoldItalicTag
+
+BeginUnderlineBoldItalicText -> UnderlineBoldItalicTag NO_UnderlineBoldItalicText_Match_emphasis
+BeginUnderlineBoldItalicText -> BeginUnderlineBoldItalicText NO_UnderlineBoldItalicText_Match_emphasis
+UnderlineBoldItalicText -> BeginUnderlineBoldItalicText UnderlineBoldItalicTag
+
+BeginStrikethroughText -> StrikethroughTag NO_StrikethroughText_Match_emphasis
+BeginStrikethroughText -> BeginStrikethroughText NO_StrikethroughText_Match_emphasis
+StrikethroughText -> BeginStrikethroughText StrikethroughTag
+
+BeginHighlightText -> HighlightTag NO_HighlightText_Match_emphasis
+BeginHighlightText -> BeginHighlightText NO_HighlightText_Match_emphasis
+HighlightText -> BeginHighlightText HighlightTag
+
+BeginSubscriptText -> SubscriptTag NO_SubscriptText_Match_emphasis
+BeginSubscriptText -> BeginSubscriptText NO_SubscriptText_Match_emphasis
+SubscriptText -> BeginSubscriptText SubscriptTag
+
+BeginSuperscriptText -> SuperscriptTag NO_SuperscriptText_Match_emphasis
+BeginSuperscriptText -> BeginSuperscriptText NO_SuperscriptText_Match_emphasis
+SuperscriptText -> BeginSuperscriptText SuperscriptTag
+
+NO_StarBoldText_Match_emphasis -> PlainText
+NO_StarBoldText_Match_emphasis -> UnderlineBoldText
+NO_StarBoldText_Match_emphasis -> StarItalicText
+NO_StarBoldText_Match_emphasis -> UnderlineItalicText
+NO_StarBoldText_Match_emphasis -> StarBoldItalicText
+NO_StarBoldText_Match_emphasis -> UnderlineBoldItalicText
+NO_StarBoldText_Match_emphasis -> StrikethroughText
+NO_StarBoldText_Match_emphasis -> HighlightText
+NO_StarBoldText_Match_emphasis -> SubscriptText
+NO_StarBoldText_Match_emphasis -> SuperscriptText
+
+NO_UnderlineBoldText_Match_emphasis -> PlainText
+NO_UnderlineBoldText_Match_emphasis -> StarBoldText
+NO_UnderlineBoldText_Match_emphasis -> StarItalicText
+NO_UnderlineBoldText_Match_emphasis -> UnderlineItalicText
+NO_UnderlineBoldText_Match_emphasis -> StarBoldItalicText
+NO_UnderlineBoldText_Match_emphasis -> UnderlineBoldItalicText
+NO_UnderlineBoldText_Match_emphasis -> StrikethroughText
+NO_UnderlineBoldText_Match_emphasis -> HighlightText
+NO_UnderlineBoldText_Match_emphasis -> SubscriptText
+NO_UnderlineBoldText_Match_emphasis -> SuperscriptText
+
+NO_StarItalicText_Match_emphasis -> PlainText
+NO_StarItalicText_Match_emphasis -> StarBoldText
+NO_StarItalicText_Match_emphasis -> UnderlineBoldText
+NO_StarItalicText_Match_emphasis -> UnderlineItalicText
+NO_StarItalicText_Match_emphasis -> StarBoldItalicText
+NO_StarItalicText_Match_emphasis -> UnderlineBoldItalicText
+NO_StarItalicText_Match_emphasis -> StrikethroughText
+NO_StarItalicText_Match_emphasis -> HighlightText
+NO_StarItalicText_Match_emphasis -> SubscriptText
+NO_StarItalicText_Match_emphasis -> SuperscriptText
+
+NO_UnderlineItalicText_Match_emphasis -> PlainText
+NO_UnderlineItalicText_Match_emphasis -> StarBoldText
+NO_UnderlineItalicText_Match_emphasis -> UnderlineBoldText
+NO_UnderlineItalicText_Match_emphasis -> StarItalicText
+NO_UnderlineItalicText_Match_emphasis -> StarBoldItalicText
+NO_UnderlineItalicText_Match_emphasis -> UnderlineBoldItalicText
+NO_UnderlineItalicText_Match_emphasis -> StrikethroughText
+NO_UnderlineItalicText_Match_emphasis -> HighlightText
+NO_UnderlineItalicText_Match_emphasis -> SubscriptText
+NO_UnderlineItalicText_Match_emphasis -> SuperscriptText
+
+NO_StarBoldItalicText_Match_emphasis -> PlainText
+NO_StarBoldItalicText_Match_emphasis -> StarBoldText
+NO_StarBoldItalicText_Match_emphasis -> UnderlineBoldText
+NO_StarBoldItalicText_Match_emphasis -> StarItalicText
+NO_StarBoldItalicText_Match_emphasis -> UnderlineItalicText
+NO_StarBoldItalicText_Match_emphasis -> UnderlineBoldItalicText
+NO_StarBoldItalicText_Match_emphasis -> StrikethroughText
+NO_StarBoldItalicText_Match_emphasis -> HighlightText
+NO_StarBoldItalicText_Match_emphasis -> SubscriptText
+NO_StarBoldItalicText_Match_emphasis -> SuperscriptText
+
+NO_UnderlineBoldItalicText_Match_emphasis -> PlainText
+NO_UnderlineBoldItalicText_Match_emphasis -> StarBoldText
+NO_UnderlineBoldItalicText_Match_emphasis -> UnderlineBoldText
+NO_UnderlineBoldItalicText_Match_emphasis -> StarItalicText
+NO_UnderlineBoldItalicText_Match_emphasis -> UnderlineItalicText
+NO_UnderlineBoldItalicText_Match_emphasis -> StarBoldItalicText
+NO_UnderlineBoldItalicText_Match_emphasis -> StrikethroughText
+NO_UnderlineBoldItalicText_Match_emphasis -> HighlightText
+NO_UnderlineBoldItalicText_Match_emphasis -> SubscriptText
+NO_UnderlineBoldItalicText_Match_emphasis -> SuperscriptText
+
+NO_StrikethroughText_Match_emphasis -> PlainText
+NO_StrikethroughText_Match_emphasis -> StarBoldText
+NO_StrikethroughText_Match_emphasis -> UnderlineBoldText
+NO_StrikethroughText_Match_emphasis -> StarItalicText
+NO_StrikethroughText_Match_emphasis -> UnderlineItalicText
+NO_StrikethroughText_Match_emphasis -> StarBoldItalicText
+NO_StrikethroughText_Match_emphasis -> UnderlineBoldItalicText
+NO_StrikethroughText_Match_emphasis -> HighlightText
+NO_StrikethroughText_Match_emphasis -> SubscriptText
+NO_StrikethroughText_Match_emphasis -> SuperscriptText
+
+NO_HighlightText_Match_emphasis -> PlainText
+NO_HighlightText_Match_emphasis -> StarBoldText
+NO_HighlightText_Match_emphasis -> UnderlineBoldText
+NO_HighlightText_Match_emphasis -> StarItalicText
+NO_HighlightText_Match_emphasis -> UnderlineItalicText
+NO_HighlightText_Match_emphasis -> StarBoldItalicText
+NO_HighlightText_Match_emphasis -> UnderlineBoldItalicText
+NO_HighlightText_Match_emphasis -> StrikethroughText
+NO_HighlightText_Match_emphasis -> SubscriptText
+NO_HighlightText_Match_emphasis -> SuperscriptText
+
+NO_SubscriptText_Match_emphasis -> PlainText
+NO_SubscriptText_Match_emphasis -> StarBoldText
+NO_SubscriptText_Match_emphasis -> UnderlineBoldText
+NO_SubscriptText_Match_emphasis -> StarItalicText
+NO_SubscriptText_Match_emphasis -> UnderlineItalicText
+NO_SubscriptText_Match_emphasis -> StarBoldItalicText
+NO_SubscriptText_Match_emphasis -> UnderlineBoldItalicText
+NO_SubscriptText_Match_emphasis -> StrikethroughText
+NO_SubscriptText_Match_emphasis -> HighlightText
+NO_SubscriptText_Match_emphasis -> SuperscriptText
+
+NO_SuperscriptText_Match_emphasis -> PlainText
+NO_SuperscriptText_Match_emphasis -> StarBoldText
+NO_SuperscriptText_Match_emphasis -> UnderlineBoldText
+NO_SuperscriptText_Match_emphasis -> StarItalicText
+NO_SuperscriptText_Match_emphasis -> UnderlineItalicText
+NO_SuperscriptText_Match_emphasis -> StarBoldItalicText
+NO_SuperscriptText_Match_emphasis -> UnderlineBoldItalicText
+NO_SuperscriptText_Match_emphasis -> StrikethroughText
+NO_SuperscriptText_Match_emphasis -> HighlightText
+NO_SuperscriptText_Match_emphasis -> SubscriptText
+
+Match_emphasis -> PlainText
+Match_emphasis -> StarBoldText
+Match_emphasis -> UnderlineBoldText
+Match_emphasis -> StarItalicText
+Match_emphasis -> UnderlineItalicText
+Match_emphasis -> StarBoldItalicText
+Match_emphasis -> UnderlineBoldItalicText
+Match_emphasis -> StrikethroughText
+Match_emphasis -> HighlightText
+Match_emphasis -> SubscriptText
+Match_emphasis -> SuperscriptText

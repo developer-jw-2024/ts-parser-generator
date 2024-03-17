@@ -1,0 +1,15 @@
+MarkdownLine -> <ERROR>
+MarkdownLine -> Sentence
+
+MarkdownLine -> fencedCodeBlockTag
+MarkdownLine -> TaskListItem
+MarkdownLine -> DefinitionListItem
+MarkdownLine -> Footnote
+MarkdownLine -> EqualsRule
+MarkdownLine -> DashesRule
+MarkdownLine -> HorizontalRule
+MarkdownLine -> BlockquoteLine
+MarkdownLine -> Complement
+MarkdownLine -> Heading
+MarkdownLine -> OrderedItem
+MarkdownLine -> UnorderedItem
