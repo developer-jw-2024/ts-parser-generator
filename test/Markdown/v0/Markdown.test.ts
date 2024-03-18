@@ -1037,7 +1037,7 @@ This is that.`
     test('markdown - 29-3', () => {
         expect(markdown.isValid(
 `> - Fruite
->    Apple is good
+>     Apple is good
 `
         )).toEqual(true)
 
@@ -1064,7 +1064,7 @@ This is that.`
     test('markdown - 29-4', () => {
         expect(markdown.isValid(
 `> - Fruite
->    > Apple is good
+>     > Apple is good
 `
         )).toEqual(true)
 

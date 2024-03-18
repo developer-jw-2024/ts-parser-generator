@@ -1,6 +1,7 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
 import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, Cursor, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
+// import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(
@@ -9,6 +10,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         `
     )
     Markdown__WholeMarkdownLine(argv : Array<AnalysisToken>) {
+        
         var markdownLines : MarkdownLines = argv[0].value
         var markdown : Markdown = markdownLines.merge()
         return markdown
@@ -44,13 +46,13 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(`WholeMarkdownLine -> enter`)
     WholeMarkdownLine__enter(argv : Array<AnalysisToken>) {
         var lines : MarkdownLines = new MarkdownLines()
-        lines.addChild(new BlankLine())
+        lines.addChild(new BlankLine(argv[0].value))
         return lines
     }
     @GrammarProductionFunction(`WholeMarkdownLine -> WholeMarkdownLine enter`)
     WholeMarkdownLine__WholeMarkdownLine_enter(argv : Array<AnalysisToken>) {
         var lines : MarkdownLines = argv[0].value
-        lines.addChild(new BlankLine())
+        lines.addChild(new BlankLine(argv[1].value))
         return lines
     }
 
@@ -257,21 +259,21 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`Complement -> intent MarkdownLine`)
     Complement__spaces_MarkdownLine(argv : Array<AnalysisToken>) {
-        var len = argv[0].value.length/4
-        var complement : Complement = new Complement(argv[1].value)
-        for (var i=0;i<len-1;i++) {
-            complement = new Complement(complement)
-        }
+        // var len = argv[0].value.length/4
+        var complement : Complement = new Complement(argv[0].value, argv[1].value)
+        // for (var i=0;i<len-1;i++) {
+        //     complement = new Complement(complement)
+        // }
         return complement
     }
 
     @GrammarProductionFunction(`Complement -> intent`)
     Complement__intent(argv : Array<AnalysisToken>) {
-        var len = argv[0].value.length/4
-        var complement : Complement = new Complement(new BlankLine())
-        for (var i=0;i<len-1;i++) {
-            complement = new Complement(complement)
-        }
+        // var len = argv[0].value.length/4
+        var complement : Complement = new Complement(argv[0].value, new BlankLine("\n"))
+        // for (var i=0;i<len-1;i++) {
+        //     complement = new Complement(complement)
+        // }
         return complement
     }
 

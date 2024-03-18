@@ -4,7 +4,7 @@ import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer"
 
 
 describe('Markdown', () => {
-
+    
     test('markdown - 0-(-1)', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 ``
@@ -683,7 +683,7 @@ This is that.`
                     SimpleText`)
     })
 
-/*
+
     test('markdown - 24', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
@@ -737,16 +737,14 @@ This is that.`
     })
 
     test('markdown - 26', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     1. Apple
         > Red is my
     2. Banana
 2. Animals
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -781,16 +779,14 @@ This is that.`
     })
 
     test('markdown - 26-1', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     1. Apple
     > Red is my
     2. Banana
 2. Animals
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -825,12 +821,10 @@ This is that.`
     })
 
     test('markdown - 27', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -840,25 +834,21 @@ This is that.`
     })
 
     test('markdown - 27-1', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- 
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
     })
 
     test('markdown - 28', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
 - Animal
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -873,15 +863,13 @@ This is that.`
 
 
     test('markdown - 29', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
     - Apple
     - Banana
 - Animal
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -905,13 +893,11 @@ This is that.`
     })
 
     test('markdown - 29-1', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
     Apple is good
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -930,13 +916,11 @@ This is that.`
     })
 
     test('markdown - 29-2', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
     > Apple is good
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -957,13 +941,11 @@ This is that.`
     })
 
     test('markdown - 29-3', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `> - Fruite
->    Apple is good
+>     Apple is good
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -984,13 +966,11 @@ This is that.`
     })
 
     test('markdown - 29-4', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `> - Fruite
->    > Apple is good
+>     > Apple is good
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1013,11 +993,9 @@ This is that.`
     })
 
     test('markdown - 30', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 "type `nano`."
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence
@@ -1033,11 +1011,9 @@ This is that.`
 
 
     test('markdown - 30', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 "``Use `code` in your Markdown file.``"
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence
@@ -1061,22 +1037,18 @@ This is that.`
 
 
     test('markdown - 31', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 "---"
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     HorizontalRule`)
     })
 
     test('markdown - 32', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `This is heading 2
 ----------`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading
         Sentence
@@ -1091,13 +1063,11 @@ This is that.`
     })
 
     test('markdown - 33', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `This is heading 2
 
 ----------`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence
@@ -1114,22 +1084,18 @@ This is that.`
     })
 
     test('markdown - 34', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `===========`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown`)
     })
 
 
     test('markdown - 35', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `This is the first level heading
 ===========`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading
         Sentence
@@ -1148,13 +1114,11 @@ This is that.`
     })
 
     test('markdown - 36', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `This is the first level heading
 
 ===========`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence
@@ -1174,11 +1138,9 @@ This is that.`
     })
 
     test('markdown - 37', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow
@@ -1197,12 +1159,10 @@ This is that.`
     })
 
     test('markdown - 38', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `| Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow
@@ -1234,12 +1194,10 @@ This is that.`
     })
 
     test('markdown - 38-1', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `|    Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow
@@ -1272,14 +1230,12 @@ This is that.`
 
 
     test('markdown - 39', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description | Num | Checked |
 | ----------- | :----------- | :-----------: | -----------: |
 | Header      | Title       | 3 | true |
 | Paragraph   | Text        | 8 | false |`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow
@@ -1365,13 +1321,11 @@ This is that.`
     })
 
     test('markdown - 40', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `| ----------- | :----------- | :-----------: | -----------: |
 | Header      | Title       | 3 | true |
 | Paragraph   | Text        | 8 | false |`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableAlignmentRow
@@ -1432,14 +1386,12 @@ This is that.`
     })
 
     test('markdown - 40-1', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `> - First Item
 > - Second Item
 > - Third Item
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1465,23 +1417,57 @@ This is that.`
     })
 
     test('markdown - 41', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |
 | Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
         TableRow
-        TableRow`)
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
     })
 
 
     test('markdown - 42', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `\`\`\`
 {
   "firstName": "John",
@@ -1489,16 +1475,14 @@ This is that.`
   "age": 25
 }
 \`\`\``
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     FencedCodeBlockText`)
     })
     
 
     test('markdown - 43', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `> \`\`\`
 > {
 >   "firstName": "John",
@@ -1506,9 +1490,7 @@ This is that.`
 >   "age": 25
 > }
 > \`\`\``
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1516,30 +1498,32 @@ This is that.`
     })
 
     test('markdown - 44', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
-    > \`\`\`
+    > \`\`\`ABC
     > {
     >   "firstName": "John",
     >   "lastName": "Smith",
     >   "age": 25
     > }
     > \`\`\``
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
             Markdown
                 Blockquote
                     Markdown
                         FencedCodeBlockText`)
     })
 
+    
+/*
     test('markdown - 45', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
     \`\`\`
     {
@@ -1548,9 +1532,7 @@ This is that.`
         "age": 25
     }
     \`\`\``
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1560,12 +1542,10 @@ This is that.`
     })
 
     test('markdown - 46', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `First Term
 : This is the definition of the first term.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1575,13 +1555,11 @@ This is that.`
     })
 
     test('markdown - 47', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `Second Term
 : This is one definition of the second term.
 : This is another definition of the second term.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1593,15 +1571,13 @@ This is that.`
     })
 
     test('markdown - 48', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `First Term
 : This is the definition of the first term.
 Second Term
 : This is one definition of the second term.
 : This is another definition of the second term.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1617,16 +1593,14 @@ Second Term
     })
 
     test('markdown - 49', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `First Term
 : This is the definition of the first term.
 
 Second Term
 : This is one definition of the second term.
 : This is another definition of the second term.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1644,11 +1618,9 @@ Second Term
     })
 
     test('markdown - 50', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- [x] Write the press release`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -1656,13 +1628,11 @@ Second Term
     })
 
     test('markdown - 51', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- [x] Write the press release
 - [ ] Update the website
 - [ ] Contact the media`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -1674,14 +1644,12 @@ Second Term
     })
 
     test('markdown - 52', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- [x] Write the press release
 - [Y] Contact the media
 - [ ] Update the website
 `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -1693,12 +1661,10 @@ Second Term
     })
 
     test('markdown - 53', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `> First Term
 : This is the definition of the first term.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1711,12 +1677,10 @@ Second Term
     })
 
     test('markdown - 54', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `> First Term
 > : This is the definition of the first term.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1728,7 +1692,7 @@ Second Term
     })
 
     test('markdown - 55', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
 > \`\`\`
 > {
@@ -1737,9 +1701,7 @@ Second Term
 >   "age": 25
 > }
 > \`\`\``
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1751,11 +1713,9 @@ Second Term
 
     
     test('markdown - 56', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1764,12 +1724,10 @@ Second Term
     })
 
     test('markdown - 57', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     Indent paragraphs to include them in the footnote.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1781,12 +1739,10 @@ Second Term
     })
 
     test('markdown - 58', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. hello
     Apple`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1797,12 +1753,10 @@ Second Term
     })
 
     test('markdown - 59', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. hello
     `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1812,13 +1766,11 @@ Second Term
     })
 
     test('markdown - 60', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. hello
     
     `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1829,15 +1781,13 @@ Second Term
     })
 
     test('markdown - 61', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     Indent paragraphs to include them in the footnote.
     \`{ my code }\`
     
     Add as many paragraphs as you like.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1853,15 +1803,13 @@ Second Term
     })
 
     test('markdown - 62', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     > Indent paragraphs to include them in the footnote.
     > \`{ my code }\`
     
     > Add as many paragraphs as you like.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1881,15 +1829,13 @@ Second Term
     })
 
     test('markdown - 63', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     > Indent paragraphs to include them in the footnote.
     > \`{ my code }\`
     > 
     > Add as many paragraphs as you like.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -1907,32 +1853,26 @@ Second Term
     })
 
     test('markdown - inputing-0', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 ``
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     BlankLine`)
     })
 
     test('markdown - inputing-1', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-2', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `#`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1940,11 +1880,9 @@ Second Term
 
 
     test('markdown - inputing-3', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `#▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -1952,55 +1890,45 @@ Second Term
 
 
     test('markdown - inputing-4', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `# ▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading
         Sentence`)
     })
 
     test('markdown - inputing-5', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `#▮ `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading`)
     })
 
 
     test('markdown - inputing-6', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `▮# `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading`)
     })
 
 
     test('markdown - inputing-7', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `#▮# `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading`)
     })
 
 
     test('markdown - inputing-8', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `-`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2008,11 +1936,9 @@ Second Term
 
 
     test('markdown - inputing-9', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
@@ -2020,33 +1946,27 @@ Second Term
 
 
     test('markdown - inputing-10', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `+`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-11', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `+ `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
     })
 
     test('markdown - inputing-12', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `-▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2054,11 +1974,9 @@ Second Term
 
 
     test('markdown - inputing-13', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `- ▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -2067,11 +1985,9 @@ Second Term
 
 
     test('markdown - inputing-14', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `+▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2079,11 +1995,9 @@ Second Term
 
 
     test('markdown - inputing-15', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `+ ▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -2091,88 +2005,72 @@ Second Term
     })
 
     test('markdown - inputing-16', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `+▮ `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
     })
 
     test('markdown - inputing-17', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-18', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-19', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-20', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-21', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1.▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-22', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-23', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. a`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2180,11 +2078,9 @@ Second Term
     })
 
     test('markdown - inputing-24', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. ▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2192,80 +2088,66 @@ Second Term
     })
 
     test('markdown - inputing-25', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1.▮ `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-26', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `1▮. `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-27', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `▮1. `
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-28', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `▮1.`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-29', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `▮`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-30', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `\\*`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-31', () => {
-        expect(markdown.isValid(
+        expect(markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |
 | ----------- | ----------- |
 | Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
-
-        expect(markdown.getResult().toMarkdownHierarchy().join('\n')).toEqual(
+        ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow

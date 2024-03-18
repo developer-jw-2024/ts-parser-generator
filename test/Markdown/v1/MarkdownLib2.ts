@@ -1,7 +1,6 @@
 import { ErrorEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis"
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils"
 import * as html from "./HtmlLib"
-import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer"
 
 export class MarkdownElement extends SymbolEntity {
     markdownElements : Array<MarkdownElement> = []
@@ -20,50 +19,29 @@ export class MarkdownElement extends SymbolEntity {
         return this.markdownElements.at(-2)
     }
 
-    getRawValue(): string {
-        var rawData : string = this.getMarkdownElements().map(markdownElement=>{
-            return markdownElement.getRawValue()
-        }).join('')
-        return rawData
-    }
-    
-
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
         var resultArray =  this.getMarkdownElements().map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+                return markdownElement.toMarkdownHierarchy(subIntent)
             } else {
                 return [`${subIntent}${markdownElement}`]
             }
         })
-        
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
-    
     mergeUnhandledBlockquotes(elements : any) : Array<Blockquote> {
-        var result : Array<MarkdownElement> = [].concat.apply([], elements)
-        result = result.filter(x=>isTypeOf(x, Blockquote))
-        var list : Array<Blockquote> = []
-        for (var i=0;i<result.length;i++) {
-            var blockquote : Blockquote = result[i] as Blockquote
-            if (!blockquote.isHandled()) {
-                list.push(blockquote)
-            }
-        }
-        return list
+        var result = Array<MarkdownElement> = [].concat.apply([], elements)
+        return result.filter(x=>isTypeOf(x, Blockquote)).filter(x=>!x.isHandled())
     }
 
     getUnhandledChildrenBlockquotes() : Array<Blockquote> {
-        var list : any = this.getMarkdownElements().filter(x=>x)
-        var unhandledBlockquoteArraytList : any = []
-        for (var i=0;i<list.length;i++) {
-            var element : MarkdownElement = list[i]
-            unhandledBlockquoteArraytList.push(element.getUnhandledBlockquotes())
-        }
-        var childBlockquotes : Array<Blockquote> = [].concat.apply([], unhandledBlockquoteArraytList)
+        var childResult : any = this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
+            return markdownElement.getUnhandledBlockquotes()
+        })
+        var childBlockquotes : Array<Blockquote> = [].concat.apply([], childResult)
         return childBlockquotes
     }
 
@@ -72,7 +50,6 @@ export class MarkdownElement extends SymbolEntity {
         var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([[this]])
         return result.concat(childBlockquotes)
     }
-    
 
     toChildrenMarkdownElementsHtml() : Array<html.HtmlElement> {
         var htmlEles : Array<html.HtmlElement> =  this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
@@ -85,7 +62,6 @@ export class MarkdownElement extends SymbolEntity {
     }
  }
 export class MarkdownValueElement extends MarkdownElement {
-
     value : any = null
 
     constructor(value : any) {
@@ -93,42 +69,28 @@ export class MarkdownValueElement extends MarkdownElement {
         this.value = value
     }
 
-    getRawValue(): string {
-        if (isTypeOf(this.value, String)) {
-            return this.value as string
-        } else if (this.value!=null && this.value.getRawValue) {
-            return this.value.getRawValue()
-        } else if (this.value==null) {
-            return ""
-        }
-    }
-    
-
     getValue() {
         return this.value
     }
 
-
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
         var resultArray =  [this.getValue()].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+                return markdownElement.toMarkdownHierarchy(subIntent)
             } else {
                 return [`${subIntent}${markdownElement}`]
             }  
         })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
-    
     getUnhandledBlockquotes() : Array<Blockquote> {
         var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
         var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([[this, this.getValue()]])
         return result.concat(childBlockquotes)
     }
-    
 
     toValueHtml() : html.HtmlElement {
         if (isTypeOf(this.value, String)) {
@@ -155,8 +117,18 @@ export class MarkdownLines extends MarkdownElement {
             markdown.addElement(child)
         }
 
-        // var unhandledBlockquotes : Array<Blockquote> = markdown.getUnhandledBlockquotes()
-        // console.log(unhandledBlockquotes)
+        var unhandledBlockquotes : Array<Blockquote> = markdown.getUnhandledBlockquotes()
+        if (unhandledBlockquotes.length>0) {
+            // unhandledBlockquotes[0].merge()
+        }
+        // while (unhandledBlockquotes.length>0) {
+        //     for (var i=0;i<unhandledBlockquotes.length;i++) {
+        //         var unhandledBlockquote : Blockquote = unhandledBlockquotes[i]
+        //         unhandledBlockquote.merge()
+        //     }
+        //     unhandledBlockquotes  = markdown.getUnhandledBlockquotes()
+        //     unhandledBlockquotes = []
+        // }
 
         return markdown
     }
@@ -164,7 +136,6 @@ export class MarkdownLines extends MarkdownElement {
 
 
 export class Markdown extends MarkdownElement {
-
 
     constructor() {
         super()
@@ -434,11 +405,6 @@ export class MarkdownError extends MarkdownElement {
         this.value = value
     }
 
-    getRawValue(): string {
-        
-        return this.value
-    }
-
     toHtml(): html.HtmlElement {
         return new html.ErrorHtmlElement(this.value)
     }
@@ -465,14 +431,8 @@ export class Paragraph extends MarkdownElement {
     
 }
 
-export class BlankLine extends MarkdownValueElement {
+export class BlankLine extends MarkdownElement {
 
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
-        // var subIntent = `${intent}    `
-        var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
-        return [].concat.apply([], resultArray)
-    }
     toHtml(): html.HtmlElement {
         return new html.BlankLine()
     }
@@ -528,18 +488,20 @@ export class TableAlignmentRow extends MarkdownElement {
     }
 }
 export class TableColumnAlignment extends MarkdownValueElement{
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
+
+    
 }
 export class TableNoAlignment extends TableColumnAlignment {
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
     
@@ -548,10 +510,10 @@ export class TableNoAlignment extends TableColumnAlignment {
     }
 }
 export class TableLeftAlignment extends TableColumnAlignment {
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
@@ -561,10 +523,10 @@ export class TableLeftAlignment extends TableColumnAlignment {
 
 }
 export class TableRightAlignment extends TableColumnAlignment {
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
@@ -573,10 +535,10 @@ export class TableRightAlignment extends TableColumnAlignment {
     }
 }
 export class TableCenterAlignment extends TableColumnAlignment {
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
@@ -602,26 +564,25 @@ export class TaskListItem extends MarkdownElement {
         return this.value
     }
 
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
         var resultArray =  [this.value].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+                return markdownElement.toMarkdownHierarchy(subIntent)
             } else {
                 return [`${subIntent}${markdownElement}`]
             }
         })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
-    
     getUnhandledBlockquotes() : Array<Blockquote> {
         var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
         var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([[this, this.getValue()]])
         return result.concat(childBlockquotes)
     }
-    
+
 }
 
 export class TaskList extends MarkdownElement {
@@ -717,25 +678,25 @@ export class BacktickText extends MarkdownElement {
     }
 }
 export class FencedCodeBlockText extends MarkdownValueElement{
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
         var resultArray =  this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+                return markdownElement.toMarkdownHierarchy(subIntent)
             } else {
                 return [`${subIntent}${markdownElement}`]
             }  
         })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 }
 
 export class SimpleText extends MarkdownValueElement {
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
@@ -745,10 +706,10 @@ export class SimpleText extends MarkdownValueElement {
 }
 
 export class Spaces extends MarkdownValueElement {
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
@@ -761,7 +722,6 @@ export class Footnote extends MarkdownElement {
 
     footnoteReference : MarkdownElement | null = null
     detail : MarkdownElement | null = null
-    complementBlock : ComplementBlock | null = null
 
     constructor(footnoteReference : MarkdownElement, detail : MarkdownElement) {
         super()
@@ -770,16 +730,24 @@ export class Footnote extends MarkdownElement {
     }
 
     addComplement(element : Complement) {
-        if (this.complementBlock==null) {
-            this.complementBlock = new ComplementBlock()
-        }
-        this.complementBlock.getMarkdownElements().push(element)
+        this.getMarkdownElements().push(element)
     }
 
-    
     addElement(element : MarkdownElement) {
         if (element.getClass()==Complement) {
-            this.addComplement(element as Complement)
+            var lastElement : MarkdownElement = this.getLastMarkdownElement()
+            var complementMarkdown : Markdown | null = null
+            if (isNulllOrUndefinedValue(lastElement)) {
+                complementMarkdown = new Markdown()
+                this.getMarkdownElements().push(complementMarkdown)
+            } else if (lastElement.getClass()==Markdown) {
+                complementMarkdown = lastElement as Markdown
+            }
+            if (complementMarkdown!=null) {
+                complementMarkdown.addElement((element as Complement).getValue())
+            } else {
+                throw new Error(`Can not find a Markdown to append ${element.getClass().name} in ${this.getClass().name}`)
+            }
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -790,16 +758,16 @@ export class Footnote extends MarkdownElement {
         return this.getLastMarkdownElement() as Markdown
     }
 
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
-        var resultArray =  [this.footnoteReference, this.detail, this.complementBlock].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+        var resultArray =  [this.footnoteReference, this.detail].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+                return markdownElement.toMarkdownHierarchy(subIntent)
             } else {
                 return [`${subIntent}${markdownElement}`]
             }  
         })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 }
@@ -809,10 +777,10 @@ export class Emoji extends MarkdownValueElement {}
 
 export class FootnoteReference extends MarkdownValueElement {}
 export class HorizontalRule extends MarkdownValueElement {
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         // var subIntent = `${intent}    `
         var resultArray =  []
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 
@@ -861,19 +829,15 @@ export class Blockquote extends MarkdownElement {
         }).join('\n')
     }
 
-    getRawValue(): string {
-        return this.contentLines.join('\n')
-    }
-
     getMarkdown() : Markdown {
         return this.getLastMarkdownElement() as Markdown
     }
 
     merge() {
-        var content : string = this.getContent()
-        var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
-        var blockquoteMarkdown : Markdown =  markdownSyntaxAnalyzer.toMarkddown(content)
-        this.getMarkdownElements().push(blockquoteMarkdown)
+        // var content : string = this.getContent()
+        // var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
+        // var blockquoteMarkdown : Markdown =  markdownSyntaxAnalyzer.toMarkddown(content)
+        // this.getMarkdownElements().push(blockquoteMarkdown)
         this.isHandledFlag = true
     }
     
@@ -890,23 +854,7 @@ export class Blockquote extends MarkdownElement {
 
 export class BlockquoteLine extends MarkdownValueElement {}
 
-export class Complement extends MarkdownElement {
-    value : MarkdownElement | null = null
-    intent : string = ""
-    constructor(intent : string , value : MarkdownElement) {
-        super()
-        this.intent = intent
-        this.value = value
-    }
-
-    getRawValue(): string {
-        return this.intent+this.value.getRawValue()
-    }
-}
-export class ComplementBlock extends MarkdownElement {
-    
-}
-
+export class Complement extends MarkdownValueElement {}
 
 export class Heading extends MarkdownValueElement {
     level : number
@@ -960,31 +908,27 @@ export class OrderedList extends MarkdownElement {
    
 }
 export class OrderedItem extends MarkdownValueElement {
-    complementBlock : ComplementBlock | null = null
+    
 
     addElement(element : MarkdownElement) {
         if (element.getClass()==Complement) {
-            if (this.complementBlock==null) {
-                this.complementBlock = new ComplementBlock()
+            var lastElement : MarkdownElement = this.getLastMarkdownElement()
+            var complementMarkdown : Markdown | null = null
+            if (isNulllOrUndefinedValue(lastElement)) {
+                complementMarkdown = new Markdown()
+                this.getMarkdownElements().push(complementMarkdown)
+            } else if (lastElement.getClass()==Markdown) {
+                complementMarkdown = lastElement as Markdown
             }
-            this.complementBlock.getMarkdownElements().push(element)
+            if (complementMarkdown!=null) {
+                complementMarkdown.addElement((element as Complement).getValue())
+            } else {
+                throw new Error(`Can not find a Markdown to append ${element.getClass().name} in ${this.getClass().name}`)
+            }
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
 
-    }
-
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
-        var subIntent = `${intent}    `
-        var resultArray =  [this.getValue(), this.complementBlock].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
-            if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
-            } else {
-                return [`${subIntent}${markdownElement}`]
-            }  
-        })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
-        return [].concat.apply([], resultArray)
     }
 
     getComplementMarkdown() : Markdown {
@@ -1042,30 +986,25 @@ export class UnorderedList extends MarkdownElement {
 
 }
 export class UnorderedItem extends MarkdownValueElement {
-    complementBlock : ComplementBlock | null = null
     addElement(element : MarkdownElement) {
         if (element.getClass()==Complement) {
-            if (this.complementBlock==null) {
-                this.complementBlock = new ComplementBlock()
+            var lastElement : MarkdownElement = this.getLastMarkdownElement()
+            var complementMarkdown : Markdown | null = null
+            if (isNulllOrUndefinedValue(lastElement)) {
+                complementMarkdown = new Markdown()
+                this.getMarkdownElements().push(complementMarkdown)
+            } else if (lastElement.getClass()==Markdown) {
+                complementMarkdown = lastElement as Markdown
             }
-            this.complementBlock.getMarkdownElements().push(element)
+            if (complementMarkdown!=null) {
+                complementMarkdown.addElement((element as Complement).getValue())
+            } else {
+                throw new Error(`Can not find a Markdown to append ${element.getClass().name} in ${this.getClass().name}`)
+            }
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
 
-    }
-
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
-        var subIntent = `${intent}    `
-        var resultArray =  [this.getValue(), this.complementBlock].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
-            if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
-            } else {
-                return [`${subIntent}${markdownElement}`]
-            }  
-        })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
-        return [].concat.apply([], resultArray)
     }
 
     getComplementMarkdown() : Markdown {
@@ -1119,16 +1058,16 @@ export class DefinitionListItemGroup extends MarkdownElement {
         }
     }
 
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
         var resultArray =  [this.nameOfGroup].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+                return markdownElement.toMarkdownHierarchy(subIntent)
             } else {
                 return [`${subIntent}${markdownElement}`]
             }
         })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 }
@@ -1173,16 +1112,16 @@ export class Table extends MarkdownElement {
         }
     }
 
-    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+    toMarkdownHierarchy(intent : string = '') {
         var subIntent = `${intent}    `
         var resultArray =  [this.getHeaderRow(), this.getTableAlignmentRow()].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
-                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+                return markdownElement.toMarkdownHierarchy(subIntent)
             } else {
                 return [`${subIntent}${markdownElement}`]
             }  
         })
-        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        resultArray.unshift(`${intent}${this.constructor.name}`)
         return [].concat.apply([], resultArray)
     }
 

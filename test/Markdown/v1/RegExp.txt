@@ -58,6 +58,6 @@ subscriptTag "~"
 superscriptTag "^"
 doubleBacktickTag "``"
 backtickTag "`"
-fencedCodeBlockTag ("```"\n"```")|("```"\n[^\`]+"```")
+fencedCodeBlockTag ("```"[^\n]*\n[^\`]*"```")|("```"[^\n]*\n[^\`]+\n[^\`]*"```")
 
 

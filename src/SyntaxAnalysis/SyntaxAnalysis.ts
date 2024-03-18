@@ -99,7 +99,7 @@ export class SymbolEntity {
         return [].concat.apply([], resultArray)
     }
 
-    getRawValue() {
+    getRawValue() : string {
         var result =  this.children.map(segment=>{
             if (segment instanceof SymbolEntity) {
                 return segment.getRawValue()
