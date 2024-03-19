@@ -855,7 +855,7 @@ export class Footnote extends MarkdownElement {
             this.complementBlock = new ComplementBlock()
         }
         // this.complementBlock.getMarkdownElements().push(element)
-        this.complementBlock.addcomplement(element as Complement)
+        this.complementBlock.addComplement(element as Complement)
     }
 
     
@@ -967,13 +967,13 @@ export class Blockquote extends MarkdownElement {
         return this.getLastMarkdownElement() as Markdown
     }
 
-    merge() {
-        var content : string = this.getContent()
-        var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
-        var blockquoteMarkdown : Markdown =  markdownSyntaxAnalyzer.toMarkddown(content)
-        this.getMarkdownElements().push(blockquoteMarkdown)
-        this.isHandledFlag = true
-    }
+    // merge() {
+    //     var content : string = this.getContent()
+    //     var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
+    //     var blockquoteMarkdown : Markdown =  markdownSyntaxAnalyzer.toMarkddown(content)
+    //     this.getMarkdownElements().push(blockquoteMarkdown)
+    //     this.isHandledFlag = true
+    // }
     
     isHandled(): boolean {
         return this.isHandledFlag
@@ -1018,7 +1018,7 @@ export class ComplementBlock extends MarkdownElement {
         }).join('\n')
     }
 
-    addcomplement(complement : Complement) {
+    addComplement(complement : Complement) {
         this.complements.push(complement)
     }
 
@@ -1049,6 +1049,13 @@ export class ComplementBlock extends MarkdownElement {
         var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
         var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([[this]])
         return result.concat(childBlockquotes)
+    }
+
+    toHtml(): html.HtmlElement {
+        if (this.getMarkdownElements.length>1) {
+            throw new Error('the children in ComplementBlock is more than 1')
+        }
+        return this.getMarkdownElements()[0].toHtml()
     }
 }
 
@@ -1123,7 +1130,7 @@ export class OrderedItem extends MarkdownValueElement {
                 this.complementBlock = new ComplementBlock()
             }
             // this.complementBlock.getMarkdownElements().push(element)
-            this.complementBlock.addcomplement(element as Complement)
+            this.complementBlock.addComplement(element as Complement)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -1148,14 +1155,9 @@ export class OrderedItem extends MarkdownValueElement {
     }
 
     toHtml(): html.HtmlElement {
-        var lastElement : MarkdownElement = this.getLastMarkdownElement()
-        var complementMarkdown : Markdown | null = null
-        if (!isNulllOrUndefinedValue(lastElement)) {
-            complementMarkdown = lastElement as Markdown
-        }
         var e : html.OrderedItem = new html.OrderedItem(this.toValueHtml())
-        if (complementMarkdown!=null) {
-            e.setComplement(complementMarkdown.toHtml())
+        if (this.complementBlock!=null) {
+            e.setComplementBlock(this.complementBlock.toHtml())
         }
         return e
     }
@@ -1233,7 +1235,7 @@ export class UnorderedItem extends MarkdownValueElement {
                 this.complementBlock = new ComplementBlock()
             }
             // this.complementBlock.getMarkdownElements().push(element)
-            this.complementBlock.addcomplement(element as Complement)
+            this.complementBlock.addComplement(element as Complement)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -1258,14 +1260,9 @@ export class UnorderedItem extends MarkdownValueElement {
     }
 
     toHtml(): html.HtmlElement {
-        var lastElement : MarkdownElement = this.getLastMarkdownElement()
-        var complementMarkdown : Markdown | null = null
-        if (!isNulllOrUndefinedValue(lastElement)) {
-            complementMarkdown = lastElement as Markdown
-        }
         var e : html.UnorderedItem = new html.UnorderedItem(this.toValueHtml())
-        if (complementMarkdown!=null) {
-            e.setComplement(complementMarkdown.toHtml())
+        if (this.complementBlock!=null) {
+            e.setComplementBlock(this.complementBlock.toHtml())
         }
         return e
     }

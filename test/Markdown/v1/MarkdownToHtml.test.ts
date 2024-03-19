@@ -1,40 +1,50 @@
-import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
+import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer"
+
+var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
+
 import * as html from './HtmlLib'
-import { MarkdownLanguageFunctionsEntity } from './Language_Function'
+import { Markdown } from "./MarkdownLib"
 
-var languageDefinitionPath: string = `${__dirname}/Language.txt`
-var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
-var markdown: LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
-markdown.setPreprocessing((v:string):string=>{
-    if (v.at(-1)!='\n') return v+'\n'
-    return v
-})
-
-
+//var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 describe('Markdown', () => {
 
     test('markdown - 0-(-1)', () => {
-        expect(markdown.isValid(
+        
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 ``
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.BlankLine()
         ])
-        
         
         expect(htmlElement.isEqual(rootElement)).toBe(true)
         
     })
 
-/*
-    test('markdown - 0', () => {
-        expect(markdown.isValid(
-`hello`
-        )).toEqual(true)
+    test('markdown - 0-(-2)', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`
+`
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.BlankLine()
+        ])
+        
+        expect(htmlElement.isEqual(rootElement)).toBe(true)
+        
+    })
+
+
+    test('markdown - 0', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`hello`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -51,11 +61,11 @@ describe('Markdown', () => {
 
 
     test('markdown - 0-0', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `he*l_l*_o`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.ErrorHtmlElement('he*l_l*_o')
         ])
@@ -66,12 +76,12 @@ describe('Markdown', () => {
 
 
     test('markdown - 0-1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `I go to school.
 he*l_l*_o`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -94,12 +104,12 @@ he*l_l*_o`
 
 
     test('markdown - 0-2', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `I go to school.
 You go home`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -130,13 +140,13 @@ You go home`
 
 
     test('markdown - 0-3', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `I go to school.
 
 You go home`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -171,11 +181,11 @@ You go home`
 
 
     test('markdown - 1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This is abc`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -196,11 +206,11 @@ You go home`
 
 
     test('markdown - 2', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This *is** abc`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.ErrorHtmlElement('This *is** abc')
         ])
@@ -210,11 +220,11 @@ You go home`
 
 
     test('markdown - 3', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This *is* abc`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -240,12 +250,12 @@ You go home`
 
 
     test('markdown - 4', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This *is* abc
 This is that.`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -280,11 +290,11 @@ This is that.`
 
 
     test('markdown - 5', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 ``
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.BlankLine()
         ])
@@ -294,12 +304,12 @@ This is that.`
 
 
     test('markdown - 6', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.BlankLine()
         ])
@@ -309,12 +319,12 @@ This is that.`
 
 
     test('markdown - 7', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `## hello
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Heading(2, new html.Sentence().initChildren([
                 new html.PlainText().initChildren([
@@ -328,12 +338,12 @@ This is that.`
 
 
     test('markdown - 8', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. First Item
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
@@ -351,13 +361,13 @@ This is that.`
 
 
     test('markdown - 9', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. First Item
 2. Second Item
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
@@ -382,14 +392,14 @@ This is that.`
 
 
     test('markdown - 10', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. First Item
 2. Second Item
 3. Third Item
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
@@ -421,12 +431,12 @@ This is that.`
 
 
     test('markdown - 11', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- First Item
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             
             new html.UnorderedList().initChildren([
@@ -445,13 +455,13 @@ This is that.`
 
 
     test('markdown - 12', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- First Item
 - Second Item
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             
             new html.UnorderedList().initChildren([
@@ -476,14 +486,14 @@ This is that.`
 
 
     test('markdown - 13', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- First Item
 - Second Item
 - Third Item
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             
             new html.UnorderedList().initChildren([
@@ -516,12 +526,12 @@ This is that.`
 
 
     test('markdown - 14', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> This is a sentence
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -546,11 +556,11 @@ This is that.`
 
 
     test('markdown - 14-1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `>`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -565,11 +575,11 @@ This is that.`
 
 
     test('markdown - 14-2', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -582,11 +592,11 @@ This is that.`
 
 
     test('markdown - 14-3', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> H`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -605,13 +615,13 @@ This is that.`
 
 
     test('markdown - 15', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> This is a sentence
 > This is the second sentence
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -649,12 +659,12 @@ This is that.`
 
 
     test('markdown - 16', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `>> This is a sentence
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -684,11 +694,11 @@ This is that.`
 
 
     test('markdown - 16-1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `>>`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -703,11 +713,11 @@ This is that.`
 
 
     test('markdown - 16-2', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `>> `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -723,13 +733,13 @@ This is that.`
     })
 
     test('markdown - 17', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `>> This is a sentence
 >> This is the
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -766,14 +776,14 @@ This is that.`
     })
 
     test('markdown - 18', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> # ONK
 >> This is a sentence
 >> This is the
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -815,14 +825,14 @@ This is that.`
     })
 
     test('markdown - 19', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> # ONK
 >> This is a sentence
 > This is the
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Blockquote().initChildren([
                 new html.HtmlRoot().initChildren([
@@ -866,20 +876,20 @@ This is that.`
     })
 
     test('markdown - 20', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     Apple
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.Paragraph().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -894,21 +904,21 @@ This is that.`
     })
 
     test('markdown - 21', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     Apple
     Banana
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.Paragraph().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -928,22 +938,22 @@ This is that.`
     })
 
     test('markdown - 22', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     Apple
     Banana
 2. Animals
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.Paragraph().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -968,22 +978,22 @@ This is that.`
     })
 
     test('markdown - 23', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     > Apple
     > Banana
 2. Animals
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.Blockquote().initChildren([
                         new html.HtmlRoot().initChildren([
                             new html.Paragraph().initChildren([
@@ -1012,22 +1022,22 @@ This is that.`
     })
 
     test('markdown - 24', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     1. Apple
     2. Banana
 2. Animals
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.OrderedList().initChildren([
                         new html.OrderedItem(new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1053,20 +1063,20 @@ This is that.`
 
 
     test('markdown - 25', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     > Red
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.Blockquote().initChildren([
                         new html.HtmlRoot().initChildren([
                             new html.Paragraph().initChildren([
@@ -1085,29 +1095,29 @@ This is that.`
     })
 
     test('markdown - 26', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     1. Apple
         > Red is my
     2. Banana
 2. Animals
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.OrderedList().initChildren([
                         new html.OrderedItem(new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
                                 new html.Text('Apple')
                             ])
-                        ])).init('complement', new html.HtmlRoot().initChildren([
+                        ])).init('complementBlock', new html.HtmlRoot().initChildren([
                             new html.Blockquote().initChildren([
                                 new html.HtmlRoot().initChildren([
                                     new html.Paragraph().initChildren([
@@ -1143,23 +1153,23 @@ This is that.`
     })
 
     test('markdown - 26-1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. Fruite
     1. Apple
     > Red is my
     2. Banana
 2. Animals
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.OrderedList().initChildren([
                 new html.OrderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.OrderedList().initChildren([
                         new html.OrderedItem(new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1203,12 +1213,12 @@ This is that.`
 
 
     test('markdown - 27', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.UnorderedList().initChildren([
                 new html.UnorderedItem(new html.Sentence().initChildren([
@@ -1222,28 +1232,28 @@ This is that.`
     })
 
     test('markdown - 27-1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- 
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.UnorderedList().initChildren([
-                new html.UnorderedItem()
+                new html.UnorderedItem(null)
             ])
         ])
         expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - 28', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
 - Animal
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.UnorderedList().initChildren([
                 new html.UnorderedItem(new html.Sentence().initChildren([
@@ -1263,22 +1273,22 @@ This is that.`
 
 
     test('markdown - 29', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- Fruite
     - Apple
     - Banana
 - Animal
 `
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.UnorderedList().initChildren([
                 new html.UnorderedItem(new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('Fruite')
                     ])
-                ])).init('complement', new html.HtmlRoot().initChildren([
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
                     new html.UnorderedList().initChildren([
                         new html.UnorderedItem(new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1303,11 +1313,11 @@ This is that.`
     })
 
     test('markdown - 30', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 "type `nano`."
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -1330,11 +1340,11 @@ This is that.`
     })
 
     test('markdown - 30', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 "``Use `code` in your Markdown file.``"
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -1367,11 +1377,11 @@ This is that.`
 
 
     test('markdown - 31', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 "---"
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.HorizontalRule('---')
         ])
@@ -1379,12 +1389,12 @@ This is that.`
     })
 
     test('markdown - 32', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This is heading 2
 ----------`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Heading(2, new html.Sentence().initChildren([
                 new html.PlainText().initChildren([
@@ -1402,13 +1412,13 @@ This is that.`
     })
 
     test('markdown - 33', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This is heading 2
 
 ----------`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -1430,23 +1440,23 @@ This is that.`
     })
 
     test('markdown - 34', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `===========`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot()
         expect(htmlElement).toEqual(rootElement)
     })
 
 
     test('markdown - 35', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This is the first level heading
 ===========`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Heading(1, new html.Sentence().initChildren([
                 new html.PlainText().initChildren([
@@ -1468,13 +1478,13 @@ This is that.`
     })
 
     test('markdown - 36', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `This is the first level heading
 
 ===========`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
@@ -1499,11 +1509,11 @@ This is that.`
     })
 
     test('markdown - 37', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Table().initChildren([
                 new html.TableRow().initChildren([
@@ -1532,12 +1542,12 @@ This is that.`
     })
 
     test('markdown - 38', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Table().initChildren([
                 new html.TableRow().initChildren([
@@ -1586,12 +1596,12 @@ This is that.`
     })
 
     test('markdown - 38-1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `|    Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Table().initChildren([
                 new html.TableRow().initChildren([
@@ -1642,14 +1652,14 @@ This is that.`
 
 
     test('markdown - 39', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description | Num | Checked |
 | ----------- | :----------- | :-----------: | -----------: |
 | Header      | Title       | 3 | true |
 | Paragraph   | Text        | 8 | false |`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Table(new html.TableRow().initChildren([
                 new html.TableCell().initChildren([
@@ -1777,13 +1787,13 @@ This is that.`
     })
 
     test('markdown - 40', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| ----------- | :----------- | :-----------: | -----------: |
 | Header      | Title       | 3 | true |
 | Paragraph   | Text        | 8 | false |`
-        )).toEqual(true)
+        )
 
-        var htmlElement : html.HtmlElement = markdown.getResult().toHtml() as html.HtmlElement
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Table(null, new html.TableAlignmentRow().initChildren([
                 new html.TableNoAlignment(' ----------- '),
@@ -1872,30 +1882,88 @@ This is that.`
         ])
         expect(htmlElement).toEqual(rootElement)
     })
-*/
-    // continue
 
-/*
     
 
     test('markdown - 41', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |
 | Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`Markdown
-    Table
-        TableRow
-        TableRow
-        TableRow`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Table(null, null).initChildren([
+                new html.TableRow().initChildren([
+                    new html.TableCell().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Spaces(' '),
+                                new html.Text('Syntax'),
+                                new html.Spaces('      ')
+                            ])
+                        ])
+                    ]),
+                    new html.TableCell().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Spaces(' '),
+                                new html.Text('Description'),
+                                new html.Spaces(' ')
+                            ])
+                        ])
+                    ]),
+                ]),
+                new html.TableRow().initChildren([
+                    new html.TableCell().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Spaces(' '),
+                                new html.Text('Header'),
+                                new html.Spaces('      ')
+                            ])
+                        ])
+                    ]),
+                    new html.TableCell().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Spaces(' '),
+                                new html.Text('Title'),
+                                new html.Spaces('       ')
+                            ])
+                        ])
+                    ]),
+                ]),
+                new html.TableRow().initChildren([
+                    new html.TableCell().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Spaces(' '),
+                                new html.Text('Paragraph'),
+                                new html.Spaces('   ')
+                            ])
+                        ])
+                    ]),
+                    new html.TableCell().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Spaces(' '),
+                                new html.Text('Text'),
+                                new html.Spaces('        ')
+                            ])
+                        ])
+                    ]),
+                ]),
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
+
     test('markdown - 42', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `\`\`\`
 {
   "firstName": "John",
@@ -1903,16 +1971,16 @@ This is that.`
   "age": 25
 }
 \`\`\``
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
-`Markdown
-    FencedCodeBlockText`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+        ])
     })
     
-
+/*
     test('markdown - 43', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> \`\`\`
 > {
 >   "firstName": "John",
@@ -1920,9 +1988,9 @@ This is that.`
 >   "age": 25
 > }
 > \`\`\``
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -1930,7 +1998,7 @@ This is that.`
     })
 
     test('markdown - 44', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
     > \`\`\`
     > {
@@ -1939,9 +2007,9 @@ This is that.`
     >   "age": 25
     > }
     > \`\`\``
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1953,7 +2021,7 @@ This is that.`
     })
 
     test('markdown - 45', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
     \`\`\`
     {
@@ -1962,9 +2030,9 @@ This is that.`
         "age": 25
     }
     \`\`\``
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -1974,12 +2042,12 @@ This is that.`
     })
 
     test('markdown - 46', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `First Term
 : This is the definition of the first term.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -1989,13 +2057,13 @@ This is that.`
     })
 
     test('markdown - 47', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `Second Term
 : This is one definition of the second term.
 : This is another definition of the second term.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -2007,15 +2075,15 @@ This is that.`
     })
 
     test('markdown - 48', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `First Term
 : This is the definition of the first term.
 Second Term
 : This is one definition of the second term.
 : This is another definition of the second term.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -2031,16 +2099,16 @@ Second Term
     })
 
     test('markdown - 49', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `First Term
 : This is the definition of the first term.
 
 Second Term
 : This is one definition of the second term.
 : This is another definition of the second term.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     DescriptionList
         DefinitionListItemGroup
@@ -2058,11 +2126,11 @@ Second Term
     })
 
     test('markdown - 50', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- [x] Write the press release`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -2070,13 +2138,13 @@ Second Term
     })
 
     test('markdown - 51', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- [x] Write the press release
 - [ ] Update the website
 - [ ] Contact the media`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -2088,14 +2156,14 @@ Second Term
     })
 
     test('markdown - 52', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- [x] Write the press release
 - [Y] Contact the media
 - [ ] Update the website
 `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     TaskList
         TaskListItem
@@ -2107,12 +2175,12 @@ Second Term
     })
 
     test('markdown - 53', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> First Term
 : This is the definition of the first term.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -2125,12 +2193,12 @@ Second Term
     })
 
     test('markdown - 54', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> First Term
 > : This is the definition of the first term.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Blockquote
         Markdown
@@ -2142,7 +2210,7 @@ Second Term
     })
 
     test('markdown - 55', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
 > \`\`\`
 > {
@@ -2151,9 +2219,9 @@ Second Term
 >   "age": 25
 > }
 > \`\`\``
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2165,11 +2233,11 @@ Second Term
 
     
     test('markdown - 56', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -2178,12 +2246,12 @@ Second Term
     })
 
     test('markdown - 57', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     Indent paragraphs to include them in the footnote.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -2195,12 +2263,12 @@ Second Term
     })
 
     test('markdown - 58', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. hello
     Apple`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2211,12 +2279,12 @@ Second Term
     })
 
     test('markdown - 59', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. hello
     `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2226,13 +2294,13 @@ Second Term
     })
 
     test('markdown - 60', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. hello
     
     `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2243,15 +2311,15 @@ Second Term
     })
 
     test('markdown - 61', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     Indent paragraphs to include them in the footnote.
     \`{ my code }\`
     
     Add as many paragraphs as you like.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -2267,15 +2335,15 @@ Second Term
     })
 
     test('markdown - 62', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     > Indent paragraphs to include them in the footnote.
     > \`{ my code }\`
     
     > Add as many paragraphs as you like.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -2295,15 +2363,15 @@ Second Term
     })
 
     test('markdown - 63', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
     > Indent paragraphs to include them in the footnote.
     > \`{ my code }\`
     > 
     > Add as many paragraphs as you like.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Footnote
         FootnoteReference
@@ -2321,32 +2389,32 @@ Second Term
     })
 
     test('markdown - inputing-0', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 ``
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     BlankLine`)
     })
 
     test('markdown - inputing-1', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-2', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `#`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2354,11 +2422,11 @@ Second Term
 
 
     test('markdown - inputing-3', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `#▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2366,55 +2434,55 @@ Second Term
 
 
     test('markdown - inputing-4', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `# ▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Heading
         Sentence`)
     })
 
     test('markdown - inputing-5', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `#▮ `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Heading`)
     })
 
 
     test('markdown - inputing-6', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `▮# `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Heading`)
     })
 
 
     test('markdown - inputing-7', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `#▮# `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Heading`)
     })
 
 
     test('markdown - inputing-8', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `-`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2422,11 +2490,11 @@ Second Term
 
 
     test('markdown - inputing-9', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
@@ -2434,33 +2502,33 @@ Second Term
 
 
     test('markdown - inputing-10', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `+`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-11', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `+ `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
     })
 
     test('markdown - inputing-12', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `-▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2468,11 +2536,11 @@ Second Term
 
 
     test('markdown - inputing-13', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- ▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -2481,11 +2549,11 @@ Second Term
 
 
     test('markdown - inputing-14', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `+▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
@@ -2493,11 +2561,11 @@ Second Term
 
 
     test('markdown - inputing-15', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `+ ▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem
@@ -2505,88 +2573,88 @@ Second Term
     })
 
     test('markdown - inputing-16', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `+▮ `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     UnorderedList
         UnorderedItem`)
     })
 
     test('markdown - inputing-17', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-18', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-19', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-20', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-21', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1.▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-22', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-23', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. a`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2594,11 +2662,11 @@ Second Term
     })
 
     test('markdown - inputing-24', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. ▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem
@@ -2606,80 +2674,80 @@ Second Term
     })
 
     test('markdown - inputing-25', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1.▮ `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-26', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1▮. `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-27', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `▮1. `
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     OrderedList
         OrderedItem`)
     })
 
     test('markdown - inputing-28', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `▮1.`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-29', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `▮`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-30', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `\\*`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Paragraph
         Sentence`)
     })
 
     test('markdown - inputing-31', () => {
-        expect(markdown.isValid(
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |
 | ----------- | ----------- |
 | Header      | Title       |
 | Paragraph   | Text        |`
-        )).toEqual(true)
+        )
 
-        expect(markdown.getResult().toHtml()).toEqual(
+        expect(markdown.toHtml()).toEqual(
 `Markdown
     Table
         TableRow

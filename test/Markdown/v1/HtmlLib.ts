@@ -133,19 +133,19 @@ export class OrderedList extends HtmlElement {}
 
 export class OrderedItem extends HtmlElement {
     item : HtmlElement
-    complement : HtmlElement 
+    complementBlock : HtmlElement 
 
     constructor(item : HtmlElement) {
         super() 
         this.item = item
     }
 
-    setComplement(complement : HtmlElement) {
-        this.complement = complement
+    setComplementBlock(complementBlock : HtmlElement) {
+        this.complementBlock = complementBlock
     }
 
-    getComplement() : HtmlElement | null {
-        return this.complement
+    getComplementBlock() : HtmlElement | null {
+        return this.complementBlock
     }
 
     setItem(item : HtmlElement) {
@@ -162,19 +162,19 @@ export class UnorderedList extends HtmlElement {}
 
 export class UnorderedItem extends HtmlElement {
     item : HtmlElement
-    complement : HtmlElement 
+    complementBlock : HtmlElement 
 
-    constructor(item : HtmlElement = null) {
+    constructor(item : HtmlElement) {
         super() 
         this.item = item
     }
 
-    setComplement(complement : HtmlElement) {
-        this.complement = complement
+    setComplementBlock(complementBlock : HtmlElement) {
+        this.complementBlock = complementBlock
     }
 
-    getComplement() : HtmlElement | null {
-        return this.complement
+    getComplementBlock() : HtmlElement | null {
+        return this.complementBlock
     }
 
     setItem(item : HtmlElement) {

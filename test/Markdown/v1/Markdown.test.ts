@@ -1,6 +1,6 @@
 import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer"
 
- var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
+var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
 
 
 describe('Markdown', () => {

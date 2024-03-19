@@ -2,7 +2,6 @@ import { LRSyntaxAnalyzer } from '../../src/SyntaxAnalysis/LR'
 import { AnalysisStep } from '../../src/SyntaxAnalysis/SyntaxAnalysis'
 import { FileUtils } from '../../src/Utils/FileUtil'
 
-import * as mlf  from './v1/Markdown_Language_Function'
 
 export class Markdown {
 
