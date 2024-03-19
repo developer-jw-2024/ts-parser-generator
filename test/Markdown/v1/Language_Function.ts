@@ -270,7 +270,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(`Complement -> intent`)
     Complement__intent(argv : Array<AnalysisToken>) {
         // var len = argv[0].value.length/4
-        var complement : Complement = new Complement(argv[0].value, new BlankLine("\n"))
+        var complement : Complement = new Complement(argv[0].value, null)
         // for (var i=0;i<len-1;i++) {
         //     complement = new Complement(complement)
         // }
@@ -310,22 +310,22 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`OrderedItem -> orderedItemTag Sentence`)
     OrderedItem__orderedItemTag_Sentence(argv : Array<AnalysisToken>) {
-        var orderedItem : OrderedItem = new OrderedItem(argv[1].value)
+        var orderedItem : OrderedItem = new OrderedItem(argv[0].value, argv[1].value)
         return orderedItem
     }
     @GrammarProductionFunction(`OrderedItem -> orderedItemTag`)
     OrderedItem__orderedItemTag(argv : Array<AnalysisToken>) {
-        var orderedItem : OrderedItem = new OrderedItem(null)
+        var orderedItem : OrderedItem = new OrderedItem(argv[0].value, null)
         return orderedItem
     }
     @GrammarProductionFunction(`OrderedItem -> orderedItemTagWithCursor Sentence`)
     OrderedItem__orderedItemTagWithCursor_Sentence(argv : Array<AnalysisToken>) {
-        var orderedItem : OrderedItem = new OrderedItem(argv[1].value)
+        var orderedItem : OrderedItem = new OrderedItem(argv[0].value, argv[1].value)
         return orderedItem
     }
     @GrammarProductionFunction(`OrderedItem -> orderedItemTagWithCursor`)
     OrderedItem__orderedItemTagWithCursor(argv : Array<AnalysisToken>) {
-        var orderedItem : OrderedItem = new OrderedItem(null)
+        var orderedItem : OrderedItem = new OrderedItem(argv[0].value, null)
         return orderedItem
     }
     @GrammarProductionFunction(`MarkdownLine -> OrderedItem`)
@@ -335,23 +335,23 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`UnorderedItem -> unorderedItemTag Sentence`)
     UnorderedItem__unorderedItemTag_Sentence(argv : Array<AnalysisToken>) {
-        var unorderedItem : UnorderedItem = new UnorderedItem(argv[1].value)
+        var unorderedItem : UnorderedItem = new UnorderedItem(argv[0].value, argv[1].value)
         return unorderedItem
     }
     @GrammarProductionFunction(`UnorderedItem -> unorderedItemTag`)
     UnorderedItem__unorderedItemTag(argv : Array<AnalysisToken>) {
-        var unorderedItem : UnorderedItem = new UnorderedItem(null)
+        var unorderedItem : UnorderedItem = new UnorderedItem(argv[0].value, null)
         return unorderedItem
     }
 
     @GrammarProductionFunction(`UnorderedItem -> unorderedItemTagWithCursor Sentence`)
     UnorderedItem__unorderedItemTagWithCursor_Sentence(argv : Array<AnalysisToken>) {
-        var unorderedItem : UnorderedItem = new UnorderedItem(argv[1].value)
+        var unorderedItem : UnorderedItem = new UnorderedItem(argv[0].value, argv[1].value)
         return unorderedItem
     }
     @GrammarProductionFunction(`UnorderedItem -> unorderedItemTagWithCursor`)
     UnorderedItem__unorderedItemTagWithCursor(argv : Array<AnalysisToken>) {
-        var unorderedItem : UnorderedItem = new UnorderedItem(null)
+        var unorderedItem : UnorderedItem = new UnorderedItem(argv[0].value, null)
         return unorderedItem
     }
 
@@ -793,6 +793,7 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(`BeginBacktickText -> backtickTag NO_BacktickText_Match_emphasis`)
     BeginBacktickText__backtickTag_NO_BacktickText_Match_emphasis(argv : Array<AnalysisToken>) {
         var backtickText : BacktickText = new BacktickText()
+        backtickText.setBeginTag(argv[0].value)
         backtickText.addChild(argv[1].value)
         return backtickText
     }
@@ -806,6 +807,8 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
 
     @GrammarProductionFunction(`BacktickText -> BeginBacktickText backtickTag`)
     BacktickText__BeginBacktickText_backtickTag(argv : Array<AnalysisToken>) {
+        var backtickText : BacktickText = argv[0].value
+        backtickText.setEndTag(argv[1].value)
         return argv[0].value
     }
     @GrammarProductionFunction(`

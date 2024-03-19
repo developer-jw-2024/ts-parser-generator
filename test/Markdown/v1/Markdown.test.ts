@@ -13,6 +13,15 @@ describe('Markdown', () => {
     BlankLine`)
     })
 
+    test('markdown - 0-(-2)', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`
+`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    BlankLine`)
+    })
+
     test('markdown - 0', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `hello`
@@ -595,11 +604,12 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Paragraph
-                    Sentence
-                        PlainText
-                            SimpleText`)
+            ComplementBlock
+                Markdown
+                    Paragraph
+                        Sentence
+                            PlainText
+                                SimpleText`)
     })
 
     test('markdown - 21', () => {
@@ -615,14 +625,15 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Paragraph
-                    Sentence
-                        PlainText
-                            SimpleText
-                    Sentence
-                        PlainText
-                            SimpleText`)
+            ComplementBlock
+                Markdown
+                    Paragraph
+                        Sentence
+                            PlainText
+                                SimpleText
+                        Sentence
+                            PlainText
+                                SimpleText`)
     })
 
     test('markdown - 22', () => {
@@ -639,14 +650,15 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Paragraph
-                    Sentence
-                        PlainText
-                            SimpleText
-                    Sentence
-                        PlainText
-                            SimpleText
+            ComplementBlock
+                Markdown
+                    Paragraph
+                        Sentence
+                            PlainText
+                                SimpleText
+                        Sentence
+                            PlainText
+                                SimpleText
         OrderedItem
             Sentence
                 PlainText
@@ -667,16 +679,17 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Blockquote
-                    Markdown
-                        Paragraph
-                            Sentence
-                                PlainText
-                                    SimpleText
-                            Sentence
-                                PlainText
-                                    SimpleText
+            ComplementBlock
+                Markdown
+                    Blockquote
+                        Markdown
+                            Paragraph
+                                Sentence
+                                    PlainText
+                                        SimpleText
+                                Sentence
+                                    PlainText
+                                        SimpleText
         OrderedItem
             Sentence
                 PlainText
@@ -698,16 +711,17 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                OrderedList
-                    OrderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
-                    OrderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
+            ComplementBlock
+                Markdown
+                    OrderedList
+                        OrderedItem
+                            Sentence
+                                PlainText
+                                    SimpleText
+                        OrderedItem
+                            Sentence
+                                PlainText
+                                    SimpleText
         OrderedItem
             Sentence
                 PlainText
@@ -727,13 +741,14 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Blockquote
-                    Markdown
-                        Paragraph
-                            Sentence
-                                PlainText
-                                    SimpleText`)
+            ComplementBlock
+                Markdown
+                    Blockquote
+                        Markdown
+                            Paragraph
+                                Sentence
+                                    PlainText
+                                        SimpleText`)
     })
 
     test('markdown - 26', () => {
@@ -751,27 +766,29 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                OrderedList
-                    OrderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
-                        Markdown
-                            Blockquote
+            ComplementBlock
+                Markdown
+                    OrderedList
+                        OrderedItem
+                            Sentence
+                                PlainText
+                                    SimpleText
+                            ComplementBlock
                                 Markdown
-                                    Paragraph
-                                        Sentence
-                                            PlainText
-                                                SimpleText
-                                                Spaces
-                                                SimpleText
-                                                Spaces
-                                                SimpleText
-                    OrderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
+                                    Blockquote
+                                        Markdown
+                                            Paragraph
+                                                Sentence
+                                                    PlainText
+                                                        SimpleText
+                                                        Spaces
+                                                        SimpleText
+                                                        Spaces
+                                                        SimpleText
+                        OrderedItem
+                            Sentence
+                                PlainText
+                                    SimpleText
         OrderedItem
             Sentence
                 PlainText
@@ -793,27 +810,28 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                OrderedList
-                    OrderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
-                Blockquote
-                    Markdown
-                        Paragraph
+            ComplementBlock
+                Markdown
+                    OrderedList
+                        OrderedItem
                             Sentence
                                 PlainText
                                     SimpleText
-                                    Spaces
+                    Blockquote
+                        Markdown
+                            Paragraph
+                                Sentence
+                                    PlainText
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                    OrderedList
+                        OrderedItem
+                            Sentence
+                                PlainText
                                     SimpleText
-                                    Spaces
-                                    SimpleText
-                OrderedList
-                    OrderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
         OrderedItem
             Sentence
                 PlainText
@@ -876,16 +894,17 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                UnorderedList
-                    UnorderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
-                    UnorderedItem
-                        Sentence
-                            PlainText
-                                SimpleText
+            ComplementBlock
+                Markdown
+                    UnorderedList
+                        UnorderedItem
+                            Sentence
+                                PlainText
+                                    SimpleText
+                        UnorderedItem
+                            Sentence
+                                PlainText
+                                    SimpleText
         UnorderedItem
             Sentence
                 PlainText
@@ -904,15 +923,16 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Paragraph
-                    Sentence
-                        PlainText
-                            SimpleText
-                            Spaces
-                            SimpleText
-                            Spaces
-                            SimpleText`)
+            ComplementBlock
+                Markdown
+                    Paragraph
+                        Sentence
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText`)
     })
 
     test('markdown - 29-2', () => {
@@ -927,17 +947,18 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Blockquote
-                    Markdown
-                        Paragraph
-                            Sentence
-                                PlainText
-                                    SimpleText
-                                    Spaces
-                                    SimpleText
-                                    Spaces
-                                    SimpleText`)
+            ComplementBlock
+                Markdown
+                    Blockquote
+                        Markdown
+                            Paragraph
+                                Sentence
+                                    PlainText
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                                        Spaces
+                                        SimpleText`)
     })
 
     test('markdown - 29-3', () => {
@@ -954,15 +975,16 @@ This is that.`
                     Sentence
                         PlainText
                             SimpleText
-                    Markdown
-                        Paragraph
-                            Sentence
-                                PlainText
-                                    SimpleText
-                                    Spaces
-                                    SimpleText
-                                    Spaces
-                                    SimpleText`)
+                    ComplementBlock
+                        Markdown
+                            Paragraph
+                                Sentence
+                                    PlainText
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                                        Spaces
+                                        SimpleText`)
     })
 
     test('markdown - 29-4', () => {
@@ -979,17 +1001,18 @@ This is that.`
                     Sentence
                         PlainText
                             SimpleText
-                    Markdown
-                        Blockquote
-                            Markdown
-                                Paragraph
-                                    Sentence
-                                        PlainText
-                                            SimpleText
-                                            Spaces
-                                            SimpleText
-                                            Spaces
-                                            SimpleText`)
+                    ComplementBlock
+                        Markdown
+                            Blockquote
+                                Markdown
+                                    Paragraph
+                                        Sentence
+                                            PlainText
+                                                SimpleText
+                                                Spaces
+                                                SimpleText
+                                                Spaces
+                                                SimpleText`)
     })
 
     test('markdown - 30', () => {
@@ -1514,14 +1537,15 @@ This is that.`
             Sentence
                 PlainText
                     SimpleText
-            Markdown
-                Blockquote
-                    Markdown
-                        FencedCodeBlockText`)
+            ComplementBlock
+                Markdown
+                    Blockquote
+                        Markdown
+                            FencedCodeBlockText`)
     })
 
     
-/*
+
     test('markdown - 45', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
@@ -1537,8 +1561,11 @@ This is that.`
     OrderedList
         OrderedItem
             Sentence
-            Markdown
-                FencedCodeBlockText`)
+                PlainText
+                    SimpleText
+            ComplementBlock
+                Markdown
+                    FencedCodeBlockText`)
     })
 
     test('markdown - 46', () => {
@@ -1550,8 +1577,28 @@ This is that.`
     DescriptionList
         DefinitionListItemGroup
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
             DefinitionListItem
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
 
     test('markdown - 47', () => {
@@ -1564,10 +1611,46 @@ This is that.`
     DescriptionList
         DefinitionListItemGroup
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
             DefinitionListItem
                 Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
             DefinitionListItem
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
 
     test('markdown - 48', () => {
@@ -1582,14 +1665,70 @@ Second Term
     DescriptionList
         DefinitionListItemGroup
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
             DefinitionListItem
                 Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
         DefinitionListItemGroup
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
             DefinitionListItem
                 Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
             DefinitionListItem
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
 
     test('markdown - 49', () => {
@@ -1605,17 +1744,74 @@ Second Term
     DescriptionList
         DefinitionListItemGroup
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
             DefinitionListItem
                 Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
     BlankLine
     DescriptionList
         DefinitionListItemGroup
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
             DefinitionListItem
                 Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
             DefinitionListItem
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
+
 
     test('markdown - 50', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
@@ -1624,7 +1820,15 @@ Second Term
 `Markdown
     TaskList
         TaskListItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
 
     test('markdown - 51', () => {
@@ -1637,10 +1841,30 @@ Second Term
     TaskList
         TaskListItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
         TaskListItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
         TaskListItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
 
     test('markdown - 52', () => {
@@ -1654,10 +1878,24 @@ Second Term
     TaskList
         TaskListItem
             Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText
     MarkdownError
     TaskList
         TaskListItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+                    Spaces
+                    SimpleText`)
     })
 
     test('markdown - 53', () => {
@@ -1670,10 +1908,30 @@ Second Term
         Markdown
             Paragraph
                 Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
     DescriptionList
         DefinitionListItemGroup
             DefinitionListItem
-                Sentence`)
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        SimpleText`)
     })
 
     test('markdown - 54', () => {
@@ -1687,8 +1945,28 @@ Second Term
             DescriptionList
                 DefinitionListItemGroup
                     Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText
                     DefinitionListItem
-                        Sentence`)
+                        Sentence
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText`)
     })
 
     test('markdown - 55', () => {
@@ -1706,12 +1984,14 @@ Second Term
     OrderedList
         OrderedItem
             Sentence
+                PlainText
+                    SimpleText
     Blockquote
         Markdown
             FencedCodeBlockText`)
     })
 
-    
+
     test('markdown - 56', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.`
@@ -1720,7 +2000,17 @@ Second Term
     Footnote
         FootnoteReference
             SimpleText
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText`)
     })
 
     test('markdown - 57', () => {
@@ -1733,9 +2023,36 @@ Second Term
         FootnoteReference
             SimpleText
         Sentence
-        Markdown
-            Paragraph
-                Sentence`)
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+        ComplementBlock
+            Markdown
+                Paragraph
+                    Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText`)
     })
 
     test('markdown - 58', () => {
@@ -1747,9 +2064,14 @@ Second Term
     OrderedList
         OrderedItem
             Sentence
-            Markdown
-                Paragraph
-                    Sentence`)
+                PlainText
+                    SimpleText
+            ComplementBlock
+                Markdown
+                    Paragraph
+                        Sentence
+                            PlainText
+                                SimpleText`)
     })
 
     test('markdown - 59', () => {
@@ -1761,8 +2083,11 @@ Second Term
     OrderedList
         OrderedItem
             Sentence
-            Markdown
-                BlankLine`)
+                PlainText
+                    SimpleText
+            ComplementBlock
+                Markdown
+                    BlankLine`)
     })
 
     test('markdown - 60', () => {
@@ -1775,9 +2100,11 @@ Second Term
     OrderedList
         OrderedItem
             Sentence
-            Markdown
-                BlankLine
-                BlankLine`)
+                PlainText
+                    SimpleText
+            ComplementBlock
+                Markdown
+                    BlankLine`)
     })
 
     test('markdown - 61', () => {
@@ -1793,13 +2120,63 @@ Second Term
         FootnoteReference
             SimpleText
         Sentence
-        Markdown
-            Paragraph
-                Sentence
-                Sentence
-            BlankLine
-            Paragraph
-                Sentence`)
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+        ComplementBlock
+            Markdown
+                Paragraph
+                    Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                    Sentence
+                        BacktickText
+                            PlainText
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                                Spaces
+                                SimpleText
+                BlankLine
+                Paragraph
+                    Sentence
+                        PlainText
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText
+                            Spaces
+                            SimpleText`)
     })
 
     test('markdown - 62', () => {
@@ -1815,19 +2192,69 @@ Second Term
         FootnoteReference
             SimpleText
         Sentence
-        Markdown
-            Blockquote
-                Markdown
-                    Paragraph
-                        Sentence
-                        Sentence
-            BlankLine
-            Blockquote
-                Markdown
-                    Paragraph
-                        Sentence`)
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+        ComplementBlock
+            Markdown
+                Blockquote
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                            Sentence
+                                BacktickText
+                                    PlainText
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                BlankLine
+                Blockquote
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText`)
     })
-
+/*
     test('markdown - 63', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.

@@ -68,11 +68,67 @@ export class MarkdownElement extends SymbolEntity {
     }
 
     getUnhandledBlockquotes() : Array<Blockquote> {
-        var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
         var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([[this]])
+        var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
+        
         return result.concat(childBlockquotes)
     }
+
+    mergeUnhandledComplementBlocks(elements : any) : Array<ComplementBlock> {
+        var result : Array<MarkdownElement> = [].concat.apply([], elements)
+        result = result.filter(x=>isTypeOf(x, ComplementBlock))
+        var list : Array<ComplementBlock> = []
+        for (var i=0;i<result.length;i++) {
+            var complementBlock : ComplementBlock = result[i] as ComplementBlock
+            if (!complementBlock.isHandled()) {
+                list.push(complementBlock)
+            }
+        }
+        return list
+    }
+
+
+    getUnhandledChildrenComplementBlocks() : Array<ComplementBlock> {
+        var list : any = this.getMarkdownElements().filter(x=>x)
+        var unhandledComplementBlockArraytList : any = []
+        for (var i=0;i<list.length;i++) {
+            var element : MarkdownElement = list[i]
+            unhandledComplementBlockArraytList.push(element.getUnhandledComplementBlocks())
+        }
+        var childComplementBlocks : Array<ComplementBlock> = [].concat.apply([], unhandledComplementBlockArraytList)
+        return childComplementBlocks
+    }
+
+    getUnhandledComplementBlockByMarkdownElement(element : MarkdownElement) : Array<ComplementBlock> {
+        var childComplementBlocks : Array<ComplementBlock> = []
+
+        if (isTypeOf(element, ComplementBlock)) {
+            var complementBlock : ComplementBlock = element as ComplementBlock
+            if (complementBlock.isHandled()) {
+                childComplementBlocks = element.getUnhandledChildrenComplementBlocks()
+            } else {
+                return [complementBlock]
+            }
+        } else if (element!=null && element.getUnhandledChildrenComplementBlocks) {
+            childComplementBlocks = element.getUnhandledChildrenComplementBlocks()
+        } 
+        return childComplementBlocks
+    }
+
+    getUnhandledComplementBlockByMarkdownElements(elements : Array<MarkdownElement>) : Array<ComplementBlock> {
+        var childComplementBlocks : Array<ComplementBlock> = []
+
+        for (var i=0;i<elements.length;i++) {
+            childComplementBlocks = childComplementBlocks.concat(this.getUnhandledComplementBlockByMarkdownElement(elements[i]))
+        }
+        return childComplementBlocks
+
+    }
     
+    getUnhandledComplementBlocks() : Array<ComplementBlock> {
+        // console.log('getUnhandledComplementBlocks', this)
+        return this.getUnhandledComplementBlockByMarkdownElement(this)
+    }
 
     toChildrenMarkdownElementsHtml() : Array<html.HtmlElement> {
         var htmlEles : Array<html.HtmlElement> =  this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
@@ -129,6 +185,12 @@ export class MarkdownValueElement extends MarkdownElement {
         return result.concat(childBlockquotes)
     }
     
+    getUnhandledComplementBlocks() : Array<ComplementBlock> {
+        // console.log('getUnhandledComplementBlocks', this)
+        return this.getUnhandledComplementBlockByMarkdownElements([this, this.value])
+    }
+
+
 
     toValueHtml() : html.HtmlElement {
         if (isTypeOf(this.value, String)) {
@@ -622,6 +684,10 @@ export class TaskListItem extends MarkdownElement {
         return result.concat(childBlockquotes)
     }
     
+    getUnhandledComplementBlocks() : Array<ComplementBlock> {
+        // console.log('getUnhandledComplementBlocks', this)
+        return this.getUnhandledComplementBlockByMarkdownElements([this, this.value])
+    }
 }
 
 export class TaskList extends MarkdownElement {
@@ -705,6 +771,21 @@ export class DoubleBacktickText extends MarkdownElement {
     }
 }
 export class BacktickText extends MarkdownElement {
+    beginTag : string = ""
+    endTag : string = ""
+
+    setBeginTag(beginTag : string) {
+        this.beginTag = beginTag
+    }
+
+    setEndTag(endTag : string) {
+        this.endTag = endTag
+    }
+
+    getRawValue(): string {
+        return this.beginTag + super.getRawValue() + this.endTag
+    }
+
     addChild(child : any) {
         this.children.push(child)
         this.markdownElements.push(child)
@@ -773,7 +854,8 @@ export class Footnote extends MarkdownElement {
         if (this.complementBlock==null) {
             this.complementBlock = new ComplementBlock()
         }
-        this.complementBlock.getMarkdownElements().push(element)
+        // this.complementBlock.getMarkdownElements().push(element)
+        this.complementBlock.addcomplement(element as Complement)
     }
 
     
@@ -801,6 +883,22 @@ export class Footnote extends MarkdownElement {
         })
         resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
         return [].concat.apply([], resultArray)
+    }
+
+    getUnhandledBlockquotes() : Array<Blockquote> {
+        var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
+        var elements : Array<MarkdownElement> = [this.footnoteReference, this.detail]
+        if (this.complementBlock!=null && this.complementBlock.isHandled()) {
+            childBlockquotes = childBlockquotes.concat(this.complementBlock.getUnhandledBlockquotes())
+            elements.push(this.complementBlock)
+        }
+        var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([elements])
+        return result.concat(childBlockquotes)
+    }
+
+    getUnhandledComplementBlocks() : Array<ComplementBlock> {
+        // console.log('getUnhandledComplementBlocks', this)
+        return this.getUnhandledComplementBlockByMarkdownElements([this, this.footnoteReference, this.detail, this.complementBlock])
     }
 }
 export class URLAddress extends MarkdownValueElement {}
@@ -900,11 +998,58 @@ export class Complement extends MarkdownElement {
     }
 
     getRawValue(): string {
-        return this.intent+this.value.getRawValue()
+        return this.intent+(this.value!=null?this.value.getRawValue():"")
     }
 }
 export class ComplementBlock extends MarkdownElement {
+    isHandledFlag : boolean = false
+    complements : Array<Complement> = []
+
+
+    constructor() {
+        super()
+        this.isHandledFlag = false
+    }
+
+    getContent() : string {
+        return this.complements.map(c=>{
+            // console.log(`[${c.getRawValue()}]`)
+            return c.getRawValue()
+        }).join('\n')
+    }
+
+    addcomplement(complement : Complement) {
+        this.complements.push(complement)
+    }
+
+    isHandled() : boolean {
+        return this.isHandledFlag
+    }
+
+    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+        var subIntent = `${intent}    `
+        var elements : Array<MarkdownElement> = []
+        if (this.isHandled()) {
+            elements = this.getMarkdownElements()
+        } else {
+            elements = this.complements
+        }
+        var resultArray =  elements.filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        return [].concat.apply([], resultArray)
+    }
     
+    getUnhandledBlockquotes() : Array<Blockquote> {
+        var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
+        var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([[this]])
+        return result.concat(childBlockquotes)
+    }
 }
 
 
@@ -961,13 +1106,24 @@ export class OrderedList extends MarkdownElement {
 }
 export class OrderedItem extends MarkdownValueElement {
     complementBlock : ComplementBlock | null = null
+    orderTag : string = ""
+    
+    constructor(orderTag : string, value : any) {
+        super(value)
+        this.orderTag = orderTag
+    }
+
+    getRawValue(): string {
+        return this.orderTag + super.getRawValue()
+    }
 
     addElement(element : MarkdownElement) {
         if (element.getClass()==Complement) {
             if (this.complementBlock==null) {
                 this.complementBlock = new ComplementBlock()
             }
-            this.complementBlock.getMarkdownElements().push(element)
+            // this.complementBlock.getMarkdownElements().push(element)
+            this.complementBlock.addcomplement(element as Complement)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -1002,6 +1158,23 @@ export class OrderedItem extends MarkdownValueElement {
             e.setComplement(complementMarkdown.toHtml())
         }
         return e
+    }
+
+    getUnhandledBlockquotes() : Array<Blockquote> {
+        var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
+        var elements : Array<MarkdownElement> = [this]
+        
+        if (this.complementBlock!=null && this.complementBlock.isHandled()) {
+            childBlockquotes = childBlockquotes.concat(this.complementBlock.getUnhandledBlockquotes())
+            elements.push(this.complementBlock)
+        }
+        var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([elements])
+        return result.concat(childBlockquotes)
+    }
+
+    getUnhandledComplementBlocks() : Array<ComplementBlock> {
+        // console.log('getUnhandledComplementBlocks', this)
+        return this.getUnhandledComplementBlockByMarkdownElements([this, this.complementBlock])
     }
 }
 
@@ -1043,12 +1216,24 @@ export class UnorderedList extends MarkdownElement {
 }
 export class UnorderedItem extends MarkdownValueElement {
     complementBlock : ComplementBlock | null = null
+    orderTag : string = ""
+    
+    constructor(orderTag : string, value : any) {
+        super(value)
+        this.orderTag = orderTag
+    }
+
+    getRawValue(): string {
+        return this.orderTag + super.getRawValue()
+    }
+
     addElement(element : MarkdownElement) {
         if (element.getClass()==Complement) {
             if (this.complementBlock==null) {
                 this.complementBlock = new ComplementBlock()
             }
-            this.complementBlock.getMarkdownElements().push(element)
+            // this.complementBlock.getMarkdownElements().push(element)
+            this.complementBlock.addcomplement(element as Complement)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -1083,6 +1268,22 @@ export class UnorderedItem extends MarkdownValueElement {
             e.setComplement(complementMarkdown.toHtml())
         }
         return e
+    }
+
+    getUnhandledBlockquotes() : Array<Blockquote> {
+        var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
+        var elements : Array<MarkdownElement> = [this]
+        if (this.complementBlock!=null && this.complementBlock.isHandled()) {
+            childBlockquotes = childBlockquotes.concat(this.complementBlock.getUnhandledBlockquotes())
+            elements.push(this.complementBlock)
+        }
+        var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([elements])
+        return result.concat(childBlockquotes)
+    }
+
+    getUnhandledComplementBlocks() : Array<ComplementBlock> {
+        // console.log('getUnhandledComplementBlocks', this)
+        return this.getUnhandledComplementBlockByMarkdownElements([this, this.complementBlock])
     }
 }
 
