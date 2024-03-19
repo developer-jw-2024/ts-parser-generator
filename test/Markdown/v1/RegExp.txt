@@ -14,7 +14,7 @@ orderedItemTag [0-9]+\." "
 orderedItemTagWithCursor (▮[0-9]+\.|[0-9]+▮[0-9]*\.|[0-9]+\.▮)" "
 
 cursor "▮"
-verticalBar "|"
+verticalBar ("|")|("▮|")|("|▮")
 openParentheses "("
 closeParentheses ")"
 openSquareBracket "["

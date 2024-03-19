@@ -2254,7 +2254,7 @@ Second Term
                                     Spaces
                                     SimpleText`)
     })
-/*
+
     test('markdown - 63', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.
@@ -2268,15 +2268,65 @@ Second Term
         FootnoteReference
             SimpleText
         Sentence
-        Markdown
-            Blockquote
-                Markdown
-                    Paragraph
-                        Sentence
-                        Sentence
-                    BlankLine
-                    Paragraph
-                        Sentence`)
+            PlainText
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+                Spaces
+                SimpleText
+        ComplementBlock
+            Markdown
+                Blockquote
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                            Sentence
+                                BacktickText
+                                    PlainText
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                                        Spaces
+                                        SimpleText
+                        BlankLine
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                                    Spaces
+                                    SimpleText`)
     })
 
     test('markdown - inputing-0', () => {
@@ -2293,7 +2343,9 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                Cursor`)
     })
 
     test('markdown - inputing-2', () => {
@@ -2302,7 +2354,9 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
 
 
@@ -2312,7 +2366,10 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Cursor`)
     })
 
 
@@ -2322,8 +2379,11 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Heading
-        Sentence`)
+        Sentence
+            PlainText
+                Cursor`)
     })
+
 
     test('markdown - inputing-5', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
@@ -2358,7 +2418,9 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
 
 
@@ -2378,7 +2440,9 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
 
     test('markdown - inputing-11', () => {
@@ -2396,7 +2460,10 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Cursor`)
     })
 
 
@@ -2407,7 +2474,9 @@ Second Term
 `Markdown
     UnorderedList
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    Cursor`)
     })
 
 
@@ -2417,7 +2486,10 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Cursor`)
     })
 
 
@@ -2428,7 +2500,9 @@ Second Term
 `Markdown
     UnorderedList
         UnorderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    Cursor`)
     })
 
     test('markdown - inputing-16', () => {
@@ -2446,7 +2520,9 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
 
     test('markdown - inputing-18', () => {
@@ -2455,7 +2531,9 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
 
     test('markdown - inputing-19', () => {
@@ -2473,7 +2551,10 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Cursor`)
     })
 
     test('markdown - inputing-21', () => {
@@ -2482,7 +2563,10 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText
+                Cursor`)
     })
 
     test('markdown - inputing-22', () => {
@@ -2501,7 +2585,9 @@ Second Term
 `Markdown
     OrderedList
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    SimpleText`)
     })
 
     test('markdown - inputing-24', () => {
@@ -2511,7 +2597,9 @@ Second Term
 `Markdown
     OrderedList
         OrderedItem
-            Sentence`)
+            Sentence
+                PlainText
+                    Cursor`)
     })
 
     test('markdown - inputing-25', () => {
@@ -2547,7 +2635,23 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                Cursor
+                SimpleText`)
+    })
+
+    test('markdown - inputing-28-1', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`1▮.`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+            PlainText
+                SimpleText
+                Cursor
+                SimpleText`)
     })
 
     test('markdown - inputing-29', () => {
@@ -2556,7 +2660,9 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                Cursor`)
     })
 
     test('markdown - inputing-30', () => {
@@ -2565,22 +2671,81 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Paragraph
-        Sentence`)
+        Sentence
+            PlainText
+                SimpleText`)
     })
 
     test('markdown - inputing-31', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
-`| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |`
+`| Syntax      `
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    MarkdownError`)
+    })
+
+    test('markdown - inputing-32', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`| Syntax      |`
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Table
         TableRow
-        TableRow`)
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
     })
-*/
+
+    test('markdown - inputing-33', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`| Syntax      |▮`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
+    })
+
+    test('markdown - inputing-34', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`| Syntax      ▮|`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces`)
+    })
+
+    test('markdown - inputing-35', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`| Syntax     ▮ |`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Table
+        TableRow
+            TableCell
+                Sentence
+                    PlainText
+                        Spaces
+                        SimpleText
+                        Spaces
+                        Cursor
+                        Spaces`)
+    })
+
 })
 
 
