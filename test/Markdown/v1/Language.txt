@@ -38,8 +38,8 @@ TaskListItem -> checkedBox spaces MarkdownLine
 TaskListItem -> uncheckedBox spaces MarkdownLine
 MarkdownLine -> TaskListItem
 
-DefinitionListItem -> colonSign spaces MarkdownLine
-MarkdownLine -> DefinitionListItem
+DefinitionItemValue -> colonSign spaces MarkdownLine
+MarkdownLine -> DefinitionItemValue
 
 Footnote -> FootnoteReference colonSign spaces MarkdownLine
 MarkdownLine -> Footnote

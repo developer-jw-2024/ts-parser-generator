@@ -157,24 +157,24 @@ export class OrderedItem extends HtmlElement {
     }
 
 }
-export class DescriptionList extends HtmlElement {}
-export class DescriptionListItemGroup extends HtmlElement {
-    item : HtmlElement
+export class DefinitionList extends HtmlElement {}
+export class DefinitionItem extends HtmlElement {
+    term : HtmlElement
 
-    constructor(item : HtmlElement) {
+    constructor(term : HtmlElement) {
         super() 
-        this.item = item
+        this.term = term
     }
-    setItem(item : HtmlElement) {
-        this.item = item
+    setTerm(term : HtmlElement) {
+        this.term = term
     }
 
-    getItem() : HtmlElement {
-        return this.item
+    getTerm() : HtmlElement {
+        return this.term
     }
 
 }
-export class DescriptionListItem extends HtmlElement {
+export class DefinitionItemValue extends HtmlElement {
     item : HtmlElement
     complementBlock : HtmlElement 
 

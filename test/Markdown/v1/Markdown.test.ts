@@ -1574,14 +1574,14 @@ This is that.`
 : This is the definition of the first term.`
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    DescriptionList
-        DefinitionListItemGroup
+    DefinitionList
+        DefinitionItem
             Sentence
                 PlainText
                     SimpleText
                     Spaces
                     SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1601,6 +1601,136 @@ This is that.`
                         SimpleText`)
     })
 
+    test('markdown - 46-1', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`First Term
+: This is
+    That are
+    Bee.`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DefinitionList
+        DefinitionItem
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                ComplementBlock
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                            Sentence
+                                PlainText
+                                    SimpleText`)
+    })
+
+    test('markdown - 46-2', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`First Term
+: This is
+    That are
+    Bee.
+: that are`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DefinitionList
+        DefinitionItem
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                ComplementBlock
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                            Sentence
+                                PlainText
+                                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText`)
+    })
+
+    test('markdown - 46-3', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`First Term
+: This is
+    That are
+    Bee.
+: that are
+Second Term
+: Those are`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DefinitionList
+        DefinitionItem
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                ComplementBlock
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                            Sentence
+                                PlainText
+                                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+        DefinitionItem
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText`)
+    })
+
     test('markdown - 47', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `Second Term
@@ -1608,14 +1738,14 @@ This is that.`
 : This is another definition of the second term.`
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    DescriptionList
-        DefinitionListItemGroup
+    DefinitionList
+        DefinitionItem
             Sentence
                 PlainText
                     SimpleText
                     Spaces
                     SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1633,7 +1763,7 @@ This is that.`
                         SimpleText
                         Spaces
                         SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1662,14 +1792,14 @@ Second Term
 : This is another definition of the second term.`
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    DescriptionList
-        DefinitionListItemGroup
+    DefinitionList
+        DefinitionItem
             Sentence
                 PlainText
                     SimpleText
                     Spaces
                     SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1687,13 +1817,13 @@ Second Term
                         SimpleText
                         Spaces
                         SimpleText
-        DefinitionListItemGroup
+        DefinitionItem
             Sentence
                 PlainText
                     SimpleText
                     Spaces
                     SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1711,7 +1841,7 @@ Second Term
                         SimpleText
                         Spaces
                         SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1741,14 +1871,14 @@ Second Term
 : This is another definition of the second term.`
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
-    DescriptionList
-        DefinitionListItemGroup
+    DefinitionList
+        DefinitionItem
             Sentence
                 PlainText
                     SimpleText
                     Spaces
                     SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1767,14 +1897,14 @@ Second Term
                         Spaces
                         SimpleText
     BlankLine
-    DescriptionList
-        DefinitionListItemGroup
+    DefinitionList
+        DefinitionItem
             Sentence
                 PlainText
                     SimpleText
                     Spaces
                     SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1792,7 +1922,7 @@ Second Term
                         SimpleText
                         Spaces
                         SimpleText
-            DefinitionListItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1912,9 +2042,9 @@ Second Term
                         SimpleText
                         Spaces
                         SimpleText
-    DescriptionList
-        DefinitionListItemGroup
-            DefinitionListItem
+    DefinitionList
+        DefinitionItem
+            DefinitionItemValue
                 Sentence
                     PlainText
                         SimpleText
@@ -1942,14 +2072,14 @@ Second Term
 `Markdown
     Blockquote
         Markdown
-            DescriptionList
-                DefinitionListItemGroup
+            DefinitionList
+                DefinitionItem
                     Sentence
                         PlainText
                             SimpleText
                             Spaces
                             SimpleText
-                    DefinitionListItem
+                    DefinitionItemValue
                         Sentence
                             PlainText
                                 SimpleText

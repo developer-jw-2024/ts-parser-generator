@@ -1,6 +1,6 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
-import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, Cursor, DashesRule, DefinitionListItem, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
+import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, Cursor, DashesRule, DefinitionItemValue, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
 // import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
@@ -190,13 +190,13 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return argv[0].value
     }
 
-    @GrammarProductionFunction(`DefinitionListItem -> colonSign spaces MarkdownLine`)
-    DefinitionListItem__colonSign_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
-        return new DefinitionListItem(argv[2].value)
+    @GrammarProductionFunction(`DefinitionItemValue -> colonSign spaces MarkdownLine`)
+    DefinitionItemValue__colonSign_spaces_MarkdownLine(argv : Array<AnalysisToken>) {
+        return new DefinitionItemValue(argv[2].value)
     }
 
-    @GrammarProductionFunction(`MarkdownLine -> DefinitionListItem`)
-    MarkdownLine__DefinitionListItem(argv : Array<AnalysisToken>) {
+    @GrammarProductionFunction(`MarkdownLine -> DefinitionItemValue`)
+    MarkdownLine__DefinitionItemValue(argv : Array<AnalysisToken>) {
         return argv[0].value
     }
 

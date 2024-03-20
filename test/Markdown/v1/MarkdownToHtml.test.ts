@@ -2098,10 +2098,183 @@ This is that.`
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.DefinitionList().initChildren([
+                new html.DefinitionItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('First'),
+                        new html.Spaces(' '),
+                        new html.Text('Term')
+                    ])
+                ])).initChildren([
+                    new html.DefinitionItemValue(new html.Sentence().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('This'),
+                            new html.Spaces(' '),
+                            new html.Text('is'),
+                            new html.Spaces(' '),
+                            new html.Text('the'),
+                            new html.Spaces(' '),
+                            new html.Text('definition'),
+                            new html.Spaces(' '),
+                            new html.Text('of'),
+                            new html.Spaces(' '),
+                            new html.Text('the'),
+                            new html.Spaces(' '),
+                            new html.Text('first'),
+                            new html.Spaces(' '),
+                            new html.Text('term.'),
+                        ])
+                    ]))
+                ])
+            ])
         ])
         expect(htmlElement).toEqual(rootElement)
     })
+    
+
+    test('markdown - 46-1', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`First Term
+: This is
+    That are
+    Bee.`
+        )
+        
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.DefinitionList().initChildren([
+                new html.DefinitionItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('First'),
+                        new html.Spaces(' '),
+                        new html.Text('Term')
+                    ])
+                ])).initChildren([
+                    new html.DefinitionItemValue(new html.Sentence().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('This'),
+                            new html.Spaces(' '),
+                            new html.Text('is'),
+                        ])
+                    ])).init('complementBlock', new html.HtmlRoot().initChildren([
+                        new html.Paragraph().initChildren([
+                            new html.Sentence().initChildren([
+                                new html.PlainText().initChildren([
+                                    new html.Text('That'),
+                                    new html.Spaces(' '),
+                                    new html.Text('are')
+                                ])
+                            ]),
+                            new html.Sentence().initChildren([
+                                new html.PlainText().initChildren([
+                                    new html.Text('Bee.'),
+                                ])
+                            ])
+                        ])
+                    ]))
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
+    })
+
 /*
+    test('markdown - 46-2', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`First Term
+: This is
+    That are
+    Bee.
+: that are`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DefinitionList
+        DefinitionItem
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                ComplementBlock
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                            Sentence
+                                PlainText
+                                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText`)
+    })
+
+    test('markdown - 46-3', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`First Term
+: This is
+    That are
+    Bee.
+: that are
+Second Term
+: Those are`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    DefinitionList
+        DefinitionItem
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+                ComplementBlock
+                    Markdown
+                        Paragraph
+                            Sentence
+                                PlainText
+                                    SimpleText
+                                    Spaces
+                                    SimpleText
+                            Sentence
+                                PlainText
+                                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText
+        DefinitionItem
+            Sentence
+                PlainText
+                    SimpleText
+                    Spaces
+                    SimpleText
+            DefinitionItemValue
+                Sentence
+                    PlainText
+                        SimpleText
+                        Spaces
+                        SimpleText`)
+    })
+
     test('markdown - 47', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `Second Term

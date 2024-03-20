@@ -260,8 +260,8 @@ export class Markdown extends MarkdownElement {
             this.addTableAlignmentRow(element as TableAlignmentRow)
         } else if (element.getClass()==FencedCodeBlockText) {
             this.addFencedCodeBlockText(element as FencedCodeBlockText)
-        } else if (element.getClass()==DefinitionListItem) {
-            this.addDefinitionListItem(element as DefinitionListItem)
+        } else if (element.getClass()==DefinitionItemValue) {
+            this.addDefinitionItemValue(element as DefinitionItemValue)
         } else if (element.getClass()==TaskListItem) {
             this.addTaskListItem(element as TaskListItem)
         } else if (element.getClass()==Footnote) {
@@ -348,6 +348,8 @@ export class Markdown extends MarkdownElement {
             (lastElement as UnorderedList).addElement(element)
         } else if (lastElement.getClass()==Footnote) {
             (lastElement as Footnote).addElement(element)
+        } else if (lastElement.getClass()==DefinitionList) {
+            (lastElement as DefinitionList).addElement(element)
         } else {
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name} with last element ${lastElement.getClass().name}`)
         }
@@ -423,9 +425,9 @@ export class Markdown extends MarkdownElement {
         this.getMarkdownElements().push(element)
     }
 
-    addDefinitionListItem(element : DefinitionListItem) {
+    addDefinitionItemValue(element : DefinitionItemValue) {
         var lastElement : MarkdownElement = this.getLastMarkdownElement()
-        var descriptionList : DescriptionList | null = null
+        var definitionList : DefinitionList | null = null
 
         if (isTypeOf(lastElement, Paragraph)) {
             var paragraph : Paragraph = lastElement as Paragraph
@@ -436,32 +438,32 @@ export class Markdown extends MarkdownElement {
             if (paragraph.getMarkdownElements().length==0) {
                 this.getMarkdownElements().pop()
             }
-            if (isTypeOf(this.getLastMarkdownElement(), DescriptionList)) {
-                descriptionList = this.getLastMarkdownElement() as DescriptionList
+            if (isTypeOf(this.getLastMarkdownElement(), DefinitionList)) {
+                definitionList = this.getLastMarkdownElement() as DefinitionList
             } else {
-                descriptionList  = new DescriptionList()
-                this.getMarkdownElements().push(descriptionList)    
+                definitionList  = new DefinitionList()
+                this.getMarkdownElements().push(definitionList)    
             }
 
-            var definitionListItemGroup  = new DefinitionListItemGroup()
-            descriptionList.addElement(definitionListItemGroup)
+            var definitionItem  = new DefinitionItem()
+            definitionList.addElement(definitionItem)
 
             if (isNulllOrUndefinedValue(sentence)) {
             } else {
-                definitionListItemGroup.setNameOfGroup(sentence)
+                definitionItem.setTerm(sentence)
             }
-        } else if (isTypeOf(lastElement, DescriptionList)) {
-            descriptionList = lastElement as DescriptionList
+        } else if (isTypeOf(lastElement, DefinitionList)) {
+            definitionList = lastElement as DefinitionList
         } else {
-            descriptionList  = new DescriptionList()
-            this.getMarkdownElements().push(descriptionList)    
-            var definitionListItemGroup  = new DefinitionListItemGroup()
-            descriptionList.addElement(definitionListItemGroup)
+            definitionList  = new DefinitionList()
+            this.getMarkdownElements().push(definitionList)    
+            var definitionItem  = new DefinitionItem()
+            definitionList.addElement(definitionItem)
         }
-        if (isNulllOrUndefinedValue(descriptionList)) {
+        if (isNulllOrUndefinedValue(definitionList)) {
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name} with last element ${lastElement.getClass().name}`)
         } else {
-            descriptionList.addElement(element)
+            definitionList.addElement(element)
         }
     }
 
@@ -703,7 +705,6 @@ export class TaskList extends MarkdownElement {
     
 }
 
-export class DefinitionListItem extends MarkdownValueElement {}
 
 export class PlainText extends MarkdownElement {
     addChild(child : any) {
@@ -1288,34 +1289,43 @@ export class UnorderedItem extends MarkdownValueElement {
     }
 }
 
-export class DescriptionList extends MarkdownElement {
+export class DefinitionList extends MarkdownElement {
     addElement(element : MarkdownElement) {
-        if (element.getClass()==DefinitionListItemGroup) {
+        if (element.getClass()==DefinitionItem) {
             this.getMarkdownElements().push(element)
-        } else if (element.getClass()==DefinitionListItem) {
-            (this.getLastMarkdownElement() as DefinitionListItemGroup).addElement(element)
+        } else if (element.getClass()==DefinitionItemValue) {
+            (this.getLastMarkdownElement() as DefinitionItem).addElement(element)
+        } else if (element.getClass()==Complement) {
+            (this.getLastMarkdownElement() as DefinitionItem).addElement(element)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
     }
 
+    toHtml(): html.HtmlElement {
+        var e : html.DefinitionList = new html.DefinitionList()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
 }
 
-export class DefinitionListItemGroup extends MarkdownElement {
-    nameOfGroup : MarkdownElement | null = null
+export class DefinitionItem extends MarkdownElement {
+    term : MarkdownElement | null = null
     // elements : Array<MarkdownElement> | null = null
 
-    setNameOfGroup(nameOfGroup : MarkdownElement) {
-        this.nameOfGroup = nameOfGroup
+    setTerm(term : MarkdownElement) {
+        this.term = term
     }
 
-    getNameOfGroup() {
-        return this.nameOfGroup
+    getTerm() {
+        return this.term
     }
 
     addElement(element : MarkdownElement) {
-        if (element.getClass()==DefinitionListItem) {
+        if (element.getClass()==DefinitionItemValue) {
             this.getMarkdownElements().push(element)
+        } else if (element.getClass()==Complement) {
+            (this.getLastMarkdownElement() as DefinitionItemValue).addElement(element)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -1323,7 +1333,7 @@ export class DefinitionListItemGroup extends MarkdownElement {
 
     toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
         var subIntent = `${intent}    `
-        var resultArray =  [this.nameOfGroup].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+        var resultArray =  [this.getTerm()].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
                 return markdownElement.toMarkdownHierarchy(subIntent, debug)
             } else {
@@ -1332,6 +1342,73 @@ export class DefinitionListItemGroup extends MarkdownElement {
         })
         resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
         return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.DefinitionItem = new html.DefinitionItem(this.term.toHtml())
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+}
+
+export class DefinitionItemValue extends MarkdownValueElement {
+    complementBlock : ComplementBlock | null = null
+
+    addComplement(element : Complement) {
+        if (this.complementBlock==null) {
+            this.complementBlock = new ComplementBlock()
+        }
+        // this.complementBlock.getMarkdownElements().push(element)
+        this.complementBlock.addComplement(element as Complement)
+    }
+
+    
+
+    addElement(element : MarkdownElement) {
+        if (element.getClass()==Complement) {
+            this.addComplement(element as Complement)
+        } else{
+            throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
+        }
+
+    }
+
+    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+        var subIntent = `${intent}    `
+        var resultArray =  [this.getValue(), this.complementBlock].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.DefinitionItemValue = new html.DefinitionItemValue(this.value.toHtml())
+        if (this.complementBlock!=null) {
+            e.setComplementBlock(this.complementBlock.toHtml())
+        }
+        return e
+    }
+
+    getUnhandledBlockquotes() : Array<Blockquote> {
+        var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
+        var elements : Array<MarkdownElement> = [this]
+        
+        if (this.complementBlock!=null && this.complementBlock.isHandled()) {
+            childBlockquotes = childBlockquotes.concat(this.complementBlock.getUnhandledBlockquotes())
+            elements.push(this.complementBlock)
+        }
+        var result : Array<Blockquote> = this.mergeUnhandledBlockquotes([elements])
+        return result.concat(childBlockquotes)
+    }
+
+    getUnhandledComplementBlocks() : Array<ComplementBlock> {
+        // console.log('getUnhandledComplementBlocks', this)
+        return this.getUnhandledComplementBlockByMarkdownElements([this, this.complementBlock])
     }
 }
 
