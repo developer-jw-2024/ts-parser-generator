@@ -131,7 +131,6 @@ export class Heading extends HtmlElement {
 
 }
 export class OrderedList extends HtmlElement {}
-
 export class OrderedItem extends HtmlElement {
     item : HtmlElement
     complementBlock : HtmlElement 
@@ -158,7 +157,49 @@ export class OrderedItem extends HtmlElement {
     }
 
 }
+export class DescriptionList extends HtmlElement {}
+export class DescriptionListItemGroup extends HtmlElement {
+    item : HtmlElement
 
+    constructor(item : HtmlElement) {
+        super() 
+        this.item = item
+    }
+    setItem(item : HtmlElement) {
+        this.item = item
+    }
+
+    getItem() : HtmlElement {
+        return this.item
+    }
+
+}
+export class DescriptionListItem extends HtmlElement {
+    item : HtmlElement
+    complementBlock : HtmlElement 
+
+    constructor(item : HtmlElement) {
+        super() 
+        this.item = item
+    }
+
+    setComplementBlock(complementBlock : HtmlElement) {
+        this.complementBlock = complementBlock
+    }
+
+    getComplementBlock() : HtmlElement | null {
+        return this.complementBlock
+    }
+
+    setItem(item : HtmlElement) {
+        this.item = item
+    }
+
+    getItem() : HtmlElement {
+        return this.item
+    }
+
+}
 export class UnorderedList extends HtmlElement {}
 
 export class UnorderedItem extends HtmlElement {

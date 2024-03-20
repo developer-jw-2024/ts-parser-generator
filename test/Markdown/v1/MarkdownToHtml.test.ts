@@ -2016,7 +2016,7 @@ This is that.`
         ])
         expect(htmlElement).toEqual(rootElement)
     })
-/*
+
     test('markdown - 44', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. coding
@@ -2029,15 +2029,30 @@ This is that.`
     > \`\`\``
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence
-            Markdown
-                Blockquote
-                    Markdown
-                        FencedCodeBlockText`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('coding')
+                    ])
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
+                    new html.Blockquote().initChildren([
+                        new html.HtmlRoot().initChildren([
+                            new html.FencedCodeBlockText(
+`\`\`\`
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+\`\`\``)
+                        ])
+                    ])
+                ])),
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - 45', () => {
@@ -2052,13 +2067,27 @@ This is that.`
     \`\`\``
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence
-            Markdown
-                FencedCodeBlockText`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('coding')
+                    ])
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
+                    new html.FencedCodeBlockText(
+`\`\`\`
+{
+    "firstName": "John",
+    "lastName": "Smith",
+    "age": 25
+}
+\`\`\``)
+                    ])
+                ),
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - 46', () => {
@@ -2067,15 +2096,12 @@ This is that.`
 : This is the definition of the first term.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    DescriptionList
-        DefinitionListItemGroup
-            Sentence
-            DefinitionListItem
-                Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
-
+/*
     test('markdown - 47', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `Second Term
