@@ -1975,10 +1975,19 @@ This is that.`
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.FencedCodeBlockText(
+`\`\`\`
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+\`\`\``)
         ])
+        expect(htmlElement).toEqual(rootElement)
     })
     
-/*
+
     test('markdown - 43', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> \`\`\`
@@ -1990,13 +1999,24 @@ This is that.`
 > \`\`\``
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Blockquote
-        Markdown
-            FencedCodeBlockText`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Blockquote().initChildren([
+                new html.HtmlRoot().initChildren([
+                    new html.FencedCodeBlockText(
+`\`\`\`
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+\`\`\``)
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
-
+/*
     test('markdown - 44', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `1. coding

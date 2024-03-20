@@ -810,6 +810,10 @@ export class FencedCodeBlockText extends MarkdownValueElement{
         resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
         return [].concat.apply([], resultArray)
     }
+
+    toHtml(): html.HtmlElement {
+        return new html.FencedCodeBlockText(this.getValue())
+    }
 }
 
 export class SimpleText extends MarkdownValueElement {

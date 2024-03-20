@@ -106,6 +106,7 @@ export class NullHtmlElement extends HtmlElement {}
 export var NullHtmlInstance : NullHtmlElement = new NullHtmlElement()
 
 export class Text extends HtmlStringElement {}
+export class FencedCodeBlockText extends HtmlStringElement {}
 export class HorizontalRule extends HtmlStringElement {}
 export class BacktickText extends HtmlElement {}
 export class DoubleBacktickText extends HtmlElement {}
