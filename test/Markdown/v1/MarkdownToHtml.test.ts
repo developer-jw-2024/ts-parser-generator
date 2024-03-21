@@ -2640,27 +2640,69 @@ Second Term
                     ])
                 ])),
             ]),
-            new html.ErrorHtmlElement()
+            new html.ErrorHtmlElement('- [Y] Contact the media'),
+            new html.TaskList().initChildren([
+                new html.TaskListItem(false, new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('Update'),
+                        new html.Spaces(' '),
+                        new html.Text('the'),
+                        new html.Spaces(' '),
+                        new html.Text('website'),
+                    ])
+                ])),
+            ]),
         ])
         expect(htmlElement).toEqual(rootElement)
     })
-/*
+
     test('markdown - 53', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> First Term
 : This is the definition of the first term.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Blockquote
-        Markdown
-            Paragraph
-                Sentence
-    DescriptionList
-        DefinitionListItemGroup
-            DefinitionListItem
-                Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Blockquote().initChildren([
+                new html.HtmlRoot().initChildren([
+                    new html.Paragraph().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Text('First'),
+                                new html.Spaces(' '),
+                                new html.Text('Term')
+                            ])
+                        ])
+                    ])
+                ]),
+            ]),
+            new html.DefinitionList().initChildren([
+                new html.DefinitionItem(null).initChildren([
+                    new html.DefinitionItemValue(new html.Sentence().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('This'),
+                            new html.Spaces(' '),
+                            new html.Text('is'),
+                            new html.Spaces(' '),
+                            new html.Text('the'),
+                            new html.Spaces(' '),
+                            new html.Text('definition'),
+                            new html.Spaces(' '),
+                            new html.Text('of'),
+                            new html.Spaces(' '),
+                            new html.Text('the'),
+                            new html.Spaces(' '),
+                            new html.Text('first'),
+                            new html.Spaces(' '),
+                            new html.Text('term.'),
+                        ])
+                    ])),
+                ]),
+            ]),
+            
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - 54', () => {
@@ -2669,16 +2711,49 @@ Second Term
 > : This is the definition of the first term.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Blockquote
-        Markdown
-            DescriptionList
-                DefinitionListItemGroup
-                    Sentence
-                    DefinitionListItem
-                        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Blockquote().initChildren([
+                new html.HtmlRoot().initChildren([
+
+                    new html.DefinitionList().initChildren([
+                        new html.DefinitionItem(new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Text('First'),
+                                new html.Spaces(' '),
+                                new html.Text('Term')
+                            ])
+                        ])).initChildren([
+                            new html.DefinitionItemValue(new html.Sentence().initChildren([
+                                new html.PlainText().initChildren([
+                                    new html.Text('This'),
+                                    new html.Spaces(' '),
+                                    new html.Text('is'),
+                                    new html.Spaces(' '),
+                                    new html.Text('the'),
+                                    new html.Spaces(' '),
+                                    new html.Text('definition'),
+                                    new html.Spaces(' '),
+                                    new html.Text('of'),
+                                    new html.Spaces(' '),
+                                    new html.Text('the'),
+                                    new html.Spaces(' '),
+                                    new html.Text('first'),
+                                    new html.Spaces(' '),
+                                    new html.Text('term.'),
+                                ])
+                            ])),
+                        ]),
+                    ]),
+
+                ]),
+            ]),
+
+            
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 55', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -2692,29 +2767,61 @@ Second Term
 > \`\`\``
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence
-    Blockquote
-        Markdown
-            FencedCodeBlockText`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('coding')
+                    ])
+                ]))
+            ]),
+            new html.Blockquote().initChildren([
+                new html.HtmlRoot().initChildren([
+                    new html.FencedCodeBlockText(
+`\`\`\`
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+\`\`\``)
+                ]),
+            ]),
+
+            
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
-    
+
     test('markdown - 56', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `[^Variable]: This is good foot note.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Footnote
-        FootnoteReference
-            SimpleText
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Footnote(
+                new html.FootnoteReference(new html.Text('Variable')),
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                        new html.Text('is'),
+                        new html.Spaces(' '),
+                        new html.Text('good'),
+                        new html.Spaces(' '),
+                        new html.Text('foot'),
+                        new html.Spaces(' '),
+                        new html.Text('note.'),
+                    ])
+                ])
+            )
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 57', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -2722,16 +2829,50 @@ Second Term
     Indent paragraphs to include them in the footnote.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Footnote
-        FootnoteReference
-            SimpleText
-        Sentence
-        Markdown
-            Paragraph
-                Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Footnote(
+                new html.FootnoteReference(new html.Text('Variable')),
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                        new html.Text('is'),
+                        new html.Spaces(' '),
+                        new html.Text('good'),
+                        new html.Spaces(' '),
+                        new html.Text('foot'),
+                        new html.Spaces(' '),
+                        new html.Text('note.'),
+                    ])
+                ])
+            ).init('complementBlock', new html.HtmlRoot().initChildren([
+                new html.Paragraph().initChildren([
+                    new html.Sentence().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('Indent'),
+                            new html.Spaces(' '),
+                            new html.Text('paragraphs'),
+                            new html.Spaces(' '),
+                            new html.Text('to'),
+                            new html.Spaces(' '),
+                            new html.Text('include'),
+                            new html.Spaces(' '),
+                            new html.Text('them'),
+                            new html.Spaces(' '),
+                            new html.Text('in'),
+                            new html.Spaces(' '),
+                            new html.Text('the'),
+                            new html.Spaces(' '),
+                            new html.Text('footnote.'),
+                        ])
+                    ])
+                ])
+            ]))
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 58', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -2739,15 +2880,27 @@ Second Term
     Apple`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence
-            Markdown
-                Paragraph
-                    Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('hello'),
+                    ])
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
+                    new html.Paragraph().initChildren([
+                        new html.Sentence().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Text('Apple')
+                            ])
+                        ])
+                    ])
+                ]))
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 59', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -2755,14 +2908,21 @@ Second Term
     `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence
-            Markdown
-                BlankLine`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('hello'),
+                    ])
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
+                    new html.BlankLine()
+                ]))
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 60', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -2771,14 +2931,20 @@ Second Term
     `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence
-            Markdown
-                BlankLine
-                BlankLine`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('hello'),
+                    ])
+                ])).init('complementBlock', new html.HtmlRoot().initChildren([
+                    new html.BlankLine()
+                ]))
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
+
     })
 
     test('markdown - 61', () => {
@@ -2790,20 +2956,83 @@ Second Term
     Add as many paragraphs as you like.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Footnote
-        FootnoteReference
-            SimpleText
-        Sentence
-        Markdown
-            Paragraph
-                Sentence
-                Sentence
-            BlankLine
-            Paragraph
-                Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Footnote(
+                new html.FootnoteReference(new html.Text('Variable')),
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                        new html.Text('is'),
+                        new html.Spaces(' '),
+                        new html.Text('good'),
+                        new html.Spaces(' '),
+                        new html.Text('foot'),
+                        new html.Spaces(' '),
+                        new html.Text('note.'),
+                    ])
+                ])
+            ).init('complementBlock', new html.HtmlRoot().initChildren([
+                new html.Paragraph().initChildren([
+                    new html.Sentence().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('Indent'),
+                            new html.Spaces(' '),
+                            new html.Text('paragraphs'),
+                            new html.Spaces(' '),
+                            new html.Text('to'),
+                            new html.Spaces(' '),
+                            new html.Text('include'),
+                            new html.Spaces(' '),
+                            new html.Text('them'),
+                            new html.Spaces(' '),
+                            new html.Text('in'),
+                            new html.Spaces(' '),
+                            new html.Text('the'),
+                            new html.Spaces(' '),
+                            new html.Text('footnote.'),
+                        ])
+                    ]),
+                    new html.Sentence().initChildren([
+                        new html.BacktickText().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Text('{'),
+                                new html.Spaces(' '),
+                                new html.Text('my'),
+                                new html.Spaces(' '),
+                                new html.Text('code'),
+                                new html.Spaces(' '),
+                                new html.Text('}'),
+                            ])
+                        ])
+                    ]),
+                ]),
+                new html.BlankLine(),
+                new html.Paragraph().initChildren([
+                    new html.Sentence().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('Add'),
+                            new html.Spaces(' '),
+                            new html.Text('as'),
+                            new html.Spaces(' '),
+                            new html.Text('many'),
+                            new html.Spaces(' '),
+                            new html.Text('paragraphs'),
+                            new html.Spaces(' '),
+                            new html.Text('as'),
+                            new html.Spaces(' '),
+                            new html.Text('you'),
+                            new html.Spaces(' '),
+                            new html.Text('like.'),
+                        ])
+                    ]),
+                ])
+            ]))
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 62', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -2814,24 +3043,91 @@ Second Term
     > Add as many paragraphs as you like.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Footnote
-        FootnoteReference
-            SimpleText
-        Sentence
-        Markdown
-            Blockquote
-                Markdown
-                    Paragraph
-                        Sentence
-                        Sentence
-            BlankLine
-            Blockquote
-                Markdown
-                    Paragraph
-                        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Footnote(
+                new html.FootnoteReference(new html.Text('Variable')),
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                        new html.Text('is'),
+                        new html.Spaces(' '),
+                        new html.Text('good'),
+                        new html.Spaces(' '),
+                        new html.Text('foot'),
+                        new html.Spaces(' '),
+                        new html.Text('note.'),
+                    ])
+                ])
+            ).init('complementBlock', new html.HtmlRoot().initChildren([
+                new html.Blockquote().initChildren([
+                    new html.HtmlRoot().initChildren([
+                        new html.Paragraph().initChildren([
+                            new html.Sentence().initChildren([
+                                new html.PlainText().initChildren([
+                                    new html.Text('Indent'),
+                                    new html.Spaces(' '),
+                                    new html.Text('paragraphs'),
+                                    new html.Spaces(' '),
+                                    new html.Text('to'),
+                                    new html.Spaces(' '),
+                                    new html.Text('include'),
+                                    new html.Spaces(' '),
+                                    new html.Text('them'),
+                                    new html.Spaces(' '),
+                                    new html.Text('in'),
+                                    new html.Spaces(' '),
+                                    new html.Text('the'),
+                                    new html.Spaces(' '),
+                                    new html.Text('footnote.'),
+                                ])
+                            ]),
+                            new html.Sentence().initChildren([
+                                new html.BacktickText().initChildren([
+                                    new html.PlainText().initChildren([
+                                        new html.Text('{'),
+                                        new html.Spaces(' '),
+                                        new html.Text('my'),
+                                        new html.Spaces(' '),
+                                        new html.Text('code'),
+                                        new html.Spaces(' '),
+                                        new html.Text('}'),
+                                    ])
+                                ])
+                            ]),
+                        ]),
+                    ])
+                ]),
+                new html.BlankLine(),
+                new html.Blockquote().initChildren([
+                    new html.HtmlRoot().initChildren([
+                        new html.Paragraph().initChildren([
+                            new html.Sentence().initChildren([
+                                new html.PlainText().initChildren([
+                                    new html.Text('Add'),
+                                    new html.Spaces(' '),
+                                    new html.Text('as'),
+                                    new html.Spaces(' '),
+                                    new html.Text('many'),
+                                    new html.Spaces(' '),
+                                    new html.Text('paragraphs'),
+                                    new html.Spaces(' '),
+                                    new html.Text('as'),
+                                    new html.Spaces(' '),
+                                    new html.Text('you'),
+                                    new html.Spaces(' '),
+                                    new html.Text('like.'),
+                                ])
+                            ]),
+                        ])
+                    ])
+                ])
+            ]))
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - 63', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -2842,53 +3138,136 @@ Second Term
     > Add as many paragraphs as you like.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Footnote
-        FootnoteReference
-            SimpleText
-        Sentence
-        Markdown
-            Blockquote
-                Markdown
-                    Paragraph
-                        Sentence
-                        Sentence
-                    BlankLine
-                    Paragraph
-                        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Footnote(
+                new html.FootnoteReference(new html.Text('Variable')),
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                        new html.Text('is'),
+                        new html.Spaces(' '),
+                        new html.Text('good'),
+                        new html.Spaces(' '),
+                        new html.Text('foot'),
+                        new html.Spaces(' '),
+                        new html.Text('note.'),
+                    ])
+                ])
+            ).init('complementBlock', new html.HtmlRoot().initChildren([
+                new html.Blockquote().initChildren([
+                    new html.HtmlRoot().initChildren([
+                        new html.Paragraph().initChildren([
+                            new html.Sentence().initChildren([
+                                new html.PlainText().initChildren([
+                                    new html.Text('Indent'),
+                                    new html.Spaces(' '),
+                                    new html.Text('paragraphs'),
+                                    new html.Spaces(' '),
+                                    new html.Text('to'),
+                                    new html.Spaces(' '),
+                                    new html.Text('include'),
+                                    new html.Spaces(' '),
+                                    new html.Text('them'),
+                                    new html.Spaces(' '),
+                                    new html.Text('in'),
+                                    new html.Spaces(' '),
+                                    new html.Text('the'),
+                                    new html.Spaces(' '),
+                                    new html.Text('footnote.'),
+                                ])
+                            ]),
+                            new html.Sentence().initChildren([
+                                new html.BacktickText().initChildren([
+                                    new html.PlainText().initChildren([
+                                        new html.Text('{'),
+                                        new html.Spaces(' '),
+                                        new html.Text('my'),
+                                        new html.Spaces(' '),
+                                        new html.Text('code'),
+                                        new html.Spaces(' '),
+                                        new html.Text('}'),
+                                    ])
+                                ])
+                            ]),
+                        ]),
+                        new html.BlankLine(),
+                        new html.Paragraph().initChildren([
+                            new html.Sentence().initChildren([
+                                new html.PlainText().initChildren([
+                                    new html.Text('Add'),
+                                    new html.Spaces(' '),
+                                    new html.Text('as'),
+                                    new html.Spaces(' '),
+                                    new html.Text('many'),
+                                    new html.Spaces(' '),
+                                    new html.Text('paragraphs'),
+                                    new html.Spaces(' '),
+                                    new html.Text('as'),
+                                    new html.Spaces(' '),
+                                    new html.Text('you'),
+                                    new html.Spaces(' '),
+                                    new html.Text('like.'),
+                                ])
+                            ]),
+                        ])
+                    ])
+                ]),
+            ]))
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - inputing-0', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 ``
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    BlankLine`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.BlankLine()
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - inputing-1', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Cursor()
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - inputing-2', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `#`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('#')
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -2897,10 +3276,18 @@ Second Term
 `#▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('#'),
+                        new html.Cursor()
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -2909,20 +3296,28 @@ Second Term
 `# ▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Heading
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Heading(1, new html.Sentence().initChildren([
+                new html.PlainText().initChildren([
+                    new html.Cursor()
+                ])
+            ]))
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - inputing-5', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `#▮ `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Heading`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Heading(1, null)
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -2931,9 +3326,11 @@ Second Term
 `▮# `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Heading`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Heading(1, null)
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -2942,9 +3339,11 @@ Second Term
 `#▮# `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Heading`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Heading(2, null)
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -2953,10 +3352,17 @@ Second Term
 `-`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('-')
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -2965,10 +3371,13 @@ Second Term
 `- `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    UnorderedList
-        UnorderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.UnorderedList().initChildren([
+                new html.UnorderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -2977,35 +3386,55 @@ Second Term
 `+`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('+')
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - inputing-11', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `+ `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    UnorderedList
-        UnorderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.UnorderedList().initChildren([
+                new html.UnorderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
+
 
     test('markdown - inputing-12', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `-▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('-'),
+                        new html.Cursor()
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
-
+/*
     test('markdown - inputing-13', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- ▮`

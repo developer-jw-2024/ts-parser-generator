@@ -853,7 +853,11 @@ export class Spaces extends MarkdownValueElement {
         return new html.Spaces(this.value)
     }
 }
-export class Cursor extends MarkdownElement {}
+export class Cursor extends MarkdownElement {
+    toHtml(): html.HtmlElement {
+        return new html.Cursor()
+    }
+}
 export class Footnote extends MarkdownElement {
 
     footnoteReference : MarkdownElement | null = null
@@ -916,12 +920,32 @@ export class Footnote extends MarkdownElement {
         // console.log('getUnhandledComplementBlocks', this)
         return this.getUnhandledComplementBlockByMarkdownElements([this, this.footnoteReference, this.detail, this.complementBlock])
     }
+
+    toHtml(): html.HtmlElement {
+        var e : html.Footnote = new html.Footnote(this.footnoteReference.toHtml(), this.detail.toHtml())
+        if (this.complementBlock!=null) {
+            e.setComplementBlock(this.complementBlock.toHtml())
+        }
+        return e
+    }
 }
 export class URLAddress extends MarkdownValueElement {}
 export class EmailAddress extends MarkdownValueElement {}
 export class Emoji extends MarkdownValueElement {}
 
-export class FootnoteReference extends MarkdownValueElement {}
+export class FootnoteReference extends MarkdownValueElement {
+    toHtml(): html.HtmlElement {
+        var value : any = null
+        if (isTypeOf(this.value, String)) {
+            value = this.value
+        } else if (this.value!=null && this.value.toHtml) {
+            value = (this.value as MarkdownElement).toHtml()
+        } else if (this.value==null) {
+            value = ""
+        }
+        return new html.FootnoteReference(value)
+    }
+}
 export class HorizontalRule extends MarkdownValueElement {
     toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
         // var subIntent = `${intent}    `
@@ -1356,7 +1380,7 @@ export class DefinitionItem extends MarkdownElement {
     }
 
     toHtml(): html.HtmlElement {
-        var e : html.DefinitionItem = new html.DefinitionItem(this.term.toHtml())
+        var e : html.DefinitionItem = new html.DefinitionItem(this.term!=null?this.term.toHtml():null)
         e.setChildren(this.toChildrenMarkdownElementsHtml())
         return e
     }

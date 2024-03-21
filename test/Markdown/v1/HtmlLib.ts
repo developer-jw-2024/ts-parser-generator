@@ -274,3 +274,30 @@ export class TableNoAlignment extends HtmlStringElement {}
 export class TableLeftAlignment extends HtmlStringElement {}
 export class TableRightAlignment extends HtmlStringElement {}
 export class TableCenterAlignment extends HtmlStringElement {}
+
+export class Footnote extends HtmlElement {
+    footnoteReference : HtmlElement | null = null
+    detail : HtmlElement | null = null
+    complementBlock : HtmlElement | null = null
+
+    constructor(footnoteReference : HtmlElement, detail : HtmlElement | null) {
+        super()
+        this.footnoteReference = footnoteReference
+        this.detail = detail
+    }
+
+    setComplementBlock(complementBlock : HtmlElement) {
+        this.complementBlock = complementBlock
+    }
+
+    getComplementBlock() : HtmlElement | null {
+        return this.complementBlock
+    }
+
+}
+
+export class FootnoteReference extends HtmlValueElement {
+    
+}
+
+export class Cursor extends HtmlElement {}
