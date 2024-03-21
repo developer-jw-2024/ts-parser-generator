@@ -116,6 +116,17 @@ export class Spaces extends HtmlStringElement {}
 export class Paragraph extends HtmlElement {}
 export class Sentence extends HtmlElement {}
 export class PlainText extends HtmlElement {}
+export class TaskList extends HtmlElement {}
+export class TaskListItem extends HtmlElement {
+    checked : boolean
+    value : HtmlElement
+
+    constructor(checked : boolean, value : HtmlElement) {
+        super()
+        this.checked = checked
+        this.value = value
+    }
+}
 export class BlankLine extends HtmlElement {}
 export class ItalicText extends HtmlElement {}
 export class Heading extends HtmlElement {

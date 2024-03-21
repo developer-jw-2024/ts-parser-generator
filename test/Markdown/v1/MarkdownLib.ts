@@ -650,12 +650,17 @@ export class TableCenterAlignment extends TableColumnAlignment {
 }
 export class TaskListItem extends MarkdownElement {
     checked : boolean
-    value : any
+    value : MarkdownElement
 
-    constructor(checked : boolean, value : any) {
+    constructor(checked : boolean, value : MarkdownElement) {
         super()
         this.checked = checked
         this.value = value
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.TaskListItem = new html.TaskListItem(this.checked, this.value.toHtml())
+        return e
     }
 
     isChecked() {
@@ -702,8 +707,14 @@ export class TaskList extends MarkdownElement {
         }
     }
 
-    
+    toHtml(): html.HtmlElement {
+        var e : html.TaskList = new html.TaskList()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
 }
+
+
 
 
 export class PlainText extends MarkdownElement {
