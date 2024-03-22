@@ -3434,17 +3434,23 @@ Second Term
         expect(htmlElement).toEqual(rootElement)
     })
 
-/*
+
     test('markdown - inputing-13', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- ▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    UnorderedList
-        UnorderedItem
-            Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.UnorderedList().initChildren([
+                new html.UnorderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Cursor()
+                    ])
+                ]))
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -3453,10 +3459,18 @@ Second Term
 `+▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('+'),
+                        new html.Cursor()
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
 
@@ -3465,11 +3479,17 @@ Second Term
 `+ ▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    UnorderedList
-        UnorderedItem
-            Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.UnorderedList().initChildren([
+                new html.UnorderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Cursor()
+                    ])
+                ]))
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-16', () => {
@@ -3477,10 +3497,13 @@ Second Term
 `+▮ `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    UnorderedList
-        UnorderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.UnorderedList().initChildren([
+                new html.UnorderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-17', () => {
@@ -3488,10 +3511,17 @@ Second Term
 `1`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('1')
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-18', () => {
@@ -3499,10 +3529,17 @@ Second Term
 `1.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('1.')
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-19', () => {
@@ -3510,10 +3547,13 @@ Second Term
 `1. `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-20', () => {
@@ -3521,10 +3561,18 @@ Second Term
 `1▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('1'),
+                        new html.Cursor()
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-21', () => {
@@ -3532,10 +3580,18 @@ Second Term
 `1.▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('1.'),
+                        new html.Cursor()
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-22', () => {
@@ -3543,10 +3599,13 @@ Second Term
 `1. `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-23', () => {
@@ -3554,11 +3613,17 @@ Second Term
 `1. a`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('a')
+                    ])
+                ]))
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-24', () => {
@@ -3566,11 +3631,17 @@ Second Term
 `1. ▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem
-            Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Cursor()
+                    ])
+                ]))
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-25', () => {
@@ -3578,10 +3649,13 @@ Second Term
 `1.▮ `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-26', () => {
@@ -3589,10 +3663,13 @@ Second Term
 `1▮. `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-27', () => {
@@ -3600,10 +3677,13 @@ Second Term
 `▮1. `
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    OrderedList
-        OrderedItem`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.OrderedList().initChildren([
+                new html.OrderedItem(null)
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-28', () => {
@@ -3611,10 +3691,18 @@ Second Term
 `▮1.`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Cursor(),
+                        new html.Text('1.')
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-29', () => {
@@ -3622,10 +3710,17 @@ Second Term
 `▮`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Cursor(),
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
     test('markdown - inputing-30', () => {
@@ -3633,27 +3728,20 @@ Second Term
 `\\*`
         )
 
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Paragraph
-        Sentence`)
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('\\*'),
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
     })
 
-    test('markdown - inputing-31', () => {
-        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
-`| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |`
-        )
-
-        expect(markdown.toHtml()).toEqual(
-`Markdown
-    Table
-        TableRow
-        TableRow`)
-    })
-*/
+    
 })
 
 
