@@ -16,11 +16,6 @@ export class HtmlElement {
         this.children = children
     }
 
-    // init(fun : HtmlElementInitFunction) : HtmlElement {
-    //     fun(this)
-    //     return this
-    // }
-
     init(fieldName : string , value : any) : HtmlElement {
         this[fieldName] = value
         return this
@@ -44,11 +39,50 @@ export class HtmlElement {
     getClass() : any {
         return (this as object).constructor
     }
+
+    buildBeginHtmlString(tagName : string, propertyValues : string[] = []) {
+        var properties : string[] = [tagName]
+        for (var i=0;i<propertyValues.length;i+=2) {
+            var name : string = propertyValues[i]
+            var value : string = propertyValues[i+1]
+            if (value!=null) {
+                properties.push(`${name} = "${value}"`)
+            } else {
+                properties.push(`${name}`)
+            }
+        }
+        return `<${properties.join(' ')}>`
+    }
+    
+    buildEndHtmlString(tagName : string) {
+        var properties : string[] = [`/${tagName}`]
+        return `<${properties.join(' ')}>`
+    }
+
+    toHtmlString(intent : string = '') : string {
+        throw new Error('not implement toHtmlString')
+    }
+
+    buildChildrenHtmlString(intent?: string, splitter : string = '\n'): string {
+        return this.getChilden().map((c:HtmlElement)=>{
+            return c.toHtmlString(intent)
+        }).join(splitter)
+    }
 }
 
-export class HtmlRoot extends HtmlElement {}
-export class Blockquote extends HtmlElement {}
-export class HtmlGroupElement extends HtmlElement {}
+export class HtmlRoot extends HtmlElement {
+    toHtmlString(intent?: string): string {
+        return this.buildChildrenHtmlString(intent)
+    }
+}
+export class Blockquote extends HtmlElement {
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('div', ['class', 'blockquote'])
+        var endTag : string = intent + this.buildEndHtmlString('div')
+        var innerHtml : string = this.buildChildrenHtmlString(intent+'    ')
+        return [beginTag, innerHtml, endTag].join('\n')
+    }
+}
 export class HtmlStringElement extends HtmlElement {
     value : string
 
@@ -69,6 +103,10 @@ export class HtmlStringElement extends HtmlElement {
         if (!super.isEqual(other)) return false
         if (this.value!=other.getValue()) return false
         return true
+    }
+
+    toHtmlString(intent: string = ''): string {
+        return this.value
     }
 }
 export class HtmlValueElement extends HtmlElement {
@@ -108,15 +146,42 @@ export var NullHtmlInstance : NullHtmlElement = new NullHtmlElement()
 export class Text extends HtmlStringElement {}
 export class FencedCodeBlockText extends HtmlStringElement {}
 export class HorizontalRule extends HtmlStringElement {}
-export class BacktickText extends HtmlElement {}
-export class DoubleBacktickText extends HtmlElement {}
+export class BacktickText extends HtmlElement {
+    toHtmlString(intent : string = ''): string {
+        return '`'+this.buildChildrenHtmlString('', '')+'`'
+    }
+}
+export class DoubleBacktickText extends HtmlElement {
+    toHtmlString(intent : string = ''): string {
+        return '``'+this.buildChildrenHtmlString('', '')+'``'
+    }
+}
 
 export class Spaces extends HtmlStringElement {}
 
-export class Paragraph extends HtmlElement {}
-export class Sentence extends HtmlElement {}
-export class PlainText extends HtmlElement {}
-export class TaskList extends HtmlElement {}
+export class Paragraph extends HtmlElement {
+    toHtmlString(intent : string = ''): string {
+        return '<p>'+this.buildChildrenHtmlString('', '<br/>')+'</p>'
+    }
+}
+export class Sentence extends HtmlElement {
+    toHtmlString(intent : string = ''): string {
+        return this.buildChildrenHtmlString('', '')
+    }
+}
+export class PlainText extends HtmlElement {
+    toHtmlString(intent : string = ''): string {
+        return this.buildChildrenHtmlString('', '')
+    }
+}
+export class TaskList extends HtmlElement {
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('div', ['class', 'taskList'])
+        var endTag : string = intent + this.buildEndHtmlString('div')
+        var innerHtml : string = this.buildChildrenHtmlString(intent+'    ', '\n')
+        return [beginTag, innerHtml, endTag].join('\n')
+    }
+}
 export class TaskListItem extends HtmlElement {
     checked : boolean
     value : HtmlElement
@@ -126,9 +191,40 @@ export class TaskListItem extends HtmlElement {
         this.checked = checked
         this.value = value
     }
+
+    toHtmlString(intent : string=''): string {
+        var inputProperties : string[] = ['type', 'checkbox']
+        if (this.checked) {
+            inputProperties.push('checked')
+            inputProperties.push(null)
+        }
+        var input : string = intent + this.buildBeginHtmlString('input', inputProperties)
+        var label : string = intent + this.buildBeginHtmlString('label', [])+this.value.toHtmlString('')+this.buildEndHtmlString('label')
+        var html : string = input + label + '<br/>'
+        return html
+    }
 }
-export class BlankLine extends HtmlElement {}
-export class ItalicText extends HtmlElement {}
+export class BlankLine extends HtmlElement {
+    toHtmlString(intent: string = ''): string {
+        return intent + '<br/>'
+    }
+}
+export class ItalicText extends HtmlElement {
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('em')
+        var endTag : string = this.buildEndHtmlString('em')
+        var innerHtml : string = this.buildChildrenHtmlString('', '')
+        return [beginTag, innerHtml, endTag].join('')
+    }
+}
+export class BoldText extends HtmlElement {
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('strong')
+        var endTag : string = this.buildEndHtmlString('strong')
+        var innerHtml : string = this.buildChildrenHtmlString('', '')
+        return [beginTag, innerHtml, endTag].join('')
+    }
+}
 export class Heading extends HtmlElement {
     level : number
     content : HtmlElement
@@ -139,9 +235,21 @@ export class Heading extends HtmlElement {
         this.content = content
     }
 
-
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`h${this.level}`)
+        var endTag : string = intent + this.buildEndHtmlString(`h${this.level}`)
+        var innerHtml : string = this.buildChildrenHtmlString('', '')
+        return [beginTag, innerHtml, endTag].join('')
+    }
 }
-export class OrderedList extends HtmlElement {}
+export class OrderedList extends HtmlElement {
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`ol`)
+        var endTag : string = intent + this.buildEndHtmlString(`ol`)
+        var innerHtml : string = this.buildChildrenHtmlString(intent+'    ', '\n')
+        return [beginTag, innerHtml, endTag].join('\n')
+    }
+}
 export class OrderedItem extends HtmlElement {
     item : HtmlElement
     complementBlock : HtmlElement 
@@ -167,6 +275,15 @@ export class OrderedItem extends HtmlElement {
         return this.item
     }
 
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`li`)
+        var endTag : string = intent + this.buildEndHtmlString(`li`)
+        var innerHtml : string = [
+            this.item==null?null:this.item.toHtmlString(),
+            this.complementBlock==null?null:this.complementBlock.toHtmlString(),
+        ].filter(x=>x).join('\n')
+        return [beginTag, innerHtml, endTag].join('\n')
+    }
 }
 export class DefinitionList extends HtmlElement {}
 export class DefinitionItem extends HtmlElement {
@@ -300,4 +417,8 @@ export class FootnoteReference extends HtmlValueElement {
     
 }
 
-export class Cursor extends HtmlElement {}
+export class Cursor extends HtmlElement {
+    toHtmlString(intent : string = ''): string {
+        return '|'
+    }
+}

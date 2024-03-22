@@ -745,7 +745,18 @@ export class Sentence extends MarkdownElement {
     }
 }
 
-export class BoldText extends MarkdownElement {}
+export class BoldText extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e : html.BoldText = new html.BoldText()
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+}
 export class StarBoldText extends BoldText {}
 export class UnderlineBoldText extends BoldText {}
 export class ItalicText extends MarkdownElement {

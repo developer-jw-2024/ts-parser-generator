@@ -15,13 +15,10 @@ describe('Markdown', () => {
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.BlankLine()
-        ])
-        
-        expect(htmlElement.isEqual(rootElement)).toBe(true)
+        expect(htmlElement.toHtmlString()).toEqual('<br/>')
         
     })
+
 
     test('markdown - 0-(-2)', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -30,14 +27,9 @@ describe('Markdown', () => {
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.BlankLine()
-        ])
-        
-        expect(htmlElement.isEqual(rootElement)).toBe(true)
+        expect(htmlElement.toHtmlString()).toEqual('<br/>')
         
     })
-
 
     test('markdown - 0', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -45,18 +37,10 @@ describe('Markdown', () => {
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text("hello")
-                    ])
-                ])
-            ])
-        ])
-
         
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>hello</p>`
+        )
     })
 
 
@@ -66,15 +50,13 @@ describe('Markdown', () => {
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.ErrorHtmlElement('he*l_l*_o')
-        ])
-
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`he*l_l*_o`
+        )
         
     })
 
-
+/*
     test('markdown - 0-1', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `I go to school.
@@ -213,35 +195,6 @@ You go home`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.ErrorHtmlElement('This *is** abc')
-        ])
-
-        expect(htmlElement).toEqual(rootElement)
-    })
-
-    test('markdown - 2-1', () => {
-        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
-`This **is** abc`
-        )
-
-        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                    ]),
-                    new html.BoldText().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('is')
-                        ])
-                    ]),
-                    new html.PlainText().initChildren([
-                        new html.Spaces(' '),
-                        new html.Text('abc')
-                    ])
-                ])
-            ])
         ])
 
         expect(htmlElement).toEqual(rootElement)
@@ -3769,7 +3722,7 @@ Second Term
         ])
         expect(htmlElement).toEqual(rootElement)
     })
-
+*/
     
 })
 

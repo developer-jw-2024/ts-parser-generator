@@ -141,6 +141,25 @@ You go home`
     MarkdownError`)
     })
 
+    test('markdown - 2-1', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`This **is** abc`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+            StarBoldText
+                PlainText
+                    SimpleText
+            PlainText
+                Spaces
+                SimpleText`)
+
+    })
+
 
     test('markdown - 3', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(

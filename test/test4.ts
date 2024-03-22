@@ -1,29 +1,17 @@
-
-
-function isPrime(n: number) : boolean {
-    var m = Math.ceil(Math.sqrt(n))
-    var f = true
-    for (var i=2;f && i<=m;i++) {
-        f = (n % i)!=0
+function buildBeginHtmlString(tagName : string, ...propertyValues : string[]) {
+    var properties : string[] = [tagName]
+    for (var i=0;i<propertyValues.length;i+=2) {
+        var name : string = propertyValues[i]
+        var value : string = propertyValues[i+1]
+        properties.push(`${name} = "${value}"`)
     }
-    return f
+    return `<${properties.join(' ')}>`
 }
 
-function nextPrime(n:number) : number {
-    if (isPrime(n)) {
-        n++
-    }
-    while (!isPrime(n)) n++
-    return n
+function buildEndHtmlString(tagName : string) {
+    var properties : string[] = [`/${tagName}`]
+    return `<${properties.join(' ')}>`
 }
-var p = [11]
-//console.log(nextPrime(p.at(-1)))
-var v = [500]
-for (var i=2;i<=11;i++) {
-    var pp = p.at(-1)
-    v.push(v.at(-1)-pp)
-    pp = nextPrime(pp)
-    p.push(pp)
-}
-console.log(p)
-console.log(v)
+
+console.log(buildBeginHtmlString('p', 'class', 'blockquote'))
+console.log(buildEndHtmlString('p'))
