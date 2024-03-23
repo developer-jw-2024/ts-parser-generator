@@ -198,9 +198,7 @@ This is that.`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
 `<ol>
-    <li>
-        First Item
-    </li>
+    <li>First Item</li>
 </ol>`)
     })
 
@@ -215,12 +213,8 @@ This is that.`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
 `<ol>
-    <li>
-        First Item
-    </li>
-    <li>
-        Second Item
-    </li>
+    <li>First Item</li>
+    <li>Second Item</li>
 </ol>`)
     
     })
@@ -237,15 +231,9 @@ This is that.`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
 `<ol>
-    <li>
-        First Item
-    </li>
-    <li>
-        Second Item
-    </li>
-    <li>
-        Third Item
-    </li>
+    <li>First Item</li>
+    <li>Second Item</li>
+    <li>Third Item</li>
 </ol>`)
     })
 
@@ -259,9 +247,7 @@ This is that.`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
 `<ul>
-    <li>
-        First Item
-    </li>
+    <li>First Item</li>
 </ul>`            
         )
 
@@ -278,12 +264,8 @@ This is that.`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
 `<ul>
-    <li>
-        First Item
-    </li>
-    <li>
-        Second Item
-    </li>
+    <li>First Item</li>
+    <li>Second Item</li>
 </ul>`            
         )
     })
@@ -300,15 +282,9 @@ This is that.`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
 `<ul>
-    <li>
-        First Item
-    </li>
-    <li>
-        Second Item
-    </li>
-    <li>
-        Third Item
-    </li>
+    <li>First Item</li>
+    <li>Second Item</li>
+    <li>Third Item</li>
 </ul>`            
         )
     })
@@ -336,7 +312,7 @@ This is that.`
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
-`<p>></p>`
+`<p>&gt;</p>`
         )
     })
 
@@ -348,31 +324,24 @@ This is that.`
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
-`<p>></p>`
+`<div class="blockquote">
+    <br/>
+</div>`
         )
     })
 
-/*
+
     test('markdown - 14-3', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `> H`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('H')
-                            ])
-                        ])
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <p>H</p>
+</div>`
+        )
     })
 
 
@@ -384,39 +353,11 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('This'),
-                                new html.Spaces(' '),
-                                new html.Text('is'),
-                                new html.Spaces(' '),
-                                new html.Text('a'),
-                                new html.Spaces(' '),
-                                new html.Text('sentence'),
-                            ])
-                        ]),
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('This'),
-                                new html.Spaces(' '),
-                                new html.Text('is'),
-                                new html.Spaces(' '),
-                                new html.Text('the'),
-                                new html.Spaces(' '),
-                                new html.Text('second'),
-                                new html.Spaces(' '),
-                                new html.Text('sentence'),
-                            ])
-                        ])
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <p>This is a sentence<br/>This is the second sentence</p>
+</div>`
+        )
     })
 
 
@@ -427,31 +368,13 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.Paragraph().initChildren([
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('This'),
-                                        new html.Spaces(' '),
-                                        new html.Text('is'),
-                                        new html.Spaces(' '),
-                                        new html.Text('a'),
-                                        new html.Spaces(' '),
-                                        new html.Text('sentence'),
-                                    ])
-                                ]),
-                                
-                            ])
-                        ])
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <div class="blockquote">
+        <p>This is a sentence</p>
+    </div>
+</div>`
+        )
     })
 
 
@@ -461,16 +384,9 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('>>')
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>&gt;&gt;</p>`
+        )
     })
 
 
@@ -480,19 +396,15 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.BlankLine()
-                        ])
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <div class="blockquote">
+        <br/>
+    </div>
+</div>`
+        )
     })
+
 
     test('markdown - 17', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -502,40 +414,15 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.Paragraph().initChildren([
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('This'),
-                                        new html.Spaces(' '),
-                                        new html.Text('is'),
-                                        new html.Spaces(' '),
-                                        new html.Text('a'),
-                                        new html.Spaces(' '),
-                                        new html.Text('sentence'),    
-                                    ])
-                                ]),
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('This'),
-                                        new html.Spaces(' '),
-                                        new html.Text('is'),
-                                        new html.Spaces(' '),
-                                        new html.Text('the'),
-                                    ])
-                                ])
-                            ])
-                        ])
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <div class="blockquote">
+        <p>This is a sentence<br/>This is the</p>
+    </div>
+</div>`
+        )
     })
+
 
     test('markdown - 18', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -546,44 +433,14 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Heading(1, new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('ONK')
-                        ])
-                    ])),
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.Paragraph().initChildren([
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('This'),
-                                        new html.Spaces(' '),
-                                        new html.Text('is'),
-                                        new html.Spaces(' '),
-                                        new html.Text('a'),
-                                        new html.Spaces(' '),
-                                        new html.Text('sentence'),    
-                                    ])
-                                ]),
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('This'),
-                                        new html.Spaces(' '),
-                                        new html.Text('is'),
-                                        new html.Spaces(' '),
-                                        new html.Text('the'),
-                                    ])
-                                ])
-                            ])
-                        ])
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <h1>ONK</h1>
+    <div class="blockquote">
+        <p>This is a sentence<br/>This is the</p>
+    </div>
+</div>`
+        )
     })
 
     test('markdown - 19', () => {
@@ -595,46 +452,15 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Heading(1, new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('ONK')
-                        ])
-                    ])),
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.Paragraph().initChildren([
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('This'),
-                                        new html.Spaces(' '),
-                                        new html.Text('is'),
-                                        new html.Spaces(' '),
-                                        new html.Text('a'),
-                                        new html.Spaces(' '),
-                                        new html.Text('sentence'),    
-                                    ])
-                                ])
-                            ])
-                        ])
-                    ]),
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('This'),
-                                new html.Spaces(' '),
-                                new html.Text('is'),
-                                new html.Spaces(' '),
-                                new html.Text('the'),
-                            ])
-                        ])
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <h1>ONK</h1>
+    <div class="blockquote">
+        <p>This is a sentence</p>
+    </div>
+    <p>This is the</p>
+</div>`
+        )
     })
 
     test('markdown - 20', () => {
@@ -645,24 +471,14 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ])
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <p>Apple</p>
+    </li>
+</ol>` 
+        )
+
     })
 
     test('markdown - 21', () => {
@@ -674,29 +490,13 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ]),
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Banana')
-                            ])
-                        ])
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <p>Apple<br/>Banana</p>
+    </li>
+</ol>` 
+        )
     })
 
     test('markdown - 22', () => {
@@ -709,34 +509,14 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ]),
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Banana')
-                            ])
-                        ])
-                    ])
-                ])),
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Animals')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <p>Apple<br/>Banana</p>
+    </li>
+    <li>Animals</li>
+</ol>` 
+        )
     })
 
     test('markdown - 23', () => {
@@ -749,38 +529,16 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.Paragraph().initChildren([
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('Apple')
-                                    ])
-                                ]),
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('Banana')
-                                    ])
-                                ])
-                            ])
-                        ])
-                    ])
-                ])),
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Animals')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <div class="blockquote">
+            <p>Apple<br/>Banana</p>
+        </div>
+    </li>
+    <li>Animals</li>
+</ol>` 
+        )
     })
 
     test('markdown - 24', () => {
@@ -793,34 +551,17 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.OrderedList().initChildren([
-                        new html.OrderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ])),
-                        new html.OrderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Banana')
-                            ])
-                        ]))
-                    ])
-                ])),
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Animals')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <ol>
+            <li>Apple</li>
+            <li>Banana</li>
+        </ol>
+    </li>
+    <li>Animals</li>
+</ol>` 
+        )
     })
 
 
@@ -832,28 +573,15 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.Paragraph().initChildren([
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('Red')
-                                    ])
-                                ])
-                            ])
-                        ])
-                    ])
-                ])),
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <div class="blockquote">
+            <p>Red</p>
+        </div>
+    </li>
+</ol>` 
+        )
     })
 
     test('markdown - 26', () => {
@@ -867,51 +595,21 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.OrderedList().initChildren([
-                        new html.OrderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                            new html.Blockquote().initChildren([
-                                new html.HtmlRoot().initChildren([
-                                    new html.Paragraph().initChildren([
-                                        new html.Sentence().initChildren([
-                                            new html.PlainText().initChildren([
-                                                new html.Text('Red'),
-                                                new html.Spaces(' '),
-                                                new html.Text('is'),
-                                                new html.Spaces(' '),
-                                                new html.Text('my'),
-                                            ])    
-                                        ])
-                                    ])
-                                ])
-                            ])
-                        ])),
-                        new html.OrderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Banana')
-                            ])
-                        ]))
-                    ])
-                    
-                ])),
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Animals')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <ol>
+            <li>Apple
+                <div class="blockquote">
+                    <p>Red is my</p>
+                </div>
+            </li>
+            <li>Banana</li>
+        </ol>
+    </li>
+    <li>Animals</li>
+</ol>` 
+        )
     })
 
     test('markdown - 26-1', () => {
@@ -925,52 +623,22 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.OrderedList().initChildren([
-                        new html.OrderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ]))
-                    ]),
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.Paragraph().initChildren([
-                                new html.Sentence().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('Red'),
-                                        new html.Spaces(' '),
-                                        new html.Text('is'),
-                                        new html.Spaces(' '),
-                                        new html.Text('my'),
-                                    ])    
-                                ])
-                            ])
-                        ])
-                    ]),
-                    new html.OrderedList().initChildren([
-                        new html.OrderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Banana')
-                            ])
-                        ]))
-                    ]),
-                    
-                ])),
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Animals')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>Fruite
+        <ol>
+            <li>Apple</li>
+        </ol>
+        <div class="blockquote">
+            <p>Red is my</p>
+        </div>
+        <ol>
+            <li>Banana</li>
+        </ol>
+    </li>
+    <li>Animals</li>
+</ol>` 
+        )
     })
 
 
@@ -981,16 +649,11 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li>Fruite</li>
+</ul>` 
+        )
     })
 
     test('markdown - 27-1', () => {
@@ -1000,12 +663,11 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li></li>
+</ul>` 
+        )
     })
 
     test('markdown - 28', () => {
@@ -1016,21 +678,12 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])),
-                new html.UnorderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Animal')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li>Fruite</li>
+    <li>Animal</li>
+</ul>` 
+        )
     })
 
 
@@ -1044,34 +697,17 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Fruite')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.UnorderedList().initChildren([
-                        new html.UnorderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ])),
-                        new html.UnorderedItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Banana')
-                            ])
-                        ]))
-                    ])
-                ])),
-                new html.UnorderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Animal')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li>Fruite
+        <ul>
+            <li>Apple</li>
+            <li>Banana</li>
+        </ul>
+    </li>
+    <li>Animal</li>
+</ul>` 
+        )
     })
 
     test('markdown - 30', () => {
@@ -1080,25 +716,9 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('type'),
-                        new html.Spaces(' ')
-                    ]),
-                    new html.BacktickText().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('nano')
-                        ])
-                    ]),
-                    new html.PlainText().initChildren([
-                        new html.Text('.'),
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>type \`nano\`.</p>` 
+        )
     })
 
     test('markdown - 30', () => {
@@ -1107,34 +727,9 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.DoubleBacktickText().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('Use'),
-                            new html.Spaces(' ')
-                        ]),
-                        new html.BacktickText().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('code')
-                            ])
-                        ]),
-                        new html.PlainText().initChildren([
-                            new html.Spaces(' '),
-                            new html.Text('in'),
-                            new html.Spaces(' '),
-                            new html.Text('your'),
-                            new html.Spaces(' '),
-                            new html.Text('Markdown'),
-                            new html.Spaces(' '),
-                            new html.Text('file.'),
-                        ]),
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>\`\`Use \`code\` in your Markdown file.\`\`</p>` 
+        )
     })
 
 
@@ -1144,10 +739,9 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.HorizontalRule('---')
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<hr>` 
+        )
     })
 
     test('markdown - 32', () => {
@@ -1157,20 +751,9 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Heading(2, new html.Sentence().initChildren([
-                new html.PlainText().initChildren([
-                    new html.Text('This'),
-                    new html.Spaces(' '),
-                    new html.Text('is'),
-                    new html.Spaces(' '),
-                    new html.Text('heading'),
-                    new html.Spaces(' '),
-                    new html.Text('2'),
-                ])
-            ]))
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<h2>This is heading 2</h2>` 
+        )
     })
 
     test('markdown - 33', () => {
@@ -1181,24 +764,12 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                        new html.Text('is'),
-                        new html.Spaces(' '),
-                        new html.Text('heading'),
-                        new html.Spaces(' '),
-                        new html.Text('2'),
-                    ])
-                ])
-            ]),
-            new html.BlankLine(),
-            new html.HorizontalRule('----------')
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>This is heading 2</p>
+<br/>
+<hr>` 
+        )
+        
     })
 
     test('markdown - 34', () => {
@@ -1207,8 +778,9 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot()
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`` 
+        )
     })
 
 
@@ -1219,24 +791,9 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Heading(1, new html.Sentence().initChildren([
-                new html.PlainText().initChildren([
-                    new html.Text('This'),
-                    new html.Spaces(' '),
-                    new html.Text('is'),
-                    new html.Spaces(' '),
-                    new html.Text('the'),
-                    new html.Spaces(' '),
-                    new html.Text('first'),
-                    new html.Spaces(' '),
-                    new html.Text('level'),
-                    new html.Spaces(' '),
-                    new html.Text('heading'),
-                ])
-            ]))
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<h1>This is the first level heading</h1>` 
+        )
     })
 
     test('markdown - 36', () => {
@@ -1245,29 +802,12 @@ This is that.`
 
 ===========`
         )
-
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                        new html.Text('is'),
-                        new html.Spaces(' '),
-                        new html.Text('the'),
-                        new html.Spaces(' '),
-                        new html.Text('first'),
-                        new html.Spaces(' '),
-                        new html.Text('level'),
-                        new html.Spaces(' '),
-                        new html.Text('heading'),
-                    ])
-                ])
-            ]),
-            new html.BlankLine()
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>This is the first level heading</p>
+<br/>` 
+        )
+        
     })
 
     test('markdown - 37', () => {
@@ -1275,6 +815,18 @@ This is that.`
 `| Syntax      | Description |`
         )
 
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`<table>
+    <tbody>
+        <tr>
+            <td>Syntax</td>
+            <td>Description</td>
+        </tr>
+    </tbody>
+</table>` 
+        )
+        
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Table().initChildren([
@@ -1302,7 +854,7 @@ This is that.`
         ])
         expect(htmlElement).toEqual(rootElement)
     })
-
+/*
     test('markdown - 38', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Header      | Title       |

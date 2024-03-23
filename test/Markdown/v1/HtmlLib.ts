@@ -1,4 +1,5 @@
 import { getClass, isTypeOf } from "../../../src/Utils/Utils"
+import {encode} from 'html-entities'
 
 export class HtmlElement {
     children : Array<HtmlElement> = []
@@ -105,7 +106,7 @@ export class HtmlStringElement extends HtmlElement {
     }
 
     toHtmlString(intent: string = ''): string {
-        return this.value
+        return encode(this.value)
     }
 }
 export class HtmlValueElement extends HtmlElement {
@@ -144,7 +145,11 @@ export var NullHtmlInstance : NullHtmlElement = new NullHtmlElement()
 
 export class Text extends HtmlStringElement {}
 export class FencedCodeBlockText extends HtmlStringElement {}
-export class HorizontalRule extends HtmlStringElement {}
+export class HorizontalRule extends HtmlStringElement {
+    toHtmlString(intent: string = ''): string {
+        return intent+"<hr>"
+    }
+}
 export class BacktickText extends HtmlElement {
     toHtmlString(intent : string = ''): string {
         return '`'+this.buildChildrenHtmlString('', '')+'`'
@@ -236,7 +241,7 @@ export class Heading extends HtmlElement {
 
     toHtmlString(intent : string=''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`h${this.level}`)
-        var endTag : string = intent + this.buildEndHtmlString(`h${this.level}`)
+        var endTag : string = this.buildEndHtmlString(`h${this.level}`)
         var innerHtml : string = this.content.toHtmlString()
         return [beginTag, innerHtml, endTag].join('')
     }
@@ -276,12 +281,16 @@ export class OrderedItem extends HtmlElement {
 
     toHtmlString(intent : string=''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`li`)
-        var endTag : string = intent + this.buildEndHtmlString(`li`)
-        var innerHtml : string = [
-            this.item==null?null:intent + '    ' + this.item.toHtmlString(intent),
-            this.complementBlock==null?null:this.complementBlock.toHtmlString(intent),
-        ].filter(x=>x).join('\n')
-        return [beginTag, innerHtml, endTag].join('\n')
+        var itemHtml : string = this.item==null?'':this.item.toHtmlString()
+        var complementBlockHtml : string =  this.complementBlock==null?'':this.complementBlock.toHtmlString(intent + '    ')
+        if (complementBlockHtml.length==0) {
+            var endTag : string = this.buildEndHtmlString(`li`)
+            return beginTag + itemHtml + endTag
+        } else {
+            var endTag : string = intent + this.buildEndHtmlString(`li`)
+            return [beginTag + itemHtml , complementBlockHtml , endTag].join('\n')
+        }
+
     }
 }
 export class DefinitionList extends HtmlElement {}
@@ -363,12 +372,16 @@ export class UnorderedItem extends HtmlElement {
 
     toHtmlString(intent : string=''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`li`)
-        var endTag : string = intent + this.buildEndHtmlString(`li`)
-        var innerHtml : string = [
-            this.item==null?null:intent + '    ' + this.item.toHtmlString(intent),
-            this.complementBlock==null?null:this.complementBlock.toHtmlString(intent),
-        ].filter(x=>x).join('\n')
-        return [beginTag, innerHtml, endTag].join('\n')
+        var itemHtml : string = this.item==null?'':this.item.toHtmlString()
+        var complementBlockHtml : string =  this.complementBlock==null?'':this.complementBlock.toHtmlString(intent + '    ')
+        if (complementBlockHtml.length==0) {
+            var endTag : string = this.buildEndHtmlString(`li`)
+            return beginTag + itemHtml + endTag
+        } else {
+            var endTag : string = intent + this.buildEndHtmlString(`li`)
+            return [beginTag + itemHtml , complementBlockHtml , endTag].join('\n')
+        }
+
     }
 }
 
@@ -394,11 +407,52 @@ export class Table extends HtmlElement {
     getTableAlignmentRow() : HtmlElement {
         return this.tableAlignmentRow
     }
+
+    toHtmlString(intent: string = ''): string {
+        var beginTableTag : string = intent + this.buildBeginHtmlString('table')
+        var endTableTag : string = intent + this.buildEndHtmlString('table')
+        var beginTHeadTag : string = intent + '    ' + this.buildBeginHtmlString('thead')
+        var endTHeadTag : string = intent + '    ' + this.buildEndHtmlString('thead')
+        var beginTBodyTag : string = intent + '    ' + this.buildBeginHtmlString('tbody')
+        var endTBodyTag : string = intent + '    ' + this.buildEndHtmlString('tbody')
+
+        var headerRowHtml : string = this.headerRow==null?'':this.headerRow.toHtmlString(intent + '    ' + '    ')
+        var bodyRowHtml : string = this.buildChildrenHtmlString(intent + '    ' + '    ')
+        return [
+            beginTableTag,
+            headerRowHtml.length>0?beginTHeadTag:null,
+            headerRowHtml.length>0?headerRowHtml:null,
+            headerRowHtml.length>0?endTHeadTag:null,
+            bodyRowHtml.length>0?beginTBodyTag:null,
+            bodyRowHtml.length>0?bodyRowHtml:null,
+            bodyRowHtml.length>0?endTBodyTag:null,
+            endTableTag,
+        ].filter(x=>x).join('\n')
+    }
 }
 
 export class TableRow extends HtmlElement {
+    toHtmlString(intent: string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('tr')
+        var endTag : string = intent + this.buildEndHtmlString('tr')
+        return [
+            beginTag,
+            this.buildChildrenHtmlString(intent+'    '),
+            endTag
+        ].join('\n')
+    }
 }
 export class TableCell extends HtmlElement {
+    toHtmlString(intent: string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('td')
+        var endTag : string = this.buildEndHtmlString('td')
+
+        return [
+            beginTag,
+            this.buildChildrenHtmlString().trim(),
+            endTag
+        ].join('')
+    }
 }
 
 export class TableAlignmentRow extends HtmlElement {}
