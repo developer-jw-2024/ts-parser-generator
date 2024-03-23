@@ -160,6 +160,74 @@ You go home`
 
     })
 
+    test('markdown - 2-2', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`This __is__ abc`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+            UnderlineBoldText
+                PlainText
+                    SimpleText
+            PlainText
+                Spaces
+                SimpleText`)
+
+    })
+
+    test('markdown - 2-2-1', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`*This __is__ abc`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    MarkdownError`)
+
+    })
+
+    test('markdown - 2-3', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`This *__is__ a*bc`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+            StarItalicText
+                UnderlineBoldText
+                    PlainText
+                        SimpleText
+                PlainText
+                    Spaces
+                    SimpleText
+            PlainText
+                SimpleText`)
+
+    })
+
+    test('markdown - 2-4', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`This ___is___ abc`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+            PlainText
+                SimpleText
+                Spaces
+            UnderlineBoldItalicText
+                PlainText
+                    SimpleText
+            PlainText
+                Spaces
+                SimpleText`)
+
+    })
 
     test('markdown - 3', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(

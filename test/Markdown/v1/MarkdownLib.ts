@@ -774,7 +774,21 @@ export class ItalicText extends MarkdownElement {
 }
 export class StarItalicText extends ItalicText {}
 export class UnderlineItalicText extends ItalicText {}
-export class BoldItalicText extends MarkdownElement {}
+export class BoldItalicText extends MarkdownElement {
+    addChild(child : any) {
+        this.children.push(child)
+        this.markdownElements.push(child)
+    }
+
+    toHtml(): html.HtmlElement {
+        var e2 : html.BoldText = new html.BoldText()
+        e2.setChildren(this.toChildrenMarkdownElementsHtml())
+
+        var e1 : html.ItalicText = new html.ItalicText()
+        e1.getChilden().push(e2)
+        return e1
+    }
+}
 export class StarBoldItalicText extends BoldItalicText {}
 export class UnderlineBoldItalicText extends BoldItalicText {}
 export class StrikethroughText extends MarkdownElement {}

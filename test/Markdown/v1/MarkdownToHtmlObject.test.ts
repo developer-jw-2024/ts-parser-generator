@@ -247,6 +247,114 @@ You go home`
         expect(htmlElement).toEqual(rootElement)
     })
 
+    test('markdown - 2-2', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`This __is__ abc`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                    ]),
+                    new html.BoldText().initChildren([
+                        new html.PlainText().initChildren([
+                            new html.Text('is')
+                        ])
+                    ]),
+                    new html.PlainText().initChildren([
+                        new html.Spaces(' '),
+                        new html.Text('abc')
+                    ])
+                ])
+            ])
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
+    })
+
+    test('markdown - 2-2-1', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`*This __is__ abc`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.ErrorHtmlElement(`*This __is__ abc`)
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
+    })
+
+    test('markdown - 2-3', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`This *__is__ a*bc`
+        )
+        
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                    ]),
+                    new html.ItalicText().initChildren([
+                        new html.BoldText().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Text('is')
+                            ])
+                        ]),
+                        new html.PlainText().initChildren([
+                            new html.Spaces(' '),
+                            new html.Spaces('a')
+                        ])    
+                    ]),
+                    new html.PlainText().initChildren([
+                        new html.Text('bc')
+                    ])
+                ])
+            ])
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
+
+    })
+
+    test('markdown - 2-4', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`This ___is___ abc`
+        )
+        
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('This'),
+                        new html.Spaces(' '),
+                    ]),
+                    new html.ItalicText().initChildren([
+                        new html.BoldText().initChildren([
+                            new html.PlainText().initChildren([
+                                new html.Text('is')
+                            ])
+                        ])
+                    ]),
+                    new html.PlainText().initChildren([
+                        new html.Spaces(' '),
+                        new html.Text('abc')
+                    ])
+                ])
+            ])
+        ])
+
+        expect(htmlElement).toEqual(rootElement)
+
+    })
 
     test('markdown - 3', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(

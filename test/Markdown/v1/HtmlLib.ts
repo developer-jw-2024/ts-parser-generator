@@ -1,6 +1,5 @@
 import { getClass, isTypeOf } from "../../../src/Utils/Utils"
 
-
 export class HtmlElement {
     children : Array<HtmlElement> = []
 
@@ -46,7 +45,7 @@ export class HtmlElement {
             var name : string = propertyValues[i]
             var value : string = propertyValues[i+1]
             if (value!=null) {
-                properties.push(`${name} = "${value}"`)
+                properties.push(`${name}="${value}"`)
             } else {
                 properties.push(`${name}`)
             }
@@ -161,7 +160,7 @@ export class Spaces extends HtmlStringElement {}
 
 export class Paragraph extends HtmlElement {
     toHtmlString(intent : string = ''): string {
-        return '<p>'+this.buildChildrenHtmlString('', '<br/>')+'</p>'
+        return intent+'<p>'+this.buildChildrenHtmlString('', '<br/>')+'</p>'
     }
 }
 export class Sentence extends HtmlElement {
@@ -238,7 +237,7 @@ export class Heading extends HtmlElement {
     toHtmlString(intent : string=''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`h${this.level}`)
         var endTag : string = intent + this.buildEndHtmlString(`h${this.level}`)
-        var innerHtml : string = this.buildChildrenHtmlString('', '')
+        var innerHtml : string = this.content.toHtmlString()
         return [beginTag, innerHtml, endTag].join('')
     }
 }
@@ -279,8 +278,8 @@ export class OrderedItem extends HtmlElement {
         var beginTag : string = intent + this.buildBeginHtmlString(`li`)
         var endTag : string = intent + this.buildEndHtmlString(`li`)
         var innerHtml : string = [
-            this.item==null?null:this.item.toHtmlString(),
-            this.complementBlock==null?null:this.complementBlock.toHtmlString(),
+            this.item==null?null:intent + '    ' + this.item.toHtmlString(intent),
+            this.complementBlock==null?null:this.complementBlock.toHtmlString(intent),
         ].filter(x=>x).join('\n')
         return [beginTag, innerHtml, endTag].join('\n')
     }
@@ -328,7 +327,14 @@ export class DefinitionItemValue extends HtmlElement {
     }
 
 }
-export class UnorderedList extends HtmlElement {}
+export class UnorderedList extends HtmlElement {
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`ul`)
+        var endTag : string = intent + this.buildEndHtmlString(`ul`)
+        var innerHtml : string = this.buildChildrenHtmlString(intent+'    ', '\n')
+        return [beginTag, innerHtml, endTag].join('\n')
+    }
+}
 
 export class UnorderedItem extends HtmlElement {
     item : HtmlElement
@@ -355,6 +361,15 @@ export class UnorderedItem extends HtmlElement {
         return this.item
     }
 
+    toHtmlString(intent : string=''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`li`)
+        var endTag : string = intent + this.buildEndHtmlString(`li`)
+        var innerHtml : string = [
+            this.item==null?null:intent + '    ' + this.item.toHtmlString(intent),
+            this.complementBlock==null?null:this.complementBlock.toHtmlString(intent),
+        ].filter(x=>x).join('\n')
+        return [beginTag, innerHtml, endTag].join('\n')
+    }
 }
 
 export class Table extends HtmlElement {
