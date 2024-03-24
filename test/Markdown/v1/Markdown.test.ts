@@ -1349,25 +1349,25 @@ This is that.`
 `Markdown
     Table
         TableRow
-            TableCell
+            TableHeadCell
                 Sentence
                     PlainText
                         Spaces
                         SimpleText
                         Spaces
-            TableCell
+            TableHeadCell
                 Sentence
                     PlainText
                         Spaces
                         SimpleText
                         Spaces
-            TableCell
+            TableHeadCell
                 Sentence
                     PlainText
                         Spaces
                         SimpleText
                         Spaces
-            TableCell
+            TableHeadCell
                 Sentence
                     PlainText
                         Spaces

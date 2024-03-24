@@ -1799,7 +1799,7 @@ This is that.`
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Table(new html.TableRow().initChildren([
-                new html.TableCell().initChildren([
+                new html.TableHeadCell().initChildren([
                     new html.Sentence().initChildren([
                         new html.PlainText().initChildren([
                             new html.Spaces(' '),
@@ -1807,8 +1807,8 @@ This is that.`
                             new html.Spaces('      ')
                         ])
                     ])
-                ]),
-                new html.TableCell().initChildren([
+                ]).init('tableCellAlignment', new html.TableNoAlignment(' ----------- ')),
+                new html.TableHeadCell().initChildren([
                     new html.Sentence().initChildren([
                         new html.PlainText().initChildren([
                             new html.Spaces(' '),
@@ -1816,8 +1816,8 @@ This is that.`
                             new html.Spaces(' ')
                         ])
                     ])
-                ]),
-                new html.TableCell().initChildren([
+                ]).init('tableCellAlignment', new html.TableLeftAlignment(' :----------- ')),
+                new html.TableHeadCell().initChildren([
                     new html.Sentence().initChildren([
                         new html.PlainText().initChildren([
                             new html.Spaces(' '),
@@ -1825,8 +1825,8 @@ This is that.`
                             new html.Spaces(' ')
                         ])
                     ])
-                ]),
-                new html.TableCell().initChildren([
+                ]).init('tableCellAlignment', new html.TableCenterAlignment(' :-----------: ')),
+                new html.TableHeadCell().initChildren([
                     new html.Sentence().initChildren([
                         new html.PlainText().initChildren([
                             new html.Spaces(' '),
@@ -1834,7 +1834,7 @@ This is that.`
                             new html.Spaces(' ')
                         ])
                     ])
-                ]),
+                ]).init('tableCellAlignment', new html.TableRightAlignment(' -----------: ')),
             ]), new html.TableAlignmentRow().initChildren([
                 new html.TableNoAlignment(' ----------- '),
                 new html.TableLeftAlignment(' :----------- '),
@@ -1850,7 +1850,7 @@ This is that.`
                                 new html.Spaces('      ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableNoAlignment(' ----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1859,7 +1859,7 @@ This is that.`
                                 new html.Spaces('       ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableLeftAlignment(' :----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1868,7 +1868,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableCenterAlignment(' :-----------: ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1877,7 +1877,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableRightAlignment(' -----------: ')),
                 ]),
                 new html.TableRow().initChildren([
                     new html.TableCell().initChildren([
@@ -1888,7 +1888,7 @@ This is that.`
                                 new html.Spaces('   ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableNoAlignment(' ----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1897,7 +1897,7 @@ This is that.`
                                 new html.Spaces('        ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableLeftAlignment(' :----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1906,7 +1906,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableCenterAlignment(' :-----------: ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1915,7 +1915,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableRightAlignment(' -----------: ')),
                 ]),
 
             ])
@@ -1947,7 +1947,7 @@ This is that.`
                                 new html.Spaces('      ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableNoAlignment(' ----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1956,7 +1956,7 @@ This is that.`
                                 new html.Spaces('       ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableLeftAlignment(' :----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1965,7 +1965,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableCenterAlignment(' :-----------: ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1974,7 +1974,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableRightAlignment(' -----------: ')),
                 ]),
                 new html.TableRow().initChildren([
                     new html.TableCell().initChildren([
@@ -1985,7 +1985,7 @@ This is that.`
                                 new html.Spaces('   ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableNoAlignment(' ----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -1994,7 +1994,7 @@ This is that.`
                                 new html.Spaces('        ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableLeftAlignment(' :----------- ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -2003,7 +2003,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableCenterAlignment(' :-----------: ')),
                     new html.TableCell().initChildren([
                         new html.Sentence().initChildren([
                             new html.PlainText().initChildren([
@@ -2012,7 +2012,7 @@ This is that.`
                                 new html.Spaces(' ')
                             ])
                         ])
-                    ]),
+                    ]).init('tableCellAlignment', new html.TableRightAlignment(' -----------: ')),
                 ]),
 
             ])

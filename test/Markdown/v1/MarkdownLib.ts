@@ -10,6 +10,10 @@ export class MarkdownElement extends SymbolEntity {
         return this.markdownElements
     }
 
+    setMarkdownElements(markdownElements : Array<MarkdownElement>) {
+        this.markdownElements = markdownElements
+    }
+
     getLastMarkdownElement() : MarkdownElement | null {
         if (this.markdownElements.length==0) return null
         return this.markdownElements.at(-1)
@@ -545,9 +549,36 @@ export class BlankLine extends MarkdownValueElement {
 
 
 export class TableRow extends MarkdownElement {
+    tableAlignmentRow : TableAlignmentRow | null = null
+    
+
+    constructor() {
+        super()
+        // this.tableAlignmentRow = null
+    }
+
     addChild(child : any) {
+        var index = this.children.length
         this.children.push(child)
         this.markdownElements.push(child)
+        if (this.tableAlignmentRow!=null && this.tableAlignmentRow.getMarkdownElements().length>index) {
+            (child as TableCell).setTableColumnAlignment(this.tableAlignmentRow.getMarkdownElements()[index] as TableColumnAlignment)
+        }
+    }
+
+    setTableAlignmentRow(tableAlignmentRow : TableAlignmentRow) {
+        this.tableAlignmentRow = tableAlignmentRow
+        if (this.tableAlignmentRow!=null) {
+            var len = Math.min(this.getMarkdownElements().length, this.tableAlignmentRow.getMarkdownElements().length)
+            for (var i=0;i<len;i++) {
+                var cell : TableCell = this.getMarkdownElements()[i] as TableCell
+                cell.setTableColumnAlignment(this.tableAlignmentRow.getMarkdownElements()[i] as TableColumnAlignment)
+            }    
+        }
+    }
+
+    getTableAlignmentRow() : TableAlignmentRow | null{
+        return this.tableAlignmentRow
     }
 
     toHtml(): html.HtmlElement {
@@ -558,11 +589,21 @@ export class TableRow extends MarkdownElement {
 }
 export class TableCell extends MarkdownElement {
     tableRow : TableRow | null = null
+    tableColumnAlignment : TableColumnAlignment | null = null
 
     constructor(tableRow : TableRow) {
         super()
         this.tableRow = tableRow
     }
+
+    setTableColumnAlignment(tableColumnAlignment : TableColumnAlignment) {
+        this.tableColumnAlignment = tableColumnAlignment
+    }
+
+    getTableColumnAlignment() : TableColumnAlignment {
+        return this.tableColumnAlignment
+    }
+
 
     getTableRow() : TableRow | null{
         return this.tableRow
@@ -575,10 +616,26 @@ export class TableCell extends MarkdownElement {
 
     toHtml(): html.HtmlElement {
         var e : html.TableCell = new html.TableCell()
+        if (this.tableColumnAlignment!=null) {
+            e.setTableCellAlignment(this.tableColumnAlignment.toHtml())
+        }
         e.setChildren(this.toChildrenMarkdownElementsHtml())
         return e
     }
 }
+
+export class TableHeadCell  extends TableCell {
+
+    toHtml(): html.HtmlElement {
+        var e : html.TableHeadCell = new html.TableHeadCell()
+        if (this.tableColumnAlignment!=null) {
+            e.setTableCellAlignment(this.tableColumnAlignment.toHtml())
+        }
+        e.setChildren(this.toChildrenMarkdownElementsHtml())
+        return e
+    }
+}
+
 export class TableAlignmentRow extends MarkdownElement {
     addChild(child : any) {
         this.children.push(child)
@@ -1494,6 +1551,7 @@ export class Table extends MarkdownElement {
 
     addElement(element : MarkdownElement) {
         if (element.getClass()==TableRow) {
+            (element as TableRow).setTableAlignmentRow(this.tableAlignmentRow)
             this.getMarkdownElements().push(element)
         } else if (element.getClass()==TableAlignmentRow) {
             this.addTableAlignmentRow(element as TableAlignmentRow)
@@ -1506,9 +1564,19 @@ export class Table extends MarkdownElement {
         if (this.getMarkdownElements().length==0) {
             this.setTableAlignmentRow(element)
         } else if (this.getMarkdownElements().length==1) {
-            var headerRow : TableRow = this.getMarkdownElements().pop()
+            var previousRow : TableRow = (this.getMarkdownElements().pop()) as TableRow
+            var headerRow : TableRow = new TableRow()
+            var elements : Array<MarkdownElement> =  previousRow.getMarkdownElements()
+            elements.forEach(ele=>{
+                var tableCell : MarkdownElement = ele
+                var tableHeadCell : TableHeadCell = new TableHeadCell(headerRow)
+                tableHeadCell.setMarkdownElements(tableCell.getMarkdownElements())
+                headerRow.addChild(tableHeadCell)
+            })
             this.setHeaderRow(headerRow)
+            headerRow.setTableAlignmentRow(element)
             this.setTableAlignmentRow(element)
+
         }
     }
 

@@ -827,34 +827,8 @@ This is that.`
 </table>` 
         )
         
-        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Table().initChildren([
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Syntax'),
-                                new html.Spaces('      ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Description'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
     })
-/*
+
     test('markdown - 38', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Header      | Title       |
@@ -862,51 +836,20 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Table().initChildren([
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Header'),
-                                new html.Spaces('      ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Title'),
-                                new html.Spaces('       ')
-                            ])
-                        ])
-                    ]),
-                ]),
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Paragraph'),
-                                new html.Spaces('   ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Text'),
-                                new html.Spaces('        ')
-                            ])
-                        ])
-                    ]),
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<table>
+    <tbody>
+        <tr>
+            <td>Header</td>
+            <td>Title</td>
+        </tr>
+        <tr>
+            <td>Paragraph</td>
+            <td>Text</td>
+        </tr>
+    </tbody>
+</table>` 
+        )
     })
 
     test('markdown - 38-1', () => {
@@ -916,52 +859,20 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Table().initChildren([
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Spaces('    '),
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Header'),
-                                new html.Spaces('      ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Title'),
-                                new html.Spaces('       ')
-                            ])
-                        ])
-                    ]),
-                ]),
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Paragraph'),
-                                new html.Spaces('   ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Text'),
-                                new html.Spaces('        ')
-                            ])
-                        ])
-                    ]),
-                ]),
-
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<table>
+    <tbody>
+        <tr>
+            <td>Header</td>
+            <td>Title</td>
+        </tr>
+        <tr>
+            <td>Paragraph</td>
+            <td>Text</td>
+        </tr>
+    </tbody>
+</table>` 
+        )
     })
 
 
@@ -974,130 +885,32 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Table(new html.TableRow().initChildren([
-                new html.TableCell().initChildren([
-                    new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Spaces(' '),
-                            new html.Text('Syntax'),
-                            new html.Spaces('      ')
-                        ])
-                    ])
-                ]),
-                new html.TableCell().initChildren([
-                    new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Spaces(' '),
-                            new html.Text('Description'),
-                            new html.Spaces(' ')
-                        ])
-                    ])
-                ]),
-                new html.TableCell().initChildren([
-                    new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Spaces(' '),
-                            new html.Text('Num'),
-                            new html.Spaces(' ')
-                        ])
-                    ])
-                ]),
-                new html.TableCell().initChildren([
-                    new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Spaces(' '),
-                            new html.Text('Checked'),
-                            new html.Spaces(' ')
-                        ])
-                    ])
-                ]),
-            ]), new html.TableAlignmentRow().initChildren([
-                new html.TableNoAlignment(' ----------- '),
-                new html.TableLeftAlignment(' :----------- '),
-                new html.TableCenterAlignment(' :-----------: '),
-                new html.TableRightAlignment(' -----------: '),
-            ])).initChildren([
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Header'),
-                                new html.Spaces('      ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Title'),
-                                new html.Spaces('       ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('3'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('true'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                ]),
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Paragraph'),
-                                new html.Spaces('   ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Text'),
-                                new html.Spaces('        ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('8'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('false'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                ]),
-
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<table>
+    <thead>
+        <tr>
+            <th>Syntax</th>
+            <th class="TableCellAlignLeft">Description</th>
+            <th class="TableCellAlignCenter">Num</th>
+            <th class="TableCellAlignRight">Checked</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Header</td>
+            <td class="TableCellAlignLeft">Title</td>
+            <td class="TableCellAlignCenter">3</td>
+            <td class="TableCellAlignRight">true</td>
+        </tr>
+        <tr>
+            <td>Paragraph</td>
+            <td class="TableCellAlignLeft">Text</td>
+            <td class="TableCellAlignCenter">8</td>
+            <td class="TableCellAlignRight">false</td>
+        </tr>
+    </tbody>
+</table>` 
+        )
     })
 
     test('markdown - 40', () => {
@@ -1198,7 +1011,7 @@ This is that.`
     })
 
     
-
+/*
     test('markdown - 41', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |

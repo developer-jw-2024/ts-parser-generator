@@ -1,5 +1,5 @@
-import { getClass, isTypeOf } from "../../../src/Utils/Utils"
 import {encode} from 'html-entities'
+import { isTypeOf } from '../../../src/Utils/Utils'
 
 export class HtmlElement {
     children : Array<HtmlElement> = []
@@ -443,10 +443,57 @@ export class TableRow extends HtmlElement {
     }
 }
 export class TableCell extends HtmlElement {
+    tableCellAlignment : HtmlElement | null = null
+
+    getTableCellAlignment() : HtmlElement {
+        return this.tableCellAlignment
+    }
+
+    setTableCellAlignment(tableCellAlignment : HtmlElement) {
+        this.tableCellAlignment = tableCellAlignment
+    }
+
     toHtmlString(intent: string = ''): string {
-        var beginTag : string = intent + this.buildBeginHtmlString('td')
+        var propertyValues : string[] = []
+        if (isTypeOf(this.tableCellAlignment, TableLeftAlignment)) {
+            propertyValues.push('class')
+            propertyValues.push('TableCellAlignLeft')
+        } else if (isTypeOf(this.tableCellAlignment, TableCenterAlignment)) {
+            propertyValues.push('class')
+            propertyValues.push('TableCellAlignCenter')
+        } else if (isTypeOf(this.tableCellAlignment, TableRightAlignment)) {
+            propertyValues.push('class')
+            propertyValues.push('TableCellAlignRight')
+        }
+        var beginTag : string = intent + this.buildBeginHtmlString('td', propertyValues)
+        
         var endTag : string = this.buildEndHtmlString('td')
 
+        return [
+            beginTag,
+            this.buildChildrenHtmlString().trim(),
+            endTag
+        ].join('')
+    }
+
+}
+
+export class TableHeadCell extends TableCell {
+    toHtmlString(intent: string = ''): string {
+        var propertyValues : string[] = []
+        if (isTypeOf(this.tableCellAlignment, TableLeftAlignment)) {
+            propertyValues.push('class')
+            propertyValues.push('TableCellAlignLeft')
+        } else if (isTypeOf(this.tableCellAlignment, TableCenterAlignment)) {
+            propertyValues.push('class')
+            propertyValues.push('TableCellAlignCenter')
+        } else if (isTypeOf(this.tableCellAlignment, TableRightAlignment)) {
+            propertyValues.push('class')
+            propertyValues.push('TableCellAlignRight')
+        }
+        var beginTag : string = intent + this.buildBeginHtmlString('th', propertyValues)
+        var endTag : string = this.buildEndHtmlString('th')
+        
         return [
             beginTag,
             this.buildChildrenHtmlString().trim(),
@@ -456,10 +503,11 @@ export class TableCell extends HtmlElement {
 }
 
 export class TableAlignmentRow extends HtmlElement {}
-export class TableNoAlignment extends HtmlStringElement {}
-export class TableLeftAlignment extends HtmlStringElement {}
-export class TableRightAlignment extends HtmlStringElement {}
-export class TableCenterAlignment extends HtmlStringElement {}
+export class TableCellAlignment extends HtmlStringElement {}
+export class TableNoAlignment extends TableCellAlignment {}
+export class TableLeftAlignment extends TableCellAlignment {}
+export class TableRightAlignment extends TableCellAlignment {}
+export class TableCenterAlignment extends TableCellAlignment {}
 
 export class Footnote extends HtmlElement {
     footnoteReference : HtmlElement | null = null
