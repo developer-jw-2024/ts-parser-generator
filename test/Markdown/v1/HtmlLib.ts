@@ -144,7 +144,11 @@ export class NullHtmlElement extends HtmlElement {}
 export var NullHtmlInstance : NullHtmlElement = new NullHtmlElement()
 
 export class Text extends HtmlStringElement {}
-export class FencedCodeBlockText extends HtmlStringElement {}
+export class FencedCodeBlockText extends HtmlStringElement {
+    toHtmlString(intent: string = ''): string {
+        return encode(this.value).split('\n').map(x=>intent+x).join('\n')
+    }
+}
 export class HorizontalRule extends HtmlStringElement {
     toHtmlString(intent: string = ''): string {
         return intent+"<hr>"
@@ -204,8 +208,7 @@ export class TaskListItem extends HtmlElement {
         }
         var input : string = intent + this.buildBeginHtmlString('input', inputProperties)
         var label : string = intent + this.buildBeginHtmlString('label', [])+this.value.toHtmlString('')+this.buildEndHtmlString('label')
-        var html : string = input + label + '<br/>'
-        return html
+        return [input , label].join('\n')
     }
 }
 export class BlankLine extends HtmlElement {
@@ -242,7 +245,7 @@ export class Heading extends HtmlElement {
     toHtmlString(intent : string=''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`h${this.level}`)
         var endTag : string = this.buildEndHtmlString(`h${this.level}`)
-        var innerHtml : string = this.content.toHtmlString()
+        var innerHtml : string = this.content==null?'':this.content.toHtmlString()
         return [beginTag, innerHtml, endTag].join('')
     }
 }
@@ -293,7 +296,14 @@ export class OrderedItem extends HtmlElement {
 
     }
 }
-export class DefinitionList extends HtmlElement {}
+export class DefinitionList extends HtmlElement {
+    toHtmlString(intent: string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`dl`)
+        var endTag : string = intent + this.buildEndHtmlString(`dl`)
+        var innerHtml : string = this.buildChildrenHtmlString(intent+'    ', '\n')
+        return [beginTag, innerHtml, endTag].join('\n')
+    }
+}
 export class DefinitionItem extends HtmlElement {
     term : HtmlElement
 
@@ -309,6 +319,13 @@ export class DefinitionItem extends HtmlElement {
         return this.term
     }
 
+    toHtmlString(intent: string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`dt`)
+        var endTag : string = this.buildEndHtmlString(`dt`)
+        var innerHtml : string = this.getTerm()==null?'':this.getTerm().toHtmlString('')
+        var childrenHtml : string = this.buildChildrenHtmlString(intent, '\n')
+        return [[beginTag, innerHtml, endTag].join(''), childrenHtml].join('\n')
+    }
 }
 export class DefinitionItemValue extends HtmlElement {
     item : HtmlElement
@@ -335,6 +352,18 @@ export class DefinitionItemValue extends HtmlElement {
         return this.item
     }
 
+    toHtmlString(intent: string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString(`dd`)
+        var itemHtml : string = this.item==null?'':this.item.toHtmlString()
+        var complementBlockHtml : string =  this.complementBlock==null?'':this.complementBlock.toHtmlString(intent + '    ')
+        if (complementBlockHtml.length==0) {
+            var endTag : string = this.buildEndHtmlString(`dd`)
+            return beginTag + itemHtml + endTag
+        } else {
+            var endTag : string = intent + this.buildEndHtmlString(`dd`)
+            return [beginTag + itemHtml , complementBlockHtml , endTag].join('\n')
+        }
+    }
 }
 export class UnorderedList extends HtmlElement {
     toHtmlString(intent : string=''): string {
@@ -510,13 +539,13 @@ export class TableRightAlignment extends TableCellAlignment {}
 export class TableCenterAlignment extends TableCellAlignment {}
 
 export class Footnote extends HtmlElement {
-    footnoteReference : HtmlElement | null = null
+    footnoteIndex : HtmlElement | null = null
     detail : HtmlElement | null = null
     complementBlock : HtmlElement | null = null
 
     constructor(footnoteReference : HtmlElement, detail : HtmlElement | null) {
         super()
-        this.footnoteReference = footnoteReference
+        this.footnoteIndex = new FootnoteIndex((footnoteReference as FootnoteReference).getValue())
         this.detail = detail
     }
 
@@ -528,14 +557,45 @@ export class Footnote extends HtmlElement {
         return this.complementBlock
     }
 
+    toHtmlString(intent : string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('div')
+        var footnoteIndexHtml : string = this.footnoteIndex.toHtmlString()
+        var detailHtml : string = this.detail.toHtmlString()
+
+        var complementBlockHtml : string =  this.complementBlock==null?'':this.complementBlock.toHtmlString(intent + '    ')
+        if (complementBlockHtml.length==0) {
+            var endTag : string = this.buildEndHtmlString(`div`)
+            return beginTag + footnoteIndexHtml + detailHtml + endTag
+        } else {
+            var endTag : string = intent + this.buildEndHtmlString(`div`)
+            return [beginTag + footnoteIndexHtml + detailHtml , complementBlockHtml , endTag].join('\n')
+        }
+
+    }
 }
 
 export class FootnoteReference extends HtmlValueElement {
-    
+    toHtmlString(intent : string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('sup')
+        var endTag : string = this.buildEndHtmlString('sup')
+        var linkBeginTag : string = this.buildBeginHtmlString('a', ['href', `#fn:${this.value.toHtmlString()}`, 'class', 'footnote', 'rel', 'footnote'])
+        var linkEndTag : string = this.buildEndHtmlString('a')
+        var link : string = [linkBeginTag, this.value.toHtmlString(), linkEndTag].join('')
+        return [beginTag, link, endTag].join('')
+    }
+}
+
+export class FootnoteIndex extends HtmlValueElement {
+    toHtmlString(intent : string = ''): string {
+        var beginTag : string = intent + this.buildBeginHtmlString('span', ['id', `fn:${this.value.toHtmlString()}`] )
+        var endTag : string = this.buildEndHtmlString('span')
+        var valueHtml : string = this.value.toHtmlString()
+        return [beginTag, valueHtml, endTag].join('')
+    }
 }
 
 export class Cursor extends HtmlElement {
     toHtmlString(intent : string = ''): string {
-        return '|'
+        return '<span class="cursor">|</span>'
     }
 }

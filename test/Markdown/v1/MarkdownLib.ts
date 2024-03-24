@@ -942,13 +942,13 @@ export class Cursor extends MarkdownElement {
 }
 export class Footnote extends MarkdownElement {
 
-    footnoteReference : MarkdownElement | null = null
+    footnoteIndex : MarkdownElement | null = null
     detail : MarkdownElement | null = null
     complementBlock : ComplementBlock | null = null
 
     constructor(footnoteReference : MarkdownElement, detail : MarkdownElement) {
         super()
-        this.footnoteReference = footnoteReference
+        this.footnoteIndex = new FootnoteIndex((footnoteReference as FootnoteReference).getValue())
         this.detail = detail
     }
 
@@ -976,7 +976,7 @@ export class Footnote extends MarkdownElement {
 
     toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
         var subIntent = `${intent}    `
-        var resultArray =  [this.footnoteReference, this.detail, this.complementBlock].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
+        var resultArray =  [this.footnoteIndex, this.detail, this.complementBlock].concat(this.getMarkdownElements()).filter(x=>x).map(markdownElement=>{
             if (markdownElement.toMarkdownHierarchy) {
                 return markdownElement.toMarkdownHierarchy(subIntent, debug)
             } else {
@@ -989,7 +989,7 @@ export class Footnote extends MarkdownElement {
 
     getUnhandledBlockquotes() : Array<Blockquote> {
         var childBlockquotes : Array<Blockquote> = this.getUnhandledChildrenBlockquotes()
-        var elements : Array<MarkdownElement> = [this.footnoteReference, this.detail]
+        var elements : Array<MarkdownElement> = [this.footnoteIndex, this.detail]
         if (this.complementBlock!=null && this.complementBlock.isHandled()) {
             childBlockquotes = childBlockquotes.concat(this.complementBlock.getUnhandledBlockquotes())
             elements.push(this.complementBlock)
@@ -1000,11 +1000,11 @@ export class Footnote extends MarkdownElement {
 
     getUnhandledComplementBlocks() : Array<ComplementBlock> {
         // console.log('getUnhandledComplementBlocks', this)
-        return this.getUnhandledComplementBlockByMarkdownElements([this, this.footnoteReference, this.detail, this.complementBlock])
+        return this.getUnhandledComplementBlockByMarkdownElements([this, this.footnoteIndex, this.detail, this.complementBlock])
     }
 
     toHtml(): html.HtmlElement {
-        var e : html.Footnote = new html.Footnote(this.footnoteReference.toHtml(), this.detail.toHtml())
+        var e : html.Footnote = new html.Footnote(this.footnoteIndex.toHtml(), this.detail.toHtml())
         if (this.complementBlock!=null) {
             e.setComplementBlock(this.complementBlock.toHtml())
         }
@@ -1028,6 +1028,21 @@ export class FootnoteReference extends MarkdownValueElement {
         return new html.FootnoteReference(value)
     }
 }
+
+export class FootnoteIndex extends FootnoteReference {
+    toHtml(): html.HtmlElement {
+        var value : any = null
+        if (isTypeOf(this.value, String)) {
+            value = this.value
+        } else if (this.value!=null && this.value.toHtml) {
+            value = (this.value as MarkdownElement).toHtml()
+        } else if (this.value==null) {
+            value = ""
+        }
+        return new html.FootnoteIndex(value)
+    }
+}
+
 export class HorizontalRule extends MarkdownValueElement {
     toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
         // var subIntent = `${intent}    `

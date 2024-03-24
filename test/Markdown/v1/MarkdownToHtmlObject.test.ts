@@ -2940,7 +2940,7 @@ Second Term
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
+                new html.FootnoteIndex(new html.Text('Variable')),
                 new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('This'),
@@ -2969,7 +2969,7 @@ Second Term
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
+                new html.FootnoteIndex(new html.Text('Variable')),
                 new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('This'),
@@ -3096,7 +3096,7 @@ Second Term
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
+                new html.FootnoteIndex(new html.Text('Variable')),
                 new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('This'),
@@ -3183,7 +3183,7 @@ Second Term
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
+                new html.FootnoteIndex(new html.Text('Variable')),
                 new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('This'),
@@ -3278,7 +3278,7 @@ Second Term
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
             new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
+                new html.FootnoteIndex(new html.Text('Variable')),
                 new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
                         new html.Text('This'),

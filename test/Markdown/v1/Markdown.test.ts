@@ -2215,7 +2215,7 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
-        FootnoteReference
+        FootnoteIndex
             SimpleText
         Sentence
             PlainText
@@ -2237,7 +2237,7 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
-        FootnoteReference
+        FootnoteIndex
             SimpleText
         Sentence
             PlainText
@@ -2334,7 +2334,7 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
-        FootnoteReference
+        FootnoteIndex
             SimpleText
         Sentence
             PlainText
@@ -2406,7 +2406,7 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
-        FootnoteReference
+        FootnoteIndex
             SimpleText
         Sentence
             PlainText
@@ -2482,7 +2482,7 @@ Second Term
         ).toMarkdownHierarchy().join('\n')).toEqual(
 `Markdown
     Footnote
-        FootnoteReference
+        FootnoteIndex
             SimpleText
         Sentence
             PlainText

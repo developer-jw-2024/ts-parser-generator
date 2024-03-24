@@ -921,97 +921,27 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Table(null, new html.TableAlignmentRow().initChildren([
-                new html.TableNoAlignment(' ----------- '),
-                new html.TableLeftAlignment(' :----------- '),
-                new html.TableCenterAlignment(' :-----------: '),
-                new html.TableRightAlignment(' -----------: '),
-            ])).initChildren([
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Header'),
-                                new html.Spaces('      ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Title'),
-                                new html.Spaces('       ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('3'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('true'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                ]),
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Paragraph'),
-                                new html.Spaces('   ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Text'),
-                                new html.Spaces('        ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('8'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('false'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                ]),
-
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<table>
+    <tbody>
+        <tr>
+            <td>Header</td>
+            <td class="TableCellAlignLeft">Title</td>
+            <td class="TableCellAlignCenter">3</td>
+            <td class="TableCellAlignRight">true</td>
+        </tr>
+        <tr>
+            <td>Paragraph</td>
+            <td class="TableCellAlignLeft">Text</td>
+            <td class="TableCellAlignCenter">8</td>
+            <td class="TableCellAlignRight">false</td>
+        </tr>
+    </tbody>
+</table>` 
+        )
     })
 
     
-/*
     test('markdown - 41', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `| Syntax      | Description |
@@ -1020,73 +950,25 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Table(null, null).initChildren([
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Syntax'),
-                                new html.Spaces('      ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Description'),
-                                new html.Spaces(' ')
-                            ])
-                        ])
-                    ]),
-                ]),
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Header'),
-                                new html.Spaces('      ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Title'),
-                                new html.Spaces('       ')
-                            ])
-                        ])
-                    ]),
-                ]),
-                new html.TableRow().initChildren([
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Paragraph'),
-                                new html.Spaces('   ')
-                            ])
-                        ])
-                    ]),
-                    new html.TableCell().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Spaces(' '),
-                                new html.Text('Text'),
-                                new html.Spaces('        ')
-                            ])
-                        ])
-                    ]),
-                ]),
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<table>
+    <tbody>
+        <tr>
+            <td>Syntax</td>
+            <td>Description</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+            <td>Title</td>
+        </tr>
+        <tr>
+            <td>Paragraph</td>
+            <td>Text</td>
+        </tr>
+    </tbody>
+</table>` 
+        )
     })
-
 
 
     test('markdown - 42', () => {
@@ -1101,17 +983,16 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.FencedCodeBlockText(
+        expect(htmlElement.toHtmlString()).toEqual(
 `\`\`\`
 {
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;Smith&quot;,
+  &quot;age&quot;: 25
 }
-\`\`\``)
-        ])
-        expect(htmlElement).toEqual(rootElement)
+\`\`\``
+        )
+        
     })
     
 
@@ -1127,22 +1008,19 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.FencedCodeBlockText(
-`\`\`\`
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-\`\`\``)
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    \`\`\`
+    {
+      &quot;firstName&quot;: &quot;John&quot;,
+      &quot;lastName&quot;: &quot;Smith&quot;,
+      &quot;age&quot;: 25
+    }
+    \`\`\`
+</div>`
+        )      
     })
+
 
     test('markdown - 44', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -1157,30 +1035,22 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('coding')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.Blockquote().initChildren([
-                        new html.HtmlRoot().initChildren([
-                            new html.FencedCodeBlockText(
-`\`\`\`
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-\`\`\``)
-                        ])
-                    ])
-                ])),
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>coding
+        <div class="blockquote">
+            \`\`\`
+            {
+              &quot;firstName&quot;: &quot;John&quot;,
+              &quot;lastName&quot;: &quot;Smith&quot;,
+              &quot;age&quot;: 25
+            }
+            \`\`\`
+        </div>
+    </li>
+</ol>`)
     })
+
 
     test('markdown - 45', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -1195,26 +1065,18 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('coding')
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.FencedCodeBlockText(
-`\`\`\`
-{
-    "firstName": "John",
-    "lastName": "Smith",
-    "age": 25
-}
-\`\`\``)
-                    ])
-                ),
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>coding
+        \`\`\`
+        {
+            &quot;firstName&quot;: &quot;John&quot;,
+            &quot;lastName&quot;: &quot;Smith&quot;,
+            &quot;age&quot;: 25
+        }
+        \`\`\`
+    </li>
+</ol>`)
     })
 
     test('markdown - 46', () => {
@@ -1224,38 +1086,12 @@ This is that.`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('First'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('first'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ]))
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<dl>
+    <dt>First Term</dt>
+    <dd>This is the definition of the first term.</dd>
+</dl>`
+        )
     })
     
 
@@ -1268,41 +1104,14 @@ This is that.`
         )
         
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('First'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                        ])
-                    ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                        new html.Paragraph().initChildren([
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('That'),
-                                    new html.Spaces(' '),
-                                    new html.Text('are')
-                                ])
-                            ]),
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('Bee.'),
-                                ])
-                            ])
-                        ])
-                    ]))
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<dl>
+    <dt>First Term</dt>
+    <dd>This is
+        <p>That are<br/>Bee.</p>
+    </dd>
+</dl>`
+        )
     })
 
 
@@ -1316,48 +1125,15 @@ This is that.`
         )
         
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('First'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                        ])
-                    ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                        new html.Paragraph().initChildren([
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('That'),
-                                    new html.Spaces(' '),
-                                    new html.Text('are')
-                                ])
-                            ]),
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('Bee.'),
-                                ])
-                            ])
-                        ])
-                    ])),
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('that'),
-                            new html.Spaces(' '),
-                            new html.Text('are'),
-                        ])
-                    ]))
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<dl>
+    <dt>First Term</dt>
+    <dd>This is
+        <p>That are<br/>Bee.</p>
+    </dd>
+    <dd>that are</dd>
+</dl>`
+        )
     })
 
     test('markdown - 46-3', () => {
@@ -1372,63 +1148,17 @@ Second Term
         )
         
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('First'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                        ])
-                    ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                        new html.Paragraph().initChildren([
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('That'),
-                                    new html.Spaces(' '),
-                                    new html.Text('are')
-                                ])
-                            ]),
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('Bee.'),
-                                ])
-                            ])
-                        ])
-                    ])),
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('that'),
-                            new html.Spaces(' '),
-                            new html.Text('are'),
-                        ])
-                    ]))
-                ]),
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Second'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('Those'),
-                            new html.Spaces(' '),
-                            new html.Text('are'),
-                        ])
-                    ]))
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<dl>
+    <dt>First Term</dt>
+    <dd>This is
+        <p>That are<br/>Bee.</p>
+    </dd>
+    <dd>that are</dd>
+    <dt>Second Term</dt>
+    <dd>Those are</dd>
+</dl>`
+        )
     })
 
     test('markdown - 47', () => {
@@ -1439,58 +1169,15 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Second'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('one'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('second'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ])),
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('another'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('second'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ]))
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<dl>
+    <dt>Second Term</dt>
+    <dd>This is one definition of the second term.</dd>
+    <dd>This is another definition of the second term.</dd>
+</dl>`
+        )
     })
+
 
     test('markdown - 48', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -1502,84 +1189,15 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('First'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('first'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ])),
-                ]),
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Second'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('one'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('second'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ])),
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('another'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('second'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ]))
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<dl>
+    <dt>First Term</dt>
+    <dd>This is the definition of the first term.</dd>
+    <dt>Second Term</dt>
+    <dd>This is one definition of the second term.</dd>
+    <dd>This is another definition of the second term.</dd>
+</dl>`
+        )
     })
 
     test('markdown - 49', () => {
@@ -1593,87 +1211,18 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('First'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('first'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ])),
-                ]),
-            ]),
-            new html.BlankLine(),
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Second'),
-                        new html.Spaces(' '),
-                        new html.Text('Term')
-                    ])
-                ])).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('one'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('second'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ])),
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('another'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('second'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ]))
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<dl>
+    <dt>First Term</dt>
+    <dd>This is the definition of the first term.</dd>
+</dl>
+<br/>
+<dl>
+    <dt>Second Term</dt>
+    <dd>This is one definition of the second term.</dd>
+    <dd>This is another definition of the second term.</dd>
+</dl>`
+        )
     })
 
     test('markdown - 50', () => {
@@ -1682,22 +1231,12 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.TaskList().initChildren([
-                new html.TaskListItem(true, new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Write'),
-                        new html.Spaces(' '),
-                        new html.Text('the'),
-                        new html.Spaces(' '),
-                        new html.Text('press'),
-                        new html.Spaces(' '),
-                        new html.Text('release'),
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="taskList">
+    <input type="checkbox" checked>
+    <label>Write the press release</label>
+</div>`
+        )
     })
 
     test('markdown - 51', () => {
@@ -1708,40 +1247,16 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.TaskList().initChildren([
-                new html.TaskListItem(true, new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Write'),
-                        new html.Spaces(' '),
-                        new html.Text('the'),
-                        new html.Spaces(' '),
-                        new html.Text('press'),
-                        new html.Spaces(' '),
-                        new html.Text('release'),
-                    ])
-                ])),
-                new html.TaskListItem(false, new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Update'),
-                        new html.Spaces(' '),
-                        new html.Text('the'),
-                        new html.Spaces(' '),
-                        new html.Text('website'),
-                    ])
-                ])),
-                new html.TaskListItem(false, new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Contact'),
-                        new html.Spaces(' '),
-                        new html.Text('the'),
-                        new html.Spaces(' '),
-                        new html.Text('media'),
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="taskList">
+    <input type="checkbox" checked>
+    <label>Write the press release</label>
+    <input type="checkbox">
+    <label>Update the website</label>
+    <input type="checkbox">
+    <label>Contact the media</label>
+</div>`
+        )
     })
 
     test('markdown - 52', () => {
@@ -1753,34 +1268,17 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.TaskList().initChildren([
-                new html.TaskListItem(true, new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Write'),
-                        new html.Spaces(' '),
-                        new html.Text('the'),
-                        new html.Spaces(' '),
-                        new html.Text('press'),
-                        new html.Spaces(' '),
-                        new html.Text('release'),
-                    ])
-                ])),
-            ]),
-            new html.ErrorHtmlElement('- [Y] Contact the media'),
-            new html.TaskList().initChildren([
-                new html.TaskListItem(false, new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('Update'),
-                        new html.Spaces(' '),
-                        new html.Text('the'),
-                        new html.Spaces(' '),
-                        new html.Text('website'),
-                    ])
-                ])),
-            ]),
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="taskList">
+    <input type="checkbox" checked>
+    <label>Write the press release</label>
+</div>
+- [Y] Contact the media
+<div class="taskList">
+    <input type="checkbox">
+    <label>Update the website</label>
+</div>`
+        )
     })
 
     test('markdown - 53', () => {
@@ -1790,46 +1288,16 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('First'),
-                                new html.Spaces(' '),
-                                new html.Text('Term')
-                            ])
-                        ])
-                    ])
-                ]),
-            ]),
-            new html.DefinitionList().initChildren([
-                new html.DefinitionItem(null).initChildren([
-                    new html.DefinitionItemValue(new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('This'),
-                            new html.Spaces(' '),
-                            new html.Text('is'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('definition'),
-                            new html.Spaces(' '),
-                            new html.Text('of'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('first'),
-                            new html.Spaces(' '),
-                            new html.Text('term.'),
-                        ])
-                    ])),
-                ]),
-            ]),
-            
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <p>First Term</p>
+</div>
+<dl>
+    <dt></dt>
+    <dd>This is the definition of the first term.</dd>
+</dl>`
+        )
+        
     })
 
     test('markdown - 54', () => {
@@ -1839,46 +1307,14 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-
-                    new html.DefinitionList().initChildren([
-                        new html.DefinitionItem(new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('First'),
-                                new html.Spaces(' '),
-                                new html.Text('Term')
-                            ])
-                        ])).initChildren([
-                            new html.DefinitionItemValue(new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('This'),
-                                    new html.Spaces(' '),
-                                    new html.Text('is'),
-                                    new html.Spaces(' '),
-                                    new html.Text('the'),
-                                    new html.Spaces(' '),
-                                    new html.Text('definition'),
-                                    new html.Spaces(' '),
-                                    new html.Text('of'),
-                                    new html.Spaces(' '),
-                                    new html.Text('the'),
-                                    new html.Spaces(' '),
-                                    new html.Text('first'),
-                                    new html.Spaces(' '),
-                                    new html.Text('term.'),
-                                ])
-                            ])),
-                        ]),
-                    ]),
-
-                ]),
-            ]),
-
-            
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div class="blockquote">
+    <dl>
+        <dt>First Term</dt>
+        <dd>This is the definition of the first term.</dd>
+    </dl>
+</div>`
+        )
     })
 
 
@@ -1895,32 +1331,33 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('coding')
-                    ])
-                ]))
-            ]),
-            new html.Blockquote().initChildren([
-                new html.HtmlRoot().initChildren([
-                    new html.FencedCodeBlockText(
-`\`\`\`
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-\`\`\``)
-                ]),
-            ]),
-
-            
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>coding</li>
+</ol>
+<div class="blockquote">
+    \`\`\`
+    {
+      &quot;firstName&quot;: &quot;John&quot;,
+      &quot;lastName&quot;: &quot;Smith&quot;,
+      &quot;age&quot;: 25
+    }
+    \`\`\`
+</div>`
+        )
     })
 
+
+    test('markdown - 56-1', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`Here's a simple footnote,[^1] and here's a longer one.[^bignote]`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>Here&apos;s a simple footnote,<sup><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> and here&apos;s a longer one.<sup><a href="#fn:bignote" class="footnote" rel="footnote">bignote</a></sup></p>`
+        )
+    })
 
     test('markdown - 56', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
@@ -1928,25 +1365,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                        new html.Text('is'),
-                        new html.Spaces(' '),
-                        new html.Text('good'),
-                        new html.Spaces(' '),
-                        new html.Text('foot'),
-                        new html.Spaces(' '),
-                        new html.Text('note.'),
-                    ])
-                ])
-            )
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div><span id="fn:Variable">Variable</span>This is good foot note.</div>`
+        )
     })
 
 
@@ -1957,47 +1378,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                        new html.Text('is'),
-                        new html.Spaces(' '),
-                        new html.Text('good'),
-                        new html.Spaces(' '),
-                        new html.Text('foot'),
-                        new html.Spaces(' '),
-                        new html.Text('note.'),
-                    ])
-                ])
-            ).init('complementBlock', new html.HtmlRoot().initChildren([
-                new html.Paragraph().initChildren([
-                    new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('Indent'),
-                            new html.Spaces(' '),
-                            new html.Text('paragraphs'),
-                            new html.Spaces(' '),
-                            new html.Text('to'),
-                            new html.Spaces(' '),
-                            new html.Text('include'),
-                            new html.Spaces(' '),
-                            new html.Text('them'),
-                            new html.Spaces(' '),
-                            new html.Text('in'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('footnote.'),
-                        ])
-                    ])
-                ])
-            ]))
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div><span id="fn:Variable">Variable</span>This is good foot note.
+    <p>Indent paragraphs to include them in the footnote.</p>
+</div>`
+        )
     })
 
 
@@ -2008,24 +1393,13 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('hello'),
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.Paragraph().initChildren([
-                        new html.Sentence().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('Apple')
-                            ])
-                        ])
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>hello
+        <p>Apple</p>
+    </li>
+</ol>`
+        )
     })
 
 
@@ -2036,18 +1410,13 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('hello'),
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.BlankLine()
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>hello
+        <br/>
+    </li>
+</ol>`
+        )
     })
 
 
@@ -2059,18 +1428,13 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('hello'),
-                    ])
-                ])).init('complementBlock', new html.HtmlRoot().initChildren([
-                    new html.BlankLine()
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>hello
+        <br/>
+    </li>
+</ol>`
+        )
 
     })
 
@@ -2084,80 +1448,13 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                        new html.Text('is'),
-                        new html.Spaces(' '),
-                        new html.Text('good'),
-                        new html.Spaces(' '),
-                        new html.Text('foot'),
-                        new html.Spaces(' '),
-                        new html.Text('note.'),
-                    ])
-                ])
-            ).init('complementBlock', new html.HtmlRoot().initChildren([
-                new html.Paragraph().initChildren([
-                    new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('Indent'),
-                            new html.Spaces(' '),
-                            new html.Text('paragraphs'),
-                            new html.Spaces(' '),
-                            new html.Text('to'),
-                            new html.Spaces(' '),
-                            new html.Text('include'),
-                            new html.Spaces(' '),
-                            new html.Text('them'),
-                            new html.Spaces(' '),
-                            new html.Text('in'),
-                            new html.Spaces(' '),
-                            new html.Text('the'),
-                            new html.Spaces(' '),
-                            new html.Text('footnote.'),
-                        ])
-                    ]),
-                    new html.Sentence().initChildren([
-                        new html.BacktickText().initChildren([
-                            new html.PlainText().initChildren([
-                                new html.Text('{'),
-                                new html.Spaces(' '),
-                                new html.Text('my'),
-                                new html.Spaces(' '),
-                                new html.Text('code'),
-                                new html.Spaces(' '),
-                                new html.Text('}'),
-                            ])
-                        ])
-                    ]),
-                ]),
-                new html.BlankLine(),
-                new html.Paragraph().initChildren([
-                    new html.Sentence().initChildren([
-                        new html.PlainText().initChildren([
-                            new html.Text('Add'),
-                            new html.Spaces(' '),
-                            new html.Text('as'),
-                            new html.Spaces(' '),
-                            new html.Text('many'),
-                            new html.Spaces(' '),
-                            new html.Text('paragraphs'),
-                            new html.Spaces(' '),
-                            new html.Text('as'),
-                            new html.Spaces(' '),
-                            new html.Text('you'),
-                            new html.Spaces(' '),
-                            new html.Text('like.'),
-                        ])
-                    ]),
-                ])
-            ]))
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div><span id="fn:Variable">Variable</span>This is good foot note.
+    <p>Indent paragraphs to include them in the footnote.<br/>\`{ my code }\`</p>
+    <br/>
+    <p>Add as many paragraphs as you like.</p>
+</div>`
+        )
     })
 
 
@@ -2171,88 +1468,17 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                        new html.Text('is'),
-                        new html.Spaces(' '),
-                        new html.Text('good'),
-                        new html.Spaces(' '),
-                        new html.Text('foot'),
-                        new html.Spaces(' '),
-                        new html.Text('note.'),
-                    ])
-                ])
-            ).init('complementBlock', new html.HtmlRoot().initChildren([
-                new html.Blockquote().initChildren([
-                    new html.HtmlRoot().initChildren([
-                        new html.Paragraph().initChildren([
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('Indent'),
-                                    new html.Spaces(' '),
-                                    new html.Text('paragraphs'),
-                                    new html.Spaces(' '),
-                                    new html.Text('to'),
-                                    new html.Spaces(' '),
-                                    new html.Text('include'),
-                                    new html.Spaces(' '),
-                                    new html.Text('them'),
-                                    new html.Spaces(' '),
-                                    new html.Text('in'),
-                                    new html.Spaces(' '),
-                                    new html.Text('the'),
-                                    new html.Spaces(' '),
-                                    new html.Text('footnote.'),
-                                ])
-                            ]),
-                            new html.Sentence().initChildren([
-                                new html.BacktickText().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('{'),
-                                        new html.Spaces(' '),
-                                        new html.Text('my'),
-                                        new html.Spaces(' '),
-                                        new html.Text('code'),
-                                        new html.Spaces(' '),
-                                        new html.Text('}'),
-                                    ])
-                                ])
-                            ]),
-                        ]),
-                    ])
-                ]),
-                new html.BlankLine(),
-                new html.Blockquote().initChildren([
-                    new html.HtmlRoot().initChildren([
-                        new html.Paragraph().initChildren([
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('Add'),
-                                    new html.Spaces(' '),
-                                    new html.Text('as'),
-                                    new html.Spaces(' '),
-                                    new html.Text('many'),
-                                    new html.Spaces(' '),
-                                    new html.Text('paragraphs'),
-                                    new html.Spaces(' '),
-                                    new html.Text('as'),
-                                    new html.Spaces(' '),
-                                    new html.Text('you'),
-                                    new html.Spaces(' '),
-                                    new html.Text('like.'),
-                                ])
-                            ]),
-                        ])
-                    ])
-                ])
-            ]))
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div><span id="fn:Variable">Variable</span>This is good foot note.
+    <div class="blockquote">
+        <p>Indent paragraphs to include them in the footnote.<br/>\`{ my code }\`</p>
+    </div>
+    <br/>
+    <div class="blockquote">
+        <p>Add as many paragraphs as you like.</p>
+    </div>
+</div>`
+        )
     })
 
 
@@ -2266,84 +1492,15 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Footnote(
-                new html.FootnoteReference(new html.Text('Variable')),
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('This'),
-                        new html.Spaces(' '),
-                        new html.Text('is'),
-                        new html.Spaces(' '),
-                        new html.Text('good'),
-                        new html.Spaces(' '),
-                        new html.Text('foot'),
-                        new html.Spaces(' '),
-                        new html.Text('note.'),
-                    ])
-                ])
-            ).init('complementBlock', new html.HtmlRoot().initChildren([
-                new html.Blockquote().initChildren([
-                    new html.HtmlRoot().initChildren([
-                        new html.Paragraph().initChildren([
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('Indent'),
-                                    new html.Spaces(' '),
-                                    new html.Text('paragraphs'),
-                                    new html.Spaces(' '),
-                                    new html.Text('to'),
-                                    new html.Spaces(' '),
-                                    new html.Text('include'),
-                                    new html.Spaces(' '),
-                                    new html.Text('them'),
-                                    new html.Spaces(' '),
-                                    new html.Text('in'),
-                                    new html.Spaces(' '),
-                                    new html.Text('the'),
-                                    new html.Spaces(' '),
-                                    new html.Text('footnote.'),
-                                ])
-                            ]),
-                            new html.Sentence().initChildren([
-                                new html.BacktickText().initChildren([
-                                    new html.PlainText().initChildren([
-                                        new html.Text('{'),
-                                        new html.Spaces(' '),
-                                        new html.Text('my'),
-                                        new html.Spaces(' '),
-                                        new html.Text('code'),
-                                        new html.Spaces(' '),
-                                        new html.Text('}'),
-                                    ])
-                                ])
-                            ]),
-                        ]),
-                        new html.BlankLine(),
-                        new html.Paragraph().initChildren([
-                            new html.Sentence().initChildren([
-                                new html.PlainText().initChildren([
-                                    new html.Text('Add'),
-                                    new html.Spaces(' '),
-                                    new html.Text('as'),
-                                    new html.Spaces(' '),
-                                    new html.Text('many'),
-                                    new html.Spaces(' '),
-                                    new html.Text('paragraphs'),
-                                    new html.Spaces(' '),
-                                    new html.Text('as'),
-                                    new html.Spaces(' '),
-                                    new html.Text('you'),
-                                    new html.Spaces(' '),
-                                    new html.Text('like.'),
-                                ])
-                            ]),
-                        ])
-                    ])
-                ]),
-            ]))
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<div><span id="fn:Variable">Variable</span>This is good foot note.
+    <div class="blockquote">
+        <p>Indent paragraphs to include them in the footnote.<br/>\`{ my code }\`</p>
+        <br/>
+        <p>Add as many paragraphs as you like.</p>
+    </div>
+</div>`
+        )
     })
 
 
@@ -2353,10 +1510,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.BlankLine()
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<br/>`
+        )
     })
 
 
@@ -2366,16 +1522,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Cursor()
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p><span class="cursor">|</span></p>`
+        )
     })
 
 
@@ -2385,16 +1534,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('#')
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>#</p>`
+        )
     })
 
 
@@ -2404,17 +1546,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('#'),
-                        new html.Cursor()
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>#<span class="cursor">|</span></p>`
+        )
     })
 
 
@@ -2424,14 +1558,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Heading(1, new html.Sentence().initChildren([
-                new html.PlainText().initChildren([
-                    new html.Cursor()
-                ])
-            ]))
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<h1><span class="cursor">|</span></h1>`
+        )
     })
 
 
@@ -2441,10 +1570,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Heading(1, null)
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<h1></h1>`
+        )
     })
 
 
@@ -2454,10 +1582,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Heading(1, null)
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<h1></h1>`
+        )
     })
 
 
@@ -2467,10 +1594,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Heading(2, null)
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<h2></h2>`
+        )
     })
 
 
@@ -2480,19 +1606,12 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('-')
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>-</p>`
+        )
     })
 
-
+/*
     test('markdown - inputing-9', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- `
