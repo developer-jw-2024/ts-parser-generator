@@ -199,6 +199,14 @@ export function toContentChars(content: string): string[] {
     if (chars[chars.length - 1] == RegularExpressionSymbol.BackSlash) {
         chars.pop()
     }
+    // chars = chars.map(c=>{
+    //     if (c == RegularExpressionSymbol.BackSlash) {
+    //         return null
+    //     } else if (c.length==2 && c[0]==RegularExpressionSymbol.BackSlash) {
+    //         return c.substring(1)
+    //     }
+    //     return c
+    // }).filter(x=>x)
     return chars
 }
 
