@@ -9,7 +9,7 @@ var content =
 
 
 
-var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(content, true) as Markdown
+var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(content) as Markdown
 
 console.log(markdown.toMarkdownHierarchy('').join('\n'))
 
