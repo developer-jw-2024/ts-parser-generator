@@ -4,6 +4,7 @@ import { FiniteAutomatonPath, NFA } from './NFA'
 import { TransferChar } from './NFA'
 import { intersection } from '../Utils/SetUtils'
 import { isNulllOrUndefinedValue } from '../Utils/Utils'
+import { RegularExpressionSymbol } from './SpecialSymbols'
 
 export class TokenType {
 
@@ -218,7 +219,21 @@ export class LexicalAnalyzer {
             tokens.push(new Token(TokenType.UNKNOWN_TOKENTYPE, chars.slice(lastSuccessCharIndex, i).join('')))
             // console.log("UNKNOWN", lastSuccessCharIndex, i, chars.slice(lastSuccessCharIndex, i))
         }
-        // console.log(tokens)
+
+        tokens.filter(t=>{
+            var v = t.value
+            var result = ""
+            for (var i=0;i<v.length;i++) {
+                if (v[i] == RegularExpressionSymbol.BackSlash && i+1<v.length) {
+                    result += v[i+1]
+                    i++
+                } else {
+                    result += v[i]
+                }
+            }
+            t.value = result
+        })
+
         return tokens
 
     }

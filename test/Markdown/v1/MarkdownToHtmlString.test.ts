@@ -1941,13 +1941,24 @@ Second Term
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
         expect(htmlElement.toHtmlString()).toEqual(
-`<p>\\*</p>`
+`<p>*</p>`
+        )
+    })
+
+    test('markdown - inputing-30-1', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`\\\\*`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`\\*`
         )
     })
 
     test('markdown - inputing-31', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
-`\\*`
+`\\\\\\*`
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement

@@ -3870,7 +3870,7 @@ Second Term
             new html.Paragraph().initChildren([
                 new html.Sentence().initChildren([
                     new html.PlainText().initChildren([
-                        new html.Text('\\*'),
+                        new html.Text('*'),
                     ])
                 ])
             ])
@@ -3878,7 +3878,53 @@ Second Term
         expect(htmlElement).toEqual(rootElement)
     })
 
-    
+    test('markdown - inputing-31', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`\\\\`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('\\'),
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
+    })
+
+    test('markdown - inputing-32', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`\\\\*`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.ErrorHtmlElement(`\\*`)
+        ])
+        expect(htmlElement).toEqual(rootElement)
+    })
+
+    test('markdown - inputing-33', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`\\\\\\*`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
+            new html.Paragraph().initChildren([
+                new html.Sentence().initChildren([
+                    new html.PlainText().initChildren([
+                        new html.Text('\\*'),
+                    ])
+                ])
+            ])
+        ])
+        expect(htmlElement).toEqual(rootElement)
+    })
 })
 
 
