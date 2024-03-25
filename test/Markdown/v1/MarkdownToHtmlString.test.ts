@@ -1611,19 +1611,18 @@ Second Term
         )
     })
 
-/*
+
     test('markdown - inputing-9', () => {
         var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
 `- `
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li></li>
+</ul>`
+        )
     })
 
 
@@ -1633,16 +1632,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('+')
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>+</p>`
+        )
     })
 
 
@@ -1652,12 +1644,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li></li>
+</ul>`
+        )
     })
 
 
@@ -1667,17 +1658,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('-'),
-                        new html.Cursor()
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>-<span class="cursor">|</span></p>`
+        )
     })
 
 
@@ -1687,16 +1670,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Cursor()
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li><span class="cursor">|</span></li>
+</ul>`
+        )
     })
 
 
@@ -1706,17 +1684,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('+'),
-                        new html.Cursor()
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>+<span class="cursor">|</span></p>`
+        )
     })
 
 
@@ -1726,16 +1696,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Cursor()
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li><span class="cursor">|</span></li>
+</ul>`
+        )
     })
 
     test('markdown - inputing-16', () => {
@@ -1744,12 +1709,72 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.UnorderedList().initChildren([
-                new html.UnorderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li></li>
+</ul>`
+        )
+    })
+
+    test('markdown - inputing-16-1', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`+ + ▮`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`+ + ▮`
+        )
+    })
+
+    test('markdown - inputing-16-2', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`+ hello`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li>hello</li>
+</ul>`
+        )
+    })
+
+    test('markdown - inputing-16-3', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`+ +`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li>+</li>
+</ul>`
+        )
+    })
+
+    test('markdown - inputing-16-3', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`+ +▮`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ul>
+    <li>+<span class="cursor">|</span></li>
+</ul>`
+        )
+    })
+
+    test('markdown - inputing-16-3', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`+ + ▮`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`+ + ▮`
+        )
     })
 
     test('markdown - inputing-17', () => {
@@ -1758,16 +1783,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('1')
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>1</p>`
+        )
     })
 
     test('markdown - inputing-18', () => {
@@ -1776,16 +1794,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('1.')
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>1.</p>`
+        )
     })
 
     test('markdown - inputing-19', () => {
@@ -1794,12 +1805,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li></li>
+</ol>`
+        )
     })
 
     test('markdown - inputing-20', () => {
@@ -1808,17 +1818,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('1'),
-                        new html.Cursor()
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>1<span class="cursor">|</span></p>`
+        )
     })
 
     test('markdown - inputing-21', () => {
@@ -1827,17 +1829,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('1.'),
-                        new html.Cursor()
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>1.<span class="cursor">|</span></p>`
+        )
     })
 
     test('markdown - inputing-22', () => {
@@ -1846,12 +1840,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li></li>
+</ol>`
+        )
     })
 
     test('markdown - inputing-23', () => {
@@ -1860,16 +1853,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('a')
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li>a</li>
+</ol>`
+        )
     })
 
     test('markdown - inputing-24', () => {
@@ -1878,16 +1866,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Cursor()
-                    ])
-                ]))
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li><span class="cursor">|</span></li>
+</ol>`
+        )
     })
 
     test('markdown - inputing-25', () => {
@@ -1896,12 +1879,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li></li>
+</ol>`
+        )
     })
 
     test('markdown - inputing-26', () => {
@@ -1910,12 +1892,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li></li>
+</ol>`
+        )
     })
 
     test('markdown - inputing-27', () => {
@@ -1924,12 +1905,11 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.OrderedList().initChildren([
-                new html.OrderedItem(null)
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<ol>
+    <li></li>
+</ol>`
+        )
     })
 
     test('markdown - inputing-28', () => {
@@ -1938,17 +1918,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Cursor(),
-                        new html.Text('1.')
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p><span class="cursor">|</span>1.</p>`
+        )
     })
 
     test('markdown - inputing-29', () => {
@@ -1957,16 +1929,9 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Cursor(),
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p><span class="cursor">|</span></p>`
+        )
     })
 
     test('markdown - inputing-30', () => {
@@ -1975,19 +1940,21 @@ Second Term
         )
 
         var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
-        var rootElement : html.HtmlElement = new html.HtmlRoot().initChildren([
-            new html.Paragraph().initChildren([
-                new html.Sentence().initChildren([
-                    new html.PlainText().initChildren([
-                        new html.Text('\\*'),
-                    ])
-                ])
-            ])
-        ])
-        expect(htmlElement).toEqual(rootElement)
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>\\*</p>`
+        )
     })
-*/
-    
+
+    test('markdown - inputing-31', () => {
+        var markdown : Markdown = markdownSyntaxAnalyzer.toMarkddown(
+`\\*`
+        )
+
+        var htmlElement : html.HtmlElement = markdown.toHtml() as html.HtmlElement
+        expect(htmlElement.toHtmlString()).toEqual(
+`<p>\\*</p>`
+        )
+    })
 })
 
 

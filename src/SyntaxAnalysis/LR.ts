@@ -159,6 +159,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
         var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer, inputString)
+        // console.log(inputTokens)
         // console.log('---------------')
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
