@@ -29,7 +29,7 @@ export class DFA {
         var cursor : number = this.startIndex
         var chars : Array<string> = toContentChars(value)
         for (var i=0;cursor>=0 && i<chars.length;i++) {
-            var transferChar: TransferChar= new TransferChar(chars[i], false, false, null, false)
+            var transferChar: TransferChar= new TransferChar().init(chars[i], false, false, null, false)
             cursor = this.move(cursor, transferChar)
         }
         return cursor>=0 && this.terminatedIndexList.indexOf(cursor)>=0

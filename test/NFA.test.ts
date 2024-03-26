@@ -191,9 +191,9 @@ describe('NFA', ()  => {
             {"source": 6, "destination": 7, transferChar:{"transferValue": "c", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
             {"source": 7, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
-        expect((new TransferChar("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
-        expect((new TransferChar("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[1].transferChar))).toBe(true)
-        expect((new TransferChar("b", false, false , null, false).canPass(nfa.finiteAutomatonPaths[1].transferChar))).toBe(false)
+        expect((new TransferChar().init("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
+        expect((new TransferChar().init("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[1].transferChar))).toBe(true)
+        expect((new TransferChar().init("b", false, false , null, false).canPass(nfa.finiteAutomatonPaths[1].transferChar))).toBe(false)
 
 
         var value = '(((a)|b|c))'
@@ -252,7 +252,7 @@ describe('NFA', ()  => {
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['a', 'b', 'c'], "isAnyCharPath" : false}},
         ])
-        expect((new TransferChar("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
+        expect((new TransferChar().init("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
 
         var value = '[^\\[\\^]'
         var chars = toRegularExpressionChars(value)
@@ -262,9 +262,9 @@ describe('NFA', ()  => {
         expect(nfa.finiteAutomatonPaths).toEqual([
             {"source": 0, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": true, "negativeTransferValues": ['[','^'], "isAnyCharPath" : false}},
         ])
-        expect((new TransferChar("^", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
-        expect((new TransferChar("[", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
-        expect((new TransferChar("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(true)
+        expect((new TransferChar().init("^", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
+        expect((new TransferChar().init("[", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(false)
+        expect((new TransferChar().init("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[0].transferChar))).toBe(true)
 
         var value = 'a*'
         var chars = toRegularExpressionChars(value)
@@ -559,10 +559,10 @@ describe('NFA', ()  => {
             {"source": 4, "destination": 5, transferChar:{"transferValue": null, "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : true}},
             {"source": 5, "destination": 1, transferChar:{"transferValue": null, "isEmptyPath": true, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
-        expect((new TransferChar("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[1].transferChar))).toBe(true)
-        expect((new TransferChar("b", false, false , null, false).canPass(nfa.finiteAutomatonPaths[4].transferChar))).toBe(true)
+        expect((new TransferChar().init().init("a", false, false , null, false).canPass(nfa.finiteAutomatonPaths[1].transferChar))).toBe(true)
+        expect((new TransferChar().init().init("b", false, false , null, false).canPass(nfa.finiteAutomatonPaths[4].transferChar))).toBe(true)
 
-        expect(nfa.findFiniteAutomatonPaths(2, new TransferChar("a", false, false , null, false))).toEqual([
+        expect(nfa.findFiniteAutomatonPaths(2, new TransferChar().init("a", false, false , null, false))).toEqual([
             {"source": 2, "destination": 3, transferChar:{"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false}},
         ])
         expect(nfa.epsilonClosure([0])).toEqual([0, 2, 4])
@@ -808,8 +808,8 @@ describe('NFA', ()  => {
         ])
 
         var transferChars = nfa.getTransferChars([
-            new TransferChar("a", false, false, null, false),
-            new TransferChar("b", false, false, null, false),
+            new TransferChar().init("a", false, false, null, false),
+            new TransferChar().init("b", false, false, null, false),
         ])
         expect(transferChars).toEqual([
             {"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false},
@@ -817,8 +817,8 @@ describe('NFA', ()  => {
         ])
 
         var transferChars = nfa.getTransferChars([
-            new TransferChar("a", false, false, null, false),
-            new TransferChar(null, false, true, ['a'], false),
+            new TransferChar().init("a", false, false, null, false),
+            new TransferChar().init(null, false, true, ['a'], false),
         ])
         expect(transferChars).toEqual([
             {"transferValue": "a", "isEmptyPath": false, "isNegativePath": false, "negativeTransferValues": null, "isAnyCharPath" : false},
@@ -826,8 +826,8 @@ describe('NFA', ()  => {
         ])
 
         var transferChars = nfa.getTransferChars([
-            new TransferChar("a", false, false, null, false),
-            new TransferChar(null, false, true, [' '], false),
+            new TransferChar().init("a", false, false, null, false),
+            new TransferChar().init(null, false, true, [' '], false),
         ])
         
         expect(transferChars).toEqual([

@@ -98,28 +98,28 @@ export class NFA {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar(value)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(value)))
     }
 
     setEmptyPath(source : number, destination : number) : void {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar(null, true)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(null, true)))
     }
 
     setAnyCharPath(source : number, destination : number) : void {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar(null, false, false, null, true)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(null, false, false, null, true)))
     }
 
     setNegativePath(source : number, destination : number, negativeTransferValues : Array<string>) : void {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar(null, false, true, negativeTransferValues)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(null, false, true, negativeTransferValues)))
     }
 
     hasDuplicatedPath(fromIndex : number, toIndex : number) : boolean {
@@ -263,30 +263,30 @@ export class NFA {
         if ( oldTransferChar.isPositiveTransferPath() && newTransferChar.isPositiveTransferPath()) {
             return [oldTransferChar, newTransferChar]
         } else if ( oldTransferChar.isPositiveTransferPath() && newTransferChar.isNegativeTransferPath()) {
-            return [oldTransferChar, new TransferChar(null, false, true, union(newTransferChar.negativeTransferValues, [oldTransferChar.transferValue]), false)]
+            return [oldTransferChar, new TransferChar().init(null, false, true, union(newTransferChar.negativeTransferValues, [oldTransferChar.transferValue]), false)]
         } else if ( oldTransferChar.isNegativeTransferPath() && newTransferChar.isPositiveTransferPath()) {
-            return [new TransferChar(null, false, true, union(oldTransferChar.negativeTransferValues, [newTransferChar.transferValue]), false),
+            return [new TransferChar().init(null, false, true, union(oldTransferChar.negativeTransferValues, [newTransferChar.transferValue]), false),
             newTransferChar]
         } else if ( oldTransferChar.isNegativeTransferPath() && newTransferChar.isNegativeTransferPath()) {
             var negativeTransferValues = union(oldTransferChar.negativeTransferValues, newTransferChar.negativeTransferValues)
             var sameChars = intersection(oldTransferChar.negativeTransferValues, newTransferChar.negativeTransferValues)
             var differChars = minus(negativeTransferValues, sameChars)
             var result : Array<TransferChar> = [
-                new TransferChar(null, false, true, negativeTransferValues, false)
+                new TransferChar().init(null, false, true, negativeTransferValues, false)
             ]
             for (var i=0;i<differChars.length;i++) {
-                result.push(new TransferChar(differChars[i], false, false, null, false))
+                result.push(new TransferChar().init(differChars[i], false, false, null, false))
             }
             return result
         } else if ( oldTransferChar.isWildcardTransferPath() && newTransferChar.isPositiveTransferPath()) {
             return [
                 newTransferChar, 
-                new TransferChar(null, false, true, [newTransferChar.transferValue], false)
+                new TransferChar().init(null, false, true, [newTransferChar.transferValue], false)
             ]
         } else if ( oldTransferChar.isPositiveTransferPath() && newTransferChar.isWildcardTransferPath()) {
             return [
                 oldTransferChar, 
-                new TransferChar(null, false, true, [oldTransferChar.transferValue], false)
+                new TransferChar().init(null, false, true, [oldTransferChar.transferValue], false)
             ]
         } else if ( oldTransferChar.isWildcardTransferPath() && newTransferChar.isNegativeTransferPath()) {
             var result : Array<TransferChar> = [
@@ -294,7 +294,7 @@ export class NFA {
             ]
             var negativeTransferValues = newTransferChar.negativeTransferValues
             for (var i=0;i<negativeTransferValues.length;i++) {
-                result.push(new TransferChar(negativeTransferValues[i], false, false, null, false))
+                result.push(new TransferChar().init(negativeTransferValues[i], false, false, null, false))
             }
             return result
         } else if ( oldTransferChar.isNegativeTransferPath() && newTransferChar.isWildcardTransferPath()) {
@@ -303,7 +303,7 @@ export class NFA {
             ]
             var negativeTransferValues = oldTransferChar.negativeTransferValues
             for (var i=0;i<negativeTransferValues.length;i++) {
-                result.push(new TransferChar(negativeTransferValues[i], false, false, null, false))
+                result.push(new TransferChar().init(negativeTransferValues[i], false, false, null, false))
             }
             return result
         } else if ( oldTransferChar.isWildcardTransferPath() && newTransferChar.isWildcardTransferPath()) {
@@ -365,7 +365,8 @@ export class TransferChar {
     negativeTransferValues : Array<string> | null = null
     isAnyCharPath : boolean = false
 
-    constructor(
+    constructor() {}
+    init(
         transferValue : string | null = null, 
         isEmptyPath : boolean = false,
         isNegativePath : boolean = false, 
@@ -376,6 +377,7 @@ export class TransferChar {
         this.isNegativePath = isNegativePath
         this.negativeTransferValues = negativeTransferValues
         this.isAnyCharPath = isAnyCharPath
+        return this
     }
 
     isEmptyTransferPath() {

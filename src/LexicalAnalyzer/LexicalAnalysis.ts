@@ -114,7 +114,7 @@ export class LexicalAnalyzer {
 
             numOfNodes+=dfa.getNumberOfNodes()
             nfa_terminatedIndexList = nfa_terminatedIndexList.concat(dfa.terminatedIndexList)
-            nfa_finiteAutomatonPaths.push(new FiniteAutomatonPath(nfa_startIndex, dfa.startIndex, new TransferChar(null, true)))
+            nfa_finiteAutomatonPaths.push(new FiniteAutomatonPath(nfa_startIndex, dfa.startIndex, new TransferChar().init(null, true)))
             nfa_finiteAutomatonPaths = nfa_finiteAutomatonPaths.concat(dfa.finiteAutomatonPaths)
         }
 
@@ -162,7 +162,7 @@ export class LexicalAnalyzer {
         var nodeCursor : number = nodeStartIndex
         var charCursor : number = charStartIndex
 
-        var transferChar : TransferChar = new TransferChar(chars[charCursor])
+        var transferChar : TransferChar = new TransferChar().init(chars[charCursor])
         var preNodeCursor = nodeCursor
         nodeCursor = this.dfa.move(nodeCursor, transferChar)
         // console.log('-->', preNodeCursor, transferChar.transferValue, nodeCursor)
@@ -175,7 +175,7 @@ export class LexicalAnalyzer {
             }
             charCursor++
             if (charCursor<chars.length) {
-                transferChar = new TransferChar(chars[charCursor])
+                transferChar = new TransferChar().init(chars[charCursor])
                 // var preNodeCursor = nodeCursor
                 nodeCursor = this.dfa.move(nodeCursor, transferChar)
                 // console.log('-->', preNodeCursor, transferChar.transferValue, nodeCursor, charEndPos)    
