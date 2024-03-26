@@ -1,0 +1,10 @@
+Equations -> Equations enter Equation
+Equations -> Equation
+Equation -> Formula = Number
+Formula -> Formula - Element
+Formula -> Formula + Element
+Formula -> Element
+Element -> Number letter
+Number -> ( Number )
+Number -> integer
+Number -> - integer

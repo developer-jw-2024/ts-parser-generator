@@ -71,7 +71,7 @@ export class HtmlElement {
 }
 
 export class HtmlRoot extends HtmlElement {
-    toHtmlString(intent?: string): string {
+    toHtmlString(intent : string=''): string {
         return this.buildChildrenHtmlString(intent)
     }
 }
@@ -105,7 +105,7 @@ export class HtmlStringElement extends HtmlElement {
         return true
     }
 
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         return encode(this.value)
     }
 }
@@ -145,12 +145,12 @@ export var NullHtmlInstance : NullHtmlElement = new NullHtmlElement()
 
 export class Text extends HtmlStringElement {}
 export class FencedCodeBlockText extends HtmlStringElement {
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         return encode(this.value).split('\n').map(x=>intent+x).join('\n')
     }
 }
 export class HorizontalRule extends HtmlStringElement {
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         return intent+"<hr>"
     }
 }
@@ -212,7 +212,7 @@ export class TaskListItem extends HtmlElement {
     }
 }
 export class BlankLine extends HtmlElement {
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         return intent + '<br/>'
     }
 }
@@ -297,7 +297,7 @@ export class OrderedItem extends HtmlElement {
     }
 }
 export class DefinitionList extends HtmlElement {
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`dl`)
         var endTag : string = intent + this.buildEndHtmlString(`dl`)
         var innerHtml : string = this.buildChildrenHtmlString(intent+'    ', '\n')
@@ -319,7 +319,7 @@ export class DefinitionItem extends HtmlElement {
         return this.term
     }
 
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`dt`)
         var endTag : string = this.buildEndHtmlString(`dt`)
         var innerHtml : string = this.getTerm()==null?'':this.getTerm().toHtmlString('')
@@ -352,7 +352,7 @@ export class DefinitionItemValue extends HtmlElement {
         return this.item
     }
 
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         var beginTag : string = intent + this.buildBeginHtmlString(`dd`)
         var itemHtml : string = this.item==null?'':this.item.toHtmlString()
         var complementBlockHtml : string =  this.complementBlock==null?'':this.complementBlock.toHtmlString(intent + '    ')
@@ -437,7 +437,7 @@ export class Table extends HtmlElement {
         return this.tableAlignmentRow
     }
 
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         var beginTableTag : string = intent + this.buildBeginHtmlString('table')
         var endTableTag : string = intent + this.buildEndHtmlString('table')
         var beginTHeadTag : string = intent + '    ' + this.buildBeginHtmlString('thead')
@@ -461,7 +461,7 @@ export class Table extends HtmlElement {
 }
 
 export class TableRow extends HtmlElement {
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         var beginTag : string = intent + this.buildBeginHtmlString('tr')
         var endTag : string = intent + this.buildEndHtmlString('tr')
         return [
@@ -482,7 +482,7 @@ export class TableCell extends HtmlElement {
         this.tableCellAlignment = tableCellAlignment
     }
 
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         var propertyValues : string[] = []
         if (isTypeOf(this.tableCellAlignment, TableLeftAlignment)) {
             propertyValues.push('class')
@@ -508,7 +508,7 @@ export class TableCell extends HtmlElement {
 }
 
 export class TableHeadCell extends TableCell {
-    toHtmlString(intent: string = ''): string {
+    toHtmlString(intent : string = ''): string {
         var propertyValues : string[] = []
         if (isTypeOf(this.tableCellAlignment, TableLeftAlignment)) {
             propertyValues.push('class')
