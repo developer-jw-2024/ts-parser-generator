@@ -191,7 +191,7 @@ if (flag) {
 ```
 6 + 2 * 3 = 12
 ```
-> if you change the euqation to invalid eqaution, such as "5 a 3", you will get an exception error becase it is not fit the lanague definition.
+> if you change the equation to invalid equation, such as "5 a 3", you will get an exception error becase it is not fit the lanague definition.
 
 --------------------------
 Refer: Compilers Principles, Technique, & Tool (Second Edition) Alfred V.Aho, Monica S. Lam, Ravi Sethi, Jeffrey D.Ullman
