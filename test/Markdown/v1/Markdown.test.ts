@@ -22,6 +22,18 @@ describe('Markdown', () => {
     BlankLine`)
     })
 
+    test('markdown - 0-(-2)', () => {
+        expect(markdownSyntaxAnalyzer.toMarkddown(
+`🌟`
+        ).toMarkdownHierarchy().join('\n')).toEqual(
+`Markdown
+    Paragraph
+        Sentence
+            PlainText
+                SimpleText`)
+    })
+
+
     test('markdown - 0', () => {
         expect(markdownSyntaxAnalyzer.toMarkddown(
 `hello`

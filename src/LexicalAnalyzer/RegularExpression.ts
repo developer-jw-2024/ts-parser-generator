@@ -3,6 +3,7 @@ import { RegularExpressionSymbol, RegularExpressionCharType } from './SpecialSym
 import { DFA } from './DFA'
 import { NFA } from './NFA'
 import { isNulllOrUndefinedValue } from '../Utils/Utils'
+const GraphemeSplitter = require('grapheme-splitter');
 
 const PareChars: Array<{ left: string, right: string }> = [
     { left: RegularExpressionSymbol.OpenCaretSquareBracket, right: RegularExpressionSymbol.CloseSquareBracket },
@@ -95,9 +96,13 @@ export function getEndTermIndex(chars: Array<string>, index: number): number {
     return result
 }
 
-export function toRegularExpressionChars(content: string): string[] {
+export function toRegularExpressionChars(inputContent: string): string[] {
     var chars: Array<string> = []
     var hasDoubleQuotes : boolean = false
+
+    const splitter = new GraphemeSplitter();
+    const content= splitter.splitGraphemes(inputContent);
+
     for (var i = 0; i < content.length; i++) {
         var handleFlag = false
         if (!handleFlag && content[i] == RegularExpressionSymbol.BackSlash) {
@@ -161,9 +166,12 @@ export function toRegularExpressionChars(content: string): string[] {
     return chars
 }
 
-export function toContentChars(content: string): string[] {
+export function toContentChars(inputContent: string): string[] {
     var chars: Array<string> = []
     var hasDoubleQuotes : boolean = false
+    const splitter = new GraphemeSplitter();
+    const content= splitter.splitGraphemes(inputContent);
+
     for (var i = 0; i < content.length; i++) {
         var handleFlag = false
         if (!handleFlag && content[i] == RegularExpressionSymbol.BackSlash) {

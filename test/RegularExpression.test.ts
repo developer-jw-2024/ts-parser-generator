@@ -5,6 +5,8 @@ describe('RegularExpression', ()  => {
 
 
     test('toChars', () => { 
+        
+        expect(toRegularExpressionChars('🌟')).toEqual(['🌟']);
         expect(toRegularExpressionChars('\\')).toEqual([]);
         expect(toRegularExpressionChars('<>')).toEqual(["<>"]);
         expect(toRegularExpressionChars('\\<\\>')).toEqual(["\\<", "\\>"]);
@@ -662,6 +664,13 @@ describe('RegularExpression', ()  => {
         ]);
 
         var value = 'a*'
+        var chars = toRegularExpressionChars(value)
+        var charblocks = initCharBlocks(chars)
+        expect(andGroupsWithIndex(chars, charblocks, 0, charblocks.length-1)).toEqual([
+            {left: 0, right: 1}
+        ]);
+
+        var value = '👋*'
         var chars = toRegularExpressionChars(value)
         var charblocks = initCharBlocks(chars)
         expect(andGroupsWithIndex(chars, charblocks, 0, charblocks.length-1)).toEqual([

@@ -422,5 +422,13 @@ describe('DFA', ()  => {
         expect(regExp.test("a^")).toBe(false)
         expect(regExp.test("[a")).toBe(false)
         expect(regExp.test("[^")).toBe(true)
+
+        var regExp : RegularExpression = new RegularExpression('"👋🌍"')
+        expect(regExp.test("a")).toBe(false)
+        expect(regExp.test("^")).toBe(false)
+        expect(regExp.test("[")).toBe(false)
+        expect(regExp.test("a^")).toBe(false)
+        expect(regExp.test("[a")).toBe(false)
+        expect(regExp.test("👋🌍")).toBe(true)
     })
 })
