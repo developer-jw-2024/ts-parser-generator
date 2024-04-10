@@ -9,13 +9,13 @@ import { LL1SyntaxAnalyzer } from "../src/SyntaxAnalysis/LL1"
 
 describe('LL', () => {
     test('LL1SyntaxAnalyzer 0', () => {
-        var PLUS = new TokenType('PLUS', '\\+', true)
-        var STAR = new TokenType('STAR', '\\*', true)
-        var ID = new TokenType('ID', 'id', true)
-        var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
-        var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
+        var PLUS = new TokenType().init('PLUS', '\\+', true)
+        var STAR = new TokenType().init('STAR', '\\*', true)
+        var ID = new TokenType().init('ID', 'id', true)
+        var OPENBRACKET = new TokenType().init('OPENBRACKET', '\\(', true)
+        var CLOSEBRACKET = new TokenType().init('CLOSEBRACKET', '\\)', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -133,13 +133,13 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 1', () => {
-        var PLUS = new TokenType('PLUS', '\\+', true)
-        var STAR = new TokenType('STAR', '\\*', true)
-        var ID = new TokenType('ID', 'id', true)
-        var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
-        var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
+        var PLUS = new TokenType().init('PLUS', '\\+', true)
+        var STAR = new TokenType().init('STAR', '\\*', true)
+        var ID = new TokenType().init('ID', 'id', true)
+        var OPENBRACKET = new TokenType().init('OPENBRACKET', '\\(', true)
+        var CLOSEBRACKET = new TokenType().init('CLOSEBRACKET', '\\)', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             PLUS,
             STAR,
             ID,
@@ -261,13 +261,13 @@ describe('LL', () => {
     })
     
     test('LL1SyntaxAnalyzer.isValid', () => {
-        var PLUS = new TokenType('PLUS', '\\+', true)
-        var STAR = new TokenType('STAR', '\\*', true)
-        var ID = new TokenType('ID', 'id', true)
-        var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
-        var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
+        var PLUS = new TokenType().init('PLUS', '\\+', true)
+        var STAR = new TokenType().init('STAR', '\\*', true)
+        var ID = new TokenType().init('ID', 'id', true)
+        var OPENBRACKET = new TokenType().init('OPENBRACKET', '\\(', true)
+        var CLOSEBRACKET = new TokenType().init('CLOSEBRACKET', '\\)', true)
 
-        var ll1LexicalAnalyzer = new LexicalAnalyzer([
+        var ll1LexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             PLUS,
             STAR,
             ID,
@@ -287,7 +287,7 @@ describe('LL', () => {
         expect(ll1.isLL1()).toEqual(true)
 
         
-        var languageLexicalAnalyzer = new LexicalAnalyzer([
+        var languageLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             PLUS,
             STAR,
             ID,
@@ -303,7 +303,7 @@ describe('LL', () => {
 
     test('LL1SyntaxAnalyzer.isValid-1', () => {
 
-        var ll1LexicalAnalyzer = new LexicalAnalyzer([
+        var ll1LexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -318,13 +318,13 @@ describe('LL', () => {
         expect(ll1.isLL1()).toEqual(true)
 
         // console.log(ll1.tokens.map((t, i)=>`${i}:${t.toSimpleString()}`).join(' '))
-        var PLUS = new TokenType('+', '\\+', true)
-        var STAR = new TokenType('*', '\\*', true)
-        var ID = new TokenType('id', '[0-9]+', true)
-        var OPENBRACKET = new TokenType('(', '\\(', true)
-        var CLOSEBRACKET = new TokenType(')', '\\)', true)
+        var PLUS = new TokenType().init('+', '\\+', true)
+        var STAR = new TokenType().init('*', '\\*', true)
+        var ID = new TokenType().init('id', '[0-9]+', true)
+        var OPENBRACKET = new TokenType().init('(', '\\(', true)
+        var CLOSEBRACKET = new TokenType().init(')', '\\)', true)
 
-        var languageLexicalAnalyzer = new LexicalAnalyzer([
+        var languageLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             PLUS,
             STAR,
             ID,
@@ -339,13 +339,13 @@ describe('LL', () => {
     })
     
     test('LL1SyntaxAnalyzer 2', () => {
-        var i_ = new TokenType('i', 'i', true)
-        var t_ = new TokenType('t', 't', true)
-        var e_ = new TokenType('e', 'e', true)
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var t_ = new TokenType().init('t', 't', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -460,13 +460,13 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 2-1', () => {
-        // var i_ = new TokenType('i', 'i', true)
-        // var t_ = new TokenType('t', 't', true)
-        // var e_ = new TokenType('e', 'e', true)
-        // var a_ = new TokenType('a', 'a', true)
-        // var b_ = new TokenType('b', 'b', true)
+        // var i_ = new TokenType().init('i', 'i', true)
+        // var t_ = new TokenType().init('t', 't', true)
+        // var e_ = new TokenType().init('e', 'e', true)
+        // var a_ = new TokenType().init('a', 'a', true)
+        // var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             // i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -581,13 +581,13 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 3', () => {
-        var i_ = new TokenType('i', 'i', true)
-        var t_ = new TokenType('t', 't', true)
-        var e_ = new TokenType('e', 'e', true)
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var t_ = new TokenType().init('t', 't', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -664,7 +664,7 @@ describe('LL', () => {
 
     test('LL1SyntaxAnalyzer 3-1', () => {
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -740,13 +740,13 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 4', () => {
-        var i_ = new TokenType('i', 'i', true)
-        var t_ = new TokenType('t', 't', true)
-        var e_ = new TokenType('e', 'e', true)
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var t_ = new TokenType().init('t', 't', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -769,7 +769,7 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 4-1', () => {
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -791,13 +791,13 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 5', () => {
-        var i_ = new TokenType('i', 'i', true)
-        var t_ = new TokenType('t', 't', true)
-        var e_ = new TokenType('e', 'e', true)
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var t_ = new TokenType().init('t', 't', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             i_, t_, a_, e_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -882,7 +882,7 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 5-1', () => {
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -967,10 +967,10 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 6', () => {
-        var ob_ = new TokenType('(', '\\(', true)
-        var cb_ = new TokenType(')', '\\)', true)
+        var ob_ = new TokenType().init('(', '\\(', true)
+        var cb_ = new TokenType().init(')', '\\)', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             ob_, cb_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -1053,7 +1053,7 @@ describe('LL', () => {
     })
 
     test('LL1SyntaxAnalyzer 6-1', () => {
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,

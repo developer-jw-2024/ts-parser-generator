@@ -1,8 +1,13 @@
-import { FiniteAutomatonPath, TransferChar } from "../src/LexicalAnalyzer/NFA";
+import { TransferChar } from "../src/LexicalAnalyzer/NFA"
 
-var a = new TransferChar().init('a', false, false, null, false)
-var b = new FiniteAutomatonPath().init(1, 2, a)
 
-var jsonObject = b.convertToJSON()
-var o = FiniteAutomatonPath.initFromJSON(jsonObject)
-console.log(o)
+var a : Map<string, TransferChar> = new Map<string, TransferChar>()
+
+a.set("abc", new TransferChar().init("a", false, false, null, false))
+a.set("def", new TransferChar().init("b", false, false, null, false))
+
+
+let keys = Array.from(a.keys());
+keys.forEach(key=>{
+    console.log(key, a.get(key))
+})

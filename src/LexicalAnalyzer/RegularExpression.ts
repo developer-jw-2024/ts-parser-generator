@@ -656,6 +656,24 @@ export class RegularExpression {
         return this
     }
 
+    init(dfa : DFA) {
+        this.dfa = dfa
+        return this
+    }
+
+    static initFromJSON(jsonObject : Object) : RegularExpression {
+        var object : RegularExpression = new RegularExpression()
+        object.init(DFA.initFromJSON(jsonObject['dfa']))
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            dfa : this.dfa.convertToJSON()
+        }
+        return jsonObject
+    }
+
     test(value : string) {
         return this.dfa.test(value)
     }

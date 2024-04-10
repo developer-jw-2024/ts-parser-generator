@@ -22,10 +22,10 @@ function isIndexGrammarProductionSetEqual(list1 : Array<IndexGrammarProduction>,
 describe('syntaxAnalyzer', ()  => {
     
     test('SyntaxAnalyzer.eliminateLeftRecursion 0', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -60,10 +60,10 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.eliminateLeftRecursion 1', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -99,12 +99,12 @@ describe('syntaxAnalyzer', ()  => {
     
 
     test('SyntaxAnalyzer.eliminateLeftRecursion 2', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
-        var c_ = new TokenType('c', 'c', true)
-        var d_ = new TokenType('d', 'd', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
+        var c_ = new TokenType().init('c', 'c', true)
+        var d_ = new TokenType().init('d', 'd', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_, c_, d_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -152,7 +152,7 @@ describe('syntaxAnalyzer', ()  => {
 
     test('SyntaxAnalyzer.eliminateLeftRecursion 2_1', ()=>{
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -198,12 +198,12 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.eliminateLeftRecursion 3', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
-        var c_ = new TokenType('c', 'c', true)
-        var d_ = new TokenType('d', 'd', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
+        var c_ = new TokenType().init('c', 'c', true)
+        var d_ = new TokenType().init('d', 'd', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_, c_, d_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -252,7 +252,7 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.eliminateLeftRecursion 3-1', ()=>{
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -300,13 +300,13 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.eliminateLeftRecursion 4', ()=>{
-        var i_ = new TokenType('i', 'i', true)
-        var t_ = new TokenType('t', 't', true)
-        var e_ = new TokenType('e', 'e', true)
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var t_ = new TokenType().init('t', 't', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             i_, t_, e_, a_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -350,7 +350,7 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.eliminateLeftRecursion 4-1', ()=>{
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -393,18 +393,18 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftCommonFactor', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
-        var c_ = new TokenType('c', 'c', true)
-        var d_ = new TokenType('d', 'd', true)
-        var e_ = new TokenType('e', 'e', true)
-        var f_ = new TokenType('f', 'f', true)
-        var g_ = new TokenType('g', 'g', true)
-        var h_ = new TokenType('h', 'h', true)
-        var i_ = new TokenType('i', 'i', true)
-        var j_ = new TokenType('j', 'j', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
+        var c_ = new TokenType().init('c', 'c', true)
+        var d_ = new TokenType().init('d', 'd', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var f_ = new TokenType().init('f', 'f', true)
+        var g_ = new TokenType().init('g', 'g', true)
+        var h_ = new TokenType().init('h', 'h', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var j_ = new TokenType().init('j', 'j', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_, c_, d_, e_, f_, g_, h_, i_, j_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -429,7 +429,7 @@ describe('syntaxAnalyzer', ()  => {
 
     test('SyntaxAnalyzer.leftCommonFactor 1', ()=>{
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -452,7 +452,7 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 1-0', ()=>{
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -479,18 +479,18 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 1', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
-        var c_ = new TokenType('c', 'c', true)
-        var d_ = new TokenType('d', 'd', true)
-        var e_ = new TokenType('e', 'e', true)
-        var f_ = new TokenType('f', 'f', true)
-        var g_ = new TokenType('g', 'g', true)
-        var h_ = new TokenType('h', 'h', true)
-        var i_ = new TokenType('i', 'i', true)
-        var j_ = new TokenType('j', 'j', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
+        var c_ = new TokenType().init('c', 'c', true)
+        var d_ = new TokenType().init('d', 'd', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var f_ = new TokenType().init('f', 'f', true)
+        var g_ = new TokenType().init('g', 'g', true)
+        var h_ = new TokenType().init('h', 'h', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var j_ = new TokenType().init('j', 'j', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_, c_, d_, e_, f_, g_, h_, i_, j_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -518,18 +518,18 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 2', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
-        var c_ = new TokenType('c', 'c', true)
-        var d_ = new TokenType('d', 'd', true)
-        var e_ = new TokenType('e', 'e', true)
-        var f_ = new TokenType('f', 'f', true)
-        var g_ = new TokenType('g', 'g', true)
-        var h_ = new TokenType('h', 'h', true)
-        var i_ = new TokenType('i', 'i', true)
-        var j_ = new TokenType('j', 'j', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
+        var c_ = new TokenType().init('c', 'c', true)
+        var d_ = new TokenType().init('d', 'd', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var f_ = new TokenType().init('f', 'f', true)
+        var g_ = new TokenType().init('g', 'g', true)
+        var h_ = new TokenType().init('h', 'h', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var j_ = new TokenType().init('j', 'j', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_, c_, d_, e_, f_, g_, h_, i_, j_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -559,7 +559,7 @@ describe('syntaxAnalyzer', ()  => {
 
     test('SyntaxAnalyzer.leftFactoring 2-1', ()=>{
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -587,18 +587,18 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 3', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
-        var c_ = new TokenType('c', 'c', true)
-        var d_ = new TokenType('d', 'd', true)
-        var e_ = new TokenType('e', 'e', true)
-        var f_ = new TokenType('f', 'f', true)
-        var g_ = new TokenType('g', 'g', true)
-        var h_ = new TokenType('h', 'h', true)
-        var i_ = new TokenType('i', 'i', true)
-        var j_ = new TokenType('j', 'j', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
+        var c_ = new TokenType().init('c', 'c', true)
+        var d_ = new TokenType().init('d', 'd', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var f_ = new TokenType().init('f', 'f', true)
+        var g_ = new TokenType().init('g', 'g', true)
+        var h_ = new TokenType().init('h', 'h', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var j_ = new TokenType().init('j', 'j', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_, c_, d_, e_, f_, g_, h_, i_, j_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -627,7 +627,7 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 3-1', ()=>{
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -655,18 +655,18 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 4', ()=>{
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
-        var c_ = new TokenType('c', 'c', true)
-        var d_ = new TokenType('d', 'd', true)
-        var e_ = new TokenType('e', 'e', true)
-        var f_ = new TokenType('f', 'f', true)
-        var g_ = new TokenType('g', 'g', true)
-        var h_ = new TokenType('h', 'h', true)
-        var i_ = new TokenType('i', 'i', true)
-        var j_ = new TokenType('j', 'j', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
+        var c_ = new TokenType().init('c', 'c', true)
+        var d_ = new TokenType().init('d', 'd', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var f_ = new TokenType().init('f', 'f', true)
+        var g_ = new TokenType().init('g', 'g', true)
+        var h_ = new TokenType().init('h', 'h', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var j_ = new TokenType().init('j', 'j', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             a_, b_, c_, d_, e_, f_, g_, h_, i_, j_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -702,7 +702,7 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 4-1', ()=>{
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -737,13 +737,13 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 5', ()=>{
-        var i_ = new TokenType('i', 'i', true)
-        var t_ = new TokenType('t', 't', true)
-        var e_ = new TokenType('e', 'e', true)
-        var a_ = new TokenType('a', 'a', true)
-        var b_ = new TokenType('b', 'b', true)
+        var i_ = new TokenType().init('i', 'i', true)
+        var t_ = new TokenType().init('t', 't', true)
+        var e_ = new TokenType().init('e', 'e', true)
+        var a_ = new TokenType().init('a', 'a', true)
+        var b_ = new TokenType().init('b', 'b', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             i_, t_, e_, a_, b_,
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
@@ -787,7 +787,7 @@ describe('syntaxAnalyzer', ()  => {
     })
 
     test('SyntaxAnalyzer.leftFactoring 5-1', ()=>{
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,

@@ -8,17 +8,17 @@ import { RegularExpressionSymbol } from './SpecialSymbols'
 
 export class TokenType {
 
-    static EMPTY_TOKENTYPE : TokenType = new TokenType("<EMPTY>", '<EMPTY>', true)
-    static ERROR_TOKENTYPE : TokenType = new TokenType("<ERROR>", '<ERROR>', true)
-    static TERMINATED_TOKENTYPE : TokenType = new TokenType("<TERMINATED>", null, true)
-    static UNKNOWN_TOKENTYPE : TokenType = new TokenType("<UNKNOWN>", null, true)
+    static EMPTY_TOKENTYPE : TokenType = new TokenType().init("<EMPTY>", '<EMPTY>', true)
+    static ERROR_TOKENTYPE : TokenType = new TokenType().init("<ERROR>", '<ERROR>', true)
+    static TERMINATED_TOKENTYPE : TokenType = new TokenType().init("<TERMINATED>", null, true)
+    static UNKNOWN_TOKENTYPE : TokenType = new TokenType().init("<UNKNOWN>", null, true)
 
     name : string
     regularExpressionValue : string | null
     regularExpression : RegularExpression | null
     isTerminal : boolean
 
-    constructor(name : string, regularExpressionValue : string | null, isTerminal : boolean) {
+    init(name : string, regularExpressionValue : string | null, isTerminal : boolean) {
         this.name = name
         this.regularExpressionValue = regularExpressionValue
         try {
@@ -28,10 +28,40 @@ export class TokenType {
             throw new Error(`Can not solve token type for [ ${name} ]`)
         }
         this.isTerminal = isTerminal
+        return this
+    }
+
+    initWithRegularExpression(name : string, regularExpressionValue : string, regularExpression : RegularExpression, isTerminal : boolean) {
+        this.name = name
+        this.regularExpressionValue = regularExpressionValue
+        this.regularExpression = regularExpression
+        this.isTerminal = isTerminal
+        return this
     }
 
     isEqual(other : TokenType) {
         return this.name == other.name
+    }
+
+    static initFromJSON(jsonObject : Object) : TokenType {
+        var object : TokenType = new TokenType()
+        object.initWithRegularExpression(
+            jsonObject['name'],
+            jsonObject['regularExpressionValue'],
+            RegularExpression.initFromJSON(jsonObject['regularExpression']),
+            jsonObject['isTerminal']
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            name : this.name,
+            regularExpressionValue : this.regularExpressionValue,
+            regularExpression : this.regularExpression.convertToJSON(),
+            isTerminal : this.isTerminal
+        }
+        return jsonObject
     }
 }
 
@@ -91,13 +121,14 @@ export class Token {
 
 
 export class LexicalAnalyzer {
-    tokenTypes : Array<TokenType>
     startIndex : number
-    nfa : NFA
     dfa : DFA
-    terminatdNodes : Map<number, {name : string, regularExpressionValue : string, regularExpression : RegularExpression} | null>
+    terminatdNodes : Map<number, TokenType | null>
+    
+    nfa : NFA
+    tokenTypes : Array<TokenType>
 
-    constructor(tokenTypes : Array<TokenType>) {
+    initWithTokenTypes(tokenTypes : Array<TokenType>) {
         this.tokenTypes = tokenTypes
         this.startIndex = 0
         var numOfNodes = 1
@@ -124,15 +155,16 @@ export class LexicalAnalyzer {
         var that = this
         var terminatdNodes = new Map<number, TokenType | null>()
         dfa.terminatedIndexList.forEach((terminatedIndex)=>{
-            terminatdNodes[terminatedIndex] = null
+            terminatdNodes.set(terminatedIndex,null)
+            //terminatdNodes[terminatedIndex] = null
             // console.log('terminatedIndex: ', terminatedIndex)
             that.tokenTypes.forEach((tokenType)=>{
                 var regularExpression = tokenType.regularExpression
                 // console.log('\t',tokenType.name, regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states,
                 //     intersection(regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states))
                 if (intersection(regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states).length>0) {
-                    if (terminatdNodes[terminatedIndex]==null) {
-                        terminatdNodes[terminatedIndex] = tokenType
+                    if (terminatdNodes.get(terminatedIndex)==null) {
+                        terminatdNodes.set(terminatedIndex, tokenType)
                     }
                     // console.log('\t', terminatdNodes[terminatedIndex])
                 }
@@ -141,15 +173,36 @@ export class LexicalAnalyzer {
 
         this.dfa = dfa
         this.terminatdNodes = terminatdNodes
-        // console.log(dfa.terminatedIndexList)
-        // dfa.finiteAutomatonPaths.forEach(p=>{
-        //     console.log(p.source, p.destination, p.transferChar.transferValue, p.transferChar.negativeTransferValues)
-        // })
+        return this
+        
 
     }
 
+    /*
+    static initFromJSON(jsonObject : Object) : LexicalAnalyzer {
+        var object : LexicalAnalyzer = new LexicalAnalyzer()
+        object.init(
+            jsonObject['startIndex'],
+            jsonObject['terminatedIndexList'],
+            jsonObject['finiteAutomatonPaths'].map(pathJSON=>FiniteAutomatonPath.initFromJSON(pathJSON)),
+            null,
+            null
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            startIndex : this.startIndex,
+            dfa : this.dfa.convertToJSON(),
+            terminatdNodes : this.finiteAutomatonPaths.map(path=>path.convertToJSON())
+        }
+        return jsonObject
+    }
+    */
+
     isTerminatedNode(nodeIndex : number) : boolean {
-        return (this.terminatdNodes[nodeIndex]!=null)
+        return (this.terminatdNodes.get(nodeIndex)!=null)
     }
 
     getToken(chars : Array<string>, nodeStartIndex : number, charStartIndex : number) : { charEndPos: number,  nodeEndIndex : number} | null {
@@ -169,7 +222,7 @@ export class LexicalAnalyzer {
         var step = 0
         while (charCursor<chars.length && nodeCursor!=-1) {
             // console.log('nodeCursor:', nodeCursor)
-            if (this.terminatdNodes[nodeCursor]!=null) {
+            if (this.terminatdNodes.get(nodeCursor)!=null) {
                 charEndPos = charCursor
                 nodeEndIndex = nodeCursor
             }
@@ -203,7 +256,7 @@ export class LexicalAnalyzer {
                     // console.log("UNKNOWN", lastSuccessCharIndex, i, chars.slice(lastSuccessCharIndex, i).join(''))
                 }
                 
-                var tokenType = this.terminatdNodes[tokenEndResult.nodeEndIndex]
+                var tokenType = this.terminatdNodes.get(tokenEndResult.nodeEndIndex)
                 tokens.push(new Token(tokenType, chars.slice(i, tokenEndResult.charEndPos+1).join('')))
                 // console.log(tokenType.name, tokenType.regularExpressionValue, i, tokenEndResult.charEndPos, chars.slice(i, tokenEndResult.charEndPos+1))
                 lastSuccessCharIndex = tokenEndResult.charEndPos+1

@@ -5,11 +5,11 @@ import { isSetEqual } from '../src/Utils/SetUtils'
 describe('LexicalAnalysis', ()  => {
     
     test('LexicalAnalysis 2', ()=>{
-        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
-        var GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+", false)
-        var SPACES = new TokenType('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType().init('DERIVATION', '\\->', true)
+        var GrammarSymbol = new TokenType().init('GrammarSymbol', "[^ \n\t]+", false)
+        var SPACES = new TokenType().init('SPACES', '[ \t]+', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             DERIVATION,
             SPACES,
             GrammarSymbol,
@@ -84,10 +84,10 @@ describe('LexicalAnalysis', ()  => {
 
 
     test('LexicalAnalysis', () => { 
-        var lexicalAnalyzer = new LexicalAnalyzer([
-            new TokenType('A', 'a', true),
-            new TokenType('ABB', 'abb', true),
-            new TokenType('AAAABBB', 'a*b+', true),
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
+            new TokenType().init('A', 'a', true),
+            new TokenType().init('ABB', 'abb', true),
+            new TokenType().init('AAAABBB', 'a*b+', true),
         ])
         expect(lexicalAnalyzer.startIndex).toEqual(0)
         var tokenTypes = lexicalAnalyzer.tokenTypes
@@ -160,10 +160,10 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('lexicalAnalyzer.tokenize', () => { 
-        var ABB = new TokenType('ABB', 'abb', true)
-        var AAAABBB = new TokenType('AAAABBB', 'a*b+', true)
+        var ABB = new TokenType().init('ABB', 'abb', true)
+        var AAAABBB = new TokenType().init('AAAABBB', 'a*b+', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([ABB, AAAABBB])
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([ABB, AAAABBB])
         var tokens = lexicalAnalyzer.tokenize("aabcacabb")
         expect(tokens).toEqual([
             new Token(AAAABBB, "aab"),
@@ -193,12 +193,12 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('lexicalAnalyzer.tokenize', () => { 
-        var H1 = new TokenType('H1', '#', true)
-        var H2 = new TokenType('H2', '##', true)
-        var SPACES = new TokenType('SPACES', '" "+', true)
-        var PLAINTEXT = new TokenType('PLAINTEXT', '[^# ]+', true)
+        var H1 = new TokenType().init('H1', '#', true)
+        var H2 = new TokenType().init('H2', '##', true)
+        var SPACES = new TokenType().init('SPACES', '" "+', true)
+        var PLAINTEXT = new TokenType().init('PLAINTEXT', '[^# ]+', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             H1,
             H2,
             SPACES,
@@ -288,12 +288,12 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('lexicalAnalyzer.tokenize 2', () => { 
-        var H1 = new TokenType('H1', '#', true)
-        var H2 = new TokenType('H2', '##', true)
-        var SPACES = new TokenType('SPACES', '" "+', true)
-        var PLAINTEXT = new TokenType('PLAINTEXT', '[^#\\( ]+', true)
+        var H1 = new TokenType().init('H1', '#', true)
+        var H2 = new TokenType().init('H2', '##', true)
+        var SPACES = new TokenType().init('SPACES', '" "+', true)
+        var PLAINTEXT = new TokenType().init('PLAINTEXT', '[^#\\( ]+', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             H1,
             H2,
             SPACES,
@@ -313,10 +313,10 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('lexicalAnalyzer.tokenize 3', () => { 
-        var H1 = new TokenType('H1', '#', true)
-        var H2 = new TokenType('H2', '##', true)
+        var H1 = new TokenType().init('H1', '#', true)
+        var H2 = new TokenType().init('H2', '##', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             H1,
             H2,
         ])
@@ -327,20 +327,20 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[A-C][A-C_]+', false)
-        // var DERIVATION = new TokenType('DERIVATION', '\\->')
+        var GrammarSymbol = new TokenType().init('GrammarSymbol', '[A-C][A-C_]+', false)
+        // var DERIVATION = new TokenType().init('DERIVATION', '\\->')
         expect(GrammarSymbol.regularExpression.dfa.test("A")).toEqual(false)
         expect(GrammarSymbol.regularExpression.dfa.test("AC")).toEqual(true)
         expect(GrammarSymbol.regularExpression.dfa.test("A_")).toEqual(true)
     })
     
     test('GrammarSymbols 1', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[A][Ad]+', false)
-        var Enter = new TokenType('Enter', '\n', true)
-        var SPACES = new TokenType('SPACES', '[ \t]+', true)
-        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
+        var GrammarSymbol = new TokenType().init('GrammarSymbol', '[A][Ad]+', false)
+        var Enter = new TokenType().init('Enter', '\n', true)
+        var SPACES = new TokenType().init('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType().init('DERIVATION', '\\->', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             GrammarSymbol,
             Enter,
             SPACES,
@@ -361,12 +361,12 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 2', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-cA-C][a-cA-C_]+', false)
-        var Enter = new TokenType('Enter', '\n', true)
-        var SPACES = new TokenType('SPACES', '[ \t]+', true)
-        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
+        var GrammarSymbol = new TokenType().init('GrammarSymbol', '[a-cA-C][a-cA-C_]+', false)
+        var Enter = new TokenType().init('Enter', '\n', true)
+        var SPACES = new TokenType().init('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType().init('DERIVATION', '\\->', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             GrammarSymbol,
             Enter,
             SPACES,
@@ -387,12 +387,12 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 3', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', '[a-dA-D][a-dA-D_]*', false)
-        var Enter = new TokenType('Enter', '\n', true)
-        var SPACES = new TokenType('SPACES', '[ \t]+', true)
-        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
+        var GrammarSymbol = new TokenType().init('GrammarSymbol', '[a-dA-D][a-dA-D_]*', false)
+        var Enter = new TokenType().init('Enter', '\n', true)
+        var SPACES = new TokenType().init('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType().init('DERIVATION', '\\->', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             GrammarSymbol,
             Enter,
             SPACES,
@@ -413,13 +413,13 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 4', () => { 
-        var GrammarSymbol = new TokenType('GrammarSymbol', "[a-zA-Z][^ \n\t]*", false)
-        var Enter = new TokenType('Enter', '\n', true)
-        var SPACES = new TokenType('SPACES', '[ \t]+', true)
-        var DERIVATION = new TokenType('DERIVATION', '\\->', true)
-        var EMPTY = new TokenType('EMPTY', '<EMPTY>', true)
+        var GrammarSymbol = new TokenType().init('GrammarSymbol', "[a-zA-Z][^ \n\t]*", false)
+        var Enter = new TokenType().init('Enter', '\n', true)
+        var SPACES = new TokenType().init('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType().init('DERIVATION', '\\->', true)
+        var EMPTY = new TokenType().init('EMPTY', '<EMPTY>', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             GrammarSymbol,
             Enter,
             SPACES,

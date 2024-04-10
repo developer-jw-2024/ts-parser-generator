@@ -244,11 +244,11 @@ export class IndexGrammarProduction {
 
 export class SyntaxAnalyzer {
     
-    static DERIVATION = new TokenType('DERIVATION', '\\->', true)
-    static ENTER = new TokenType('ENTER', '\n', true)
-    static SPACES = new TokenType('SPACES', '[ \t]+', true)
-    static GrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",false)
-    static TerminatedGrammarSymbol = new TokenType('GrammarSymbol', "[^ \n\t]+",true)
+    static DERIVATION = new TokenType().init('DERIVATION', '\\->', true)
+    static ENTER = new TokenType().init('ENTER', '\n', true)
+    static SPACES = new TokenType().init('SPACES', '[ \t]+', true)
+    static GrammarSymbol = new TokenType().init('GrammarSymbol', "[^ \n\t]+",false)
+    static TerminatedGrammarSymbol = new TokenType().init('GrammarSymbol', "[^ \n\t]+",true)
     static DERIVATION_TOKEN = new Token(SyntaxAnalyzer.DERIVATION, '->')
 
     startSymbol : Token | null = null
@@ -265,7 +265,7 @@ export class SyntaxAnalyzer {
     
     firstOfGrammaProduction : Array<Array<number>> = new Array<Array<number>>()
 
-    lexicalAnalyzer : LexicalAnalyzer = new LexicalAnalyzer([
+    lexicalAnalyzer : LexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
         TokenType.ERROR_TOKENTYPE,
         TokenType.EMPTY_TOKENTYPE,
         SyntaxAnalyzer.DERIVATION,
@@ -372,9 +372,9 @@ export class SyntaxAnalyzer {
             var reg = line.substring(spaceIndex)
             name = name.trim()
             reg = reg.trim()
-            return new TokenType(name, reg, true)
+            return new TokenType().init(name, reg, true)
         })
-        this.tokenTypeLexicalAnalyzer = new LexicalAnalyzer(tokenTypes)
+        this.tokenTypeLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes(tokenTypes)
     }
 
     getTheNoInGrammarProductionList(grammarProductionStringExpression : string) : number {

@@ -48,13 +48,13 @@ function convertActionList(lrSyntaxAnalyzer : LRSyntaxAnalyzer) : Array<string> 
 
 describe('Lr', () => {
     test('LR 1', () => {
-        var PLUS = new TokenType('PLUS', '\\+', true)
-        var STAR = new TokenType('STAR', '\\*', true)
-        var ID = new TokenType('ID', 'id', true)
-        var OPENBRACKET = new TokenType('OPENBRACKET', '\\(', true)
-        var CLOSEBRACKET = new TokenType('CLOSEBRACKET', '\\)', true)
+        var PLUS = new TokenType().init('PLUS', '\\+', true)
+        var STAR = new TokenType().init('STAR', '\\*', true)
+        var ID = new TokenType().init('ID', 'id', true)
+        var OPENBRACKET = new TokenType().init('OPENBRACKET', '\\(', true)
+        var CLOSEBRACKET = new TokenType().init('CLOSEBRACKET', '\\)', true)
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             PLUS, STAR, ID, 
             OPENBRACKET, CLOSEBRACKET,
             TokenType.EMPTY_TOKENTYPE,
@@ -127,7 +127,7 @@ describe('Lr', () => {
     })
 
     test('LR 2', () => {
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -262,7 +262,7 @@ describe('Lr', () => {
 
     test('LR isValid', () => {
 
-        var lexicalAnalyzer = new LexicalAnalyzer([
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             TokenType.EMPTY_TOKENTYPE,
             SyntaxAnalyzer.DERIVATION,
             SyntaxAnalyzer.ENTER,
@@ -274,13 +274,13 @@ describe('Lr', () => {
         var tokens = lexicalAnalyzer.tokenize(value)
         var lrSyntaxAnalyzer = new LRSyntaxAnalyzer().initWithTokens(tokens)
 
-        var PLUS = new TokenType('+', '\\+', true)
-        var STAR = new TokenType('*', '\\*', true)
-        var ID = new TokenType('id', '[0-9]+', true)
-        var OPENBRACKET = new TokenType('(', '\\(', true)
-        var CLOSEBRACKET = new TokenType(')', '\\)', true)
+        var PLUS = new TokenType().init('+', '\\+', true)
+        var STAR = new TokenType().init('*', '\\*', true)
+        var ID = new TokenType().init('id', '[0-9]+', true)
+        var OPENBRACKET = new TokenType().init('(', '\\(', true)
+        var CLOSEBRACKET = new TokenType().init(')', '\\)', true)
 
-        var languageLexicalAnalyzer = new LexicalAnalyzer([
+        var languageLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             PLUS,
             STAR,
             ID,
