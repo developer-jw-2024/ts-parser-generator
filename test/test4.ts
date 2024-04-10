@@ -1,22 +1,8 @@
-import { toRegularExpressionChars } from "../src/LexicalAnalyzer/RegularExpression"
+import { FiniteAutomatonPath, TransferChar } from "../src/LexicalAnalyzer/NFA";
 
-// toRegularExpressionChars('🌟')
-// toRegularExpressionChars('我')
+var a = new TransferChar().init('a', false, false, null, false)
+var b = new FiniteAutomatonPath().init(1, 2, a)
 
-const GraphemeSplitter = require('grapheme-splitter');
-const splitter = new GraphemeSplitter();
-
-// Example string with emojis
-const stringWithEmoji = 'Hello 👋🌍';
-
-// Correctly split string into array of graphemes (characters as we see them)
-const graphemes = splitter.splitGraphemes(stringWithEmoji);
-
-console.log(graphemes); // Output will be an array of characters including emojis
-
-// You can now iterate over each grapheme as if it were a separate character
-graphemes.forEach(char => {
-    console.log(char);
-});
-
-console.log('length = ', graphemes.length)
+var jsonObject = b.convertToJSON()
+var o = FiniteAutomatonPath.initFromJSON(jsonObject)
+console.log(o)

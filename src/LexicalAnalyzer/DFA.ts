@@ -9,7 +9,7 @@ export class DFA {
     dfaStates : Array<DFAState>
     nfa : NFA
 
-    constructor(startIndex : number, 
+    init(startIndex : number, 
         terminatedIndexList : Array<number>, 
         finiteAutomatonPaths : Array<FiniteAutomatonPath>,
         dfaStates : Array<DFAState>, 
@@ -19,6 +19,28 @@ export class DFA {
         this.finiteAutomatonPaths = finiteAutomatonPaths
         this.dfaStates = dfaStates
         this.nfa = nfa
+        return this
+    }
+
+    static initFromJSON(jsonObject : Object) : DFA {
+        var object : DFA = new DFA()
+        object.init(
+            jsonObject['startIndex'],
+            jsonObject['terminatedIndexList'],
+            jsonObject['finiteAutomatonPaths'].map(pathJSON=>FiniteAutomatonPath.initFromJSON(pathJSON)),
+            null,
+            null
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            startIndex : this.startIndex,
+            terminatedIndexList : this.terminatedIndexList,
+            finiteAutomatonPaths : this.finiteAutomatonPaths.map(path=>path.convertToJSON())
+        }
+        return jsonObject
     }
 
     getNumberOfNodes() {

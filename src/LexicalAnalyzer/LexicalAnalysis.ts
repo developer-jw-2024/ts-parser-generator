@@ -22,7 +22,7 @@ export class TokenType {
         this.name = name
         this.regularExpressionValue = regularExpressionValue
         try {
-            this.regularExpression = regularExpressionValue==null?null:new RegularExpression(this.regularExpressionValue)
+            this.regularExpression = regularExpressionValue==null?null:new RegularExpression().initWtihRegularExpression(this.regularExpressionValue)
         } catch(error) {
 
             throw new Error(`Can not solve token type for [ ${name} ]`)
@@ -114,7 +114,7 @@ export class LexicalAnalyzer {
 
             numOfNodes+=dfa.getNumberOfNodes()
             nfa_terminatedIndexList = nfa_terminatedIndexList.concat(dfa.terminatedIndexList)
-            nfa_finiteAutomatonPaths.push(new FiniteAutomatonPath(nfa_startIndex, dfa.startIndex, new TransferChar().init(null, true)))
+            nfa_finiteAutomatonPaths.push(new FiniteAutomatonPath().init(nfa_startIndex, dfa.startIndex, new TransferChar().init(null, true)))
             nfa_finiteAutomatonPaths = nfa_finiteAutomatonPaths.concat(dfa.finiteAutomatonPaths)
         }
 

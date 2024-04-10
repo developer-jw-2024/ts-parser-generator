@@ -98,28 +98,28 @@ export class NFA {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(value)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath().init(source, destination, new TransferChar().init(value)))
     }
 
     setEmptyPath(source : number, destination : number) : void {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(null, true)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath().init(source, destination, new TransferChar().init(null, true)))
     }
 
     setAnyCharPath(source : number, destination : number) : void {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(null, false, false, null, true)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath().init(source, destination, new TransferChar().init(null, false, false, null, true)))
     }
 
     setNegativePath(source : number, destination : number, negativeTransferValues : Array<string>) : void {
         if (this.hasDuplicatedPath(source, destination)) {
             throw new Error(`There is already a path from [${source}] to [${destination}]`)
         }
-        this.finiteAutomatonPaths.push(new FiniteAutomatonPath(source, destination, new TransferChar().init(null, false, true, negativeTransferValues)))
+        this.finiteAutomatonPaths.push(new FiniteAutomatonPath().init(source, destination, new TransferChar().init(null, false, true, negativeTransferValues)))
     }
 
     hasDuplicatedPath(fromIndex : number, toIndex : number) : boolean {
@@ -339,11 +339,11 @@ export class NFA {
                     }
                 }
                 // console.log('\t===>',i, destIndex, transferChar)
-                finiteAutomatonPaths.push(new FiniteAutomatonPath(i, destIndex, transferChar))
+                finiteAutomatonPaths.push(new FiniteAutomatonPath().init(i, destIndex, transferChar))
             }
             i++
         }
-        return new DFA(0, dfaTerminatedIndexList, finiteAutomatonPaths, dfaStates, this)
+        return new DFA().init(0, dfaTerminatedIndexList, finiteAutomatonPaths, dfaStates, this)
     }
 }
 
@@ -366,6 +366,7 @@ export class TransferChar {
     isAnyCharPath : boolean = false
 
     constructor() {}
+
     init(
         transferValue : string | null = null, 
         isEmptyPath : boolean = false,
@@ -378,6 +379,22 @@ export class TransferChar {
         this.negativeTransferValues = negativeTransferValues
         this.isAnyCharPath = isAnyCharPath
         return this
+    }
+
+    static initFromJSON(jsonObject : Object) : TransferChar {
+        var object : TransferChar = new TransferChar()
+        object.init(
+            jsonObject['transferValue'],
+            jsonObject['isEmptyPath'],
+            jsonObject['isNegativePath'],
+            jsonObject['negativeTransferValues'],
+            jsonObject['isAnyCharPath'])
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = JSON.parse(JSON.stringify(this))
+        return jsonObject
     }
 
     isEmptyTransferPath() {
@@ -463,7 +480,8 @@ export class FiniteAutomatonPath {
     source : number
     destination : number
     transferChar : TransferChar
-    constructor(
+
+    init(
         source : number, 
         destination : number, 
         transferChar : TransferChar
@@ -471,8 +489,28 @@ export class FiniteAutomatonPath {
         this.source = source
         this.destination = destination
         this.transferChar = transferChar
+        return this
     }
 
+    static initFromJSON(jsonObject : Object) : FiniteAutomatonPath {
+        var object : FiniteAutomatonPath = new FiniteAutomatonPath()
+        object.init(
+            jsonObject['source'],
+            jsonObject['destination'],
+            TransferChar.initFromJSON(jsonObject['transferChar'])
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            source : this.source,
+            destination : this.destination,
+            transferChar : this.transferChar.convertToJSON()
+        }
+        return jsonObject
+    }
+    
     toString() : string | null {
         return `${this.source} --- ${this.transferChar.toString()} ---> ${this.destination}`
     }

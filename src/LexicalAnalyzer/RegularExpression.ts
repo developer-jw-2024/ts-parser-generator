@@ -646,12 +646,14 @@ export function buildRegularExpressionTree(chars : Array<string>, charBlocks ? :
 
 export class RegularExpression {
     dfa : DFA
-    constructor(regularExpression : string) {
+
+    initWtihRegularExpression(regularExpression : string) {
         var chars = toRegularExpressionChars(regularExpression)
         var tree = buildRegularExpressionTree(chars)
         var nfa = new NFA()
         nfa.initWithRegularExpressionTree(tree)
         this.dfa = nfa.toDFA()
+        return this
     }
 
     test(value : string) {
