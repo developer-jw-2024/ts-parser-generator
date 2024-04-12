@@ -299,9 +299,10 @@ export class SyntaxAnalyzer {
         SyntaxAnalyzer.GrammarSymbol
     ])
 
-    startSymbol : Token | null = null
-    indexOfStartSymbl : number | null = null
-    tokens : Array<Token> =  []
+    startSymbol : Token | null = null //json
+    indexOfStartSymbl : number | null = null //json
+    tokens : Array<Token> =  [] //json
+
     grammerProductions : Array<GrammarProduction>
     indexGrammerProductions : Array<IndexGrammarProduction>
     indexGrammerProductionFlags : Array<boolean>
@@ -315,6 +316,22 @@ export class SyntaxAnalyzer {
 
     tokenTypeLexicalAnalyzer : LexicalAnalyzer | null = null
     
+    init( 
+        startSymbol : Token, 
+        indexOfStartSymbl : number, 
+        tokens : Array<Token>, 
+        tokenTypeLexicalAnalyzer : LexicalAnalyzer , 
+        grammerProductions : Array<GrammarProduction>,
+        indexGrammerProductions : Array<IndexGrammarProduction>) {
+
+        this.startSymbol = startSymbol
+        this.indexOfStartSymbl = indexOfStartSymbl
+        this.tokens = tokens
+        this.tokenTypeLexicalAnalyzer = tokenTypeLexicalAnalyzer
+        this.grammerProductions = grammerProductions
+        this.indexGrammerProductions = indexGrammerProductions
+        return this
+    }
     
     initWithLanguageDefinition(languageDefinition : string) : SyntaxAnalyzer {
         var tokens = SyntaxAnalyzer.LanguageDefinitionLexicalAnalyzer.tokenize(languageDefinition)
@@ -390,9 +407,45 @@ export class SyntaxAnalyzer {
                 throw new Error(`Can not find grammar production ${gpString}`)
             }
             this.grammerProductionFunctionNames[indexOfgp] = gpString
+        }) 
+    }
+
+    static initFromJSON(jsonObject : Object) : SyntaxAnalyzer {
+        var object : SyntaxAnalyzer = new SyntaxAnalyzer()
+        var startSymbol : Token = Token.initFromJSON(jsonObject['startSymbol'])
+        var indexOfStartSymbl : number = jsonObject['indexOfStartSymbl']
+        var tokens : Array<Token> = jsonObject['tokens'].map(tokenJson=>{
+            return Token.initFromJSON(tokenJson)
+        })
+        var tokenTypeLexicalAnalyzer : LexicalAnalyzer =  LexicalAnalyzer.initFromJSON(jsonObject['tokenTypeLexicalAnalyzer'])
+        var grammerProductions : Array<GrammarProduction> =  jsonObject['grammerProductions'].map(gpJson=>{
+            return GrammarProduction.initFromJSON(gpJson)
         })
 
-        
+        var indexGrammerProductions : Array<IndexGrammarProduction> = jsonObject['indexGrammerProductions'].map(igpJson=>{
+            return IndexGrammarProduction.initFromJSON(igpJson)
+        })
+        object.init(
+            startSymbol,
+            indexOfStartSymbl,
+            tokens,
+            tokenTypeLexicalAnalyzer,
+            grammerProductions,
+            indexGrammerProductions
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            startSymbol : this.startSymbol.convertToJSON(),
+            indexOfStartSymbl : this.indexOfStartSymbl,
+            tokens : this.tokens.map(t=>t.convertToJSON()),
+            tokenTypeLexicalAnalyzer : this.tokenTypeLexicalAnalyzer?this.tokenTypeLexicalAnalyzer.convertToJSON():null,
+            grammerProductions : this.grammerProductions.map(gp=>gp.convertToJSON()),
+            indexGrammerProductions : this.indexGrammerProductions.map(igp=>igp.convertToJSON())
+        }
+        return jsonObject
     }
 
     showGrammarProductionWithoutFunction() {

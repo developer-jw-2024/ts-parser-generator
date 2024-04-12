@@ -11,7 +11,7 @@ var tokenTypeDefinitionPath = './test/SimpleMath/SimpleMath_RegExp.txt'
 
 var timeCounter : TimeCounter = new TimeCounter()
 
-var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
+var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
 console.log(timeCounter.getTimePeriod())
 var equation = "  5     +    2   -   2 *    3  "
 var flag = simpleMath.isValid(equation)

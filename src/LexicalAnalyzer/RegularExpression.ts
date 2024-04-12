@@ -661,7 +661,8 @@ export class RegularExpression {
         return this
     }
 
-    static initFromJSON(jsonObject : Object) : RegularExpression {
+    static initFromJSON(jsonObject : Object) : RegularExpression | null {
+        if (isNulllOrUndefinedValue(jsonObject)) return null
         var object : RegularExpression = new RegularExpression()
         object.init(DFA.initFromJSON(jsonObject['dfa']))
         return object

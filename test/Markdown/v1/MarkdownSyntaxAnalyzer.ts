@@ -8,12 +8,13 @@ var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
 export class MarkdownSyntaxAnalyzer {
     lrSyntaxAnalyzerRunner: LRSyntaxAnalyzerRunner
 
-    constructor() {
+    init() {
         this.lrSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
         this.lrSyntaxAnalyzerRunner.setPreprocessing((v:string):string=>{
             if (v.at(-1)!='\n') return v+'\n'
             return v
         })
+        return this
     }
 
     private convdertToMarkdown(content : string, debug : boolean = false) : Markdown | null {

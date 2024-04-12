@@ -58,7 +58,7 @@ export class TokenType {
         var jsonObject = {
             name : this.name,
             regularExpressionValue : this.regularExpressionValue,
-            regularExpression : this.regularExpression.convertToJSON(),
+            regularExpression : this.regularExpression?this.regularExpression.convertToJSON():null,
             isTerminal : this.isTerminal
         }
         return jsonObject

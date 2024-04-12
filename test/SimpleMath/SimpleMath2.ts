@@ -22,7 +22,7 @@ var tokenTypeDefinitionPath = './test/SimpleMath/SimpleMath_RegExp.txt'
 
 var timeCounter : TimeCounter = new TimeCounter()
 
-var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
+var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
 console.log(timeCounter.getTimePeriod())
 var equations : Array<string> = [
     " 6 * 2 + 1",
@@ -32,6 +32,21 @@ var equations : Array<string> = [
 equations.forEach(equation=>{
     var flag = simpleMath.isValid(equation)
     console.log(equation , '=', simpleMath.getResult(), '\tUsed time: ', timeCounter.getTimePeriod())
+        
+})
+
+var json = simpleMath.convertToJSON()
+console.log('--- --- --- ---')
+console.log('json time: ', timeCounter.getTimePeriod())
+FileUtils.writeJSONToFileSystem(`${__dirname}/SimpleMathLanguage.json`, json)
+console.log(__dirname)
+var b : LRSyntaxAnalyzerRunner = LRSyntaxAnalyzerRunner.initFromJSON(json)
+b.setLanguageFunctionsEntityClass(SimpleMath)
+
+console.log('init from json: ',timeCounter.getTimePeriod())
+equations.forEach(equation=>{
+    var flag = b.isValid(equation)
+    console.log(equation , '=', b.getResult(), '\tUsed time: ', timeCounter.getTimePeriod())
         
 })
 

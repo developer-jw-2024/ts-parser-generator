@@ -63,9 +63,27 @@ export class LRAction {
     type : LRActionType
     value : number
 
-    constructor(type : LRActionType, value : number) {
+    init(type : LRActionType, value : number) {
         this.type = type
         this.value = value
+        return this
+    }
+
+    static initFromJSON(jsonObject : Object) : LRAction {
+        var object : LRAction = new LRAction()
+        object.init(
+            jsonObject['type'],
+            jsonObject['value']
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            type : this.type,
+            value : this.value,
+        }
+        return jsonObject
     }
 
     toString() : string {
@@ -87,14 +105,17 @@ export class LRAction {
 }
 
 export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
-    states : Array<LRItemSet> = []
-    actions : Array<Array<LRAction>> = []
-
+    actions : Array<Array<LRAction>> = [] //json
+    
+    states : Array<LRItemSet> = [] 
     acceptState : LRItemSet | null = null
     acceptIndexGrammarProduction : IndexGrammarProduction | null = null
     analysisSteps : Array<AnalysisStep> = []
 
-    // inputTokens
+    initActions(actions : Array<Array<LRAction>>) {
+        this.actions = actions
+        return this
+    }
 
     initWithLanguageDefinition(languageDefinition : string) : LRSyntaxAnalyzer {
         var tokens = SyntaxAnalyzer.LanguageDefinitionLexicalAnalyzer.tokenize(languageDefinition)
@@ -111,6 +132,68 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
             this.calculateActions()    
         }
         return this
+    }
+
+    static initFromJSON(jsonObject : Object) : LRSyntaxAnalyzer {
+        var object : LRSyntaxAnalyzer = new LRSyntaxAnalyzer()
+
+        var startSymbol : Token = Token.initFromJSON(jsonObject['startSymbol'])
+        var indexOfStartSymbl : number = jsonObject['indexOfStartSymbl']
+        var tokens : Array<Token> = jsonObject['tokens'].map(tokenJson=>{
+            return Token.initFromJSON(tokenJson)
+        })
+        var actions : Array<Array<LRAction>> = []
+        var actionsJson = jsonObject['actions']
+        for (var i=0;i<actionsJson.length;i++) {
+            actions[i] = actions[i] || []
+            var iactionList = actionsJson[i]
+            if (!isNulllOrUndefinedValue(iactionList)) {
+                for (var j=0;j<iactionList.length;j++) {
+                    var actionJson = iactionList[j]
+                    actions[i][j] = null
+                    if (!isNulllOrUndefinedValue(actionJson)) {
+                        actions[i][j] = LRAction.initFromJSON(actionJson)
+                    }
+                }
+            }
+        }
+        var tokenTypeLexicalAnalyzer : LexicalAnalyzer =  LexicalAnalyzer.initFromJSON(jsonObject['tokenTypeLexicalAnalyzer'])
+        var grammerProductions : Array<GrammarProduction> =  jsonObject['grammerProductions'].map(gpJson=>{
+            return GrammarProduction.initFromJSON(gpJson)
+        })
+        var indexGrammerProductions : Array<IndexGrammarProduction> = jsonObject['indexGrammerProductions'].map(igpJson=>{
+            return IndexGrammarProduction.initFromJSON(igpJson)
+        })
+        object.init(
+            startSymbol,
+            indexOfStartSymbl,
+            tokens,
+            tokenTypeLexicalAnalyzer,
+            grammerProductions,
+            indexGrammerProductions
+        )
+        object.initActions(actions)
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = super.convertToJSON()
+        var actionsJson = []
+        for (var i=0;i<this.actions.length;i++) {
+            actionsJson[i] = actionsJson[i] || []
+            var iactionList = this.actions[i]
+            if (!isNulllOrUndefinedValue(iactionList)) {
+                for (var j=0;j<iactionList.length;j++) {
+                    var action = iactionList[j]
+                    actionsJson[i][j] = null
+                    if (!isNulllOrUndefinedValue(action)) {
+                        actionsJson[i][j] = action.convertToJSON()
+                    }
+                }
+            }
+        }
+        jsonObject['actions'] = actionsJson
+        return jsonObject
     }
 
     toTokens(inputString : string) : Array<Token> {
@@ -463,7 +546,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
                         road[source][destination] = symbol
                         if (this.tokens[symbol].type.isTerminal) {
                             this.actions[source] = this.actions[source] || []
-                            this.actions[source][symbol] = new LRAction(LRActionType.ACCEPT, destination)
+                            this.actions[source][symbol] = new LRAction().init(LRActionType.ACCEPT, destination)
                         }    
                     } else {
                         this.states.push(destState)
@@ -489,7 +572,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
                                         // console.log(this.showLRItemSet(this.states[destination]))
                                         // throw new Error(`duplicated action for ${destination}-${follows[k]}(${this.tokens[follows[k]]})`)
                                     } 
-                                    this.actions[destination][follows[k]] = new LRAction(LRActionType.REDUCE, item.numOfGrammerProduction)
+                                    this.actions[destination][follows[k]] = new LRAction().init(LRActionType.REDUCE, item.numOfGrammerProduction)
                                 }
                             }
                         }
@@ -504,7 +587,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
                     road[source][destination] = symbol
                     this.actions[source] = this.actions[source] || []
                     if (this.tokens[symbol].type.isTerminal) {
-                        this.actions[source][symbol] = new LRAction(LRActionType.SHIFT, destination)
+                        this.actions[source][symbol] = new LRAction().init(LRActionType.SHIFT, destination)
                         if (symbol==indexOfTerminatedToken) {
                             errors.push({
                                 state : source,
@@ -516,7 +599,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
                             })
                         }
                     } else {
-                        this.actions[source][symbol] = new LRAction(LRActionType.GOTO, destination)
+                        this.actions[source][symbol] = new LRAction().init(LRActionType.GOTO, destination)
                     }
 
             
@@ -660,6 +743,31 @@ export class LRSyntaxAnalyzerRunner {
         this.lrSyntaxAnalyzer.setLanguageFunctionsEntityClass(languageFunctionsEntityClass)
         this.lrSyntaxAnalyzer.setTokenTypeDefinition(tokenTypeDefinition)                
         return this
+    }
+
+    initWithLRSyntaxAnalyzer(lrSyntaxAnalyzer : LRSyntaxAnalyzer) {
+        this.lrSyntaxAnalyzer = lrSyntaxAnalyzer
+        return this
+    }
+    setLanguageFunctionsEntityClass(languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
+        this.lrSyntaxAnalyzer.setLanguageFunctionsEntityClass(languageFunctionsEntityClass)
+    }
+
+    static initFromJSON(jsonObject : Object) : LRSyntaxAnalyzerRunner {
+        var object : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner()
+        var lrSyntaxAnalyzer : LRSyntaxAnalyzer = LRSyntaxAnalyzer.initFromJSON(jsonObject['lrSyntaxAnalyzer'])
+
+        object.initWithLRSyntaxAnalyzer(
+            lrSyntaxAnalyzer
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            lrSyntaxAnalyzer : this.lrSyntaxAnalyzer.convertToJSON()
+        }
+        return jsonObject
     }
 
     getResult() : any {

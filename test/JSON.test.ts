@@ -3,9 +3,10 @@ import { orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, 
 import { FiniteAutomatonPath, NFA, TransferChar } from '../src/LexicalAnalyzer/NFA'
 import { isSetEqual, minus } from '../src/Utils/SetUtils'
 import { FileUtils } from '../src/Utils/FileUtil'
-import { SyntaxAnalyzer } from "../src/SyntaxAnalysis/SyntaxAnalysis"
+import { AnalysisToken, SyntaxAnalyzer } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 import { LL1SyntaxAnalyzer } from "../src/SyntaxAnalysis/LL1"
 import { DFA } from "../src/LexicalAnalyzer/DFA"
+import { LRAction, LRActionType, LRSyntaxAnalyzer } from "../src/SyntaxAnalysis/LR"
 
 
 describe('JSON', () => {
@@ -127,5 +128,66 @@ describe('JSON', () => {
             Token.initFromJSON(new Token().init(EMPTY, '<EMPTY>').convertToJSON()),
         ])
 
+    })
+
+    test('LRAction', () => { 
+        var a = new LRAction().init(LRActionType.ACCEPT, 3)
+        var json = a.convertToJSON()
+        var b = LRAction.initFromJSON(json)
+        expect(a).toEqual(b)
+    })
+
+    test('LR', () => {
+
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
+            TokenType.EMPTY_TOKENTYPE,
+            SyntaxAnalyzer.DERIVATION,
+            SyntaxAnalyzer.ENTER,
+            SyntaxAnalyzer.SPACES,
+            SyntaxAnalyzer.GrammarSymbol
+        ])
+
+        var value = FileUtils.readFromFileSystem('./test/LR_Test.txt')
+        var tokens = lexicalAnalyzer.tokenize(value)
+        var lrSyntaxAnalyzer = new LRSyntaxAnalyzer().initWithTokens(tokens)
+
+        var PLUS = new TokenType().init('+', '\\+', true)
+        var STAR = new TokenType().init('*', '\\*', true)
+        var ID = new TokenType().init('id', '[0-9]+', true)
+        var OPENBRACKET = new TokenType().init('(', '\\(', true)
+        var CLOSEBRACKET = new TokenType().init(')', '\\)', true)
+
+        var languageTokenLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
+            PLUS,
+            STAR,
+            ID,
+            OPENBRACKET,
+            CLOSEBRACKET
+        ])
+
+        lrSyntaxAnalyzer.setTokenTypeLexicalAnalyzer(languageTokenLexicalAnalyzer)
+        expect(lrSyntaxAnalyzer.isValidWithTokenTypeLexicalAnalyzer("3+4*6")).toEqual(true)
+        var json = lrSyntaxAnalyzer.convertToJSON()
+
+        var b : LRSyntaxAnalyzer = LRSyntaxAnalyzer.initFromJSON(json)
+        expect(b.isValidWithTokenTypeLexicalAnalyzer("3+4*6")).toEqual(true)
+        
+        
+        // var columnLens : Array<number> = lrSyntaxAnalyzer.analysisSteps.map(s=>{
+        //     return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
+        // }).reduce((pre, value)=>{
+        //     return pre.map((p, i)=> Math.max(pre[i], value[i]))
+        // }, [0, 0, 0, 0])
+        // columnLens = columnLens.map((v)=>v+10)
+
+
+        // console.log(
+        //     lrSyntaxAnalyzer.analysisSteps.map(s=>{
+        //         return [appendToFixLen(`[ ${s.stack} ]`, columnLens[0]),
+        //                 appendToFixLen(`[ ${s.symbols} ]`, columnLens[1]),
+        //                 appendToFixLen(`[ ${s.inputs} ]`, columnLens[2]),
+        //                 `[ ${s.action} ]`].join('')
+        //     }).join('\n')
+        // )
     })
 })
