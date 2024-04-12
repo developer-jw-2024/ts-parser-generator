@@ -88,15 +88,16 @@ export class LRAction {
 
 export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
     states : Array<LRItemSet> = []
-    acceptIndexGrammarProduction : IndexGrammarProduction | null = null
-    acceptState : LRItemSet | null = null
     actions : Array<Array<LRAction>> = []
+
+    acceptState : LRItemSet | null = null
+    acceptIndexGrammarProduction : IndexGrammarProduction | null = null
     analysisSteps : Array<AnalysisStep> = []
 
     // inputTokens
 
     initWithLanguageDefinition(languageDefinition : string) : LRSyntaxAnalyzer {
-        var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
+        var tokens = SyntaxAnalyzer.LanguageDefinitionLexicalAnalyzer.tokenize(languageDefinition)
         return this.initWithTokens(tokens)
     }
 
@@ -113,11 +114,12 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
     }
 
     toTokens(inputString : string) : Array<Token> {
-        return this.toTokensWithTokenTypeLexicalAnalyzer(this.tokenTypeLexicalAnalyzer, inputString)
+        return this.toTokensWithTokenTypeLexicalAnalyzer(inputString)
     }
 
-    toTokensWithTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer : LexicalAnalyzer, inputString : string) : Array<Token> {
-        var inputTokens : Array<Token> = tokenTypeLexicalAnalyzer.tokenize(inputString)
+    toTokensWithTokenTypeLexicalAnalyzer(inputString : string) : Array<Token> {
+        // var inputTokens : Array<Token> = tokenTypeLexicalAnalyzer.tokenize(inputString)
+        var inputTokens : Array<Token> = this.tokenTypeLexicalAnalyzer.tokenize(inputString)
         inputTokens.push(Token.TERMINATED_TOKEN)
         inputTokens = inputTokens.map(it=>{
             if (it.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {
@@ -144,7 +146,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         return symbolTokenString
     }
 
-    isValidWithTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer : LexicalAnalyzer, inputString : string, debug : boolean = false) : boolean {
+    isValidWithTokenTypeLexicalAnalyzer(inputString : string, debug : boolean = false) : boolean {
         
         var clazz  = this.languageFunctionsEntityClass
         var languageFunctionsEntityObject : LanguageFunctionsEntity | null
@@ -158,7 +160,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         var indexOfUnknownToken = this.getIndexOfToken(Token.UNKNOWN_TOKEN)
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
-        var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer, inputString)
+        var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalyzer(inputString)
         // console.log(inputTokens)
         // console.log('---------------')
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
@@ -328,7 +330,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
     }
 
     isValid(inputString : string, debug : boolean = false) : boolean {
-        return this.isValidWithTokenTypeLexicalAnalyzer(this.tokenTypeLexicalAnalyzer, inputString, debug)
+        return this.isValidWithTokenTypeLexicalAnalyzer(inputString, debug)
     }
 
     createAnalysisStep(
@@ -629,10 +631,10 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         var newIndexOfStartSymbol = this.tokens.length
         var newStartSymbol = new Token().init(this.startSymbol.type, arugmentedTokenName)
         this.tokens.push(newStartSymbol)
-        this.grammerProductions.push(new GrammarProduction(newStartSymbol, [this.startSymbol, Token.TERMINATED_TOKEN]))
-        this.indexGrammerProductions.push(new IndexGrammarProduction(newIndexOfStartSymbol, [this.indexOfStartSymbl, this.getIndexOfToken(Token.TERMINATED_TOKEN)]))
+        this.grammerProductions.push(new GrammarProduction().initWithTokens(newStartSymbol, [this.startSymbol, Token.TERMINATED_TOKEN]))
+        this.indexGrammerProductions.push(new IndexGrammarProduction().init(newIndexOfStartSymbol, [this.indexOfStartSymbl, this.getIndexOfToken(Token.TERMINATED_TOKEN)]))
         this.indexGrammerProductionFlags.push(true)
-        this.acceptIndexGrammarProduction = new IndexGrammarProduction(newIndexOfStartSymbol, [this.indexOfStartSymbl])
+        this.acceptIndexGrammarProduction = new IndexGrammarProduction().init(newIndexOfStartSymbol, [this.indexOfStartSymbl])
         this.acceptState = new LRItemSet([new LRItem(this.indexGrammerProductions.length-1, 2)])
         this.startSymbol = newStartSymbol
         this.indexOfStartSymbl = newIndexOfStartSymbol
@@ -646,7 +648,7 @@ export class LRSyntaxAnalyzerRunner {
     lrSyntaxAnalyzer : LRSyntaxAnalyzer
     preProcessingFunc : ((string) => string)|null = null
 
-    constructor(
+    init(
         languageDefinitionPath : string, 
         tokenTypeDefinitionPath : string, 
         languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
@@ -657,6 +659,7 @@ export class LRSyntaxAnalyzerRunner {
         this.lrSyntaxAnalyzer = new LRSyntaxAnalyzer().initWithLanguageDefinition(languageDefinition)
         this.lrSyntaxAnalyzer.setLanguageFunctionsEntityClass(languageFunctionsEntityClass)
         this.lrSyntaxAnalyzer.setTokenTypeDefinition(tokenTypeDefinition)                
+        return this
     }
 
     getResult() : any {

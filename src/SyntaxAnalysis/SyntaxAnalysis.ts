@@ -194,9 +194,29 @@ export class GrammarProduction {
     symbol : Token
     factors : Array<Token> = []
 
-    constructor(symbol : Token, factors : Array<Token>) {
+    initWithTokens(symbol : Token, factors : Array<Token>) {
         this.symbol = symbol
         this.factors = factors
+        return this
+    }
+
+    static initFromJSON(jsonObject : Object) : GrammarProduction {
+        var object : GrammarProduction = new GrammarProduction()
+        object.initWithTokens(
+            Token.initFromJSON(jsonObject['symbol']),
+            jsonObject['factors'].map(factorJSON=>{
+                return Token.initFromJSON(factorJSON)
+            }),
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            symbol : this.symbol.convertToJSON(),
+            factors : this.factors.map(factor=>factor.convertToJSON()),
+        }
+        return jsonObject
     }
 
     toString() {
@@ -223,9 +243,27 @@ export class IndexGrammarProduction {
     symbol : number
     factors : Array<number> = []
 
-    constructor(symbol : number, factors : Array<number>) {
+    init(symbol : number, factors : Array<number>) {
         this.symbol = symbol
         this.factors = factors
+        return this
+    }
+
+    static initFromJSON(jsonObject : Object) : IndexGrammarProduction {
+        var object : IndexGrammarProduction = new IndexGrammarProduction()
+        object.init(
+            jsonObject['symbol'],
+            jsonObject['factors']
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            symbol : this.symbol,
+            factors : this.factors
+        }
+        return jsonObject
     }
 
     isEqual(other : IndexGrammarProduction) {
@@ -233,7 +271,7 @@ export class IndexGrammarProduction {
     }
 
     copy() : IndexGrammarProduction {
-        return new IndexGrammarProduction(this.symbol, this.factors)
+        return new IndexGrammarProduction().init(this.symbol, this.factors)
     }
 
     toString() {
@@ -249,7 +287,17 @@ export class SyntaxAnalyzer {
     static SPACES = new TokenType().init('SPACES', '[ \t]+', true)
     static GrammarSymbol = new TokenType().init('GrammarSymbol', "[^ \n\t]+",false)
     static TerminatedGrammarSymbol = new TokenType().init('GrammarSymbol', "[^ \n\t]+",true)
+
     static DERIVATION_TOKEN = new Token().init(SyntaxAnalyzer.DERIVATION, '->')
+
+    static LanguageDefinitionLexicalAnalyzer : LexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
+        TokenType.ERROR_TOKENTYPE,
+        TokenType.EMPTY_TOKENTYPE,
+        SyntaxAnalyzer.DERIVATION,
+        SyntaxAnalyzer.ENTER,
+        SyntaxAnalyzer.SPACES,
+        SyntaxAnalyzer.GrammarSymbol
+    ])
 
     startSymbol : Token | null = null
     indexOfStartSymbl : number | null = null
@@ -265,22 +313,11 @@ export class SyntaxAnalyzer {
     
     firstOfGrammaProduction : Array<Array<number>> = new Array<Array<number>>()
 
-    lexicalAnalyzer : LexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
-        TokenType.ERROR_TOKENTYPE,
-        TokenType.EMPTY_TOKENTYPE,
-        SyntaxAnalyzer.DERIVATION,
-        SyntaxAnalyzer.ENTER,
-        SyntaxAnalyzer.SPACES,
-        SyntaxAnalyzer.GrammarSymbol
-    ])
-
     tokenTypeLexicalAnalyzer : LexicalAnalyzer | null = null
-    // constructor(tokens : Array<Token>) {
-    //     this.initWithTokens(tokens)
-    // }
+    
     
     initWithLanguageDefinition(languageDefinition : string) : SyntaxAnalyzer {
-        var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
+        var tokens = SyntaxAnalyzer.LanguageDefinitionLexicalAnalyzer.tokenize(languageDefinition)
         this.initWithTokens(tokens)
         return this
     }
@@ -375,7 +412,11 @@ export class SyntaxAnalyzer {
             reg = reg.trim()
             return new TokenType().init(name, reg, true)
         })
-        this.tokenTypeLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes(tokenTypes)
+        this.setTokenTypeLexicalAnalyzer(new LexicalAnalyzer().initWithTokenTypes(tokenTypes))
+    }
+
+    setTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer : LexicalAnalyzer) {
+        this.tokenTypeLexicalAnalyzer = tokenTypeLexicalAnalyzer
     }
 
     getTheNoInGrammarProductionList(grammarProductionStringExpression : string) : number {
@@ -384,7 +425,7 @@ export class SyntaxAnalyzer {
     }
 
     convertToIndexGrammarProduction(grammarProductionStringExpression : string) : IndexGrammarProduction {
-        var gpTokens = this.lexicalAnalyzer.tokenize(grammarProductionStringExpression).filter(t=>!t.type.isEqual(SyntaxAnalyzer.SPACES))
+        var gpTokens = SyntaxAnalyzer.LanguageDefinitionLexicalAnalyzer.tokenize(grammarProductionStringExpression).filter(t=>!t.type.isEqual(SyntaxAnalyzer.SPACES))
         var gp = this.toGrammarProduction(gpTokens, SyntaxAnalyzer.DERIVATION_TOKEN)
         var igp = this.toIndexGrammarProduction(gp)
         return igp
@@ -411,7 +452,7 @@ export class SyntaxAnalyzer {
     toIndexGrammarProduction(gp : GrammarProduction) :IndexGrammarProduction {
         var indexOfToken = this.getIndexOfToken(gp.symbol)
         var indexArrayOfFactors = gp.factors.map(e=>this.getIndexOfToken(e))
-        return new IndexGrammarProduction(indexOfToken, indexArrayOfFactors)
+        return new IndexGrammarProduction().init(indexOfToken, indexArrayOfFactors)
     }
 
     toGrammarProduction(list : Array<Token>, derivationToken : Token) : GrammarProduction | null {
@@ -423,7 +464,7 @@ export class SyntaxAnalyzer {
         }
         var token : Token = list[0]
         var factors : Array<Token> = list.slice(2, list.length)
-        return new GrammarProduction(token, factors)
+        return new GrammarProduction().initWithTokens(token, factors)
     }
     
     toGrammarProductions(list : Array<Array<Token>>, derivationToken : Token) : Array<GrammarProduction> {
@@ -485,7 +526,7 @@ export class SyntaxAnalyzer {
                 var tokenOfSymbol : Token = this.tokens[this.indexGrammerProductions[i].symbol]
                 var factors : Array<Token> = this.indexGrammerProductions[i].factors.map(f=>this.tokens[f])
     
-                cupgp.push(new GrammarProduction(tokenOfSymbol, factors))    
+                cupgp.push(new GrammarProduction().initWithTokens(tokenOfSymbol, factors))    
             }
         }
         this.grammerProductions = cupgp
@@ -520,7 +561,7 @@ export class SyntaxAnalyzer {
                         var factors = lgp.factors.concat(kgp.factors.slice(1))
                         while (factors.length>1 && factors[0]==indexOfEmptyToken) factors = factors.slice(1)
                         while (factors.length>1 && factors[factors.length-1]==indexOfEmptyToken) factors = factors.slice(0, factors.length-1)
-                        var newIndexGrammerProduction = new IndexGrammarProduction(symbol, factors)
+                        var newIndexGrammerProduction = new IndexGrammarProduction().init(symbol, factors)
                         if (!this.isInIndexGrammarProductionList(newIndexGrammerProduction)) {
                             // console.log('new ', newIndexGrammerProduction)
                             this.indexGrammerProductions.push(newIndexGrammerProduction)
@@ -591,7 +632,7 @@ export class SyntaxAnalyzer {
 
                 while (factors.length>1 && factors[0]==indexOfEmptyToken) factors = factors.slice(1)
                 while (factors.length>1 && factors[factors.length-1]==indexOfEmptyToken) factors = factors.slice(0, factors.length-1)
-                var newIndexGrammerProduction = new IndexGrammarProduction(symbol, factors)
+                var newIndexGrammerProduction = new IndexGrammarProduction().init(symbol, factors)
                 if (!this.isInIndexGrammarProductionList(newIndexGrammerProduction)) {
                     // console.log('new 1', newIndexGrammerProduction)
                     this.indexGrammerProductions.push(newIndexGrammerProduction)
@@ -600,7 +641,7 @@ export class SyntaxAnalyzer {
                 }
             } 
         }
-        var newIndexGrammerProduction = new IndexGrammarProduction(newTokenNameIndex, [indexOfEmptyToken])
+        var newIndexGrammerProduction = new IndexGrammarProduction().init(newTokenNameIndex, [indexOfEmptyToken])
         if (!this.isInIndexGrammarProductionList(newIndexGrammerProduction)) {
             // console.log('new 2', newIndexGrammerProduction)
             this.indexGrammerProductions.push(newIndexGrammerProduction)
@@ -623,7 +664,7 @@ export class SyntaxAnalyzer {
             var newToken : Token = new Token().init(this.tokens[tokenOfSymbol].type, newTokenName)
             this.tokens.push(newToken)
             indexOfNewTokenName  = this.tokens.length-1
-            var newgp = new IndexGrammarProduction(tokenOfSymbol, maxLeftCommonFactor.concat([indexOfNewTokenName]))
+            var newgp = new IndexGrammarProduction().init(tokenOfSymbol, maxLeftCommonFactor.concat([indexOfNewTokenName]))
 
             if (!this.isInIndexGrammarProductionList(newgp)) {
                 this.indexGrammerProductions.push(newgp)
@@ -636,7 +677,7 @@ export class SyntaxAnalyzer {
                     this.isLeftCommonFactor(maxLeftCommonFactor, gp.factors)) {
                         var factors : Array<number> = gp.factors.slice(maxLeftCommonFactor.length)
                         if (factors.length==0) factors = [indexOfEmptyToken]
-                        var newgp = new IndexGrammarProduction(indexOfNewTokenName, factors)
+                        var newgp = new IndexGrammarProduction().init(indexOfNewTokenName, factors)
                         if (!this.isInIndexGrammarProductionList(newgp)) {
                             this.indexGrammerProductions.push(newgp)
                             this.indexGrammerProductionFlags.push(true)

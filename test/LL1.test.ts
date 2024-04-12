@@ -295,7 +295,7 @@ describe('LL', () => {
             CLOSEBRACKET
         ])
         
-        
+        // ll1.setTokenTypeLexicalAnalyzer(languageLexicalAnalyzer)
         ll1.isValid(languageLexicalAnalyzer, "id+id*id")
         
 

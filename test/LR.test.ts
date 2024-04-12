@@ -280,7 +280,7 @@ describe('Lr', () => {
         var OPENBRACKET = new TokenType().init('(', '\\(', true)
         var CLOSEBRACKET = new TokenType().init(')', '\\)', true)
 
-        var languageLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
+        var languageTokenLexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             PLUS,
             STAR,
             ID,
@@ -288,7 +288,8 @@ describe('Lr', () => {
             CLOSEBRACKET
         ])
 
-        expect(lrSyntaxAnalyzer.isValidWithTokenTypeLexicalAnalyzer(languageLexicalAnalyzer, "3+4*6")).toEqual(true)
+        lrSyntaxAnalyzer.setTokenTypeLexicalAnalyzer(languageTokenLexicalAnalyzer)
+        expect(lrSyntaxAnalyzer.isValidWithTokenTypeLexicalAnalyzer("3+4*6")).toEqual(true)
         // var columnLens : Array<number> = lrSyntaxAnalyzer.analysisSteps.map(s=>{
         //     return [s.stack.length, s.symbols.length, s.inputs.length, s.action.length]
         // }).reduce((pre, value)=>{

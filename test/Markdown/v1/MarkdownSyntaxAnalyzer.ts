@@ -9,7 +9,7 @@ export class MarkdownSyntaxAnalyzer {
     lrSyntaxAnalyzerRunner: LRSyntaxAnalyzerRunner
 
     constructor() {
-        this.lrSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
+        this.lrSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
         this.lrSyntaxAnalyzerRunner.setPreprocessing((v:string):string=>{
             if (v.at(-1)!='\n') return v+'\n'
             return v

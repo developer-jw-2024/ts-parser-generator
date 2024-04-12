@@ -7,7 +7,7 @@ export class LL1SyntaxAnalyzer extends SyntaxAnalyzer {
     predictiveParsingTable : Array<Array<Array<number>>> = []
     
     initWithLanguageDefinition(languageDefinition : string) : LL1SyntaxAnalyzer {
-        var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
+        var tokens = SyntaxAnalyzer.LanguageDefinitionLexicalAnalyzer.tokenize(languageDefinition)
         return this.initWithTokens(tokens)
     }
 
