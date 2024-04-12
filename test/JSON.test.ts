@@ -90,4 +90,42 @@ describe('JSON', () => {
         expect(b.regularExpression.test('b')).toBe(true)
         expect(b.regularExpression.test('aaabb')).toBe(true)
     })
+
+    test('LexicalAnalyzer', () => { 
+        var GrammarSymbol = new TokenType().init('GrammarSymbol', "[a-zA-Z][^ \n\t]*", false)
+        var Enter = new TokenType().init('Enter', '\n', true)
+        var SPACES = new TokenType().init('SPACES', '[ \t]+', true)
+        var DERIVATION = new TokenType().init('DERIVATION', '\\->', true)
+        var EMPTY = new TokenType().init('EMPTY', '<EMPTY>', true)
+
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
+            GrammarSymbol,
+            Enter,
+            SPACES,
+            DERIVATION,
+            EMPTY
+        ])
+        
+        var tokens = lexicalAnalyzer.tokenize("A' -> <EMPTY>")
+        expect(tokens).toEqual([
+            new Token().init(GrammarSymbol, "A'"),
+            new Token().init(SPACES, " "),
+            new Token().init(DERIVATION, "->"),
+            new Token().init(SPACES, " "),
+            new Token().init(EMPTY, '<EMPTY>'),
+        ])
+        
+        var json = lexicalAnalyzer.convertToJSON()
+        var lexicalAnalyzerObj = LexicalAnalyzer.initFromJSON(json)
+        var tokens2 = lexicalAnalyzerObj.tokenize("A' -> <EMPTY>")
+
+        expect(tokens2).toEqual([
+            Token.initFromJSON(new Token().init(GrammarSymbol, "A'").convertToJSON()),
+            Token.initFromJSON(new Token().init(SPACES, " ").convertToJSON()),
+            Token.initFromJSON(new Token().init(DERIVATION, "->").convertToJSON()),
+            Token.initFromJSON(new Token().init(SPACES, " ").convertToJSON()),
+            Token.initFromJSON(new Token().init(EMPTY, '<EMPTY>').convertToJSON()),
+        ])
+
+    })
 })

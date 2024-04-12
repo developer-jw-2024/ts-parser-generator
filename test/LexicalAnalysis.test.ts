@@ -69,11 +69,11 @@ describe('LexicalAnalysis', ()  => {
 
         var tokens = lexicalAnalyzer.tokenize("A' -> A")
         expect(tokens).toEqual([
-            new Token(GrammarSymbol, "A'"),
-            new Token(SPACES, " "),
-            new Token(DERIVATION, "->"),
-            new Token(SPACES, " "),
-            new Token(GrammarSymbol, 'A'),
+            new Token().init(GrammarSymbol, "A'"),
+            new Token().init(SPACES, " "),
+            new Token().init(DERIVATION, "->"),
+            new Token().init(SPACES, " "),
+            new Token().init(GrammarSymbol, 'A'),
         ])
         
         // console.log(lexicalAnalyzer.dfa.dfaStates)
@@ -166,29 +166,29 @@ describe('LexicalAnalysis', ()  => {
         var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([ABB, AAAABBB])
         var tokens = lexicalAnalyzer.tokenize("aabcacabb")
         expect(tokens).toEqual([
-            new Token(AAAABBB, "aab"),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, "cac"),
-            new Token(ABB, "abb"),
+            new Token().init(AAAABBB, "aab"),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, "cac"),
+            new Token().init(ABB, "abb"),
         ])
         
         var tokens = lexicalAnalyzer.tokenize("aabcacaabb")
         expect(tokens).toEqual([
-            new Token(AAAABBB, "aab"),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, "cac"),
-            new Token(AAAABBB, "aabb"),
+            new Token().init(AAAABBB, "aab"),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, "cac"),
+            new Token().init(AAAABBB, "aabb"),
         ])
 
         var tokens = lexicalAnalyzer.tokenize("aabcaaabb")
         expect(tokens).toEqual([
-            new Token(AAAABBB, "aab"),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, "c"),
-            new Token(AAAABBB, "aaabb"),
+            new Token().init(AAAABBB, "aab"),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, "c"),
+            new Token().init(AAAABBB, "aaabb"),
         ])
 
         var tokens = lexicalAnalyzer.tokenize("aabcaaa")
         expect(tokens).toEqual([
-            new Token(AAAABBB, "aab"),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, "caaa"),
+            new Token().init(AAAABBB, "aab"),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, "caaa"),
         ])
     })
 
@@ -276,13 +276,13 @@ describe('LexicalAnalysis', ()  => {
 
         var tokens = lexicalAnalyzer.tokenize("# I am (boy).\n")
         expect(tokens).toEqual([
-            new Token(H1, "#"),
-            new Token(SPACES, " "),
-            new Token(PLAINTEXT, "I"),
-            new Token(SPACES, " "),
-            new Token(PLAINTEXT, "am"),
-            new Token(SPACES, " "),
-            new Token(PLAINTEXT, "(boy).\n"),
+            new Token().init(H1, "#"),
+            new Token().init(SPACES, " "),
+            new Token().init(PLAINTEXT, "I"),
+            new Token().init(SPACES, " "),
+            new Token().init(PLAINTEXT, "am"),
+            new Token().init(SPACES, " "),
+            new Token().init(PLAINTEXT, "(boy).\n"),
         ])
         // console.log(tokens)
     })
@@ -301,14 +301,14 @@ describe('LexicalAnalysis', ()  => {
         ])
         var tokens = lexicalAnalyzer.tokenize("# I am (boy).\n")
         expect(tokens).toEqual([
-            new Token(H1, "#"),
-            new Token(SPACES, " "),
-            new Token(PLAINTEXT, "I"),
-            new Token(SPACES, " "),
-            new Token(PLAINTEXT, "am"),
-            new Token(SPACES, " "),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, '('),
-            new Token(PLAINTEXT, "boy).\n"),
+            new Token().init(H1, "#"),
+            new Token().init(SPACES, " "),
+            new Token().init(PLAINTEXT, "I"),
+            new Token().init(SPACES, " "),
+            new Token().init(PLAINTEXT, "am"),
+            new Token().init(SPACES, " "),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, '('),
+            new Token().init(PLAINTEXT, "boy).\n"),
         ])
     })
 
@@ -322,7 +322,7 @@ describe('LexicalAnalysis', ()  => {
         ])
         var tokens = lexicalAnalyzer.tokenize("I am (boy).\n")
         expect(tokens).toEqual([
-            new Token(TokenType.UNKNOWN_TOKENTYPE, 'I am (boy).\n'),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, 'I am (boy).\n'),
         ])
     })
 
@@ -349,13 +349,13 @@ describe('LexicalAnalysis', ()  => {
         
         var tokens = lexicalAnalyzer.tokenize("A -> A d")
         expect(tokens).toEqual([
-            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
-            new Token(SPACES, " "),
-            new Token(DERIVATION, "->"),
-            new Token(SPACES, " "),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
-            new Token(SPACES, " "),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, 'd'),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token().init(SPACES, " "),
+            new Token().init(DERIVATION, "->"),
+            new Token().init(SPACES, " "),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token().init(SPACES, " "),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, 'd'),
         ])
         
     })
@@ -375,13 +375,13 @@ describe('LexicalAnalysis', ()  => {
         
         var tokens = lexicalAnalyzer.tokenize("A -> A d")
         expect(tokens).toEqual([
-            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
-            new Token(SPACES, " "),
-            new Token(DERIVATION, "->"),
-            new Token(SPACES, " "),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, 'A'),
-            new Token(SPACES, " "),
-            new Token(TokenType.UNKNOWN_TOKENTYPE, 'd'),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token().init(SPACES, " "),
+            new Token().init(DERIVATION, "->"),
+            new Token().init(SPACES, " "),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, 'A'),
+            new Token().init(SPACES, " "),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, 'd'),
         ])
         
     })
@@ -401,13 +401,13 @@ describe('LexicalAnalysis', ()  => {
         
         var tokens = lexicalAnalyzer.tokenize("A -> A d")
         expect(tokens).toEqual([
-            new Token(GrammarSymbol, 'A'),
-            new Token(SPACES, " "),
-            new Token(DERIVATION, "->"),
-            new Token(SPACES, " "),
-            new Token(GrammarSymbol, 'A'),
-            new Token(SPACES, " "),
-            new Token(GrammarSymbol, 'd'),
+            new Token().init(GrammarSymbol, 'A'),
+            new Token().init(SPACES, " "),
+            new Token().init(DERIVATION, "->"),
+            new Token().init(SPACES, " "),
+            new Token().init(GrammarSymbol, 'A'),
+            new Token().init(SPACES, " "),
+            new Token().init(GrammarSymbol, 'd'),
         ])
         
     })
@@ -429,11 +429,11 @@ describe('LexicalAnalysis', ()  => {
         
         var tokens = lexicalAnalyzer.tokenize("A' -> <EMPTY>")
         expect(tokens).toEqual([
-            new Token(GrammarSymbol, "A'"),
-            new Token(SPACES, " "),
-            new Token(DERIVATION, "->"),
-            new Token(SPACES, " "),
-            new Token(EMPTY, '<EMPTY>'),
+            new Token().init(GrammarSymbol, "A'"),
+            new Token().init(SPACES, " "),
+            new Token().init(DERIVATION, "->"),
+            new Token().init(SPACES, " "),
+            new Token().init(EMPTY, '<EMPTY>'),
         ])
         
     })

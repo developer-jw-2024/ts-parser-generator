@@ -121,7 +121,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         inputTokens.push(Token.TERMINATED_TOKEN)
         inputTokens = inputTokens.map(it=>{
             if (it.type.isEqual(TokenType.UNKNOWN_TOKENTYPE)) {
-                return new Token(TokenType.ERROR_TOKENTYPE, it.value)
+                return new Token().init(TokenType.ERROR_TOKENTYPE, it.value)
             }
             return it
         })
@@ -222,7 +222,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
                     i++
                     isMergeErrorhandled = true
                 } else {
-                    var errorToken : Token = new Token(TokenType.ERROR_TOKENTYPE, '')
+                    var errorToken : Token = new Token().init(TokenType.ERROR_TOKENTYPE, '')
                     a = indexOfErrorToken
                     
                     action  = this.actions[s][a]
@@ -627,7 +627,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         var tokenName : string = this.startSymbol.value
         var arugmentedTokenName = nextGrammarSymbol(tokenName, this.tokens)    
         var newIndexOfStartSymbol = this.tokens.length
-        var newStartSymbol = new Token(this.startSymbol.type, arugmentedTokenName)
+        var newStartSymbol = new Token().init(this.startSymbol.type, arugmentedTokenName)
         this.tokens.push(newStartSymbol)
         this.grammerProductions.push(new GrammarProduction(newStartSymbol, [this.startSymbol, Token.TERMINATED_TOKEN]))
         this.indexGrammerProductions.push(new IndexGrammarProduction(newIndexOfStartSymbol, [this.indexOfStartSymbl, this.getIndexOfToken(Token.TERMINATED_TOKEN)]))
@@ -646,7 +646,11 @@ export class LRSyntaxAnalyzerRunner {
     lrSyntaxAnalyzer : LRSyntaxAnalyzer
     preProcessingFunc : ((string) => string)|null = null
 
-    constructor(languageDefinitionPath : string, tokenTypeDefinitionPath : string, languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
+    constructor(
+        languageDefinitionPath : string, 
+        tokenTypeDefinitionPath : string, 
+        languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
+            
         var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
         var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
         

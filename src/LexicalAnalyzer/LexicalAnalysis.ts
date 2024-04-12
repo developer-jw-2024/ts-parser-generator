@@ -67,20 +67,41 @@ export class TokenType {
 
 export class Token {
 
-    static EMPTY_TOKEN : Token = new Token(TokenType.EMPTY_TOKENTYPE, '<EMPTY>')
-    static TERMINATED_TOKEN : Token = new Token(TokenType.TERMINATED_TOKENTYPE, '<TERMINATED>')
-    static ERROR_TOKEN : Token = new Token(TokenType.ERROR_TOKENTYPE, '<ERROR>')
-    static UNKNOWN_TOKEN : Token = new Token(TokenType.UNKNOWN_TOKENTYPE, '<UNKNOWN>')
+    static EMPTY_TOKEN : Token = new Token().init(TokenType.EMPTY_TOKENTYPE, '<EMPTY>')
+    static TERMINATED_TOKEN : Token = new Token().init(TokenType.TERMINATED_TOKENTYPE, '<TERMINATED>')
+    static ERROR_TOKEN : Token = new Token().init(TokenType.ERROR_TOKENTYPE, '<ERROR>')
+    static UNKNOWN_TOKEN : Token = new Token().init(TokenType.UNKNOWN_TOKENTYPE, '<UNKNOWN>')
 
     type : TokenType
     value : string
-    constructor(type : TokenType, value : string) {
+
+    init(type : TokenType, value : string) {
         this.type = type
         this.value = value
+        return this
     }
 
+    
+    static initFromJSON(jsonObject : Object) : Token {
+        var object : Token = new Token()
+        object.init(
+            TokenType.initFromJSON(jsonObject['type']),
+            jsonObject['value']
+        )
+        return object
+    }
+
+    convertToJSON() : Object {
+        var jsonObject = {
+            type : this.type.convertToJSON(),
+            value : this.value
+        }
+        return jsonObject
+    }
+    
+
     copy(value : string) : Token {
-        return new Token(this.type, value)
+        return new Token().init(this.type, value)
     }
 
     toString() : string | null {
@@ -128,6 +149,13 @@ export class LexicalAnalyzer {
     nfa : NFA
     tokenTypes : Array<TokenType>
 
+    init(startIndex : number, dfa : DFA, terminatdNodes : Map<number, TokenType | null>) {
+        this.startIndex = startIndex
+        this.dfa = dfa
+        this.terminatdNodes = terminatdNodes
+        return this
+    }
+
     initWithTokenTypes(tokenTypes : Array<TokenType>) {
         this.tokenTypes = tokenTypes
         this.startIndex = 0
@@ -155,7 +183,7 @@ export class LexicalAnalyzer {
         var that = this
         var terminatdNodes = new Map<number, TokenType | null>()
         dfa.terminatedIndexList.forEach((terminatedIndex)=>{
-            terminatdNodes.set(terminatedIndex,null)
+            // terminatdNodes.set(terminatedIndex,null)
             //terminatdNodes[terminatedIndex] = null
             // console.log('terminatedIndex: ', terminatedIndex)
             that.tokenTypes.forEach((tokenType)=>{
@@ -163,7 +191,7 @@ export class LexicalAnalyzer {
                 // console.log('\t',tokenType.name, regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states,
                 //     intersection(regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states))
                 if (intersection(regularExpression.dfa.terminatedIndexList, dfa.dfaStates[terminatedIndex].states).length>0) {
-                    if (terminatdNodes.get(terminatedIndex)==null) {
+                    if (isNulllOrUndefinedValue(terminatdNodes.get(terminatedIndex))) {
                         terminatdNodes.set(terminatedIndex, tokenType)
                     }
                     // console.log('\t', terminatdNodes[terminatedIndex])
@@ -178,28 +206,38 @@ export class LexicalAnalyzer {
 
     }
 
-    /*
     static initFromJSON(jsonObject : Object) : LexicalAnalyzer {
         var object : LexicalAnalyzer = new LexicalAnalyzer()
+        var terminatdNodesJsonObject = jsonObject['terminatdNodes']
+        var map : Map<number, TokenType | null> = new Map<number, TokenType | null>()
+        var keys = Object.keys(terminatdNodesJsonObject)
+        keys.forEach(key=>{
+            var tokenType : TokenType = TokenType.initFromJSON(terminatdNodesJsonObject[key])
+            var keyInt = parseInt(key)
+            map.set(keyInt, tokenType)
+        })
         object.init(
             jsonObject['startIndex'],
-            jsonObject['terminatedIndexList'],
-            jsonObject['finiteAutomatonPaths'].map(pathJSON=>FiniteAutomatonPath.initFromJSON(pathJSON)),
-            null,
-            null
+            DFA.initFromJSON(jsonObject['dfa']),
+            map
         )
         return object
     }
 
     convertToJSON() : Object {
+        var terminatdNodesJsonObject = {}
+        let keys = Array.from(this.terminatdNodes.keys());
+        keys.forEach(key=>{
+            terminatdNodesJsonObject[key] = (this.terminatdNodes.get(key) as TokenType).convertToJSON()
+        })
         var jsonObject = {
             startIndex : this.startIndex,
             dfa : this.dfa.convertToJSON(),
-            terminatdNodes : this.finiteAutomatonPaths.map(path=>path.convertToJSON())
+            terminatdNodes : terminatdNodesJsonObject
         }
         return jsonObject
     }
-    */
+    
 
     isTerminatedNode(nodeIndex : number) : boolean {
         return (this.terminatdNodes.get(nodeIndex)!=null)
@@ -252,12 +290,12 @@ export class LexicalAnalyzer {
             var tokenEndResult :{ charEndPos: number,  nodeEndIndex : number} | null = this.getToken(chars, nodeStartIndex, i)
             if (tokenEndResult!=null) {
                 if (i>lastSuccessCharIndex) {
-                    tokens.push(new Token(TokenType.UNKNOWN_TOKENTYPE, chars.slice(lastSuccessCharIndex, i).join('')))
+                    tokens.push(new Token().init(TokenType.UNKNOWN_TOKENTYPE, chars.slice(lastSuccessCharIndex, i).join('')))
                     // console.log("UNKNOWN", lastSuccessCharIndex, i, chars.slice(lastSuccessCharIndex, i).join(''))
                 }
                 
                 var tokenType = this.terminatdNodes.get(tokenEndResult.nodeEndIndex)
-                tokens.push(new Token(tokenType, chars.slice(i, tokenEndResult.charEndPos+1).join('')))
+                tokens.push(new Token().init(tokenType, chars.slice(i, tokenEndResult.charEndPos+1).join('')))
                 // console.log(tokenType.name, tokenType.regularExpressionValue, i, tokenEndResult.charEndPos, chars.slice(i, tokenEndResult.charEndPos+1))
                 lastSuccessCharIndex = tokenEndResult.charEndPos+1
                 nodeStartIndex = 0
@@ -269,7 +307,7 @@ export class LexicalAnalyzer {
         }
         // console.log(i, lastSuccessCharIndex)
         if (i>lastSuccessCharIndex) {
-            tokens.push(new Token(TokenType.UNKNOWN_TOKENTYPE, chars.slice(lastSuccessCharIndex, i).join('')))
+            tokens.push(new Token().init(TokenType.UNKNOWN_TOKENTYPE, chars.slice(lastSuccessCharIndex, i).join('')))
             // console.log("UNKNOWN", lastSuccessCharIndex, i, chars.slice(lastSuccessCharIndex, i))
         }
 

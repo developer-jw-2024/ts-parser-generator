@@ -249,7 +249,7 @@ export class SyntaxAnalyzer {
     static SPACES = new TokenType().init('SPACES', '[ \t]+', true)
     static GrammarSymbol = new TokenType().init('GrammarSymbol', "[^ \n\t]+",false)
     static TerminatedGrammarSymbol = new TokenType().init('GrammarSymbol', "[^ \n\t]+",true)
-    static DERIVATION_TOKEN = new Token(SyntaxAnalyzer.DERIVATION, '->')
+    static DERIVATION_TOKEN = new Token().init(SyntaxAnalyzer.DERIVATION, '->')
 
     startSymbol : Token | null = null
     indexOfStartSymbl : number | null = null
@@ -278,6 +278,7 @@ export class SyntaxAnalyzer {
     // constructor(tokens : Array<Token>) {
     //     this.initWithTokens(tokens)
     // }
+    
     initWithLanguageDefinition(languageDefinition : string) : SyntaxAnalyzer {
         var tokens = this.lexicalAnalyzer.tokenize(languageDefinition)
         this.initWithTokens(tokens)
@@ -305,7 +306,7 @@ export class SyntaxAnalyzer {
             }
         }
 
-        var tokenGroups = SyntaxAnalyzer.split(list, new Token(SyntaxAnalyzer.ENTER, '\n'))
+        var tokenGroups = SyntaxAnalyzer.split(list, new Token().init(SyntaxAnalyzer.ENTER, '\n'))
         this.grammerProductions = this.toGrammarProductions(tokenGroups, SyntaxAnalyzer.DERIVATION_TOKEN)
 
         // this.grammerProductions.forEach(gp=>{
@@ -566,7 +567,7 @@ export class SyntaxAnalyzer {
         }
         if (newTokenName==null) return 
         newTokenNameIndex = this.tokens.length
-        this.tokens.push(new Token(this.tokens[indexOfToken].type, newTokenName))
+        this.tokens.push(new Token().init(this.tokens[indexOfToken].type, newTokenName))
 
         // if (!this.isInIndexGrammarProductionList(newIndexGrammerProduction)) {
         //     this.indexGrammerProductions.push(newIndexGrammerProduction)
@@ -619,7 +620,7 @@ export class SyntaxAnalyzer {
             var tokenName : string = this.tokens[tokenOfSymbol].value
             var newTokenName : string = nextGrammarSymbol(tokenName, this.tokens)  
             var indexOfNewTokenName : number = -1  
-            var newToken : Token = new Token(this.tokens[tokenOfSymbol].type, newTokenName)
+            var newToken : Token = new Token().init(this.tokens[tokenOfSymbol].type, newTokenName)
             this.tokens.push(newToken)
             indexOfNewTokenName  = this.tokens.length-1
             var newgp = new IndexGrammarProduction(tokenOfSymbol, maxLeftCommonFactor.concat([indexOfNewTokenName]))
