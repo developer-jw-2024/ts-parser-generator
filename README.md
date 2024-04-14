@@ -11,7 +11,7 @@ or
 ```TypeScript
 import { regexp } from 'ts-parser-generator'
 
-var regularExpression : regexp.RegularExpression = new regexp.RegularExpression("wo*f")
+var regularExpression : regexp.RegularExpression = new regexp.RegularExpression().initWtihRegularExpression("wo*f")
 
 console.log(regularExpression.test("wf"))
 console.log(regularExpression.test("wof"))
@@ -31,11 +31,11 @@ console.log(regularExpression.test("wwf"))
 ```TypeScript
 import { lexical } from 'ts-parser-generator'
 
-var NUMBER_TYPE = new lexical.TokenType('NUMBER', '[1-9][0-9]*\\.[0-9]*', true)
-var ALPHABET_TYPE = new lexical.TokenType('ALPHABET', '[a-zA-Z]+', true)
-var SPACES_TYPE = new lexical.TokenType('SPACES', '[ \t]+', true)
+var NUMBER_TYPE = new lexical.TokenType().init('NUMBER', '[1-9][0-9]*\\.[0-9]*', true)
+var ALPHABET_TYPE = new lexical.TokenType().init('ALPHABET', '[a-zA-Z]+', true)
+var SPACES_TYPE = new lexical.TokenType().init('SPACES', '[ \t]+', true)
 
-var lexicalAnalyzer = new lexical.LexicalAnalyzer([
+var lexicalAnalyzer = new lexical.LexicalAnalyzer().initWithTokenTypes([
     NUMBER_TYPE,
     ALPHABET_TYPE,
     SPACES_TYPE,
@@ -101,7 +101,7 @@ F -> integer
 F -> - integer
 ```
 #### 2.3.3 Semantic analysis
-> Here we will define an object to handle all the grammar productions
+> Here we will define an object to handle all the grammar productions in file **_SimpleMath_Language_Function.ts_**
 ```Typescript
 import { syntax } from "ts-parser-generator";
 
@@ -168,6 +168,16 @@ export class SimpleMath extends syntax.LanguageFunctionsEntity {
     
 }
 ```
+> add **_tsconfig.json_** in the project
+```JSON
+{
+    "compilerOptions": {
+      "target": "ES5",
+      "experimentalDecorators": true
+    }
+}
+```
+
 
 #### 2.3.4 Ruuning the language
 > create a program called **_app.ts_** as below:
@@ -179,9 +189,9 @@ import { SimpleMath } from './SimpleMath_Language_Function'
 var languageDefinitionPath = './SimpleMath_Language.txt'
 var tokenTypeDefinitionPath = './SimpleMath_RegExp.txt'
 
-var simpleMath : lr.LRSyntaxAnalyzerRunner = new lr.LRSyntaxAnalyzerRunner(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
+var simpleMath : lr.LRSyntaxAnalyzerRunner = new lr.LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
 
-var equation = '5 a 3'
+var equation = '5 + 2 * 3'
 var flag : boolean = simpleMath.isValid(equation)
 if (flag) {
     console.log(`${equation} = ${simpleMath.getResult()}`)
@@ -189,7 +199,7 @@ if (flag) {
 ```
 > after runing the program, you will get:
 ```
-6 + 2 * 3 = 12
+5 + 2 * 3 = 11
 ```
 > if you change the equation to invalid equation, such as "5 a 3", you will get an exception error becase it is not fit the lanague definition.
 

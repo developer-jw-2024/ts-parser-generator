@@ -1,21 +1,7 @@
-import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
-import { MarkdownLanguageFunctionsEntity } from './Language_Function'
+import { MarkdownSyntaxAnalyzer } from './MarkdownSyntaxAnalyzer'
 
-var languageDefinitionPath: string = `${__dirname}/Language.txt`
-var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
-class MarkdownRunner extends LRSyntaxAnalyzerRunner {
-    // isValid(markdownContent : string, debug : boolean = false) : boolean {
-    //     if (markdownContent.at(-1)!='\n') markdownContent += '\n'
-    //     var flag = super.isValid(markdownContent, debug)
-    //     return flag
-    // }
-}
-var markdown: MarkdownRunner = new MarkdownRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
+var markdown: MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer().init()
 
-markdown.setPreprocessing((v:string):string=>{
-    if (v.at(-1)!='\n') return v+'\n'
-    return v
-})
 
 describe('Sentence', () => {
 

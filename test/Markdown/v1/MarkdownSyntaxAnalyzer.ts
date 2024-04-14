@@ -60,4 +60,8 @@ export class MarkdownSyntaxAnalyzer {
         }
         return markdown
     }
+
+    isValid(markdownContent : string, debug : boolean = false) : boolean {
+        return this.lrSyntaxAnalyzerRunner.isValid(markdownContent, debug)
+    }
 }
