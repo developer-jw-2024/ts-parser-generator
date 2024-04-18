@@ -1,4 +1,4 @@
-import { regexp } from "..";
+import { regexp } from "../src";
 import { RegularExpression, toContentChars, toRegularExpressionChars } from "../src/LexicalAnalyzer/RegularExpression";
 import { FileUtils } from "../src/Utils/FileUtil";
 
