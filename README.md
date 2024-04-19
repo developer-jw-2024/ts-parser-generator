@@ -61,7 +61,7 @@ console.log(result)
 ]
 ```
 
-> If we pass the string =='1.2 -Apple'== to a lexical analyzer and it contains an unknown token, the analyzer will generate a token with the reserved type 'UNKNOWN'. This 'UNKNOWN' token is used to identify certain tokens that are not predefined, which helps us to handle them as well.
+> If we pass the string **'1.2 -Apple'** to a lexical analyzer and it contains an unknown token, the analyzer will generate a token with the reserved type 'UNKNOWN'. This 'UNKNOWN' token is used to identify certain tokens that are not predefined, which helps us to handle them as well.
 ```json
 [
   { type: 'NUMBER', value: '1.2' },
