@@ -3,7 +3,8 @@ import { RegularExpressionSymbol, RegularExpressionCharType } from './SpecialSym
 import { DFA } from './DFA'
 import { NFA } from './NFA'
 import { isNulllOrUndefinedValue } from '../Utils/Utils'
-import GraphemeSplitter = require('grapheme-splitter');
+import GraphemeSplitter from 'grapheme-splitter';
+//import GraphemeSplitter = require('grapheme-splitter');
 
 const PareChars: Array<{ left: string, right: string }> = [
     { left: RegularExpressionSymbol.OpenCaretSquareBracket, right: RegularExpressionSymbol.CloseSquareBracket },
