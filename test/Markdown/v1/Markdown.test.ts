@@ -1,6 +1,13 @@
 import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer"
+import { FileUtils } from "../../../src/Utils/FileUtil";
 
-var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer().init()
+var languageDefinitionPath: string = `${__dirname}/Language.txt`
+var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
+
+var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+
+var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer().init(languageDefinition, tokenTypeDefinition)
 
 
 describe('Markdown', () => {

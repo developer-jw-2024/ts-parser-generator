@@ -2,14 +2,12 @@ import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
 import { MarkdownLanguageFunctionsEntity } from './Language_Function'
 import { Blockquote, ComplementBlock, Markdown } from './MarkdownLib'
 
-var languageDefinitionPath: string = `${__dirname}/Language.txt`
-var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
-
 export class MarkdownSyntaxAnalyzer {
     lrSyntaxAnalyzerRunner: LRSyntaxAnalyzerRunner
 
-    init() {
-        this.lrSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
+    init(languageDefinition : string, 
+        tokenTypeDefinition : string) {
+        this.lrSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinition, tokenTypeDefinition, MarkdownLanguageFunctionsEntity)
         this.lrSyntaxAnalyzerRunner.setPreprocessing((v:string):string=>{
             if (v.at(-1)!='\n') return v+'\n'
             return v

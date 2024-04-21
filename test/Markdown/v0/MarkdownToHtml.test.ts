@@ -1,10 +1,16 @@
 import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
 import * as html from './HtmlLib'
 import { MarkdownLanguageFunctionsEntity } from './Language_Function'
+import { FileUtils } from "../../../src/Utils/FileUtil";
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
-var markdown: LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
+
+var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+
+
+var markdown: LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinition, tokenTypeDefinition, MarkdownLanguageFunctionsEntity)
 markdown.setPreprocessing((v:string):string=>{
     if (v.at(-1)!='\n') return v+'\n'
     return v

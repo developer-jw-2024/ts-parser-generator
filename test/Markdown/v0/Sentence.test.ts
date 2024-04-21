@@ -1,8 +1,14 @@
 import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
 import { MarkdownLanguageFunctionsEntity } from './Language_Function'
+import { FileUtils } from "../../../src/Utils/FileUtil";
+
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
+
+var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+
 class MarkdownRunner extends LRSyntaxAnalyzerRunner {
     // isValid(markdownContent : string, debug : boolean = false) : boolean {
     //     if (markdownContent.at(-1)!='\n') markdownContent += '\n'
@@ -10,7 +16,7 @@ class MarkdownRunner extends LRSyntaxAnalyzerRunner {
     //     return flag
     // }
 }
-var markdown: MarkdownRunner = new MarkdownRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, MarkdownLanguageFunctionsEntity)
+var markdown: MarkdownRunner = new MarkdownRunner().init(languageDefinition, tokenTypeDefinition, MarkdownLanguageFunctionsEntity)
 
 markdown.setPreprocessing((v:string):string=>{
     if (v.at(-1)!='\n') return v+'\n'

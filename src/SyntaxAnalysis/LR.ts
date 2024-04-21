@@ -1,7 +1,7 @@
 import { AnalysisStep, AnalysisToken, GrammarProduction, IndexGrammarProduction, LanguageFunctionsEntity, SyntaxAnalyzer, nextGrammarSymbol } from "../SyntaxAnalysis/SyntaxAnalysis";
 import { LexicalAnalyzer, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis";
 import { intersection, union } from "../Utils/SetUtils"
-import { FileUtils } from "../Utils/FileUtil";
+//import { FileUtils } from "../Utils/FileUtil";
 import { isNulllOrUndefinedValue } from "../Utils/Utils";
 
 export class LRItem {
@@ -649,7 +649,7 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         </script>
         </body>
         </html>`
-        FileUtils.writeToFileSystem("./Mermaid.html", stateListContent)
+        //FileUtils.writeToFileSystem("./Mermaid.html", stateListContent)
     }
 
     showLRItemSet(lrItemSet : LRItemSet) {
@@ -732,12 +732,12 @@ export class LRSyntaxAnalyzerRunner {
     preProcessingFunc : ((string) => string)|null = null
 
     init(
-        languageDefinitionPath : string, 
-        tokenTypeDefinitionPath : string, 
+        languageDefinition : string, 
+        tokenTypeDefinition : string, 
         languageFunctionsEntityClass : typeof LanguageFunctionsEntity) {
             
-        var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
-        var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+        //var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+        //var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
         
         this.lrSyntaxAnalyzer = new LRSyntaxAnalyzer().initWithLanguageDefinition(languageDefinition)
         this.lrSyntaxAnalyzer.setLanguageFunctionsEntityClass(languageFunctionsEntityClass)
