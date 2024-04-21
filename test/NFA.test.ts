@@ -1,7 +1,7 @@
 import { toRegularExpressionChars, orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree } from '../src/LexicalAnalyzer/RegularExpression'
 import { NFA, TransferChar } from '../src/LexicalAnalyzer/NFA'
 import { isSetEqual } from '../src/Utils/SetUtils'
-import { FileUtils } from '../src/Utils/FileUtil'
+import { FileUtils } from './FileUtil'
 
 describe('NFA', ()  => {
     test('NFA', () => { 

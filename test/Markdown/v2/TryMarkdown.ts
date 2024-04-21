@@ -2,7 +2,7 @@ import { LRSyntaxAnalyzerRunner } from '../../../src/SyntaxAnalysis/LR'
 import { MarkdownLanguageFunctionsEntity }  from './Language_Function'
 
 import { TestCaseUtils } from './TestCaseUtils'
-import { FileUtils } from '../../../src/Utils/FileUtil'
+import { FileUtils } from '../../FileUtil'
 
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`

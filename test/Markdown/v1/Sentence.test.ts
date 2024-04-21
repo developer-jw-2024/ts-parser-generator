@@ -1,5 +1,5 @@
 import { MarkdownSyntaxAnalyzer } from './MarkdownSyntaxAnalyzer'
-import { FileUtils } from "../../../src/Utils/FileUtil";
+import { FileUtils } from "../../FileUtil";
 
 var languageDefinitionPath: string = `${__dirname}/Language.txt`
 var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`

@@ -1,6 +1,6 @@
 import { regexp } from "../src";
 import { RegularExpression, toContentChars, toRegularExpressionChars } from "../src/LexicalAnalyzer/RegularExpression";
-import { FileUtils } from "../src/Utils/FileUtil";
+import { FileUtils } from "./FileUtil";
 
 var content = FileUtils.readFromFileSystem(`${__dirname}/test`)
 var lines = content.split('\n')

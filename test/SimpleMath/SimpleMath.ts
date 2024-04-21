@@ -1,4 +1,4 @@
-import { FileUtils } from '../../src/Utils/FileUtil'
+import { FileUtils } from '../FileUtil'
 import { LRSyntaxAnalyzer, LRSyntaxAnalyzerRunner } from "../../src/SyntaxAnalysis/LR"
 import { SimpleMath } from './SimpleMath_Language_Function'
 import { TimeCounter } from '../../src/Utils/Utils'

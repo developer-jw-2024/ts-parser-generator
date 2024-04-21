@@ -2,7 +2,7 @@ import { LexicalAnalyzer, Token, TokenType } from "../src/LexicalAnalyzer/Lexica
 import { orGroup, andGroup, getEndTermIndex, initCharBlocks, orGroupsWithIndex, andGroupsWithIndex, RegularExpressionTreeOperation, buildRegularExpressionTree, RegularExpression } from '../src/LexicalAnalyzer/RegularExpression'
 import { FiniteAutomatonPath, NFA, TransferChar } from '../src/LexicalAnalyzer/NFA'
 import { isSetEqual, minus } from '../src/Utils/SetUtils'
-import { FileUtils } from '../src/Utils/FileUtil'
+import { FileUtils } from './FileUtil'
 import { AnalysisToken, SyntaxAnalyzer } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 import { LL1SyntaxAnalyzer } from "../src/SyntaxAnalysis/LL1"
 import { DFA } from "../src/LexicalAnalyzer/DFA"

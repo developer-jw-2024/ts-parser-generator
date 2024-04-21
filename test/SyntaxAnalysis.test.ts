@@ -1,7 +1,7 @@
 import { LexicalAnalyzer, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
 import { SyntaxAnalyzer, IndexGrammarProduction } from "../src/SyntaxAnalysis/SyntaxAnalysis"
 
-import { FileUtils } from "../src/Utils/FileUtil"
+import { FileUtils } from "./FileUtil"
 import { isSetEqual } from '../src/Utils/SetUtils'
 
 function isIndexGrammarProductionSubSetToAnother(list1 : Array<IndexGrammarProduction>, list2 : Array<IndexGrammarProduction>) : boolean {

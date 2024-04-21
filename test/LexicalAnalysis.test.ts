@@ -1,5 +1,5 @@
 import { LexicalAnalyzer, Token, TokenType } from "../src/LexicalAnalyzer/LexicalAnalysis"
-import { FileUtils } from "../src/Utils/FileUtil"
+import { FileUtils } from "./FileUtil"
 import { isSetEqual } from '../src/Utils/SetUtils'
 
 describe('LexicalAnalysis', ()  => {

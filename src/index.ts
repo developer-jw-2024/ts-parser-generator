@@ -7,14 +7,13 @@ import * as ll1 from './SyntaxAnalysis/LL1'
 import * as lr from './SyntaxAnalysis/LR'
 import * as syntax from './SyntaxAnalysis/SyntaxAnalysis'
 import * as ArrayListUtils from './Utils/ArrayListUtils'
-import * as FileUtil from './Utils/FileUtil'
 import * as SetUtils from './Utils/SetUtils'
 import * as StateSet from './Utils/StateSet'
 import * as Utils from './Utils/Utils'
 
 var utils = {
     ArrayListUtils,
-    FileUtil, SetUtils, StateSet, Utils
+    SetUtils, StateSet, Utils
 }
 export {
     nfa, dfa, lexical,

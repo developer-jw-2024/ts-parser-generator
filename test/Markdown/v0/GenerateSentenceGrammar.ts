@@ -1,4 +1,4 @@
-import { FileUtils } from "../../../src/Utils/FileUtil"
+import { FileUtils } from "../../FileUtil"
 
 var tags = 
 `

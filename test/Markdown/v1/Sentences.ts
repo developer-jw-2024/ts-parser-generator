@@ -2,7 +2,7 @@
 import { Blockquote, Markdown } from "./MarkdownLib"
 import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer"
 import * as html from './HtmlLib'
-import { FileUtils } from "../../../src/Utils/FileUtil"
+import { FileUtils } from "../../FileUtil"
 import { TimeCounter } from "../../../src/Utils/Utils"
 var t : TimeCounter = new TimeCounter()
 var content = FileUtils.readFromFileSystem(`${__dirname}/Sentences.txt`)

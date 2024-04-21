@@ -1,5 +1,5 @@
 import { AnalysisToken, GrammarProductionFunction, LanguageFunctionsEntity } from "../../src/SyntaxAnalysis/SyntaxAnalysis"
-import { FileUtils } from "../../src/Utils/FileUtil"
+import { FileUtils } from "../FileUtil"
 
 export class NumberList extends LanguageFunctionsEntity {
     @GrammarProductionFunction('WriteToFile -> All')

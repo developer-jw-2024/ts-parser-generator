@@ -1,4 +1,4 @@
-import { FileUtils } from '../../src/Utils/FileUtil'
+import { FileUtils } from '../FileUtil'
 import { LRActionType, LRSyntaxAnalyzer, LRSyntaxAnalyzerRunner } from "../../src/SyntaxAnalysis/LR"
 import { NumberList } from './Language_Function'
  
