@@ -9,9 +9,14 @@ import { TokenType } from '../../src/LexicalAnalyzer/LexicalAnalysis'
 var languageDefinitionPath = './test/SimpleMath/SimpleMath_Language.txt'
 var tokenTypeDefinitionPath = './test/SimpleMath/SimpleMath_RegExp.txt'
 
+var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+
+
 var timeCounter : TimeCounter = new TimeCounter()
 
-var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinitionPath, tokenTypeDefinitionPath, SimpleMath)
+
+var simpleMath : LRSyntaxAnalyzerRunner = new LRSyntaxAnalyzerRunner().init(languageDefinition, tokenTypeDefinition, SimpleMath)
 console.log(timeCounter.getTimePeriod())
 var equation = "  5     +    2   -   2 *    3  "
 var flag = simpleMath.isValid(equation)

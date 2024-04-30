@@ -511,6 +511,7 @@ export class SyntaxAnalyzer {
     toGrammarProduction(list : Array<Token>, derivationToken : Token) : GrammarProduction | null {
         if (list.length==0) return null
         if (list[0].value.startsWith('//')) return null
+        // console.log(list)
         if (!list[1].isEqual(derivationToken)) {
             // console.log(list)
             throw new Error('Grammer Production Error!')
