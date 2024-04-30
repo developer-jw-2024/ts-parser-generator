@@ -244,8 +244,6 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
         var indexOfTerminatedToken = this.getIndexOfToken(Token.TERMINATED_TOKEN)
 
         var inputTokens : Array<Token> = this.toTokensWithTokenTypeLexicalAnalyzer(inputString)
-        // console.log(inputTokens)
-        // console.log('---------------')
         var input : Array<number> = inputTokens.map(t=>this.getIndexOfToken(t))
         var stack : Array<number> = [0]
         var symbols : Array<number> = [indexOfTerminatedToken]
@@ -387,6 +385,16 @@ export class LRSyntaxAnalyzer extends SyntaxAnalyzer {
                             // result = parameters.map(p=>p.value).join('')
                         } else {
                             result = func(parameters)
+                            var originalContent = parameters.map(x=>{
+                                var value = x.value
+                                if (x.value.getOriginalContent) {
+                                    value = x.value.getOriginalContent()
+                                }
+                                return value
+                            }).join('')
+                            if (result.setOriginalContent) {
+                                result.setOriginalContent(originalContent)
+                            }
                         }
                         if (debug) {
                             console.log(this.grammerProductions[igp].toSimpleString(), '===>', '\n')

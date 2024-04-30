@@ -38,7 +38,6 @@ export class MarkdownSyntaxAnalyzer {
                 unhandledBlockquote.getMarkdownElements().push(blockquoteMarkdown)
                 unhandledBlockquote.isHandledFlag = true
             }
-            // console.log(unhandledComplementBlocks)
             for (var i=0;i<unhandledComplementBlocks.length;i++) {
                 var unhandledComplementBlock : ComplementBlock = unhandledComplementBlocks[i]
                 

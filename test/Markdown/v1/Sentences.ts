@@ -6,11 +6,18 @@ import { FileUtils } from "../../FileUtil"
 import { TimeCounter } from "../../../src/Utils/Utils"
 var t : TimeCounter = new TimeCounter()
 var content = FileUtils.readFromFileSystem(`${__dirname}/Sentences.txt`)
-var lines = content.split('\n')
+// var lines = content.split('\n')
+// console.log(lines)
 console.log('Read data: ', t.getTimePeriod())
-var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer()
+var languageDefinitionPath: string = `${__dirname}/Language.txt`
+var tokenTypeDefinitionPath: string = `${__dirname}/RegExp.txt`
+var languageDefinition = FileUtils.readFromFileSystem(languageDefinitionPath)
+var tokenTypeDefinition = FileUtils.readFromFileSystem(tokenTypeDefinitionPath)
+
+var markdownSyntaxAnalyzer : MarkdownSyntaxAnalyzer = new MarkdownSyntaxAnalyzer().init(languageDefinition, tokenTypeDefinition)
+
 console.log('Build Analyzer: ', t.getTimePeriod())
-var content = lines[0]
+// var content = lines[0]
 
 
 

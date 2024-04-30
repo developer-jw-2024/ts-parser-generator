@@ -77,9 +77,19 @@ export class AnalysisStep {
 
 export class SymbolEntity {
     children : Array<any>
+    originalContent : string
 
     constructor() {
         this.children = []
+        this.originalContent = 'not set'
+    }
+
+    setOriginalContent(originalContent : string) {
+        this.originalContent = originalContent
+    }
+
+    getOriginalContent() {
+        return this.originalContent
     }
 
     addChild(child : any) {
