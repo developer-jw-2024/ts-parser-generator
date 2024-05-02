@@ -4,7 +4,7 @@ import { FiniteAutomatonPath, NFA } from './NFA'
 import { TransferChar } from './NFA'
 import { intersection } from '../Utils/SetUtils'
 import { isNulllOrUndefinedValue } from '../Utils/Utils'
-import { RegularExpressionSymbol } from './SpecialSymbols'
+import { RegularExpressionCharType, RegularExpressionSymbol } from './SpecialSymbols'
 
 export class TokenType {
 
@@ -17,8 +17,9 @@ export class TokenType {
     regularExpressionValue : string | null
     regularExpression : RegularExpression | null
     isTerminal : boolean
+    skipChar : string
 
-    init(name : string, regularExpressionValue : string | null, isTerminal : boolean) {
+    init(name : string, regularExpressionValue : string | null, isTerminal : boolean,  skipChar : string = RegularExpressionSymbol.BackSlash) {
         this.name = name
         this.regularExpressionValue = regularExpressionValue
         try {
@@ -28,6 +29,7 @@ export class TokenType {
             throw new Error(`Can not solve token type for [ ${name} ]`)
         }
         this.isTerminal = isTerminal
+        this.skipChar = skipChar
         return this
     }
 
@@ -77,10 +79,25 @@ export class Token {
 
     init(type : TokenType, value : string) {
         this.type = type
-        this.value = value
+        // this.value = value
+        this.value = this.formalizedValue(value)
         return this
     }
 
+    formalizedValue(value : string) : string {
+        var v = value
+        var result = ""
+        for (var i=0;i<v.length;i++) {
+            if (v[i] == this.type.skipChar && i+1<v.length) {
+                result += v[i+1]
+                i++
+            } else {
+                result += v[i]
+            }
+        }
+        return result
+
+    }
     
     static initFromJSON(jsonObject : Object) : Token {
         var object : Token = new Token()
@@ -311,6 +328,7 @@ export class LexicalAnalyzer {
             // console.log("UNKNOWN", lastSuccessCharIndex, i, chars.slice(lastSuccessCharIndex, i))
         }
 
+        /*
         tokens.filter(t=>{
             var v = t.value
             var result = ""
@@ -324,6 +342,7 @@ export class LexicalAnalyzer {
             }
             t.value = result
         })
+        */
 
         return tokens
 

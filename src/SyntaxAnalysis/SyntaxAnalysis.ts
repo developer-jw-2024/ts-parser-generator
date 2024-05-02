@@ -1,4 +1,5 @@
 import { LexicalAnalyzer, Token, TokenType } from "../LexicalAnalyzer/LexicalAnalysis"
+import { initCharBlocks, toRegularExpressionChars } from "../LexicalAnalyzer/RegularExpression"
 import { isListEqual } from "../Utils/ArrayListUtils"
 import { isSetEqual } from "../Utils/SetUtils"
 
@@ -468,15 +469,47 @@ export class SyntaxAnalyzer {
 
     setTokenTypeDefinition(tokenTypeDefinitionContent) {
         var tokenTypes : Array<TokenType> = tokenTypeDefinitionContent.split('\n').filter(t=>t.trim().length>0).map(line=>{
-            var spaceIndex = line.indexOf(' ')
-            var name = line.substring(0, spaceIndex)
-            var reg = line.substring(spaceIndex)
+            var words = this.splitBySpace(line)
+            var name = words[0]
+            var reg = words[1]
             name = name.trim()
             reg = reg.trim()
-            return new TokenType().init(name, reg, true)
+            var skipChar : string |  null = words.length>=3?words[2]:null
+            if (skipChar==null) {
+                return new TokenType().init(name, reg, true)
+            } else {
+                return new TokenType().init(name, reg, true, skipChar)
+            }
         })
         this.setTokenTypeLexicalAnalyzer(new LexicalAnalyzer().initWithTokenTypes(tokenTypes))
     }
+
+    splitBySpace(value : string ) : Array<string> {
+        var chars = toRegularExpressionChars(value)
+        var charblocks = initCharBlocks(chars)
+        var words = []
+        var word = ''
+        var i = 0
+        while (i<chars.length) {
+            var range = charblocks[i]
+            if (range.left==range.right && chars[range.left]==' ') {
+                if (word.length>0) {
+                    words.push(word)
+                }
+                word = ''
+            } else {
+                for (var j=range.left;j<=range.right;j++) {
+                    word += chars[j]
+                }
+            }
+            i = range.right + 1
+        }
+        if (word.length>0) {
+            words.push(word)
+            word = ''
+        }
+        return words
+    } 
 
     setTokenTypeLexicalAnalyzer(tokenTypeLexicalAnalyzer : LexicalAnalyzer) {
         this.tokenTypeLexicalAnalyzer = tokenTypeLexicalAnalyzer

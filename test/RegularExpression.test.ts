@@ -34,6 +34,7 @@ describe('RegularExpression', ()  => {
         expect(toRegularExpressionChars('[^*]')).toEqual(['[^', '*', ']']);
         expect(toRegularExpressionChars('[^\\*]')).toEqual(['[^', '\\*', ']']);
         expect(toRegularExpressionChars('[\\-\\*\\+]')).toEqual(['[', '\\-', '\\*', '\\+', ']']);
+        expect(toRegularExpressionChars('\\$[^\\$]*\\$')).toEqual(['\\$', '[^', '\\$', ']','*', '\\$']);
         
     });
 
@@ -1517,6 +1518,22 @@ describe('RegularExpression', ()  => {
         var charblocks = initCharBlocks(chars)
         var tree = buildRegularExpressionTree(chars, charblocks, 0, charblocks.length-1)
         expect(tree.operation).toEqual(RegularExpressionTreeOperation.EMPTY)
+
+        var value = '\\$[^\\$]*\\$'
+        var chars = toRegularExpressionChars(value)
+        var tree = buildRegularExpressionTree(chars)
+        expect(tree.operation).toEqual(RegularExpressionTreeOperation.AND)
+        expect(tree.actualChars).toEqual([])
+        expect(tree.subtrees.length).toEqual(3)
+        expect(tree.subtrees[0].operation).toEqual(RegularExpressionTreeOperation.CHAR)
+        expect(tree.subtrees[0].actualChars).toEqual(['$'])
+        expect(tree.subtrees[1].operation).toEqual(RegularExpressionTreeOperation.STAR)
+        expect(tree.subtrees[1].actualChars).toEqual([])
+        expect(tree.subtrees[1].subtrees.length).toEqual(1)
+        expect(tree.subtrees[1].subtrees[0].operation).toEqual(RegularExpressionTreeOperation.NOT)
+        expect(tree.subtrees[1].subtrees[0].actualChars).toEqual(['$'])
+        expect(tree.subtrees[2].operation).toEqual(RegularExpressionTreeOperation.CHAR)
+        expect(tree.subtrees[2].actualChars).toEqual(['$'])
     })
 });
 
