@@ -35,6 +35,7 @@ describe('RegularExpression', ()  => {
         expect(toRegularExpressionChars('[^\\*]')).toEqual(['[^', '\\*', ']']);
         expect(toRegularExpressionChars('[\\-\\*\\+]')).toEqual(['[', '\\-', '\\*', '\\+', ']']);
         expect(toRegularExpressionChars('\\$[^\\$]*\\$')).toEqual(['\\$', '[^', '\\$', ']','*', '\\$']);
+        expect(toRegularExpressionChars('"$"[^$]*"$"')).toEqual(['\"', '$', '\"', '[^', '$', ']','*', '\"', '$', '\"' ]);
         
     });
 

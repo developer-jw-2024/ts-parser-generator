@@ -443,5 +443,12 @@ describe('DFA', ()  => {
         expect(regExp.test("$\sqrt$")).toBe(true)
         expect(regExp.test("$\\sqrt$")).toBe(true)
         expect(regExp.test("$$$")).toBe(false)
+
+        var regExp : RegularExpression = new RegularExpression().initWtihRegularExpression('"$"[^$]*"$"')
+        expect(regExp.test("$$")).toBe(true)
+        expect(regExp.test("$\sqrt$")).toBe(true)
+        expect(regExp.test("$\\sqrt$")).toBe(true)
+        expect(regExp.test("$$$")).toBe(false)
+        
     })
 })

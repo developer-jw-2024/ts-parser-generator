@@ -468,4 +468,37 @@ describe('LexicalAnalysis', ()  => {
         ])
         
     })
+
+    test('GrammarSymbols 6', () => { 
+        var Equation = new TokenType().init('Enter', '"$"[^$]*"$"', true, "NONE")
+
+        var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
+            Equation
+        ])
+        
+        var tokens = lexicalAnalyzer.tokenize("$\\sqrt$")
+        expect(tokens).toEqual([
+            new Token().init(Equation, "$\\sqrt$"),
+            
+        ])
+        expect(tokens.map(t=>t.value)).toEqual([
+            "$\\sqrt$"
+            
+        ])
+
+        var tokens = lexicalAnalyzer.tokenize("$\\sqrt$$")
+        expect(tokens).toEqual([
+            new Token().init(Equation, "$\\sqrt$"),
+            new Token().init(TokenType.UNKNOWN_TOKENTYPE, "$"),
+            
+        ])
+        expect(tokens.map(t=>t.value)).toEqual([
+            "$\\sqrt$",
+            "$"
+            
+        ])
+        
+    })
+
+
 })
