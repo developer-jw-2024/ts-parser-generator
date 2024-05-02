@@ -13,6 +13,7 @@ WholeMarkdownLine -> WholeMarkdownLine enter
 MarkdownLine -> <ERROR>
 
 MarkdownLine -> fencedCodeBlockTag
+MarkdownLine -> doubleDollarSign
 
 TableRow -> verticalBar
 TableRowWithCell -> TableRow Sentence
@@ -98,6 +99,7 @@ PlainText -> sharpSign
 PlainText -> leftArrow
 PlainText -> dashSign
 PlainText -> plusSign
+PlainText -> dollarSignTag
 PlainText -> PlainText simpleText
 PlainText -> PlainText spaces
 PlainText -> PlainText Link
@@ -112,6 +114,7 @@ PlainText -> PlainText sharpSign
 PlainText -> PlainText leftArrow
 PlainText -> PlainText dashSign
 PlainText -> PlainText plusSign
+PlainText -> PlainText dollarSignTag
 
 FootnoteReference -> openSquareBracketWithCaret simpleText closeSquareBracket
 

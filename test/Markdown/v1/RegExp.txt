@@ -1,7 +1,7 @@
 enter \n
 intent "    "+
 spaces [\t ]+
-simpleText  [^▮*_=\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
+simpleText  [^▮*_=\$\-\+\>\#\`\:\/\"\(\)\[\]\!\^\: \t\n\|]+
 
 emoji ":"[^▮\:\n]+":"
 url [^\!\<\>\[\]\(\) \n\t]+\:\/\/[^\!\<\>\[\]\(\) \n\t]+
@@ -58,6 +58,8 @@ subscriptTag "~"
 superscriptTag "^"
 doubleBacktickTag "``"
 backtickTag "`"
+dollarSignTag "$"[^$]*"$" None
+doubleDollarSign "$$"[^$]*"$$" None
 fencedCodeBlockTag ("```"[^\n]*\n[^\`]*"```")|("```"[^\n]*\n[^\`]+\n[^\`]*"```")
 
 

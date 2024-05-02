@@ -149,6 +149,19 @@ export class FencedCodeBlockText extends HtmlStringElement {
         return encode(this.value).split('\n').map(x=>intent+x).join('\n')
     }
 }
+export class DollarSignText extends HtmlStringElement {
+    toHtmlString(intent : string = ''): string {
+        const equation = this.value
+        return equation
+    }
+
+}
+export class DoubleDollarSignText extends HtmlStringElement {
+    toHtmlString(intent : string = ''): string {
+        const equation = this.value
+        return "<div>"+equation+"</div>"
+    }
+}
 export class HorizontalRule extends HtmlStringElement {
     toHtmlString(intent : string = ''): string {
         return intent+"<hr>"

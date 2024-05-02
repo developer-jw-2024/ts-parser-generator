@@ -478,6 +478,7 @@ export class SyntaxAnalyzer {
             if (skipChar==null) {
                 return new TokenType().init(name, reg, true)
             } else {
+                // console.log(name, reg, skipChar)
                 return new TokenType().init(name, reg, true, skipChar)
             }
         })

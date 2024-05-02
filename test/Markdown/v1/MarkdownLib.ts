@@ -270,6 +270,8 @@ export class Markdown extends MarkdownElement {
             this.addTaskListItem(element as TaskListItem)
         } else if (element.getClass()==Footnote) {
             this.addFootnote(element as Footnote)
+        } else if (element.getClass()==DoubleDollarSignText) {
+            this.addDoubleDollarSignText(element as DoubleDollarSignText)
         } else{
             throw new Error(`Can not add ${element.getClass().name} to ${this.getClass().name}`)
         }
@@ -284,6 +286,9 @@ export class Markdown extends MarkdownElement {
         //     this.addBlockquote(blockquote)
         // }
 
+    }
+    addDoubleDollarSignText(element : DoubleDollarSignText) {
+        this.getMarkdownElements().push(element)
     }
 
     addSentence(element : Sentence) {
@@ -909,7 +914,42 @@ export class FencedCodeBlockText extends MarkdownValueElement{
         return new html.FencedCodeBlockText(this.getValue())
     }
 }
+export class DollarSignText  extends MarkdownValueElement{
+    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+        var subIntent = `${intent}    `
+        var resultArray =  this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        return [].concat.apply([], resultArray)
+    }
 
+    toHtml(): html.HtmlElement {
+        return new html.DollarSignText(this.getValue())
+    }
+}
+export class DoubleDollarSignText  extends MarkdownValueElement{
+    toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
+        var subIntent = `${intent}    `
+        var resultArray =  this.getMarkdownElements().filter(x=>x).map(markdownElement=>{
+            if (markdownElement.toMarkdownHierarchy) {
+                return markdownElement.toMarkdownHierarchy(subIntent, debug)
+            } else {
+                return [`${subIntent}${markdownElement}`]
+            }  
+        })
+        resultArray.unshift(`${intent}${this.constructor.name}`+(debug?`[${this.getRawValue()}]`:""))
+        return [].concat.apply([], resultArray)
+    }
+
+    toHtml(): html.HtmlElement {
+        return new html.DoubleDollarSignText(this.getValue())
+    }
+}
 export class SimpleText extends MarkdownValueElement {
     toMarkdownHierarchy(intent : string = '', debug : boolean = false) {
         // var subIntent = `${intent}    `

@@ -1,6 +1,6 @@
 import { AnalysisToken, ErrorEntity, GrammarProductionFunction, LanguageFunctionsEntity, SymbolEntity, ValueSymbolEntity } from "../../../src/SyntaxAnalysis/SyntaxAnalysis";
 import { isNulllOrUndefinedValue, isTypeOf } from "../../../src/Utils/Utils";
-import { BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, Cursor, DashesRule, DefinitionItemValue, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
+import { DollarSignText, DoubleDollarSignText, BacktickText, BlankLine, BlockquoteLine, BoldText, Complement, Cursor, DashesRule, DefinitionItemValue, DoubleBacktickText, EmailAddress, Emoji, EqualsRule, FencedCodeBlockText, Footnote, FootnoteReference, Heading, HighlightText, HorizontalRule, Image, ItalicText, Link, Markdown, MarkdownError, MarkdownLines, OrderedItem, PlainText, Sentence, SimpleText, Spaces, StarBoldItalicText, StarBoldText, StarItalicText, StrikethroughText, SubscriptText, SuperscriptText, TableAlignmentRow, TableCell, TableCenterAlignment, TableColumnAlignment, TableLeftAlignment, TableNoAlignment, TableRightAlignment, TableRow, TaskListItem, URLAddress, UnderlineBoldItalicText, UnderlineBoldText, UnderlineItalicText, UnorderedItem } from "./MarkdownLib";
 // import { MarkdownSyntaxAnalyzer } from "./MarkdownSyntaxAnalyzer";
 
 export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
@@ -64,6 +64,11 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
     @GrammarProductionFunction(`MarkdownLine -> fencedCodeBlockTag`)
     MarkdownLine__fencedCodeBlockTag(argv : Array<AnalysisToken>) {
         return new FencedCodeBlockText(argv[0].value)
+    }
+
+    @GrammarProductionFunction(`MarkdownLine -> doubleDollarSign`)
+    MarkdownLine__doubleDollarSign(argv : Array<AnalysisToken>) {
+        return new DoubleDollarSignText(argv[0].value.substring(2, argv[0].value.length-2))
     }
 
     @GrammarProductionFunction(`TableRow -> verticalBar`)
@@ -461,6 +466,14 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         return plainText
     }
 
+    @GrammarProductionFunction(`PlainText -> dollarSignTag`)
+    PlainText__dollarSignTag(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = new PlainText()
+        plainText.addChild(new DollarSignText(argv[0].value.substring(1, argv[0].value.length-1)))
+        return plainText
+    }
+
+
     @GrammarProductionFunction(`PlainText -> PlainText simpleText`)
     PlainText__PlainText_simpleText(argv : Array<AnalysisToken>) {
         var plainText : PlainText = argv[0].value
@@ -551,6 +564,15 @@ export class MarkdownLanguageFunctionsEntity extends LanguageFunctionsEntity {
         plainText.addChild(new SimpleText(argv[1].value))
         return plainText
     }
+
+    @GrammarProductionFunction(`PlainText -> PlainText dollarSignTag`)
+    PlainText__PlainText_dollarSignTag(argv : Array<AnalysisToken>) {
+        var plainText : PlainText = argv[0].value
+        var dollarSignText : DollarSignText = new DollarSignText(argv[1].value.substring(1, argv[1].value.length-1))
+        plainText.addChild(dollarSignText)
+        return plainText
+    }
+
 
     @GrammarProductionFunction(`FootnoteReference -> openSquareBracketWithCaret simpleText closeSquareBracket`)
     FootnoteReference__openSquareBracketWithCaret_simpleText_closeSquareBracket(argv : Array<AnalysisToken>) {
