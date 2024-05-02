@@ -4,7 +4,7 @@ import { FiniteAutomatonPath, NFA } from './NFA'
 import { TransferChar } from './NFA'
 import { intersection } from '../Utils/SetUtils'
 import { isNulllOrUndefinedValue } from '../Utils/Utils'
-import { RegularExpressionCharType, RegularExpressionSymbol } from './SpecialSymbols'
+import { RegularExpressionSymbol } from './SpecialSymbols'
 
 export class TokenType {
 
@@ -33,11 +33,12 @@ export class TokenType {
         return this
     }
 
-    initWithRegularExpression(name : string, regularExpressionValue : string, regularExpression : RegularExpression, isTerminal : boolean) {
+    initWithRegularExpression(name : string, regularExpressionValue : string, regularExpression : RegularExpression, isTerminal : boolean,  skipChar : string = RegularExpressionSymbol.BackSlash) {
         this.name = name
         this.regularExpressionValue = regularExpressionValue
         this.regularExpression = regularExpression
         this.isTerminal = isTerminal
+        this.skipChar = skipChar
         return this
     }
 
@@ -51,7 +52,8 @@ export class TokenType {
             jsonObject['name'],
             jsonObject['regularExpressionValue'],
             RegularExpression.initFromJSON(jsonObject['regularExpression']),
-            jsonObject['isTerminal']
+            jsonObject['isTerminal'],
+            jsonObject['skipChar']
         )
         return object
     }
@@ -61,7 +63,8 @@ export class TokenType {
             name : this.name,
             regularExpressionValue : this.regularExpressionValue,
             regularExpression : this.regularExpression?this.regularExpression.convertToJSON():null,
-            isTerminal : this.isTerminal
+            isTerminal : this.isTerminal,
+            skipChar : this.skipChar
         }
         return jsonObject
     }
@@ -95,6 +98,9 @@ export class Token {
                 result += v[i]
             }
         }
+        // if (this.type.skipChar!=RegularExpressionSymbol.BackSlash) {
+            // console.log(`formalizedValue: Token =${this.type.name}, value = ${value},  result = ${result}, skipChar =  ${this.type.skipChar}` )
+        // }
         return result
 
     }

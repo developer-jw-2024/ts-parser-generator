@@ -439,7 +439,7 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 5', () => { 
-        var Equation = new TokenType().init('Enter', '\\$[^\\$]*\\$', true, "NONE")
+        var Equation = new TokenType().init('Equation', '\\$[^\\$]*\\$', true, "NONE")
 
         var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             Equation
@@ -470,7 +470,7 @@ describe('LexicalAnalysis', ()  => {
     })
 
     test('GrammarSymbols 6', () => { 
-        var Equation = new TokenType().init('Enter', '"$"[^$]*"$"', true, "NONE")
+        var Equation = new TokenType().init('Equation', '"$"[^$]*"$"', true, "NONE")
 
         var lexicalAnalyzer = new LexicalAnalyzer().initWithTokenTypes([
             Equation

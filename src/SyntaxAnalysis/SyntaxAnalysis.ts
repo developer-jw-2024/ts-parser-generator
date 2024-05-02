@@ -475,10 +475,11 @@ export class SyntaxAnalyzer {
             name = name.trim()
             reg = reg.trim()
             var skipChar : string |  null = words.length>=3?words[2]:null
+
             if (skipChar==null) {
                 return new TokenType().init(name, reg, true)
             } else {
-                // console.log(name, reg, skipChar)
+                // console.log(name, reg, `[${skipChar}]`)
                 return new TokenType().init(name, reg, true, skipChar)
             }
         })
